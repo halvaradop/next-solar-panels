@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "@/ui/global.css"
-import { LayoutProps } from "@/@types/types"
+import { LayoutProps } from "@/lib/@types/types"
+import "@/ui/globals.css"
 
 const inter = Inter({
     weight: ["400", "500", "600", "700"],
