@@ -1,0 +1,24 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "plugin:prettier/recommended", "prettier"],
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false,
+        "printWidth": 130,
+        "tabWidth": 4,
+        "useTabs": false,
+        "trailingComma": "es5",
+        "overrides": [
+          {
+            "files": ["*.json", "*.yml", "*.yaml", "*.md"],
+            "options": {
+              "tabWidth": 2
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
