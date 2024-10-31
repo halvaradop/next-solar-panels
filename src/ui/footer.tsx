@@ -1,16 +1,21 @@
 import Link from "next/link"
 
 export const Footer = () => {
-
     return (
         <footer className="py-20">
             <section className="w-11/12 mx-auto flex flex-col gap-y-10 font-medium text-center">
                 <h3 className="text-4xl">© 2024 - ACHE ENGINEERING</h3>
                 <div className="space-y-8">
                     <ul className="flex justify-between items-center">
-                        <li><Link href="/">HOME</Link></li>
-                        <li><Link href="/">CORROSION</Link></li>
-                        <li><Link href="/">ABOUT US</Link></li>
+                        <li>
+                            <Link href="/">HOME</Link>
+                        </li>
+                        <li>
+                            <Link href="/">CORROSION</Link>
+                        </li>
+                        <li>
+                            <Link href="/">ABOUT US</Link>
+                        </li>
                     </ul>
                     <ul>
                         <li>CONTACTS</li>
