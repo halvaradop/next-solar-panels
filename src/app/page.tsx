@@ -3,8 +3,8 @@ import { Keywords } from "@/ui/keywords"
 import clouds from "@/public/clouds.jpg"
 import arrowIcon from "@/public/arrow-down.svg"
 import { Button } from "@halvaradop/ui-button"
-import { ProductList } from "@/ui/product-list"
-import { ProjectList } from "@/ui/project-list"
+import { ProductList } from "@/ui/products/product-list"
+import { ProjectList } from "@/ui/projects/project-list"
 
 const Index = () => {
     return (
