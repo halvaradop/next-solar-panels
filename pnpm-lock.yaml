@@ -8,12 +8,21 @@ importers:
 
   .:
     dependencies:
+      '@halvaradop/tailwindcss-utilities':
+        specifier: ^0.2.3
+        version: 0.2.3
+      '@halvaradop/ui-button':
+        specifier: ^0.3.1
+        version: 0.3.1
       '@halvaradop/ui-input':
         specifier: ^0.2.1
         version: 0.2.1
       '@halvaradop/ui-label':
         specifier: ^0.1.1
         version: 0.1.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       next:
         specifier: 14.2.15
         version: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -23,6 +32,9 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
+      tw-merge:
+        specifier: 0.0.1-alpha.3
+        version: 0.0.1-alpha.3
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -82,8 +94,14 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@halvaradop/tailwindcss-utilities@0.2.3':
+    resolution: {integrity: sha512-z8e3hdNLpgV7Pv46VL0zboLAhxC63xUt/8iYqiYO3TJxBlcWQZkAuyN7LZVH1x/FfqVCxo0YgMLYZ3HlRQ0IHw==}
+
   '@halvaradop/ts-utility-types@0.11.1':
     resolution: {integrity: sha512-7t86TIg5cKxPweNMR6olMtZkeTJ6uoXN+hjTu+A9t1nvWh5bS0LtWO3yjOZ1hobjcgH+uy6gM7ApoIkpx/6BeA==}
+
+  '@halvaradop/ui-button@0.3.1':
+    resolution: {integrity: sha512-Xm3VaomefyZyiBDfdiYTliyfKW4ivIue0PaYtez5/27ZX8/vFGjIUvnTs9JR2IRmBwKs4b5BDiPAub0l8Qr0pg==}
 
   '@halvaradop/ui-core@0.2.0':
     resolution: {integrity: sha512-v677p9fPHsgy46QTvbNZJKrlpNhRJIikV1pa/m7CnoOYULbKRSk6ODOYP5xIrU61N4PXSdlR1VQeZRPWzuJJLg==}
@@ -444,6 +462,10 @@ packages:
 
   clsx@2.0.0:
     resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
+    engines: {node: '>=6'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
   color-convert@2.0.1:
@@ -1523,6 +1545,9 @@ packages:
   tslib@2.8.0:
     resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
 
+  tw-merge@0.0.1-alpha.3:
+    resolution: {integrity: sha512-HvuKdaUWjJKFlUa/DKDGnicPXill0bUZnzoK/BoTWn0OkKLfIrMMn97VXW6fFdArA40FeBkitWjr7SJRuaDvCg==}
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -1635,7 +1660,15 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
+  '@halvaradop/tailwindcss-utilities@0.2.3': {}
+
   '@halvaradop/ts-utility-types@0.11.1': {}
+
+  '@halvaradop/ui-button@0.3.1':
+    dependencies:
+      '@halvaradop/ts-utility-types': 0.11.1
+      '@halvaradop/ui-core': 0.2.0
+      class-variance-authority: 0.7.0
 
   '@halvaradop/ui-core@0.2.0': {}
 
@@ -2024,6 +2057,8 @@ snapshots:
   client-only@0.0.1: {}
 
   clsx@2.0.0: {}
+
+  clsx@2.1.1: {}
 
   color-convert@2.0.1:
     dependencies:
@@ -3306,6 +3341,8 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.8.0: {}
+
+  tw-merge@0.0.1-alpha.3: {}
 
   type-check@0.4.0:
     dependencies:
