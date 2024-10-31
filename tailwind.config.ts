@@ -10,6 +10,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            screens: {
+                base: "900px",
+            },
             fontSize: {
                 poppins: "var(--font-poppins)",
             },

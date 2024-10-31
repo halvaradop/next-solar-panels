@@ -2,11 +2,11 @@ import Link from "next/link"
 
 export const Footer = () => {
     return (
-        <footer className="py-20">
-            <section className="w-11/12 mx-auto flex flex-col gap-y-10 font-medium text-center">
-                <h3 className="text-4xl">© 2024 - ACHE ENGINEERING</h3>
-                <div className="space-y-8">
-                    <ul className="flex justify-between items-center">
+        <footer className="py-20 base:py-24">
+            <section className="w-11/12 mx-auto flex flex-col gap-y-10 font-medium text-center base:text-start lg:w-10/12 xl:max-w-screen-xl">
+                <h3 className="fluency-4xl">© 2024 - ACHE ENGINEERING</h3>
+                <div className="space-y-8 base:mt-10 base:flex base:items-start base:justify-between base:space-y-0">
+                    <ul className="flex justify-between items-center base:flex-row base:gap-x-8">
                         <li>
                             <Link href="/">HOME</Link>
                         </li>
@@ -28,7 +28,7 @@ export const Footer = () => {
                         <li className="font-normal">D-35638 Leun (Hessen)</li>
                     </ul>
                 </div>
-                <p className="text-[10px]">© 2024 ACHE ENGINEERING GmbH. ALL RIGHT RESERVED</p>
+                <p className="text-[10px] base:-order-1">© 2024 ACHE ENGINEERING GmbH. ALL RIGHT RESERVED</p>
             </section>
         </footer>
     )

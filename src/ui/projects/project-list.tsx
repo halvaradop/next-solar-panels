@@ -7,6 +7,7 @@ export const ProjectList = () => {
             <section className="mt-4 mb-8 w-full flex items-center justify-center gap-x-5">
                 <div className="w-1/2 aspect-square bg-neutral-300"></div>
                 <div className="w-1/2 aspect-square bg-neutral-300"></div>
+                <div className="w-1/2 hidden aspect-square bg-neutral-300 base:block"></div>
             </section>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis blanditiis sit adipisci itaque ipsam porro

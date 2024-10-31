@@ -18,6 +18,7 @@ export const ProductList = () => {
                 title="internationl photovolaic large-scale and ground-mounted systems"
                 subtitle="solar panels"
                 description="we build photovoltaic systems for you worldwide in various sizes and types. From industrial roofs to ground-mounted systems, together we will find the right solution for you"
+                isRight
             />
         </section>
     )
