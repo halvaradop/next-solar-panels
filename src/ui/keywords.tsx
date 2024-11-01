@@ -7,7 +7,7 @@ export const Keywords = () => {
                 <li>CORROSION</li>
                 <li>SOLAR PANELS</li>
             </ul>
-            <ul className="w-full flex justify-center items-center gap-x-6 li:min-w-fit">
+            <ul className="w-full flex justify-center items-center gap-x-[10vw] li:min-w-fit">
                 <li>KSS</li>
                 <li>RENEWABLE</li>
                 <li>PROTECTION</li>
