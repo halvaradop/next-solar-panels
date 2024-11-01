@@ -12,11 +12,16 @@
     "formart:check": "prettier --check ."
   },
   "dependencies": {
+    "@halvaradop/tailwindcss-utilities": "^0.2.3",
+    "@halvaradop/ui-button": "^0.3.1",
     "@halvaradop/ui-input": "^0.2.1",
     "@halvaradop/ui-label": "^0.1.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.11",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tw-merge": "0.0.1-alpha.3"
   },
   "devDependencies": {
     "@types/node": "^20",
