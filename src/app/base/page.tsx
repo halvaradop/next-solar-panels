@@ -1,14 +1,11 @@
-"use client"
-
 import { PrismaClient } from "@prisma/client"
-import jsPDF from "jspdf"
 
 const prisma = new PrismaClient()
 
 const Page = async () => {
     const Companys = await prisma.company.findMany()
-    console.log("Companys")
-    console.log(Companys)
+    console.log("Companys", Companys)
+
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
             <div className="flex justify-between items-center mb-6">
@@ -35,7 +32,7 @@ const Page = async () => {
                                 <td className="py-4 px-6">
                                     {" "}
                                     <button
-                                        onClick={handleDownload}
+                                        onClick={() => {}}
                                         className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition"
                                     >
                                         Descargar Archivo
