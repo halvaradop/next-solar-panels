@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  ID                 Int     @id @default(autoincrement())
+  RESGISTRION_NUMBER String  @db.VarChar(60)
+  ADDRESS            String  @db.VarChar(12)
+  NAME               String  @db.VarChar(12)
+  Users              Users[]
+}
+
+model DetailForm {
+  ID          Int       @id @default(autoincrement())
+  MATERIAL    String    @db.VarChar(60)
+  COROSSION   String    @db.VarChar(60)
+  HUMIDITY    String    @db.VarChar(60)
+  TEMPERATURE String    @db.VarChar(60)
+  ADDRESS     String?   @db.VarChar(60)
+  DATEF       DateTime? @db.Date
+  ID_USUARIO  Int?
+  Users       Users?    @relation(fields: [ID_USUARIO], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "DetailForm_ibfk_1")
+  Plant       Plant[]
+
+  @@index([ID_USUARIO], map: "ID_USUARIO")
+}
+
+model Plant {
+  ID          Int         @id @default(autoincrement())
+  cordinates  String      @db.VarChar(60)
+  description String      @db.VarChar(60)
+  ID_FORM     Int?
+  DetailForm  DetailForm? @relation(fields: [ID_FORM], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Plant_ibfk_1")
+  Samples     Samples[]
+
+  @@index([ID_FORM], map: "ID_FORM")
+}
+
+model Rol {
+  ID_ROL      Int     @id @default(autoincrement())
+  DESCRIPRION String  @db.VarChar(60)
+  NAME        String  @db.VarChar(12)
+  Users       Users[]
+}
+
+model Samples {
+  ID          Int    @id @default(autoincrement())
+  formulate   String @db.VarChar(60)
+  description String @db.VarChar(60)
+  ID_PLANT    Int?
+  Plant       Plant? @relation(fields: [ID_PLANT], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Samples_ibfk_1")
+
+  @@index([ID_PLANT], map: "ID_PLANT")
+}
+
+model Users {
+  ID                 Int          @id @default(autoincrement())
+  RESGISTRION_NUMBER String       @db.VarChar(60)
+  Email              String       @db.VarChar(12)
+  PASSWORD           String       @db.VarChar(500)
+  NAME               String       @db.VarChar(12)
+  ID_ROL             Int?
+  ID_COMPANY         Int?
+  DetailForm         DetailForm[]
+  Rol                Rol?         @relation(fields: [ID_ROL], references: [ID_ROL], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_1")
+  Company            Company?     @relation(fields: [ID_COMPANY], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_2")
+
+  @@index([ID_COMPANY], map: "ID_COMPANY")
+  @@index([ID_ROL], map: "ID_ROL")
+}
