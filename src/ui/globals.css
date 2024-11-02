@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @media (max-width: 900px) {
+        body:has(header[data-open="true"]) {
+            @apply scroll:bg-black thumb:bg-white;
+        }
+    }
+
+    header nav ul:hover > li:not(:hover) {
+        filter: blur(2px);
+    }
+}
