@@ -21,11 +21,11 @@ const Page = async () => {
                     </thead>
                     <tbody>
                         {companies.map((Company) => (
-                            <tr key={Company.ID} className="border-b hover:bg-gray-100 transition">
-                                <td className="py-4 px-6">{Company.ID}</td>
-                                <td className="py-4 px-6">{Company.RESGISTRION_NUMBER}</td>
-                                <td className="py-4 px-6">{Company.ADDRESS}</td>
-                                <td className="py-4 px-6">{Company.NAME}</td>
+                            <tr key={Company.id} className="border-b hover:bg-gray-100 transition">
+                                <td className="py-4 px-6">{Company.id}</td>
+                                <td className="py-4 px-6">{Company.registrationNumber}</td>
+                                <td className="py-4 px-6">{Company.address}</td>
+                                <td className="py-4 px-6">{Company.name}</td>
                                 <td className="py-4 px-6">
                                     <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
                                         Descargar Archivo
