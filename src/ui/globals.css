@@ -6,10 +6,15 @@
     @media (max-width: 900px) {
         body:has(header[data-open="true"]) {
             @apply scroll:bg-black thumb:bg-white;
+
+            header nav > aside ul a {
+                padding: 0;
+                font-size: inherit;
+            }
         }
     }
 
-    header nav ul:hover > li:not(:hover) {
+    header nav ul:hover:has(li:hover) > li:not(:hover) {
         filter: blur(2px);
     }
 }

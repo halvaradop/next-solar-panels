@@ -13,6 +13,9 @@ const config: Config = {
             screens: {
                 base: "900px",
             },
+            minHeight: {
+                main: "calc(100vh - 5rem)",
+            },
             fontSize: {
                 poppins: "var(--font-poppins)",
             },
