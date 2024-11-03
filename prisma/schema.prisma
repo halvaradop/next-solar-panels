@@ -8,68 +8,68 @@ datasource db {
 }
 
 model Company {
-  ID                 Int     @id @default(autoincrement())
-  RESGISTRION_NUMBER String  @db.VarChar(60)
-  ADDRESS            String  @db.VarChar(12)
-  NAME               String  @db.VarChar(12)
-  Users              Users[]
+  id                 Int     @id @default(autoincrement())
+  registrationNumber String  @db.VarChar(60)
+  address            String  @db.VarChar(12)
+  name               String  @db.VarChar(12)
+  users              Users[]
 }
 
 model DetailForm {
-  ID          Int       @id @default(autoincrement())
-  MATERIAL    String    @db.VarChar(60)
-  COROSSION   String    @db.VarChar(60)
-  HUMIDITY    String    @db.VarChar(60)
-  TEMPERATURE String    @db.VarChar(60)
-  ADDRESS     String?   @db.VarChar(60)
-  DATEF       DateTime? @db.Date
-  ID_USUARIO  Int?
-  Users       Users?    @relation(fields: [ID_USUARIO], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "DetailForm_ibfk_1")
-  Plant       Plant[]
+  id          Int       @id @default(autoincrement())
+  material    String    @db.VarChar(60)
+  corrosion   String    @db.VarChar(60)
+  humidity    String    @db.VarChar(60)
+  temperature String    @db.VarChar(60)
+  address     String?   @db.VarChar(60)
+  date        DateTime? @db.Date
+  userId      Int?
+  users       Users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "DetailForm_ibfk_1")
+  plant       Plant[]
 
-  @@index([ID_USUARIO], map: "ID_USUARIO")
+  @@index([userId])
 }
 
 model Plant {
-  ID          Int         @id @default(autoincrement())
-  cordinates  String      @db.VarChar(60)
+  id          Int         @id @default(autoincrement())
+  coordinates String      @db.VarChar(60)
   description String      @db.VarChar(60)
-  ID_FORM     Int?
-  DetailForm  DetailForm? @relation(fields: [ID_FORM], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Plant_ibfk_1")
-  Samples     Samples[]
+  formId      Int?
+  detailForm  DetailForm? @relation(fields: [formId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Plant_ibfk_1")
+  samples     Samples[]
 
-  @@index([ID_FORM], map: "ID_FORM")
+  @@index([formId])
 }
 
-model Rol {
-  ID_ROL      Int     @id @default(autoincrement())
-  DESCRIPRION String  @db.VarChar(60)
-  NAME        String  @db.VarChar(12)
-  Users       Users[]
+model Role {
+  idRole      Int     @id @default(autoincrement())
+  description String  @db.VarChar(60)
+  name        String  @db.VarChar(12)
+  users       Users[]
 }
 
 model Samples {
-  ID          Int    @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   formulate   String @db.VarChar(60)
   description String @db.VarChar(60)
-  ID_PLANT    Int?
-  Plant       Plant? @relation(fields: [ID_PLANT], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Samples_ibfk_1")
+  plantId     Int?
+  plant       Plant? @relation(fields: [plantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Samples_ibfk_1")
 
-  @@index([ID_PLANT], map: "ID_PLANT")
+  @@index([plantId])
 }
 
 model Users {
-  ID                 Int          @id @default(autoincrement())
-  RESGISTRION_NUMBER String       @db.VarChar(60)
-  Email              String       @db.VarChar(12)
-  PASSWORD           String       @db.VarChar(500)
-  NAME               String       @db.VarChar(12)
-  ID_ROL             Int?
-  ID_COMPANY         Int?
-  DetailForm         DetailForm[]
-  Rol                Rol?         @relation(fields: [ID_ROL], references: [ID_ROL], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_1")
-  Company            Company?     @relation(fields: [ID_COMPANY], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_2")
+  id                 Int          @id @default(autoincrement())
+  registrationNumber String       @db.VarChar(60)
+  email              String       @db.VarChar(12)
+  password           String       @db.VarChar(500)
+  name               String       @db.VarChar(12)
+  idRole             Int?
+  companyId          Int?
+  detailForm         DetailForm[]
+  role               Role?        @relation(fields: [idRole], references: [idRole], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_1")
+  company            Company?     @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_2")
 
-  @@index([ID_COMPANY], map: "ID_COMPANY")
-  @@index([ID_ROL], map: "ID_ROL")
+  @@index([companyId])
+  @@index([idRole])
 }
