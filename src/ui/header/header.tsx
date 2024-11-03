@@ -5,21 +5,39 @@ import { AnimatePresence } from "framer-motion"
 import { HeaderMenu } from "./header-menu"
 import { usePathname } from "next/navigation"
 import { merge } from "@/lib/merge"
+import { MenuState } from "@/lib/@types/types"
 
 export const Header = () => {
     const pathname = usePathname()
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const isHome = pathname === "/"
+    const [menuState, setMenuState] = useState<MenuState>({
+        isMenuOpen: false,
+        isMatchMedia: false,
+    })
+    const isHomePage = pathname === "/"
+    const isMenuVisible = menuState.isMenuOpen || menuState.isMatchMedia
 
     const handleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
+        setMenuState({
+            ...menuState,
+            isMenuOpen: !menuState.isMenuOpen,
+        })
     }
+
+    useEffect(() => {
+        setMenuState({
+            ...menuState,
+            isMenuOpen: false,
+        })
+    }, [pathname])
 
     useEffect(() => {
         const matchMedia = window.matchMedia("(min-width: 900px)")
 
         const handleMatchMedia = () => {
-            setIsMenuOpen(matchMedia.matches)
+            setMenuState({
+                isMenuOpen: false,
+                isMatchMedia: matchMedia.matches,
+            })
         }
 
         handleMatchMedia()
@@ -27,24 +45,20 @@ export const Header = () => {
         return () => matchMedia.removeEventListener("change", handleMatchMedia)
     }, [])
 
-    useEffect(() => {
-        setIsMenuOpen(false)
-    }, [pathname])
-
     return (
-        <header data-open={isMenuOpen}>
+        <header data-open={isMenuVisible} data-home={isHomePage}>
             <nav
                 className={merge(
                     "w-11/12 h-20 mx-auto flex items-center justify-between text-white lg:w-10/12 xl:max-w-screen-xl",
-                    { "text-black": !isHome && !isMenuOpen }
+                    { "text-black": !isHomePage && !menuState.isMenuOpen }
                 )}
             >
-                <Link className={merge("font-medium", { "text-black": !isHome })} href="/">
+                <Link className={merge("font-medium", { "text-black": !isHomePage })} href="/">
                     Ache Engineering
                 </Link>
                 <div
                     className={merge("space-y-1.5 z-20 hover:cursor-pointer base:hidden span:bg-white", {
-                        "span:bg-black": !isHome && !isMenuOpen,
+                        "span:bg-black": !isHomePage && !menuState.isMenuOpen,
                     })}
                     onClick={handleMenu}
                 >
@@ -52,7 +66,7 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded"></span>
                     <span className="w-8 h-0.5 block rounded"></span>
                 </div>
-                <AnimatePresence>{isMenuOpen && <HeaderMenu />}</AnimatePresence>
+                <AnimatePresence>{isMenuVisible && <HeaderMenu />}</AnimatePresence>
             </nav>
         </header>
     )
