@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
+import { Button } from "@halvaradop/ui-button"
 
 const Login = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="w-80 h-100 mx-auto p-5 text-center rounded-lg shadow-lg">
+        <div className="min-h-main flex items-center justify-center">
+            <div className="w-80 h-100 mx-auto p-5 text-center rounded-lg">
                 <h1 className="text-xl text-left font-bold mb-5">Log In</h1>
                 <form className="flex flex-col gap-y-4">
                     <Label className="w-full text-neutral-500 text-left" size="sm">
@@ -27,9 +28,7 @@ const Login = () => {
                         </Link>
                         <span>.</span>
                     </p>
-                    <button type="submit" className="rounded-lg bg-gray-500 text-white py-2  text-base hover:bg-gray-800">
-                        Log In
-                    </button>
+                    <Button fullWidth>Log In</Button>
                 </form>
                 <Link className="text-xs text-gray-600 underline block mt-3" href="/">
                     Forget your password?

@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps) {
     return (
-        <html lang="en">
+        <html className="scroll-smooth" lang="en">
             <body
                 className={`${poppins.className} relative antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
