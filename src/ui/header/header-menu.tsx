@@ -25,7 +25,7 @@ export const HeaderMenu = () => {
                         <Link href="/#solar-panels">Solar panels</Link>
                     </motion.li>
                     <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                        <Link href="/">About us</Link>
+                        <Link href="/#about-us">About us</Link>
                     </motion.li>
                     <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
                         <Button asChild>
