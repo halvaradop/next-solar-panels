@@ -66,7 +66,7 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded"></span>
                     <span className="w-8 h-0.5 block rounded"></span>
                 </div>
-                <AnimatePresence>{isMenuVisible && <HeaderMenu />}</AnimatePresence>
+                <AnimatePresence>{isMenuVisible && <HeaderMenu isMatchMedia={menuState.isMatchMedia} />}</AnimatePresence>
             </nav>
         </header>
     )

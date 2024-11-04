@@ -17,3 +17,7 @@ export interface ProjectProps {
     city: string
     year: string
 }
+
+export interface HeaderMenuProps {
+    isMatchMedia: boolean
+}
