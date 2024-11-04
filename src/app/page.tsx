@@ -1,10 +1,10 @@
+import Link from "next/link"
 import Image from "next/image"
 import { Keywords } from "@/ui/keywords"
 import { Button } from "@halvaradop/ui-button"
 import { ProductList } from "@/ui/products/product-list"
 import clouds from "@/public/clouds.jpg"
-import arrowIcon from "@/public/arrow-down.svg"
-import Link from "next/link"
+import arrowIcon from "@/public/arrow.svg"
 
 const Index = () => {
     return (

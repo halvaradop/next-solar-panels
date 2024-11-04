@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image"
+import { Entry } from "./types"
 
 export interface ProductProps {
     className?: string
@@ -16,4 +17,14 @@ export interface ProjectProps {
     title: string
     city: string
     year: string
+}
+
+export interface HeaderMenuProps {
+    isMatchMedia: boolean
+}
+
+export interface FilterByProps {
+    className?: string
+    title: string
+    options: Entry[]
 }
