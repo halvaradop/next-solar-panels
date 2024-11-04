@@ -6,7 +6,7 @@ import { Button } from "@halvaradop/ui-button"
 export const HeaderMenu = () => {
     return (
         <motion.aside
-            className="w-1/2 max-w-md absolute inset-y-0 right-0 z-10 bg-black base:w-auto base:max-w-none base:relative base:bg-transparent [--nav-menu:100%] base:[--nav-menu:0%]"
+            className="w-1/2 min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black base:w-auto base:max-w-none base:relative base:bg-transparent [--nav-menu:100%] base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
             animate="visible"

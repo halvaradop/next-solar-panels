@@ -19,6 +19,11 @@ const config: Config = {
             fontSize: {
                 poppins: "var(--font-poppins)",
             },
+            colors: {
+                gray: {
+                    1000: "#D5D5D5",
+                },
+            },
         },
     },
     plugins: [utilities],
