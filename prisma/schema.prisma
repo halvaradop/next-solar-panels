@@ -86,4 +86,70 @@ model Sample {
   updatedAt   DateTime @updatedAt
   idZone      Int
   Zone        Zone     @relation(fields: [idZone], references: [id])
+=======
+model Company {
+  id                 Int     @id @default(autoincrement())
+  registrationNumber String  @db.VarChar(60)
+  address            String  @db.VarChar(12)
+  name               String  @db.VarChar(12)
+  users              Users[]
+}
+
+model DetailForm {
+  id          Int       @id @default(autoincrement())
+  material    String    @db.VarChar(60)
+  corrosion   String    @db.VarChar(60)
+  humidity    String    @db.VarChar(60)
+  temperature String    @db.VarChar(60)
+  address     String?   @db.VarChar(60)
+  date        DateTime? @db.Date
+  userId      Int?
+  users       Users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "DetailForm_ibfk_1")
+  plant       Plant[]
+
+  @@index([userId])
+}
+
+model Plant {
+  id          Int         @id @default(autoincrement())
+  coordinates String      @db.VarChar(60)
+  description String      @db.VarChar(60)
+  formId      Int?
+  detailForm  DetailForm? @relation(fields: [formId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Plant_ibfk_1")
+  samples     Samples[]
+
+  @@index([formId])
+}
+
+model Role {
+  idRole      Int     @id @default(autoincrement())
+  description String  @db.VarChar(60)
+  name        String  @db.VarChar(12)
+  users       Users[]
+}
+
+model Samples {
+  id          Int    @id @default(autoincrement())
+  formulate   String @db.VarChar(60)
+  description String @db.VarChar(60)
+  plantId     Int?
+  plant       Plant? @relation(fields: [plantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Samples_ibfk_1")
+
+  @@index([plantId])
+}
+
+model Users {
+  id                 Int          @id @default(autoincrement())
+  registrationNumber String       @db.VarChar(60)
+  email              String       @db.VarChar(12)
+  password           String       @db.VarChar(500)
+  name               String       @db.VarChar(12)
+  idRole             Int?
+  companyId          Int?
+  detailForm         DetailForm[]
+  role               Role?        @relation(fields: [idRole], references: [idRole], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_1")
+  company            Company?     @relation(fields: [companyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_ibfk_2")
+
+  @@index([companyId])
+  @@index([idRole])
 }
