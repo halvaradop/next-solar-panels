@@ -11,5 +11,6 @@ import { AddSampleActionState } from "@/lib/@types/types"
  */
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
     await scheduler.wait(2000)
+    console.log("formData", formData, ", previous", previous)
     return { message: "", isSuccess: true } as AddSampleActionState
 }

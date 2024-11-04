@@ -28,6 +28,7 @@ export const Header = () => {
             ...menuState,
             isMenuOpen: false,
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname])
 
     useEffect(() => {
@@ -46,7 +47,11 @@ export const Header = () => {
     }, [])
 
     return (
-        <header data-open={isMenuVisible} data-home={isHomePage}>
+        <header
+            className="data-[home='false']:border-b data-[home='false']:border-gray-1000"
+            data-open={isMenuVisible}
+            data-home={isHomePage}
+        >
             <nav
                 className={merge(
                     "w-11/12 h-20 mx-auto flex items-center justify-between text-white lg:w-10/12 xl:max-w-screen-xl",

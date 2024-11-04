@@ -23,3 +23,8 @@ export interface AddSampleActionState {
     message: string
     isSuccess: boolean
 }
+
+export interface Entry {
+    key: string
+    value: string
+}

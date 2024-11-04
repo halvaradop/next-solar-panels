@@ -14,7 +14,7 @@ const config: Config = {
                 base: "900px",
             },
             minHeight: {
-                main: "calc(100vh - 5rem)",
+                main: "calc(100vh - calc(5rem + 1px))",
             },
             fontSize: {
                 poppins: "var(--font-poppins)",
