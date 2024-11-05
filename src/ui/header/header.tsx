@@ -6,6 +6,7 @@ import { HeaderMenu } from "./header-menu"
 import { usePathname } from "next/navigation"
 import { merge } from "@/lib/merge"
 import { MenuState } from "@/lib/@types/types"
+import { SessionProvider } from "next-auth/react"
 
 export const Header = () => {
     const pathname = usePathname()
@@ -47,32 +48,34 @@ export const Header = () => {
     }, [])
 
     return (
-        <header
-            className="data-[home='false']:border-b data-[home='false']:border-gray-1000"
-            data-open={isMenuVisible}
-            data-home={isHomePage}
-        >
-            <nav
-                className={merge(
-                    "w-11/12 h-20 mx-auto flex items-center justify-between text-white lg:w-10/12 xl:max-w-screen-xl",
-                    { "text-black": !isHomePage && !menuState.isMenuOpen }
-                )}
+        <SessionProvider>
+            <header
+                className="data-[home='false']:border-b data-[home='false']:border-gray-1000"
+                data-open={isMenuVisible}
+                data-home={isHomePage}
             >
-                <Link className={merge("font-medium", { "text-black": !isHomePage })} href="/">
-                    Ache Engineering
-                </Link>
-                <div
-                    className={merge("space-y-1.5 z-20 hover:cursor-pointer base:hidden span:bg-white", {
-                        "span:bg-black": !isHomePage && !menuState.isMenuOpen,
-                    })}
-                    onClick={handleMenu}
+                <nav
+                    className={merge(
+                        "w-11/12 h-20 mx-auto flex items-center justify-between text-white lg:w-10/12 xl:max-w-screen-xl",
+                        { "text-black": !isHomePage && !menuState.isMenuOpen }
+                    )}
                 >
-                    <span className="w-8 h-0.5 block rounded"></span>
-                    <span className="w-8 h-0.5 block rounded"></span>
-                    <span className="w-8 h-0.5 block rounded"></span>
-                </div>
-                <AnimatePresence>{isMenuVisible && <HeaderMenu isMatchMedia={menuState.isMatchMedia} />}</AnimatePresence>
-            </nav>
-        </header>
+                    <Link className={merge("font-medium", { "text-black": !isHomePage })} href="/">
+                        Ache Engineering
+                    </Link>
+                    <div
+                        className={merge("space-y-1.5 z-20 hover:cursor-pointer base:hidden span:bg-white", {
+                            "span:bg-black": !isHomePage && !menuState.isMenuOpen,
+                        })}
+                        onClick={handleMenu}
+                    >
+                        <span className="w-8 h-0.5 block rounded"></span>
+                        <span className="w-8 h-0.5 block rounded"></span>
+                        <span className="w-8 h-0.5 block rounded"></span>
+                    </div>
+                    <AnimatePresence>{isMenuVisible && <HeaderMenu isMatchMedia={menuState.isMatchMedia} />}</AnimatePresence>
+                </nav>
+            </header>
+        </SessionProvider>
     )
 }

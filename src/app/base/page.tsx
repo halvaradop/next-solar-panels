@@ -1,7 +1,5 @@
-import { prisma } from "@/lib/prisma"
-
 const Page = async () => {
-    const companies = await prisma.company.findMany()
+    //const companies = await prisma.company.findMany()
 
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
@@ -20,7 +18,7 @@ const Page = async () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {companies.map((Company) => (
+                        {/* {companies.map((Company) => (
                             <tr key={Company.id} className="border-b hover:bg-gray-100 transition">
                                 <td className="py-4 px-6">{Company.id}</td>
                                 <td className="py-4 px-6">{Company.registrationNumber}</td>
@@ -32,7 +30,7 @@ const Page = async () => {
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                        ))} */}
                     </tbody>
                 </table>
             </div>

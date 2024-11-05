@@ -10,12 +10,13 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prisma:migrate": "dotenv -e .env.local -- npx prisma migrate dev --name init",
-    "prisma:generate": "prisma generate",
-    "prisma:studio": "prisma studio"
+    "prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
+    "prisma:generate": "dotenv -e .env.lcao -- prisma generate",
+    "prisma:studio": "dotenv -e .env.local -- prisma studio"
   },
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
+    "@halvaradop/ts-utility-types": "^0.11.1",
     "@halvaradop/ui-button": "^0.3.1",
     "@halvaradop/ui-form": "^0.1.1",
     "@halvaradop/ui-input": "^0.2.1",

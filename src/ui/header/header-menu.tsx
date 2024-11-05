@@ -1,18 +1,15 @@
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
+import { useSession } from "next-auth/react"
 import { Button } from "@halvaradop/ui-button"
-import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { HeaderMenuProps } from "@/lib/@types/props"
+import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Loggin } from "./loggin"
 
 export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
-    /**
-     * Get the current pathname and simulate if the user is logged in
-     * TODO: Remove this when will be implemented next-auth
-     */
-    const patname = usePathname()
-    const isLogged = ["/dashboard", "/dashboard/add"].includes(patname)
+    const session = useSession()
+    const protectedRoutes = ["/dashboard", "/dashboard/add"]
+    const isLoggin = protectedRoutes.includes(window.location.pathname) && session
 
     return (
         <motion.aside
@@ -24,11 +21,11 @@ export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
         >
             <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-min base:p-0">
                 <p className="pb-1 border-b border-gray base:hidden">Navigation</p>
-                {isLogged && isMatchMedia ? (
+                {isLoggin && isMatchMedia ? (
                     <Loggin />
                 ) : (
                     <ul className="fluency-3xl font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:text-lg base:uppercase">
-                        {isLogged ? (
+                        {isLoggin ? (
                             <>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
                                     <Link href="/dashboard">Dashboard</Link>
@@ -55,7 +52,7 @@ export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
                         )}
                         <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
                             <Button asChild>
-                                <Link href={isLogged ? "/" : "/login"}>{isLogged ? "Log out" : "Login"}</Link>
+                                <Link href={isLoggin ? "/" : "/login"}>{isLoggin ? "Log out" : "Login"}</Link>
                             </Button>
                         </motion.li>
                     </ul>
