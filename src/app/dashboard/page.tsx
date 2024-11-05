@@ -1,11 +1,11 @@
 import Image from "next/image"
+import { Suspense } from "react"
 import { Table } from "@/ui/dashboard/table"
 import { prisma } from "@/prisma"
 import { Filter } from "@/ui/dashboard/filter"
 import samplesIcon from "@/public/samples.svg"
 import zonesIcon from "@/public/zone.svg"
 import arrowIcon from "@/public/arrow.svg"
-import { Suspense } from "react"
 
 const Dashboard = async () => {
     const zones = await prisma.zone.findMany()

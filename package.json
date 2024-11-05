@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
     "prisma:generate": "dotenv -e .env.local -- prisma generate",
-    "prisma:studio": "dotenv -e .env.local -- prisma studio"
+    "prisma:studio": "dotenv -e .env.local -- prisma studio",
+    "prisma:deploy": "dotenv -e .env.local -- prisma migrate deploy"
   },
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
