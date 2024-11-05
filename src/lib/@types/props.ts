@@ -1,4 +1,6 @@
 import { StaticImageData } from "next/image"
+import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
+import { Sample, Zone } from "@prisma/client"
 import { Entry } from "./types"
 
 export interface ProductProps {
@@ -27,4 +29,12 @@ export interface FilterByProps {
     className?: string
     title: string
     options: Entry[]
+}
+
+export interface TableProps {
+    samples: AddPropertyToObject<Sample, "Zone", Zone>[]
+}
+
+export interface FilterProps {
+    zones: Zone[]
 }

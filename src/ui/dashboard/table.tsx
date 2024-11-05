@@ -1,25 +1,6 @@
-const mocks = [
-    {
-        id: 1,
-        material: "Steel",
-        corrosion: "20",
-        temperature: "25",
-        humidity: "60",
-        zone: "1",
-        date: "03-11-2024",
-    },
-    {
-        id: 2,
-        material: "Steel",
-        corrosion: "50",
-        temperature: "30",
-        humidity: "55",
-        zone: "1",
-        date: "03-11-2024",
-    },
-]
+import { TableProps } from "@/lib/@types/props"
 
-export const Table = () => {
+export const Table = async ({ samples }: TableProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
@@ -34,7 +15,7 @@ export const Table = () => {
                 </tr>
             </thead>
             <tbody>
-                {mocks.map(({ id, material, corrosion, temperature, humidity, zone, date }) => (
+                {samples.map(({ id, material, corrosion, temperature, humidity, date, Zone: { name } }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={id}>
                         <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[10%]">{id}</td>
                         <td className="w-[40%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[30%]">
@@ -50,10 +31,10 @@ export const Table = () => {
                             {humidity}%
                         </td>
                         <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[15%]">
-                            {zone}
+                            {name}
                         </td>
                         <td className="w-[30%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[25%]">
-                            {date}
+                            {date.toDateString()}
                         </td>
                     </tr>
                 ))}

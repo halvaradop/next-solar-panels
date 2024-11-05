@@ -1,6 +1,9 @@
 "use server"
+import { redirect } from "next/navigation"
+import { AuthError } from "next-auth"
+import { signIn } from "@/auth"
 import { scheduler } from "timers/promises"
-import { AddSampleActionState } from "@/lib/@types/types"
+import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -13,4 +16,16 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
     await scheduler.wait(2000)
     console.log("formData", formData, ", previous", previous)
     return { message: "", isSuccess: true } as AddSampleActionState
+}
+
+export const loginAction = async (previous: LoginActionState, formData: FormData): Promise<LoginActionState> => {
+    try {
+        await signIn("credentials", formData)
+    } catch (error) {
+        if (error instanceof AuthError) {
+            return { message: "Unauthorized", isSuccess: false } as LoginActionState
+        }
+    }
+    redirect("/dashboard")
+    return { message: "Authorized", isSuccess: true } as LoginActionState
 }

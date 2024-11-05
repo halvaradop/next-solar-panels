@@ -17,7 +17,7 @@ const AddSample = () => {
     } as AddSampleActionState)
 
     return (
-        <Form action={formAction}>
+        <Form className="min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 Material
                 <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
