@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "dotenv -e .env.local -- next dev",
     "build": "dotenv -e .env.local -- next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
-    "prisma:generate": "dotenv -e .env.lcao -- prisma generate",
+    "prisma:generate": "dotenv -e .env.local -- prisma generate",
     "prisma:studio": "dotenv -e .env.local -- prisma studio"
   },
   "dependencies": {
