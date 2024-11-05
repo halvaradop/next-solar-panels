@@ -1,3 +1,5 @@
+import { Sample } from "@prisma/client"
+
 export interface LayoutProps {
     children: React.ReactNode
 }
@@ -10,6 +12,7 @@ export interface MenuState {
 export interface AddSampleActionState {
     message: string
     isSuccess: boolean
+    schema: Pick<Sample, "material" | "temperature" | "humidity" | "corrosion">
 }
 
 export interface Entry {

@@ -1,20 +1,30 @@
 import Image from "next/image"
 import { Suspense } from "react"
-import { Table } from "@/ui/dashboard/table"
 import { prisma } from "@/prisma"
+import { auth } from "@/lib/auth"
+import { Table } from "@/ui/dashboard/table"
 import { Filter } from "@/ui/dashboard/filter"
 import samplesIcon from "@/public/samples.svg"
 import zonesIcon from "@/public/zone.svg"
 import arrowIcon from "@/public/arrow.svg"
 
 const Dashboard = async () => {
+    const session = await auth()
     const zones = await prisma.zone.findMany()
     const samples = await prisma.sample.findMany({
+        where: {
+            Zone: {
+                Plant: {
+                    Employee: {
+                        id: Number(session?.user?.id) || Number.MAX_SAFE_INTEGER,
+                    },
+                },
+            },
+        },
         include: {
             Zone: true,
         },
     })
-    //const samplesFiltered = samples.filter(({ Zone: { id } }) => id.toString() === searchParams.zone || !searchParams.zone)
     const samplesFiltered = samples.filter(({ Zone: { id } }) => true)
 
     return (

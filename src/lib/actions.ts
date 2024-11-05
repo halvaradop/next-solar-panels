@@ -2,8 +2,9 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { signIn } from "@/auth"
-import { scheduler } from "timers/promises"
 import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
+import { SampleSchema } from "./schemas"
+import { prisma } from "@/lib/prisma"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -13,9 +14,29 @@ import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
  * @returns state of the sample and the result of the action
  */
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
-    await scheduler.wait(2000)
-    console.log("formData", formData, ", previous", previous)
-    return { message: "", isSuccess: true } as AddSampleActionState
+    const entries = Object.fromEntries(formData)
+    const validate = SampleSchema.safeParse(entries)
+    if (validate.success) {
+        await prisma.sample.create({
+            data: {
+                corrosion: validate.data.corrosion,
+                humidity: parseInt(validate.data.humidity),
+                material: validate.data.material,
+                temperature: parseInt(validate.data.temperature),
+                Zone: {
+                    connect: {
+                        id: parseInt(validate.data.zone),
+                    },
+                },
+            },
+        })
+        redirect("/dashboard")
+    }
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: Object.fromEntries(Object.entries(validate.error.format()).map(([key, value]) => [key, ""])),
+    } as never as AddSampleActionState
 }
 
 export const loginAction = async (previous: LoginActionState, formData: FormData): Promise<LoginActionState> => {
