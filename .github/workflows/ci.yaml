@@ -32,7 +32,7 @@ jobs:
         run: |
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.local
       - run: pnpm prisma:generate
-      - run: pnpm prisma:deploy
+      - run: pnpm db:pull
       - run: pnpm build
 
   deploy-to-development:
