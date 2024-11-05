@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 
 export const middleware = async (request: NextRequest) => {
     const session = await auth()
-    if (!session) NextResponse.redirect(new URL("/login", request.nextUrl))
+    if (!session) return NextResponse.redirect(new URL("/login", request.nextUrl))
     return NextResponse.next()
 }
 
