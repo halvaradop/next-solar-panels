@@ -1,16 +1,23 @@
 import Link from "next/link"
 
+const links = [
+    { href: "/dashboard/samples", label: "List" },
+    { href: "/dashboard/samples/add", label: "Add" },
+]
+
 export const Menu = () => {
     return (
-        <aside className="hidden base:self-start base:w-[20vw] base:h-min base:my-4 base:max-w-52 base:block base:py-6 base:px-4 base:border base:border-gray-1000 base:rounded-lg base:bg-white">
-            <ul className="text-neutral-600 space-y-1">
-                <li className="text-neutral-800 font-medium">Samples</li>
-                <li className="ml-4">
-                    <Link href="/dashboard">Dashboard</Link>
-                </li>
-                <li className="ml-4">
-                    <Link href="/dashboard/add">Add</Link>
-                </li>
+        <aside className="hidden base:self-start base:w-[20vw] base:h-min base:my-4 base:max-w-52 base:block base:py-6 base:px-4 base:space-y-2 base:border base:border-gray-1000 base:rounded-lg base:bg-white">
+            <h2 className="text-lg text-neutral-800 font-medium">
+                <Link href="/dashboard">Dashboard</Link>
+            </h2>
+            <ul className="text-neutral-500 space-y-1">
+                <li className="text-neutral-600 font-medium">Samples</li>
+                {links.map(({ href, label }, key) => (
+                    <li className="ml-3" key={key}>
+                        <Link href={href}>{label}</Link>
+                    </li>
+                ))}
             </ul>
         </aside>
     )

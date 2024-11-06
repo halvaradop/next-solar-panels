@@ -6,10 +6,9 @@ import { HeaderMenuProps } from "@/lib/@types/props"
 import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Loggin } from "./loggin"
 
-export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
+export const HeaderMenu = ({ pathname, isMatchMedia }: HeaderMenuProps) => {
     const session = useSession()
-    const protectedRoutes = ["/dashboard", "/dashboard/add"]
-    const isLoggin = protectedRoutes.includes(window.location.pathname) && session
+    const isLoggin = new RegExp("^/dashboard.*$").test(pathname) && session
 
     return (
         <motion.aside
@@ -31,7 +30,10 @@ export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
                                     <Link href="/dashboard">Dashboard</Link>
                                 </motion.li>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/dashboard/add">Add</Link>
+                                    <Link href="/dashboard/samples">List</Link>
+                                </motion.li>
+                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                                    <Link href="/dashboard/samples/add">Add</Link>
                                 </motion.li>
                             </>
                         ) : (
@@ -52,7 +54,7 @@ export const HeaderMenu = ({ isMatchMedia }: HeaderMenuProps) => {
                         )}
                         <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
                             <Button asChild>
-                                <Link href={isLoggin ? "/" : "/login"}>{isLoggin ? "Log out" : "Login"}</Link>
+                                <Link href={isLoggin ? "/" : "/dashboard"}>{isLoggin ? "Log out" : "Login"}</Link>
                             </Button>
                         </motion.li>
                     </ul>

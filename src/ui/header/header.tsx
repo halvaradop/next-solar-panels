@@ -1,12 +1,12 @@
 "use client"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { AnimatePresence } from "framer-motion"
-import { HeaderMenu } from "./header-menu"
 import { usePathname } from "next/navigation"
-import { merge } from "@/lib/merge"
-import { MenuState } from "@/lib/@types/types"
+import { AnimatePresence } from "framer-motion"
 import { SessionProvider } from "next-auth/react"
+import { merge } from "@/lib/merge"
+import { HeaderMenu } from "./header-menu"
+import { MenuState } from "@/lib/@types/types"
 
 export const Header = () => {
     const pathname = usePathname()
@@ -73,7 +73,9 @@ export const Header = () => {
                         <span className="w-8 h-0.5 block rounded"></span>
                         <span className="w-8 h-0.5 block rounded"></span>
                     </div>
-                    <AnimatePresence>{isMenuVisible && <HeaderMenu isMatchMedia={menuState.isMatchMedia} />}</AnimatePresence>
+                    <AnimatePresence>
+                        {isMenuVisible && <HeaderMenu pathname={pathname} isMatchMedia={menuState.isMatchMedia} />}
+                    </AnimatePresence>
                 </nav>
             </header>
         </SessionProvider>

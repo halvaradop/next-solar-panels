@@ -10,8 +10,9 @@ import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState } from "@/lib/@types/types"
 import { Zone } from "@prisma/client"
 import arrowDown from "@/public/arrow.svg"
+import { getZones } from "@/lib/services/dashboard"
 
-const AddSample = () => {
+export const AddSample = () => {
     const [zones, setZones] = useState<Zone[]>([])
     const [state, formAction] = useFormState(addSampleAction, {
         message: "",
@@ -20,15 +21,14 @@ const AddSample = () => {
 
     useEffect(() => {
         const fetchZones = async () => {
-            const response = await fetch("/api/zones")
-            const json = await response.json()
-            setZones(json.data)
+            const response = await getZones()
+            setZones(response)
         }
         fetchZones()
     }, [])
 
     return (
-        <Form className="min-h-main pt-4" action={formAction}>
+        <Form className="w-full min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 Material
                 <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
@@ -80,5 +80,3 @@ const AddSample = () => {
         </Form>
     )
 }
-
-export default AddSample

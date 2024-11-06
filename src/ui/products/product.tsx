@@ -1,6 +1,6 @@
 import Image from "next/image"
-import { ProductProps } from "@/lib/@types/props"
 import { merge } from "@/lib/merge"
+import { ProductProps } from "@/lib/@types/props"
 
 export const Product = ({ className, id, title, subtitle, description, src, alt, isRight }: ProductProps) => {
     const figureVariant = isRight ? "base:grid-cols-[0.35fr_0.65fr]" : "base:grid-cols-[0.65fr_0.35fr]"

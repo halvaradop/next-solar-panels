@@ -19,9 +19,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"],
-      "@/auth": ["./src/lib/auth.ts"],
-      "@/prisma": ["./src/lib/prisma.ts"]
+      "@/public/*": ["./public/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

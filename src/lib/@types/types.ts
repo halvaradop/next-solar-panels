@@ -1,5 +1,5 @@
-import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 import { Sample, Zone } from "@prisma/client"
+import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -27,3 +27,9 @@ export interface LoginActionState {
 }
 
 export type SampleZone = AddPropertyToObject<Sample, "Zone", Zone>
+
+export interface ResponseAPI<T> {
+    data: T
+    ok: boolean
+    message?: string
+}

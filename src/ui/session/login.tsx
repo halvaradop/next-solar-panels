@@ -4,8 +4,8 @@ import { useFormState } from "react-dom"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
-import { loginAction } from "@/lib/actions"
 import { merge } from "@/lib/merge"
+import { loginAction } from "@/lib/actions"
 
 export const Login = () => {
     const [state, formAction] = useFormState(loginAction, {

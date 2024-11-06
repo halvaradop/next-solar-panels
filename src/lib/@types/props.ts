@@ -1,6 +1,5 @@
 import { StaticImageData } from "next/image"
-import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
-import { Sample, Zone } from "@prisma/client"
+import { Zone } from "@prisma/client"
 import { Entry, SampleZone } from "./types"
 
 export interface ProductProps {
@@ -23,6 +22,7 @@ export interface ProjectProps {
 
 export interface HeaderMenuProps {
     isMatchMedia: boolean
+    pathname: string
 }
 
 export interface FilterByProps {

@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { FilterBy } from "./filter-by"
 import { FilterProps } from "@/lib/@types/props"
 import { Entry } from "@/lib/@types/types"
@@ -9,10 +9,11 @@ import filterIcon from "@/public/filter.svg"
 
 export const Filter = ({ zones }: FilterProps) => {
     const router = useRouter()
+    const patname = usePathname()
     const mapZones = zones.map<Entry>(({ id, name }) => ({ key: name, value: id.toString() }))
 
     const handleResetFilter = () => {
-        router.push("/dashboard")
+        router.push(patname)
     }
 
     return (
