@@ -1,4 +1,5 @@
-import { Sample } from "@prisma/client"
+import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
+import { Sample, Zone } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -24,3 +25,5 @@ export interface LoginActionState {
     message: string
     isSuccess: boolean
 }
+
+export type SampleZone = AddPropertyToObject<Sample, "Zone", Zone>

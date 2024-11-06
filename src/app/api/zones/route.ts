@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma"
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
     try {
         const data = await prisma.zone.findMany()
         return NextResponse.json({
