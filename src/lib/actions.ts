@@ -32,10 +32,13 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
         })
         redirect("/dashboard")
     }
+    const errors = validate.error.flatten().fieldErrors
     return {
         message: "Check the invalid fields",
         isSuccess: false,
-        schema: Object.fromEntries(Object.entries(validate.error.format()).map(([key, value]) => [key, ""])),
+        schema: {
+            material: errors.material?.slice(0, 1),
+        },
     } as never as AddSampleActionState
 }
 

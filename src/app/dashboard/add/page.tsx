@@ -17,9 +17,7 @@ const AddSample = () => {
         message: "",
         isSuccess: false,
     } as AddSampleActionState)
-    const [errors, setErrors] = useState({
-        material: "",
-    })
+
     useEffect(() => {
         const fetchZones = async () => {
             const response = await fetch("/api/zones")
@@ -29,32 +27,12 @@ const AddSample = () => {
         fetchZones()
     }, [])
 
-    const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        if (!/^[a-zA-Z\s]*$/.test(value)) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                [name]: "Please enter only letters",
-            }))
-        } else {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                [name]: "",
-            }))
-        }
-    }
-
     return (
         <Form className="min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 Material
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    variant="outline"
-                    name="material"
-                    onInput={handleTextInput}
-                />
-                {errors.material && <p className="text-red-500 text-sm">{errors.material}</p>}
+                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
+                {state.schema && state.schema.material && <p className="text-red-500 text-sm">{state.schema.material}</p>}
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Corrosion
