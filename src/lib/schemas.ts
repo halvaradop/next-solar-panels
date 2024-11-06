@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const SampleSchema = z.object({
-    material: z.string(),
+    material: z.string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
     corrosion: z
         .string({
             message: "Corrosion must be a number",
