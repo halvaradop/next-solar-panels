@@ -1,10 +1,10 @@
 "use server"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
-import { signIn } from "@/auth"
-import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
-import { SampleSchema } from "./schemas"
+import { signIn } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { SampleSchema } from "./schemas"
+import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -51,5 +51,4 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
         }
     }
     redirect("/dashboard")
-    return { message: "Authorized", isSuccess: true } as LoginActionState
 }
