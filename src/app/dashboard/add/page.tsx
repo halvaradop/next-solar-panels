@@ -17,7 +17,9 @@ const AddSample = () => {
         message: "",
         isSuccess: false,
     } as AddSampleActionState)
-
+    const [errors, setErrors] = useState({
+        material: "",
+    })
     useEffect(() => {
         const fetchZones = async () => {
             const response = await fetch("/api/zones")
@@ -27,23 +29,59 @@ const AddSample = () => {
         fetchZones()
     }, [])
 
+    const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        if (!/^[a-zA-Z\s]*$/.test(value)) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: "Please enter only letters",
+            }))
+        } else {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: "",
+            }))
+        }
+    }
+
     return (
         <Form className="min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 Material
-                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
+                <Input
+                    className="mt-1 focus-within:border-black focus-within:ring-black"
+                    variant="outline"
+                    name="material"
+                    onInput={handleTextInput}
+                />
+                {errors.material && <p className="text-red-500 text-sm">{errors.material}</p>}
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Corrosion
-                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="corrosion" />
+                <Input
+                    className="mt-1 focus-within:border-black focus-within:ring-black"
+                    type="number"
+                    variant="outline"
+                    name="corrosion"
+                />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Temperature
-                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="temperature" />
+                <Input
+                    className="mt-1 focus-within:border-black focus-within:ring-black"
+                    type="number"
+                    variant="outline"
+                    name="temperature"
+                />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Humidity
-                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="humidity" />
+                <Input
+                    className="mt-1 focus-within:border-black focus-within:ring-black"
+                    type="number"
+                    variant="outline"
+                    name="humidity"
+                />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Zone
