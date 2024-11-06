@@ -1,5 +1,8 @@
 import { TableProps } from "@/lib/@types/props"
 
+/**
+ * TODO: fix error in Date type
+ */
 export const Table = async ({ samples }: TableProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
@@ -34,7 +37,7 @@ export const Table = async ({ samples }: TableProps) => {
                             {name}
                         </td>
                         <td className="w-[30%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[25%]">
-                            {date.toDateString()}
+                            {JSON.stringify(date, null, 2)}
                         </td>
                     </tr>
                 ))}

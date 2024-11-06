@@ -20,9 +20,14 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                 if (authorized) {
                     const role = await prisma.role.findUnique({
                         where: { id: authorized.idRole },
+                        select: {
+                            name: true,
+                        },
                     })
-                    const { email, name } = authorized
-                    return { email, name, role }
+                    const { email, name, id } = authorized
+                    const jwt = { email, name, role: role?.name, id: id.toString() }
+                    console.log("Auth: ", authorized, ", jwt: ", jwt)
+                    return jwt
                 }
                 return null
             },
@@ -30,10 +35,16 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     ],
     callbacks: {
         async jwt({ token, user }) {
-            return { ...token, ...user }
+            if (user) {
+                token.user = user
+            }
+            return token
         },
-        async session({ session }) {
-            return { ...session }
+        async session({ session, token }) {
+            if (token.user) {
+                session.user = token.user
+            }
+            return session
         },
     },
 })

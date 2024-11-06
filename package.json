@@ -12,9 +12,7 @@
     "format:check": "prettier --check .",
     "prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
     "prisma:generate": "dotenv -e .env.local -- prisma generate",
-    "prisma:studio": "dotenv -e .env.local -- prisma studio",
-    "prisma:deploy": "dotenv -e .env.local -- prisma migrate deploy",
-    "db:pull": "dotenv -e .env.local -- prisma db pull"
+    "prisma:studio": "dotenv -e .env.local -- prisma studio"
   },
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
@@ -33,7 +31,8 @@
     "react": "^18",
     "react-dom": "^18",
     "sharp": "^0.33.5",
-    "tw-merge": "0.0.1-alpha.3"
+    "tw-merge": "0.0.1-alpha.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",

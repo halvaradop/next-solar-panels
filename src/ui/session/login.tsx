@@ -45,7 +45,7 @@ export const Login = () => {
                 <span>.</span>
             </p>
             <Button fullWidth>Log In</Button>
-            {state.message && (
+            {state && state.message && (
                 <p
                     className={merge("p-2 text-sm text-green-400 rounded-md bg-green-100", {
                         "text-red-500 bg-red-100": !state.isSuccess,
