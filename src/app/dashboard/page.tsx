@@ -10,7 +10,16 @@ import arrowIcon from "@/public/arrow.svg"
 
 const Dashboard = async () => {
     const session = await auth()
-    const zones = await prisma.zone.findMany()
+    const zones = await prisma.zone.findMany({ where: {
+           
+                Plant: {
+                    Employee: {
+                        id: Number(session?.user?.id) || Number.MAX_SAFE_INTEGER,
+                    },
+             
+            },
+        },
+     })
     const samples = await prisma.sample.findMany({
         where: {
             Zone: {
@@ -26,7 +35,7 @@ const Dashboard = async () => {
         },
     })
     const samplesFiltered = samples.filter(({ Zone: { id } }) => true)
-
+   
     return (
         <Suspense>
             <section className="w-11/12 mx-auto min-h-main py-4 space-y-4 base:w-full">
