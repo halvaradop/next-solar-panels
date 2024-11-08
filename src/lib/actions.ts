@@ -1,4 +1,5 @@
 "use server"
+import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { signIn } from "@/lib/auth"
@@ -30,6 +31,7 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
                 },
             },
         })
+        revalidateTag("samplesByUser")
         redirect("/dashboard")
     }
     const errors = validate.error.flatten().fieldErrors
