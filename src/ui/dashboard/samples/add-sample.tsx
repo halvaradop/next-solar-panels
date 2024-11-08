@@ -9,8 +9,8 @@ import { Button } from "@halvaradop/ui-button"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState } from "@/lib/@types/types"
 import { Zone } from "@prisma/client"
-import arrowDown from "@/public/arrow.svg"
 import { getZones } from "@/lib/services/dashboard"
+import arrowDown from "@/public/arrow.svg"
 
 export const AddSample = () => {
     const [zones, setZones] = useState<Zone[]>([])
