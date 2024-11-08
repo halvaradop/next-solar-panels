@@ -1,4 +1,7 @@
+import { ReadonlyURLSearchParams } from "next/navigation"
+import { z } from "zod"
 import { Sample, Zone } from "@prisma/client"
+import { SampleSchema } from "@/lib/schemas"
 import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
 export interface LayoutProps {
@@ -32,4 +35,11 @@ export interface ResponseAPI<T> {
     data: T
     ok: boolean
     message?: string
+}
+
+export type SampleRequest = z.infer<typeof SampleSchema>
+
+export interface Params<T extends string> {
+    params: Record<T, string>
+    searchParams: ReadonlyURLSearchParams
 }

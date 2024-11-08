@@ -9,14 +9,7 @@ import { ResponseAPI, SampleZone } from "@/lib/@types/types"
  * @returns - A list of samples related to the user
  */
 export const getSamplesByUser = async (userId: number): Promise<SampleZone[]> => {
-    const response = await fetch("http://localhost:3000/api/dashboards/samples", {
-        method: "POST",
-        cache: "force-cache",
-        body: JSON.stringify({ userId }),
-        next: {
-            tags: ["samplesByUser"],
-        },
-    })
+    const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/samples`)
     const json: ResponseAPI<SampleZone[]> = await response.json()
     return json.data
 }
@@ -31,10 +24,7 @@ export const getSamplesByUser = async (userId: number): Promise<SampleZone[]> =>
  * @returns - A list of zones related to the user
  */
 export const getZonesByUser = async (userId: number): Promise<Zone[]> => {
-    const response = await fetch("http://localhost:3000/api/dashboards/zones", {
-        method: "POST",
-        body: JSON.stringify({ userId }),
-    })
+    const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/zones`)
     const json: ResponseAPI<Zone[]> = await response.json()
     return json.data
 }
@@ -48,7 +38,7 @@ export const getZonesByUser = async (userId: number): Promise<Zone[]> => {
  * @returns - A list of zones from the database
  */
 export const getZones = async (): Promise<Zone[]> => {
-    const response = await fetch("http://localhost:3000/api/dashboards/zones")
+    const response = await fetch("http://localhost:3000/api/v1/zones")
     const json: ResponseAPI<Zone[]> = await response.json()
     return json.data
 }
