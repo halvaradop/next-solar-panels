@@ -1,7 +1,7 @@
 "use server"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
-import { signIn } from "@/lib/auth"
+import { auth, signIn } from "@/lib/auth"
 import { SampleSchema } from "./schemas"
 import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
 
@@ -13,11 +13,11 @@ import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
  * @returns state of the sample and the result of the action
  */
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
+    const session = await auth()
     const entries = Object.fromEntries(formData)
     const validate = SampleSchema.safeParse(entries)
     if (validate.success) {
-        // TODO: Pendin
-        const request = await fetch("/api/v1", {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/samples`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })

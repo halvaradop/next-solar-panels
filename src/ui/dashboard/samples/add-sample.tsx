@@ -2,6 +2,7 @@
 import Image from "next/image"
 import { useFormState } from "react-dom"
 import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
@@ -9,10 +10,11 @@ import { Button } from "@halvaradop/ui-button"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState } from "@/lib/@types/types"
 import { Zone } from "@prisma/client"
-import { getZones } from "@/lib/services/dashboard"
+import { getZonesByUser } from "@/lib/services/dashboard"
 import arrowDown from "@/public/arrow.svg"
 
 export const AddSample = () => {
+    const { data: session } = useSession()
     const [zones, setZones] = useState<Zone[]>([])
     const [state, formAction] = useFormState(addSampleAction, {
         message: "",
@@ -21,7 +23,8 @@ export const AddSample = () => {
 
     useEffect(() => {
         const fetchZones = async () => {
-            const response = await getZones()
+            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
+            const response = await getZonesByUser(userId)
             setZones(response)
         }
         fetchZones()

@@ -69,7 +69,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
  * const data = await response.json()
  * ```
  */
-export const POST = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { material, corrosion, humidity, temperature, zone } = response as SampleRequest
