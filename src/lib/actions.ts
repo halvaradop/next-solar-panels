@@ -1,9 +1,7 @@
 "use server"
-import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { signIn } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
 import { SampleSchema } from "./schemas"
 import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
 
@@ -18,28 +16,21 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
     const entries = Object.fromEntries(formData)
     const validate = SampleSchema.safeParse(entries)
     if (validate.success) {
-        await prisma.sample.create({
-            data: {
-                corrosion: validate.data.corrosion,
-                humidity: parseInt(validate.data.humidity),
-                material: validate.data.material,
-                temperature: parseInt(validate.data.temperature),
-                Zone: {
-                    connect: {
-                        id: parseInt(validate.data.zone),
-                    },
-                },
-            },
+        // TODO: Pendin
+        const request = await fetch("/api/v1", {
+            method: "POST",
+            body: JSON.stringify(validate.data),
         })
-        revalidateTag("samplesByUser")
-        redirect("/dashboard")
+        if (request.ok) {
+            redirect("/dashboard")
+        }
     }
-    const errors = validate.error.flatten().fieldErrors
+    const errors = validate?.error?.flatten().fieldErrors
     return {
         message: "Check the invalid fields",
         isSuccess: false,
         schema: {
-            material: errors.material?.slice(0, 1),
+            material: errors?.material?.slice(0, 1),
         },
     } as never as AddSampleActionState
 }
