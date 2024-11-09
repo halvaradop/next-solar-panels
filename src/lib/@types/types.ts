@@ -29,8 +29,6 @@ export interface LoginActionState {
     isSuccess: boolean
 }
 
-export type SampleZone = AddPropertyToObject<Samples, "Zones", Zones>
-
 export interface ResponseAPI<T> {
     data: T
     ok: boolean

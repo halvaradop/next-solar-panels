@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Zone } from "@prisma/client"
+import { Zones } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -18,20 +18,20 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
-        const data = await prisma.zone.findMany({
+        const data = await prisma.zones.findMany({
             where: {
-                Plant: {
-                    Employee: {
-                        id: userId,
+                Samples: {
+                    some: {
+                        userId,
                     },
                 },
             },
         })
-        return NextResponse.json<ResponseAPI<Zone[]>>({
+        return NextResponse.json<ResponseAPI<Zones[]>>({
             data,
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zone[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
     }
 }
