@@ -11,23 +11,30 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             },
             async authorize(credentials) {
                 const { email, password } = credentials as { email: string; password: string }
-                const authorized = await prisma.users.findUnique({
+                const authorized = await prisma.users.findFirst({
                     where: {
-                        email: "",
+                        email,
+                        password,
+                    },
+                    select: {
+                        userId: true,
+                        email: true,
+                        roleId: true,
+                        firstName: true,
                     },
                 })
                 if (authorized) {
-                    const {
-                        email,
-                        name,
-                        id,
-                        Role: { name: role },
-                    } = authorized
+                    const role = await prisma.roles.findFirst({
+                        where: {
+                            roleId: authorized.roleId,
+                        },
+                    })
+                    const { email, firstName: name, userId: id } = authorized
                     return {
                         email,
                         name,
                         id: id.toString(),
-                        role,
+                        role: role?.roleName,
                     }
                 }
                 return null

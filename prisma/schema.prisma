@@ -8,28 +8,28 @@ datasource db {
 }
 
 model Roles {
-  roleId   Int      @id @default(autoincrement())
-  roleName String   @db.VarChar(50)
-  state    State    @default(ACTIVE)
+  roleId   Int    @id @default(autoincrement())
+  roleName String @db.VarChar(50)
+  state    State  @default(ACTIVE)
 
   Users            Users[]
   RolesPermissions RolesPermissions[]
 }
 
 model Users {
-  userId    Int       @id @default(autoincrement())
-  firstName String    @db.VarChar(50)
-  lastName  String    @db.VarChar(50)
-  email     String    @db.VarChar(100)
-  password  String    @db.VarChar(50)
-  state     State     @default(ACTIVE)
+  userId    Int    @id @default(autoincrement())
+  firstName String @db.VarChar(50)
+  lastName  String @db.VarChar(50)
+  email     String @db.VarChar(100)
+  password  String @db.VarChar(50)
+  state     State  @default(ACTIVE)
   roleId    Int
-  role      Roles     @relation(fields: [roleId], references: [roleId])
+  role      Roles  @relation(fields: [roleId], references: [roleId])
 
-  AuditLogs       AuditLogs[]
-  PhoneUsers      PhoneUsers[]
-  EmployeePlants  EmployeePlants[]
-  Samples         Samples[]
+  AuditLogs      AuditLogs[]
+  PhoneUsers     PhoneUsers[]
+  EmployeePlants EmployeePlants[]
+  Samples        Samples[]
 }
 
 model AuditLogs {
@@ -44,9 +44,9 @@ model AuditLogs {
 }
 
 model Permissions {
-  permissionId   Int               @id @default(autoincrement())
-  permissionName String            @db.VarChar(100)
-  state          State             @default(ACTIVE)
+  permissionId   Int    @id @default(autoincrement())
+  permissionName String @db.VarChar(100)
+  state          State  @default(ACTIVE)
 
   RolesPermissions RolesPermissions[]
 }
@@ -55,16 +55,16 @@ model RolesPermissions {
   roleId       Int
   permissionId Int
   role         Roles       @relation(fields: [roleId], references: [roleId])
-  permission   Permissions  @relation(fields: [permissionId], references: [permissionId])
+  permission   Permissions @relation(fields: [permissionId], references: [permissionId])
 
   @@id([roleId, permissionId])
 }
 
 model Companies {
-  companyId   Int            @id @default(autoincrement())
-  companyName String         @db.VarChar(100)
-  email       String         @db.VarChar(100)
-  state       State          @default(ACTIVE)
+  companyId   Int    @id @default(autoincrement())
+  companyName String @db.VarChar(100)
+  email       String @db.VarChar(100)
+  state       State  @default(ACTIVE)
 
   PhoneCompanies PhoneCompanies[]
   Plants         Plants[]
@@ -78,13 +78,13 @@ model PhoneCompanies {
 }
 
 model Plants {
-  plantId    Int       @id @default(autoincrement())
-  plantName  String    @db.VarChar(100)
-  companyId  Int
-  latitude   Decimal   @db.Decimal(10, 8)
-  longitude  Decimal   @db.Decimal(11, 8)
-  state      State     @default(ACTIVE)
-  company    Companies @relation(fields: [companyId], references: [companyId])
+  plantId   Int       @id @default(autoincrement())
+  plantName String    @db.VarChar(100)
+  companyId Int
+  latitude  Decimal   @db.Decimal(10, 8)
+  longitude Decimal   @db.Decimal(11, 8)
+  state     State     @default(ACTIVE)
+  company   Companies @relation(fields: [companyId], references: [companyId])
 
   Zones          Zones[]
   EmployeePlants EmployeePlants[]
@@ -103,43 +103,43 @@ model Zones {
 }
 
 model PhoneUsers {
-  phoneId     Int    @id @default(autoincrement())
+  phoneId     Int   @id @default(autoincrement())
   phoneNumber Int
   userId      Int
-  user        Users  @relation(fields: [userId], references: [userId])
+  user        Users @relation(fields: [userId], references: [userId])
 }
 
 model EmployeePlants {
   userId  Int
   plantId Int
-  user    Users   @relation(fields: [userId], references: [userId])
-  plant   Plants  @relation(fields: [plantId], references: [plantId])
+  user    Users  @relation(fields: [userId], references: [userId])
+  plant   Plants @relation(fields: [plantId], references: [plantId])
 
   @@id([userId, plantId])
 }
 
 model Samples {
-  sampleId              Int       @id @default(autoincrement())
-  sampleDateTime        DateTime
-  userId                Int
-  zoneId                Int
-  soilTime              Int
-  soilResistivity       Decimal   @db.Decimal(10, 2)
-  moistureContent       Decimal   @db.Decimal(5, 2)
-  pHValue               Decimal   @db.Decimal(4, 2)
-  bufferCapacityPH4_3   Decimal   @db.Decimal(5, 2)
-  bufferCapacityPH7_0   Decimal   @db.Decimal(5, 2)
-  sulfurReducingBacteria Int
-  sulfateContent        Decimal   @db.Decimal(5, 2)
-  neutralSalts          Decimal   @db.Decimal(5, 2)
-  undergroundWaterPresence Boolean
-  horizontalSoilHomogeneity String @db.VarChar(50)
-  verticalSoilHomogeneity   String @db.VarChar(50)
-  soilTypeHomogeneity       String @db.VarChar(50)
-  pHSoilHomogeneity         String @db.VarChar(50)
+  sampleId                  Int      @id @default(autoincrement())
+  sampleDateTime            DateTime
+  userId                    Int
+  zoneId                    Int
+  soilTime                  Int
+  soilResistivity           Decimal  @db.Decimal(10, 2)
+  moistureContent           Decimal  @db.Decimal(5, 2)
+  pHValue                   Decimal  @db.Decimal(4, 2)
+  bufferCapacityPH4_3       Decimal  @db.Decimal(5, 2)
+  bufferCapacityPH7_0       Decimal  @db.Decimal(5, 2)
+  sulfurReducingBacteria    Int
+  sulfateContent            Decimal  @db.Decimal(5, 2)
+  neutralSalts              Decimal  @db.Decimal(5, 2)
+  undergroundWaterPresence  Boolean
+  horizontalSoilHomogeneity String   @db.VarChar(50)
+  verticalSoilHomogeneity   String   @db.VarChar(50)
+  soilTypeHomogeneity       String   @db.VarChar(50)
+  pHSoilHomogeneity         String   @db.VarChar(50)
   externalCathodes          Boolean
-  user                     Users   @relation(fields: [userId], references: [userId])
-  zone                     Zones   @relation(fields: [zoneId], references: [zoneId])
+  user                      Users    @relation(fields: [userId], references: [userId])
+  zone                      Zones    @relation(fields: [zoneId], references: [zoneId])
 }
 
 enum State {
