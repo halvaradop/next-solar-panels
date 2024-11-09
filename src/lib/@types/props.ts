@@ -38,3 +38,10 @@ export interface TableProps {
 export interface FilterProps {
     zones: Zones[]
 }
+
+export interface SelectProps {
+    className?: string
+    classNameOption?: string
+    name: string
+    values: Entry[]
+}
