@@ -35,7 +35,9 @@ export const AddSample = () => {
             <Label className="w-full text-neutral-700" size="sm">
                 Material
                 <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
-                {state.schema && state.schema.pHSoilHomogeneity && <p className="text-red-500 text-sm">{state.schema.pHSoilHomogeneity}</p>}
+                {state.schema && state.schema.pHSoilHomogeneity && (
+                    <p className="text-red-500 text-sm">{state.schema.pHSoilHomogeneity}</p>
+                )}
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Corrosion

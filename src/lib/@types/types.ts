@@ -16,7 +16,7 @@ export interface MenuState {
 export interface AddSampleActionState {
     message: string
     isSuccess: boolean
-    schema: Omit<Samples, "zoneId"|"userId"|"sampleDateTime"|"sampleId">
+    schema: Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 }
 
 export interface Entry {
