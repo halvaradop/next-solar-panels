@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { revalidateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
-import { Sample } from "@prisma/client"
-import { Params, ResponseAPI, SampleRequest, SampleZone } from "@/lib/@types/types"
+import { Samples } from "@prisma/client"
+import { Params, ResponseAPI, SampleRequest } from "@/lib/@types/types"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific employee
@@ -19,23 +19,14 @@ import { Params, ResponseAPI, SampleRequest, SampleZone } from "@/lib/@types/typ
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
-        const data = await prisma.sample.findMany({
+        const data = await prisma.samples.findMany({
             where: {
-                Zone: {
-                    Plant: {
-                        Employee: {
-                            id: userId,
-                        },
-                    },
-                },
-            },
-            include: {
-                Zone: true,
+                userId,
             },
         })
-        return NextResponse.json<ResponseAPI<SampleZone[]>>({ data, ok: true })
+        return NextResponse.json<ResponseAPI<Samples[]>>({ data: [], ok: true })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<SampleZone[]>>(
+        return NextResponse.json<ResponseAPI<Samples[]>>(
             {
                 data: [],
                 ok: false,
@@ -74,23 +65,15 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { material, corrosion, humidity, temperature, zone } = response as SampleRequest
 
-        const newSample = await prisma.sample.create({
+        /*const newSample = await prisma.samples.create({
             data: {
-                corrosion: corrosion,
-                humidity: parseInt(humidity),
-                material: material,
-                temperature: parseInt(temperature),
-                Zone: {
-                    connect: {
-                        id: parseInt(zone),
-                    },
-                },
+                
             },
-        })
+        })*/
 
         revalidateTag("samplesByUser")
-        return NextResponse.json<ResponseAPI<Sample>>({
-            data: newSample,
+        return NextResponse.json<ResponseAPI<Samples>>({
+            data: {} as Samples,
             ok: true,
             message: "The resource was created successfuly",
         })

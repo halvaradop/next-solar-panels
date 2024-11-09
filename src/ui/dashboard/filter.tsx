@@ -10,7 +10,7 @@ import filterIcon from "@/public/filter.svg"
 export const Filter = ({ zones }: FilterProps) => {
     const router = useRouter()
     const patname = usePathname()
-    const mapZones = zones.map<Entry>(({ id, name }) => ({ key: name, value: id.toString() }))
+    const mapZones = zones.map<Entry>(({ zoneId, name }) => ({ key: name, value: zoneId.toString() }))
 
     const handleResetFilter = () => {
         router.push(patname)

@@ -1,6 +1,6 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { z } from "zod"
-import { Sample, Zone } from "@prisma/client"
+import { Samples, Zones } from "@prisma/client"
 import { SampleSchema } from "@/lib/schemas"
 import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
@@ -16,7 +16,7 @@ export interface MenuState {
 export interface AddSampleActionState {
     message: string
     isSuccess: boolean
-    schema: Pick<Sample, "material" | "temperature" | "humidity" | "corrosion">
+    schema: Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 }
 
 export interface Entry {
@@ -28,8 +28,6 @@ export interface LoginActionState {
     message: string
     isSuccess: boolean
 }
-
-export type SampleZone = AddPropertyToObject<Sample, "Zone", Zone>
 
 export interface ResponseAPI<T> {
     data: T

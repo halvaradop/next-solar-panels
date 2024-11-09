@@ -1,5 +1,5 @@
-import { Zone } from "@prisma/client"
-import { ResponseAPI, SampleZone } from "@/lib/@types/types"
+import { Zones, Samples } from "@prisma/client"
+import { ResponseAPI } from "@/lib/@types/types"
 
 /**
  * Fetches the sample data associated with a specific user from the database.
@@ -8,9 +8,9 @@ import { ResponseAPI, SampleZone } from "@/lib/@types/types"
  * @param userId - The user id to get the samples related to them from the database
  * @returns - A list of samples related to the user
  */
-export const getSamplesByUser = async (userId: number): Promise<SampleZone[]> => {
+export const getSamplesByUser = async (userId: number): Promise<Samples[]> => {
     const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/samples`)
-    const json: ResponseAPI<SampleZone[]> = await response.json()
+    const json: ResponseAPI<Samples[]> = await response.json()
     return json.data
 }
 
@@ -23,9 +23,9 @@ export const getSamplesByUser = async (userId: number): Promise<SampleZone[]> =>
  * @param userId - The user id to get the zones related to them from the database
  * @returns - A list of zones related to the user
  */
-export const getZonesByUser = async (userId: number): Promise<Zone[]> => {
+export const getZonesByUser = async (userId: number): Promise<Zones[]> => {
     const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/zones`)
-    const json: ResponseAPI<Zone[]> = await response.json()
+    const json: ResponseAPI<Zones[]> = await response.json()
     return json.data
 }
 
@@ -37,8 +37,8 @@ export const getZonesByUser = async (userId: number): Promise<Zone[]> => {
  *
  * @returns - A list of zones from the database
  */
-export const getZones = async (): Promise<Zone[]> => {
+export const getZones = async (): Promise<Zones[]> => {
     const response = await fetch("http://localhost:3000/api/v1/zones")
-    const json: ResponseAPI<Zone[]> = await response.json()
+    const json: ResponseAPI<Zones[]> = await response.json()
     return json.data
 }
