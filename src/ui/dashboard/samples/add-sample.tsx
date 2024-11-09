@@ -9,13 +9,13 @@ import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState } from "@/lib/@types/types"
-import { Zone } from "@prisma/client"
+import { Zones } from "@prisma/client"
 import { getZonesByUser } from "@/lib/services/dashboard"
 import arrowDown from "@/public/arrow.svg"
 
 export const AddSample = () => {
     const { data: session } = useSession()
-    const [zones, setZones] = useState<Zone[]>([])
+    const [zones, setZones] = useState<Zones[]>([])
     const [state, formAction] = useFormState(addSampleAction, {
         message: "",
         isSuccess: false,
@@ -35,7 +35,7 @@ export const AddSample = () => {
             <Label className="w-full text-neutral-700" size="sm">
                 Material
                 <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="material" />
-                {state.schema && state.schema.material && <p className="text-red-500 text-sm">{state.schema.material}</p>}
+                {state.schema && state.schema.pHSoilHomogeneity && <p className="text-red-500 text-sm">{state.schema.pHSoilHomogeneity}</p>}
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Corrosion
@@ -68,8 +68,8 @@ export const AddSample = () => {
                 Zone
                 <div className="mt1 flex items-center relative">
                     <select className="w-full h-10 pl-3 border rounded-lg appearance-none" name="zone">
-                        {zones.map(({ id, name }) => (
-                            <option key={id} value={id}>
+                        {zones.map(({ zoneId, name }) => (
+                            <option key={zoneId} value={zoneId}>
                                 {name}
                             </option>
                         ))}

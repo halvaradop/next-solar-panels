@@ -96,6 +96,7 @@ model Zones {
   latitude   Decimal   @db.Decimal(10, 8)
   longitude  Decimal   @db.Decimal(11, 8)
   state      State     @default(ACTIVE)
+  name       String    @db.VarChar(50)
   plant      Plants    @relation(fields: [plantId], references: [plantId])
 
   Samples Samples[]

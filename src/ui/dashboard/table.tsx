@@ -17,7 +17,8 @@ export const Table = async ({ samples }: TableProps) => {
                     <th className="w-[25%] p-3 text-start font-medium sm:w-[25%] md:w-[20%] base:w-[15]">Date</th>
                 </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
+               
                 {samples.map(({ id, material, corrosion, temperature, humidity, date, Zone: { name } }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={id}>
                         <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[10%]">{id}</td>
@@ -41,7 +42,7 @@ export const Table = async ({ samples }: TableProps) => {
                         </td>
                     </tr>
                 ))}
-            </tbody>
+            </tbody> */}
         </table>
     )
 }

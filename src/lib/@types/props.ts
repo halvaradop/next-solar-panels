@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image"
-import { Zone } from "@prisma/client"
+import { Zones } from "@prisma/client"
 import { Entry, SampleZone } from "./types"
 
 export interface ProductProps {
@@ -36,5 +36,5 @@ export interface TableProps {
 }
 
 export interface FilterProps {
-    zones: Zone[]
+    zones: Zones[]
 }
