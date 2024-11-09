@@ -1,57 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Client` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Coordinate` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Employee` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Plant` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Role` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Sample` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Zone` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE `Employee` DROP FOREIGN KEY `Employee_idClient_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Employee` DROP FOREIGN KEY `Employee_idRole_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Plant` DROP FOREIGN KEY `Plant_idCoordinate_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Plant` DROP FOREIGN KEY `Plant_idEmployee_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Sample` DROP FOREIGN KEY `Sample_idZone_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Zone` DROP FOREIGN KEY `Zone_idCoordinate_fkey`;
-
--- DropForeignKey
-ALTER TABLE `Zone` DROP FOREIGN KEY `Zone_idPlant_fkey`;
-
--- DropTable
-DROP TABLE `Client`;
-
--- DropTable
-DROP TABLE `Coordinate`;
-
--- DropTable
-DROP TABLE `Employee`;
-
--- DropTable
-DROP TABLE `Plant`;
-
--- DropTable
-DROP TABLE `Role`;
-
--- DropTable
-DROP TABLE `Sample`;
-
--- DropTable
-DROP TABLE `Zone`;
-
 -- CreateTable
 CREATE TABLE `Roles` (
     `roleId` INTEGER NOT NULL AUTO_INCREMENT,
@@ -142,6 +88,7 @@ CREATE TABLE `Zones` (
     `latitude` DECIMAL(10, 8) NOT NULL,
     `longitude` DECIMAL(11, 8) NOT NULL,
     `state` ENUM('ACTIVE', 'DELETED') NOT NULL DEFAULT 'ACTIVE',
+    `name` VARCHAR(50) NOT NULL,
 
     PRIMARY KEY (`zoneId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -156,7 +103,7 @@ CREATE TABLE `PhoneUsers` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `EmployeePlants` (
+CREATE TABLE `UserPlants` (
     `userId` INTEGER NOT NULL,
     `plantId` INTEGER NOT NULL,
 
@@ -175,15 +122,15 @@ CREATE TABLE `Samples` (
     `pHValue` DECIMAL(4, 2) NOT NULL,
     `bufferCapacityPH4_3` DECIMAL(5, 2) NOT NULL,
     `bufferCapacityPH7_0` DECIMAL(5, 2) NOT NULL,
-    `sulfurReducingBacteria` INTEGER NOT NULL,
+    `sulfurReducingBacteria` DECIMAL(5, 2) NOT NULL,
     `sulfateContent` DECIMAL(5, 2) NOT NULL,
     `neutralSalts` DECIMAL(5, 2) NOT NULL,
-    `undergroundWaterPresence` BOOLEAN NOT NULL,
-    `horizontalSoilHomogeneity` VARCHAR(50) NOT NULL,
-    `verticalSoilHomogeneity` VARCHAR(50) NOT NULL,
-    `soilTypeHomogeneity` VARCHAR(50) NOT NULL,
+    `undergroundWaterPresence` VARCHAR(50) NOT NULL,
+    `horizontalSoilHomogeneity` DECIMAL(5, 2) NOT NULL,
+    `verticalSoilHomogeneity` DECIMAL(5, 2) NOT NULL,
+    `soilTypeHomogeneity` DECIMAL(5, 2) NOT NULL,
     `pHSoilHomogeneity` VARCHAR(50) NOT NULL,
-    `externalCathodes` BOOLEAN NOT NULL,
+    `externalCathodes` DECIMAL(5, 2) NOT NULL,
 
     PRIMARY KEY (`sampleId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -213,10 +160,10 @@ ALTER TABLE `Zones` ADD CONSTRAINT `Zones_plantId_fkey` FOREIGN KEY (`plantId`) 
 ALTER TABLE `PhoneUsers` ADD CONSTRAINT `PhoneUsers_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `Users`(`userId`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `EmployeePlants` ADD CONSTRAINT `EmployeePlants_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `Users`(`userId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `UserPlants` ADD CONSTRAINT `UserPlants_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `Users`(`userId`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `EmployeePlants` ADD CONSTRAINT `EmployeePlants_plantId_fkey` FOREIGN KEY (`plantId`) REFERENCES `Plants`(`plantId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `UserPlants` ADD CONSTRAINT `UserPlants_plantId_fkey` FOREIGN KEY (`plantId`) REFERENCES `Plants`(`plantId`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Samples` ADD CONSTRAINT `Samples_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `Users`(`userId`) ON DELETE RESTRICT ON UPDATE CASCADE;
