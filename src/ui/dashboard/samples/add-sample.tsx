@@ -9,7 +9,7 @@ import { Button } from "@halvaradop/ui-button"
 import { Zones } from "@prisma/client"
 import { Select } from "@/ui/common/select"
 import { addSampleAction } from "@/lib/actions"
-import { AddSampleActionState, Entry } from "@/lib/@types/types"
+import { AddSampleActionState, Entry, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByUser } from "@/lib/services/dashboard"
 import dataJson from "@/lib/data.json"
 
@@ -52,6 +52,9 @@ export const AddSample = () => {
                             variant="outline"
                             name={name}
                         />
+                    )}
+                    {state.schema && state.schema[name as keyof SamplesWithoutIds] && (
+                        <p className="mt-1 text-xs text-red-400">{state.schema[name as keyof SamplesWithoutIds]?.toString()}</p>
                     )}
                 </Label>
             ))}

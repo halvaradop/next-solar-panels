@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { merge } from "@/lib/merge"
+import { merge } from "@/lib/utils"
 import { ProductProps } from "@/lib/@types/props"
 
 export const Product = ({ className, id, title, subtitle, description, src, alt, isRight }: ProductProps) => {

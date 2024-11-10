@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
-import { revalidateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { Samples } from "@prisma/client"
-import { Params, ResponseAPI, SampleRequest } from "@/lib/@types/types"
+import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific employee
@@ -24,7 +23,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 userId,
             },
         })
-        return NextResponse.json<ResponseAPI<Samples[]>>({ data: [], ok: true })
+        return NextResponse.json<ResponseAPI<Samples[]>>({ data, ok: true })
     } catch (error) {
         return NextResponse.json<ResponseAPI<Samples[]>>(
             {
@@ -50,11 +49,23 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
  * const response = await fetch("/api/v1/employees/{userId}/samples", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     material: "Steel",
- *     corrosion: "30",
- *     humidity: "50",
- *     temperature: "25",
- *     zone: "1",
+ *     userId: 1,
+ *     zoneId: 1,
+ *     soilTime: 1,
+ *     soilResistivity: 1,
+ *     moistureContent: 1,
+ *     pHValue: 1,
+ *     bufferCapacityPH4_3: 1,
+ *     bufferCapacityPH7_0: 1,
+ *     sulfurReducingBacteria: 1,
+ *     sulfateContent: 1,
+ *     neutralSalts: 1,
+ *     undergroundWaterPresence: "never",
+ *     horizontalSoilHomogeneity: 1,
+ *     verticalSoilHomogeneity: 1,
+ *     soilTypeHomogeneity: "homogeneous",
+ *     pHSoilHomogeneity: 1,
+ *     externalCathodes: 1,
  *   })
  * })
  * const data = await response.json()
@@ -63,17 +74,12 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { material, corrosion, humidity, temperature, zone } = response as SampleRequest
-
-        /*const newSample = await prisma.samples.create({
-            data: {
-                
-            },
-        })*/
-
-        revalidateTag("samplesByUser")
+        const json: Samples = response
+        const data = await prisma.samples.create({
+            data: json,
+        })
         return NextResponse.json<ResponseAPI<Samples>>({
-            data: {} as Samples,
+            data,
             ok: true,
             message: "The resource was created successfuly",
         })

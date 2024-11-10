@@ -1,7 +1,7 @@
 import { object, number, enum as enums } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
-    return number().min(min, { message: minMessage }).max(max, { message: maxMessage })
+    return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
 }
 
 export const SampleSchema = object({

@@ -4,6 +4,8 @@ import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
 import { SampleSchema } from "./schemas"
 import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
+import { Samples } from "@prisma/client"
+import { mapToNumber } from "./utils"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -15,6 +17,7 @@ import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["undergroundWaterPresence", "soilTypeHomogeneity"], false)
     const validate = SampleSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/samples`, {
@@ -24,15 +27,21 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
         if (request.ok) {
             redirect("/dashboard")
         }
+        return {
+            message: "Failed to add the sample",
+            isSuccess: false,
+            schema: {} as Samples,
+        }
     }
     const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
     return {
         message: "Check the invalid fields",
         isSuccess: false,
-        schema: {
-            material: errors?.material?.slice(0, 1),
-        },
-    } as never as AddSampleActionState
+        schema: schema as Samples,
+    }
 }
 
 export const loginAction = async (previous: LoginActionState, formData: FormData): Promise<LoginActionState> => {

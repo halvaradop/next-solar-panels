@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { SelectProps } from "@/lib/@types/props"
-import { merge } from "@/lib/merge"
+import { merge } from "@/lib/utils"
 import arrowDown from "@/public/arrow.svg"
 
 export const Select = ({ className, classNameOption, name, values }: SelectProps) => {
