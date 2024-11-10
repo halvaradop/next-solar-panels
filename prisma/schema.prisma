@@ -8,28 +8,26 @@ datasource db {
 }
 
 model Roles {
-  roleId   Int    @id @default(autoincrement())
-  roleName String @db.VarChar(50)
-  state    State  @default(ACTIVE)
-
+  roleId           Int                @id @default(autoincrement())
+  roleName         String             @db.VarChar(50)
+  state            State              @default(ACTIVE)
   Users            Users[]
   RolesPermissions RolesPermissions[]
 }
 
 model Users {
-  userId    Int    @id @default(autoincrement())
-  firstName String @db.VarChar(50)
-  lastName  String @db.VarChar(50)
-  email     String @db.VarChar(100)
-  password  String @db.VarChar(50)
-  state     State  @default(ACTIVE)
-  roleId    Int
-  role      Roles  @relation(fields: [roleId], references: [roleId])
-
-  AuditLogs      AuditLogs[]
-  PhoneUsers     PhoneUsers[]
-  EmployeePlants EmployeePlants[]
-  Samples        Samples[]
+  userId     Int          @id @default(autoincrement())
+  firstName  String       @db.VarChar(50)
+  lastName   String       @db.VarChar(50)
+  email      String       @db.VarChar(100)
+  password   String       @db.VarChar(50)
+  state      State        @default(ACTIVE)
+  roleId     Int
+  role       Roles        @relation(fields: [roleId], references: [roleId])
+  AuditLogs  AuditLogs[]
+  PhoneUsers PhoneUsers[]
+  UserPlants UserPlants[]
+  Samples    Samples[]
 }
 
 model AuditLogs {
@@ -44,10 +42,9 @@ model AuditLogs {
 }
 
 model Permissions {
-  permissionId   Int    @id @default(autoincrement())
-  permissionName String @db.VarChar(100)
-  state          State  @default(ACTIVE)
-
+  permissionId     Int                @id @default(autoincrement())
+  permissionName   String             @db.VarChar(100)
+  state            State              @default(ACTIVE)
   RolesPermissions RolesPermissions[]
 }
 
@@ -61,11 +58,10 @@ model RolesPermissions {
 }
 
 model Companies {
-  companyId   Int    @id @default(autoincrement())
-  companyName String @db.VarChar(100)
-  email       String @db.VarChar(100)
-  state       State  @default(ACTIVE)
-
+  companyId      Int              @id @default(autoincrement())
+  companyName    String           @db.VarChar(100)
+  email          String           @db.VarChar(100)
+  state          State            @default(ACTIVE)
   PhoneCompanies PhoneCompanies[]
   Plants         Plants[]
 }
@@ -78,28 +74,26 @@ model PhoneCompanies {
 }
 
 model Plants {
-  plantId   Int       @id @default(autoincrement())
-  plantName String    @db.VarChar(100)
-  companyId Int
-  latitude  Decimal   @db.Decimal(10, 8)
-  longitude Decimal   @db.Decimal(11, 8)
-  state     State     @default(ACTIVE)
-  company   Companies @relation(fields: [companyId], references: [companyId])
-
-  Zones          Zones[]
-  EmployeePlants EmployeePlants[]
+  plantId    Int          @id @default(autoincrement())
+  plantName  String       @db.VarChar(100)
+  companyId  Int
+  latitude   Decimal      @db.Decimal(10, 8)
+  longitude  Decimal      @db.Decimal(11, 8)
+  state      State        @default(ACTIVE)
+  company    Companies    @relation(fields: [companyId], references: [companyId])
+  Zones      Zones[]
+  UserPlants UserPlants[]
 }
 
 model Zones {
-  zoneId     Int       @id @default(autoincrement())
-  plantId    Int
-  latitude   Decimal   @db.Decimal(10, 8)
-  longitude  Decimal   @db.Decimal(11, 8)
-  state      State     @default(ACTIVE)
-  name       String    @db.VarChar(50)
-  plant      Plants    @relation(fields: [plantId], references: [plantId])
-
-  Samples Samples[]
+  zoneId    Int       @id @default(autoincrement())
+  plantId   Int
+  latitude  Decimal   @db.Decimal(10, 8)
+  longitude Decimal   @db.Decimal(11, 8)
+  state     State     @default(ACTIVE)
+  name      String    @db.VarChar(50)
+  plant     Plants    @relation(fields: [plantId], references: [plantId])
+  Samples   Samples[]
 }
 
 model PhoneUsers {
@@ -109,7 +103,7 @@ model PhoneUsers {
   user        Users @relation(fields: [userId], references: [userId])
 }
 
-model EmployeePlants {
+model UserPlants {
   userId  Int
   plantId Int
   user    Users  @relation(fields: [userId], references: [userId])
@@ -129,15 +123,15 @@ model Samples {
   pHValue                   Decimal  @db.Decimal(4, 2)
   bufferCapacityPH4_3       Decimal  @db.Decimal(5, 2)
   bufferCapacityPH7_0       Decimal  @db.Decimal(5, 2)
-  sulfurReducingBacteria    Int
+  sulfurReducingBacteria    Decimal  @db.Decimal(5, 2)
   sulfateContent            Decimal  @db.Decimal(5, 2)
   neutralSalts              Decimal  @db.Decimal(5, 2)
-  undergroundWaterPresence  Boolean
-  horizontalSoilHomogeneity String   @db.VarChar(50)
-  verticalSoilHomogeneity   String   @db.VarChar(50)
-  soilTypeHomogeneity       String   @db.VarChar(50)
+  undergroundWaterPresence  String   @db.VarChar(50)
+  horizontalSoilHomogeneity Decimal  @db.Decimal(5, 2)
+  verticalSoilHomogeneity   Decimal  @db.Decimal(5, 2)
+  soilTypeHomogeneity       Decimal  @db.Decimal(5, 2)
   pHSoilHomogeneity         String   @db.VarChar(50)
-  externalCathodes          Boolean
+  externalCathodes          Decimal  @db.Decimal(5, 2)
   user                      Users    @relation(fields: [userId], references: [userId])
   zone                      Zones    @relation(fields: [zoneId], references: [zoneId])
 }
