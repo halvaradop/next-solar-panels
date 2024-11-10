@@ -1,7 +1,7 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { z } from "zod"
 import { Samples, Zones } from "@prisma/client"
-import { SampleSchema } from "@/lib/schemas"
+import { SampleSchema, ZoneSchema } from "@/lib/schemas"
 import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
 export interface LayoutProps {
@@ -40,4 +40,12 @@ export type SampleRequest = z.infer<typeof SampleSchema>
 export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
+}
+
+export type ZoneRequest = z.infer<typeof ZoneSchema>
+
+export interface AddZonesActionState {
+    message: string
+    isSuccess: boolean
+    schema: Zones
 }

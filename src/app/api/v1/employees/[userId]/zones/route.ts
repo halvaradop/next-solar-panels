@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Zones } from "@prisma/client"
-import { Params, ResponseAPI } from "@/lib/@types/types"
+import { Params, ResponseAPI, SampleRequest, ZoneRequest } from "@/lib/@types/types"
+import { request } from "http"
 
 /**
  * Handle the GET request to retrieve all zones related to a specific employee
@@ -33,5 +34,34 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
         })
     } catch (error) {
         return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+    }
+}
+
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
+    try {
+        const response = await request.json()
+        const { latitude, longitude, name, plant } = response as ZoneRequest
+
+        /*  const newZone = await prisma.zones.create({
+             data: {
+
+
+
+             },
+
+
+        })*/
+
+        return NextResponse.json<ResponseAPI<Zones>>({
+            data: {} as Zones,
+            ok: true,
+            message: "The zone was created successfuly",
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<{}>>({
+            data: {},
+            ok: false,
+            message: "Failed to create new zone",
+        })
     }
 }

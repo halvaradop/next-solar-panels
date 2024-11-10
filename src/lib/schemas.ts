@@ -7,3 +7,10 @@ export const SampleSchema = z.object({
     humidity: z.string().regex(/^[0-9]+$/),
     zone: z.string(),
 })
+
+export const ZoneSchema = z.object({
+    latitude: z.string(),
+    longitude: z.string(),
+    name: z.string(),
+    plant: z.string(),
+})

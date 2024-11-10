@@ -2,8 +2,8 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { SampleSchema } from "./schemas"
-import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
+import { SampleSchema, ZoneSchema } from "./schemas"
+import { AddSampleActionState, AddZonesActionState, LoginActionState } from "@/lib/@types/types"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -44,4 +44,25 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
         }
     }
     redirect("/dashboard")
+}
+
+export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = ZoneSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/zones`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        if (request.ok) {
+            redirect("/dashboard")
+        }
+    }
+    const errors = validate?.error?.flatten().fieldErrors
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: {},
+    } as never as AddZonesActionState
 }
