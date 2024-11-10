@@ -20,7 +20,7 @@ export const Footer = () => {
                             <Link href="/">ABOUT US</Link>
                         </li>
                         <li>
-                            <Link href="/login">LOGIN</Link>
+                            <Link href="/dashboard">LOGIN</Link>
                         </li>
                     </ul>
                     <ul>

@@ -6,9 +6,16 @@ import { HeaderMenuProps } from "@/lib/@types/props"
 import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Loggin } from "./loggin"
 
-export const HeaderMenu = ({ pathname, isMatchMedia }: HeaderMenuProps) => {
+export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProps) => {
     const session = useSession()
     const isLoggin = new RegExp("^/dashboard.*$").test(pathname) && session
+
+    const handleHashChange = () => {
+        setMenuState((previous) => ({
+            ...previous,
+            isMenuOpen: false,
+        }))
+    }
 
     return (
         <motion.aside
@@ -20,7 +27,7 @@ export const HeaderMenu = ({ pathname, isMatchMedia }: HeaderMenuProps) => {
         >
             <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-min base:p-0">
                 <p className="pb-1 border-b border-gray base:hidden">Navigation</p>
-                {isLoggin && isMatchMedia ? (
+                {isLoggin && menuState.isMatchMedia ? (
                     <Loggin />
                 ) : (
                     <ul className="fluency-3xl font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:text-lg base:uppercase">
@@ -42,13 +49,19 @@ export const HeaderMenu = ({ pathname, isMatchMedia }: HeaderMenuProps) => {
                                     <Link href="/">Home</Link>
                                 </motion.li>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#corrosion">Corrosion</Link>
+                                    <Link href="/#corrosion" onClick={() => handleHashChange()}>
+                                        Corrosion
+                                    </Link>
                                 </motion.li>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#solar-panels">Solar panels</Link>
+                                    <Link href="/#solar-panels" onClick={() => handleHashChange()}>
+                                        Solar panels
+                                    </Link>
                                 </motion.li>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#about-us">About us</Link>
+                                    <Link href="/#about-us" onClick={() => handleHashChange()}>
+                                        About us
+                                    </Link>
                                 </motion.li>
                             </>
                         )}

@@ -1,6 +1,7 @@
+import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zones, Samples } from "@prisma/client"
-import { Entry } from "./types"
+import { Entry, MenuState } from "./types"
 
 export interface ProductProps {
     className?: string
@@ -21,8 +22,9 @@ export interface ProjectProps {
 }
 
 export interface HeaderMenuProps {
-    isMatchMedia: boolean
     pathname: string
+    menuState: MenuState
+    setMenuState: Dispatch<SetStateAction<MenuState>>
 }
 
 export interface FilterByProps {
