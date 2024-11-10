@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: "Add a sample to the dashboard",
 }
 
-const AddSamplesPage = () => {
+const AddSamplesPage = async () => {
     return (
         <SessionProvider>
             <AddSample />

@@ -1,0 +1,103 @@
+{
+  "sampleInputs": [
+    {
+      "label": "Soil type",
+      "name": "soilTime",
+      "unit": "%"
+    },
+    {
+      "label": "Specific soild resistivity",
+      "name": "soilResistivity",
+      "unit": "Ω m"
+    },
+    {
+      "label": "Moisture content",
+      "name": "moistureContent",
+      "unit": "%"
+    },
+    {
+      "label": "pH value",
+      "name": "pHValue",
+      "unit": ""
+    },
+    {
+      "label": "Buffer capacity pH 4.3",
+      "name": "bufferCapacityPH4_3",
+      "unit": "mmol/kg"
+    },
+    {
+      "label": "Buffer capacity pH 7.0",
+      "name": "bufferCapacityPH7_0",
+      "unit": "mmol/kg"
+    },
+    {
+      "label": "Sulphate reducing bacteria",
+      "name": "sulfurReducingBacteria",
+      "unit": "mg/kg"
+    },
+    {
+      "label": "Sulphate content",
+      "name": "sulfateContent",
+      "unit": "mmol/kg"
+    },
+    {
+      "label": "Neutral salts",
+      "name": "neutralSalts",
+      "unit": "mmol/kg"
+    },
+    {
+      "label": "Location of the object in relation to the groundwater",
+      "name": "undergroundWaterPresence",
+      "unit": "",
+      "values": [
+        {
+          "key": "never",
+          "value": "never"
+        },
+        {
+          "key": "constant",
+          "value": "constant"
+        },
+        {
+          "key": "intermittent",
+          "value": "intermittent"
+        }
+      ]
+    },
+    {
+      "label": "Horizontal soild homogeneity based on soild resistivity",
+      "name": "horizontalSoilHomogeneity",
+      "unit": ""
+    },
+    {
+      "label": "Vertical soild homogeneity",
+      "name": "verticalSoilHomogeneity",
+      "unit": ""
+    },
+    {
+      "label": "Soil homogeneity",
+      "name": "soilTypeHomogeneity",
+      "unit": "",
+      "values": [
+        {
+          "key": "homogeneous",
+          "value": "homogeneous"
+        },
+        {
+          "key": "heterogeneous",
+          "value": "heterogeneous"
+        }
+      ]
+    },
+    {
+      "label": "Soil homogeneity / different pH values",
+      "name": "pHSoilHomogeneity",
+      "unit": ""
+    },
+    {
+      "label": "Presence of foreign cathodes",
+      "name": "externalCathodes",
+      "unit": ""
+    }
+  ]
+}

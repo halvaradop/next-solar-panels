@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { AnimatePresence } from "framer-motion"
 import { SessionProvider } from "next-auth/react"
-import { merge } from "@/lib/merge"
+import { merge } from "@/lib/utils"
 import { HeaderMenu } from "./header-menu"
 import { MenuState } from "@/lib/@types/types"
 

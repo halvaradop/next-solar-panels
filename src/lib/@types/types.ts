@@ -1,8 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { z } from "zod"
-import { Samples, Zones } from "@prisma/client"
-import { SampleSchema, ZoneSchema } from "@/lib/schemas"
-import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
+import { Samples } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -16,7 +13,7 @@ export interface MenuState {
 export interface AddSampleActionState {
     message: string
     isSuccess: boolean
-    schema: Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+    schema: SamplesWithoutIds
 }
 
 export interface Entry {
@@ -35,8 +32,6 @@ export interface ResponseAPI<T> {
     message?: string
 }
 
-export type SampleRequest = z.infer<typeof SampleSchema>
-
 export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
@@ -49,3 +44,5 @@ export interface AddZonesActionState {
     isSuccess: boolean
     schema: Zones
 }
+
+export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
