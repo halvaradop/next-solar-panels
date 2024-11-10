@@ -114,7 +114,7 @@ model UserPlants {
 
 model Samples {
   sampleId                  Int      @id @default(autoincrement())
-  sampleDateTime            DateTime
+  sampleDateTime            DateTime @default(now())
   userId                    Int
   zoneId                    Int
   soilTime                  Int
@@ -129,8 +129,8 @@ model Samples {
   undergroundWaterPresence  String   @db.VarChar(50)
   horizontalSoilHomogeneity Decimal  @db.Decimal(5, 2)
   verticalSoilHomogeneity   Decimal  @db.Decimal(5, 2)
-  soilTypeHomogeneity       Decimal  @db.Decimal(5, 2)
-  pHSoilHomogeneity         String   @db.VarChar(50)
+  soilTypeHomogeneity       String   @db.VarChar(50)
+  pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
   externalCathodes          Decimal  @db.Decimal(5, 2)
   user                      Users    @relation(fields: [userId], references: [userId])
   zone                      Zones    @relation(fields: [zoneId], references: [zoneId])

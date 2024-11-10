@@ -1,4 +1,4 @@
-import { merge } from "@/lib/merge"
+import { merge } from "@/lib/utils"
 import { ProjectProps } from "@/lib/@types/props"
 
 export const Project = ({ className, title, city, year }: ProjectProps) => {

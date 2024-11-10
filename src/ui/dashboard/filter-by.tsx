@@ -1,7 +1,7 @@
 "use client"
 import { MouseEvent, useState } from "react"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
-import { merge } from "@/lib/merge"
+import { merge } from "@/lib/utils"
 import { FilterByProps } from "@/lib/@types/props"
 
 export const FilterBy = ({ className, title, options }: FilterByProps) => {
