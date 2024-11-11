@@ -113,7 +113,7 @@ CREATE TABLE `UserPlants` (
 -- CreateTable
 CREATE TABLE `Samples` (
     `sampleId` INTEGER NOT NULL AUTO_INCREMENT,
-    `sampleDateTime` DATETIME(3) NOT NULL,
+    `sampleDateTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `userId` INTEGER NOT NULL,
     `zoneId` INTEGER NOT NULL,
     `soilTime` INTEGER NOT NULL,
@@ -128,8 +128,8 @@ CREATE TABLE `Samples` (
     `undergroundWaterPresence` VARCHAR(50) NOT NULL,
     `horizontalSoilHomogeneity` DECIMAL(5, 2) NOT NULL,
     `verticalSoilHomogeneity` DECIMAL(5, 2) NOT NULL,
-    `soilTypeHomogeneity` DECIMAL(5, 2) NOT NULL,
-    `pHSoilHomogeneity` VARCHAR(50) NOT NULL,
+    `soilTypeHomogeneity` VARCHAR(50) NOT NULL,
+    `pHSoilHomogeneity` DECIMAL(5, 2) NOT NULL,
     `externalCathodes` DECIMAL(5, 2) NOT NULL,
 
     PRIMARY KEY (`sampleId`)

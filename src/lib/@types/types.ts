@@ -1,5 +1,7 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Samples } from "@prisma/client"
+import { Samples, Zones } from "@prisma/client"
+import { ZoneSchema } from "../schemas"
+import { z } from "zod"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -43,7 +45,7 @@ export type ZoneRequest = z.infer<typeof ZoneSchema>
 export interface AddZonesActionState {
     message: string
     isSuccess: boolean
-    schema: Zones
+    schema: Omit<Zones, "zoneId" | "plantId" | "state">
 }
 
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">

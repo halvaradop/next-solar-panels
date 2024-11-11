@@ -25,6 +25,7 @@ export const AddZone = () => {
         const fetchPlants = async () => {
             const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
             const response = await getPlantsByUser(userId)
+            console.log(session)
             setPlants(response)
         }
         fetchPlants()
@@ -54,9 +55,9 @@ export const AddZone = () => {
                 />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
-                Zone
+                Plant
                 <div className="mt1 flex items-center relative">
-                    <select className="w-full h-10 pl-3 border rounded-lg appearance-none" name="zone">
+                    <select className="w-full h-10 pl-3 border rounded-lg appearance-none" name="plant">
                         {plants.map(({ plantId, plantName }) => (
                             <option key={plantId} value={plantId}>
                                 {plantName}

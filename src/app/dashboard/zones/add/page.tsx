@@ -1,11 +1,12 @@
+import { auth } from "@/lib/auth"
 import { AddZone } from "@/ui/dashboard/zones/add-zones"
-import { Session } from "inspector/promises"
 import { SessionProvider } from "next-auth/react"
 
-const AddZonePage = () => {
+const AddZonePage = async () => {
+    const session = await auth()
     return (
-        <SessionProvider>
-            <AddZone></AddZone>
+        <SessionProvider session={session}>
+            <AddZone />
         </SessionProvider>
     )
 }

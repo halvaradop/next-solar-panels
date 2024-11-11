@@ -4,7 +4,7 @@ import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
 import { SampleSchema, ZoneSchema } from "./schemas"
 import { AddSampleActionState, AddZonesActionState, LoginActionState } from "@/lib/@types/types"
-import { Samples } from "@prisma/client"
+import { Samples, Zones } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**
@@ -67,11 +67,20 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
         if (request.ok) {
             redirect("/dashboard")
         }
+        return {
+            message: "Check the invalid fields",
+            isSuccess: false,
+            schema: {} as Zones,
+        }
     }
+
     const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
     return {
         message: "Check the invalid fields",
         isSuccess: false,
-        schema: {},
-    } as never as AddZonesActionState
+        schema: schema as Zones,
+    }
 }

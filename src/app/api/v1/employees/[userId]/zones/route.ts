@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Zones } from "@prisma/client"
-import { Params, ResponseAPI, SampleRequest, ZoneRequest } from "@/lib/@types/types"
+import { Params, ResponseAPI, ZoneRequest } from "@/lib/@types/types"
 import { request } from "http"
 
 /**
@@ -39,21 +39,23 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
+        console.log("entro 1")
         const response = await request.json()
         const { latitude, longitude, name, plant } = response as ZoneRequest
-
-        /*  const newZone = await prisma.zones.create({
-             data: {
-
-
-
-             },
-
-
-        })*/
+        console.log(response)
+        const newZone = await prisma.zones.create({
+            data: {
+                latitude,
+                longitude,
+                name,
+                plantId: parseInt(plant),
+            },
+        })
+        console.log("pasa")
+        console.log(newZone)
 
         return NextResponse.json<ResponseAPI<Zones>>({
-            data: {} as Zones,
+            data: newZone as Zones,
             ok: true,
             message: "The zone was created successfuly",
         })

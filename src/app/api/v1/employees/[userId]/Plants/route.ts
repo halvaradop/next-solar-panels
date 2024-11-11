@@ -1,41 +1,34 @@
 import { NextRequest, NextResponse } from "next/server"
 import { revalidateTag } from "next/cache"
 import { prisma } from "@/lib/prisma"
-import { Params, ResponseAPI, SampleRequest } from "@/lib/@types/types"
-import { Plants } from "@prisma/client"
-
+import { Params, ResponseAPI } from "@/lib/@types/types"
+import { Companies, Plants } from "@prisma/client"
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
-        const companyId = await prisma.companies.findFirst({
+        const company = await prisma.companies.findFirst({
             where: {
                 Plants: {
                     some: {
-                        EmployeePlants: {
+                        UserPlants: {
                             some: {
-                                userId,
+                                userId: userId,
                             },
                         },
                     },
                 },
             },
         })
-        const data = await prisma.companies.findMany({
+        const data = await prisma.plants.findMany({
             where: {
-                companyId: companyId?.companyId,
+                companyId: company?.companyId,
             },
         })
-        console.log(data)
-
-        return NextResponse.json<ResponseAPI<Plants[]>>({ data: [], ok: true })
+        return NextResponse.json<ResponseAPI<Plants[]>>({
+            data,
+            ok: true,
+        })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Plants[]>>(
-            {
-                data: [],
-                ok: false,
-                message: "Failed to retrieve samples related to the employee",
-            },
-            { status: 404 }
-        )
+        return NextResponse.json<ResponseAPI<Plants[]>>({ data: [], ok: true }, { status: 404 })
     }
 }
