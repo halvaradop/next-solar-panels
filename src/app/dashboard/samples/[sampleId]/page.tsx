@@ -11,7 +11,7 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
         <div className="self-start mt-4 grid place-content-center">
             <div className="space-y-1">
                 {Object.entries(getSample).map(([key, value]) => (
-                    <p>
+                    <p key={key}>
                         <span className="text-neutral-700 font-medium">{key}: </span>
                         <span className="text-neutral-600">{value as never}</span>
                     </p>
