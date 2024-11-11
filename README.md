@@ -35,6 +35,18 @@ npm install -g pnpm@latest
 pnpm install
 ```
 
+### Set up environment variables
+
+To ensure the project works correctly, you need to set up the environment variables. These variables are required for database connection and NextAuth configuration.
+
+1. Copy the example environment file to create your local environment file:
+
+```bash
+cp .env.local.example .env.local
+```
+
+2. Open the `.env.local` file and fill in the required values.
+
 ### Run the project
 
 ```bash
