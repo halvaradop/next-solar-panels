@@ -3,6 +3,13 @@ import { prisma } from "@/lib/prisma"
 import { Samples } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
+/**
+ * Handle the GET request to retrieve a specific sample by its Id from the database.
+ *
+ * @param {NextRequest} request - The HTTP request created by the client
+ * @param {Params<"sampleId">} params - The parameters received in the request
+ * @returns {Promise<NextResponse>} - The HTTP response with the sample fetched
+ */
 export const GET = async (request: NextRequest, { params }: Params<"sampleId">): Promise<NextResponse> => {
     try {
         const sampleId = parseInt(params.sampleId)
