@@ -21,4 +21,8 @@
     body:has(header[data-home="false"]) footer {
         display: none;
     }
+
+    th {
+        @apply text-start font-medium;
+    }
 }
