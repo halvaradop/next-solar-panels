@@ -1,23 +1,45 @@
 import { Params } from "@/lib/@types/types"
 import { getSamplesById } from "@/lib/services/dashboard"
+import { camelCaseToWords } from "@/lib/utils"
+import { Button } from "@halvaradop/ui-button"
+import Link from "next/link"
 
-/**
- * TODO: Improve the UI of this page
- */
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const getSample = await getSamplesById(parseInt(params.sampleId))
+    const { zoneId, sampleId, userId, sampleDateTime, ...spread } = getSample
+    const date = new Date(sampleDateTime).toLocaleString()
 
     return (
-        <div className="self-start mt-4 grid place-content-center">
-            <div className="space-y-1">
-                {Object.entries(getSample).map(([key, value]) => (
-                    <p key={key}>
-                        <span className="text-neutral-700 font-medium">{key}: </span>
-                        <span className="text-neutral-600">{value as never}</span>
-                    </p>
-                ))}
-            </div>
-        </div>
+        <section className="pt-4 pb-12 self-start grid place-content-center base:pb-0 base:relative">
+            <Button className="mb-6 base:absolute base:top-4">
+                <Link href="./">Go back</Link>
+            </Button>
+            <article>
+                <div className="flex items-center justify-between">
+                    <h1 className="text-neutral-700 text-lg font-medium">Sample information</h1>
+                    <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500">Zone {zoneId}</span>
+                </div>
+                <time className="text-neutral-600" dateTime={date}>
+                    Date: {date}
+                </time>
+                <table className="mt-2 py-4 px-2 border border-separate rounded-lg">
+                    <thead>
+                        <tr>
+                            <th className="p-2">Title</th>
+                            <th className="p-2">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.entries(spread).map(([key, value]) => (
+                            <tr key={key}>
+                                <td className="py-1 px-2 text-neutral-700 font-medium">{camelCaseToWords(key)}</td>
+                                <td className="py-1 px-2 text-neutral-600">{value as never}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </article>
+        </section>
     )
 }
 
