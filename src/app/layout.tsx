@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
 import { LayoutProps } from "@/lib/@types/types"
-import "@/ui/globals.css"
 import { Header } from "@/ui/header/header"
 import { Footer } from "@/ui/footer"
+import "@/ui/globals.css"
 
 const poppins = Poppins({
     weight: ["400", "500", "600", "700"],

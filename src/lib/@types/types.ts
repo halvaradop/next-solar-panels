@@ -8,6 +8,7 @@ export interface LayoutProps {
 export interface MenuState {
     isMenuOpen: boolean
     isMatchMedia: boolean
+    hash: string
 }
 
 export interface AddSampleActionState {
