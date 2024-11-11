@@ -2,7 +2,7 @@ import Image from "next/image"
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { Table } from "@/ui/dashboard/table"
+import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/dashboard/filter"
 import { getSamplesByUser, getZonesByUser } from "@/lib/services/dashboard"
 import arrowIcon from "@/public/arrow.svg"
@@ -22,7 +22,7 @@ const DashboardSamplesPage = async () => {
         <section className="min-h-main py-4 space-y-4">
             <Filter zones={zones} />
             <Suspense fallback={<p>Table...</p>}>
-                <Table samples={samples} />
+                <SampleList samples={samples} />
             </Suspense>
             <div className="w-full flex items-center justify-between">
                 <p className="text-sm">showing {samples.length}</p>
