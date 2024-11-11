@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Zones } from "@prisma/client"
-import { Params, ResponseAPI, ZoneRequest } from "@/lib/@types/types"
+import { Params, ResponseAPI } from "@/lib/@types/types"
 import { request } from "http"
 
 /**
@@ -16,6 +16,8 @@ import { request } from "http"
  * const data = await response.json()
  * ```
  */
+
+/*
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
@@ -36,13 +38,46 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
         return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
     }
 }
+*/
+export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
+    try {
+        const userId = parseInt(params.userId)
+        const company = await prisma.companies.findFirst({
+            where: {
+                Plants: {
+                    some: {
+                        UserPlants: {
+                            some: {
+                                userId: userId,
+                            },
+                        },
+                    },
+                },
+            },
+        })
+        const data = await prisma.plants
+            .findMany({
+                where: {
+                    companyId: company?.companyId,
+                },
+                include: {
+                    Zones: true,
+                },
+            })
+            .then((plants) => plants.flatMap((plant) => plant.Zones))
+        return NextResponse.json<ResponseAPI<Zones[]>>({
+            data,
+            ok: true,
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+    }
+}
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        console.log("entro 1")
         const response = await request.json()
-        const { latitude, longitude, name, plant } = response as ZoneRequest
-        console.log(response)
+        const { latitude, longitude, name, plant } = response
         const newZone = await prisma.zones.create({
             data: {
                 latitude,
@@ -51,9 +86,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 plantId: parseInt(plant),
             },
         })
-        console.log("pasa")
-        console.log(newZone)
-
         return NextResponse.json<ResponseAPI<Zones>>({
             data: newZone as Zones,
             ok: true,

@@ -39,9 +39,6 @@ export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
 }
-
-export type ZoneRequest = z.infer<typeof ZoneSchema>
-
 export interface AddZonesActionState {
     message: string
     isSuccess: boolean

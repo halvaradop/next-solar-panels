@@ -25,7 +25,6 @@ export const AddZone = () => {
         const fetchPlants = async () => {
             const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
             const response = await getPlantsByUser(userId)
-            console.log(session)
             setPlants(response)
         }
         fetchPlants()
