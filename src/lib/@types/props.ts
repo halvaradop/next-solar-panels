@@ -33,7 +33,7 @@ export interface FilterByProps {
     options: Entry[]
 }
 
-export interface TableProps {
+export interface SampleListProps {
     samples: Samples[]
 }
 
