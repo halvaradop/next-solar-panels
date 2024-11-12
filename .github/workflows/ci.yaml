@@ -36,6 +36,7 @@ jobs:
   deploy-to-development:
     needs: build
     runs-on: ubuntu-latest
+    environment: "development"
     if: github.event.pull_request.merged == true && github.base_ref == 'master'
     steps:
       - run: echo "Deploying to development"
@@ -43,6 +44,7 @@ jobs:
   deploy-to-production:
     needs: build
     runs-on: ubuntu-latest
+    environment: "production"
     if: github.event.pull_request.merged == true && github.base_ref == 'master' && startsWith(github.head_ref, 'release/')
     steps:
       - run: echo "Deploying to production"

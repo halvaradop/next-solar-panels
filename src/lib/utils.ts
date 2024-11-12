@@ -29,3 +29,13 @@ export const mapToNumber = (entries: Record<string, unknown>, fields: string[], 
         })
     }
 }
+
+/**
+ * Converts a camelCase string to a string separated by spaces
+ *
+ * @param str the camelCase string
+ * @returns a string with spaces separating the words
+ */
+export const camelCaseToWords = (str: string): string => {
+    return str.replace(/([A-Z])/g, " $1").trim()
+}

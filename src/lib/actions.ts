@@ -2,9 +2,9 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { SampleSchema } from "./schemas"
-import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
-import { Samples } from "@prisma/client"
+import { SampleSchema, ZoneSchema } from "./schemas"
+import { AddSampleActionState, AddZonesActionState, LoginActionState } from "@/lib/@types/types"
+import { Samples, Zones } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**
@@ -53,4 +53,34 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
         }
     }
     redirect("/dashboard")
+}
+
+export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = ZoneSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/zones`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        if (request.ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message: "Check the invalid fields",
+            isSuccess: false,
+            schema: {} as Zones,
+        }
+    }
+
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: schema as Zones,
+    }
 }

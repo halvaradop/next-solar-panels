@@ -1,4 +1,4 @@
-import { object, number, enum as enums } from "zod"
+import { object, number, string, enum as enums } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -30,4 +30,11 @@ export const SampleSchema = object({
     pHSoilHomogeneity: range(0, "Soil homogeneity must be a positive number", 10, "Soild homogeneity must be less than 10"),
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
     zoneId: range(0, "", 0, ""),
+})
+
+export const ZoneSchema = object({
+    latitude: string(),
+    longitude: string(),
+    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    plant: string(),
 })
