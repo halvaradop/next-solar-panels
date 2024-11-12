@@ -1,4 +1,4 @@
-import { Zones, Samples } from "@prisma/client"
+import { Zones, Samples, Plants } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -39,6 +39,18 @@ export const getZonesByUser = async (userId: number): Promise<Zones[]> => {
  */
 export const getZones = async (): Promise<Zones[]> => {
     const response = await fetch("http://localhost:3000/api/v1/zones")
+    const json: ResponseAPI<Zones[]> = await response.json()
+    return json.data
+}
+
+export const getPlantsByUser = async (userId: number): Promise<Plants[]> => {
+    const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/plants`)
+    const json: ResponseAPI<Plants[]> = await response.json()
+    return json.data
+}
+
+export const getZonesPlantsByUser = async (userId: number): Promise<Zones[]> => {
+    const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/zonesByCompany`)
     const json: ResponseAPI<Zones[]> = await response.json()
     return json.data
 }
