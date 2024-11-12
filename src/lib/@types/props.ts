@@ -41,7 +41,7 @@ export interface FilterProps {
     zones: Zones[]
 }
 
-export interface FilterPropsPlants {
+export interface FilterPlantsProps {
     plants: Plants[]
 }
 export interface SelectProps {

@@ -1,14 +1,13 @@
 "use client"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-
-import { FilterProps, FilterPropsPlants } from "@/lib/@types/props"
+import { FilterPlantsProps } from "@/lib/@types/props"
 import { Entry } from "@/lib/@types/types"
+import { FilterBy } from "../filter-by"
 import resetIcon from "@/public/reset.svg"
 import filterIcon from "@/public/filter.svg"
-import { FilterBy } from "../filter-by"
 
-export const Filter = ({ plants }: FilterPropsPlants) => {
+export const Filter = ({ plants }: FilterPlantsProps) => {
     const router = useRouter()
     const patname = usePathname()
     const mapPlants = plants.map<Entry>(({ plantId, plantName }) => ({ key: plantId.toString(), value: plantName }))

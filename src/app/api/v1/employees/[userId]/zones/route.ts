@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Zones } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
-import { request } from "http"
 
 /**
  * Handle the GET request to retrieve all zones related to a specific employee
@@ -16,29 +15,6 @@ import { request } from "http"
  * const data = await response.json()
  * ```
  */
-
-/*
-export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
-    try {
-        const userId = parseInt(params.userId)
-        const data = await prisma.zones.findMany({
-            where: {
-                Samples: {
-                    some: {
-                        userId,
-                    },
-                },
-            },
-        })
-        return NextResponse.json<ResponseAPI<Zones[]>>({
-            data,
-            ok: true,
-        })
-    } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
-    }
-}
-*/
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)

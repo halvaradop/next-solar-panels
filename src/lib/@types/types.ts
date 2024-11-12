@@ -1,7 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { Samples, Zones } from "@prisma/client"
-import { ZoneSchema } from "../schemas"
-import { z } from "zod"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -46,3 +44,22 @@ export interface AddZonesActionState {
 }
 
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+
+export interface UsersResponse {
+    userId: number
+    email: string
+    firstName: string
+    lastName: string
+    role: {
+        roleId: number
+        roleName: string
+        state: string
+    }
+    UserPlants: Array<{
+        plant: {
+            company: {
+                companyId: number
+            }
+        }
+    }>
+}
