@@ -1,4 +1,4 @@
-import { object, number, enum as enums, z } from "zod"
+import { object, number, string, enum as enums } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -32,9 +32,9 @@ export const SampleSchema = object({
     zoneId: range(0, "", 0, ""),
 })
 
-export const ZoneSchema = z.object({
-    latitude: z.string(),
-    longitude: z.string(),
-    name: z.string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
-    plant: z.string(),
+export const ZoneSchema = object({
+    latitude: string(),
+    longitude: string(),
+    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    plant: string(),
 })
