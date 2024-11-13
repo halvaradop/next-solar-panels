@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Samples } from "@prisma/client"
+import { Companies, Samples, Users } from "@prisma/client"
 export interface LayoutProps {
     children: React.ReactNode
 }
@@ -16,6 +16,17 @@ export interface AddSampleActionState {
     schema: SamplesWithoutIds
 }
 
+export interface AddCompanieActionState {
+    message: string
+    isSuccess: boolean
+    schema: Omit<Companies, "companyId">
+}
+
+export interface AddUserActionState {
+    message: string
+    isSuccess: boolean
+    schema: Omit<Users, "userId">
+}
 export interface Entry {
     key: string
     value: string

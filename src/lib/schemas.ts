@@ -1,4 +1,5 @@
-import { object, number, enum as enums } from "zod"
+import Email from "next-auth/providers/email"
+import { object, number, enum as enums, z } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -31,3 +32,20 @@ export const SampleSchema = object({
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
     zoneId: range(0, "", 0, ""),
 })
+
+export const CompanySchema= z.object({
+     companyName: z.string(),
+     email:z.string(),
+     phone:z.string(),
+}
+)
+
+export const UserSchema= z.object({
+    firstName: z.string(),
+    lastName:z.string(),
+    email:z.string(),
+    password:z.string(),
+    phone:z.string(),
+    rol:z.string(),
+}
+)

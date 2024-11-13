@@ -2,9 +2,9 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { SampleSchema } from "./schemas"
-import { AddSampleActionState, LoginActionState } from "@/lib/@types/types"
-import { Samples } from "@prisma/client"
+import { CompanySchema, SampleSchema, UserSchema } from "./schemas"
+import { AddCompanieActionState, AddSampleActionState, AddUserActionState, LoginActionState } from "@/lib/@types/types"
+import { Companies, Samples, Users } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**
@@ -53,4 +53,64 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
         }
     }
     redirect("/dashboard")
+}
+
+export const addCompanyAction = async (previous: AddCompanieActionState, formData: FormData): Promise<AddCompanieActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = CompanySchema.safeParse(entries)
+
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/companies`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        if (request.ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message: "Failed to add the sample",
+            isSuccess: false,
+            schema: {} as Companies,
+        }
+    }
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: schema as Companies,
+    }
+}
+
+export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = UserSchema.safeParse(entries)
+
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/users`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        if (request.ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message: "Failed to add the sample",
+            isSuccess: false,
+            schema: {} as Users,
+        }
+    }
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: schema as Users,
+    }
 }
