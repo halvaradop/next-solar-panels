@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
-import { getSamplesByUser, getZonesByUser } from "@/lib/services/dashboard"
+import { getSamplesByUser, getZonesByUser } from "@/lib/services"
 import samplesIcon from "@/public/samples.svg"
 import zonesIcon from "@/public/zone.svg"
 

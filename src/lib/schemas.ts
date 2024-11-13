@@ -1,5 +1,4 @@
-import Email from "next-auth/providers/email"
-import { object, number, enum as enums, z } from "zod"
+import { object, number, string, enum as enums } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -33,17 +32,27 @@ export const SampleSchema = object({
     zoneId: range(0, "", 0, ""),
 })
 
-export const CompanySchema = z.object({
-    companyName: z.string(),
-    email: z.string(),
-    phone: z.string(),
+export const CompanySchema = object({
+    companyName: string(),
+    email: string(),
+    phone: string(),
 })
 
-export const UserSchema = z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    email: z.string(),
-    password: z.string(),
-    phone: z.string(),
-    rol: z.string(),
+export const UserSchema = object({
+    firstName: string(),
+    lastName: string(),
+    email: string(),
+    password: string(),
+    phone: string(),
+    rol: string(),
+})
+export const ZoneSchema = object({
+    latitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
+    longitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
+    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    plant: number(),
 })

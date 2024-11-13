@@ -18,20 +18,60 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
-        const data = await prisma.zones.findMany({
+        const company = await prisma.companies.findFirst({
             where: {
-                Samples: {
+                Plants: {
                     some: {
-                        userId,
+                        UserPlants: {
+                            some: {
+                                userId: userId,
+                            },
+                        },
                     },
                 },
             },
         })
+        const data = await prisma.plants
+            .findMany({
+                where: {
+                    companyId: company?.companyId,
+                },
+                include: {
+                    Zones: true,
+                },
+            })
+            .then((plants) => plants.flatMap((plant) => plant.Zones))
         return NextResponse.json<ResponseAPI<Zones[]>>({
             data,
             ok: true,
         })
     } catch (error) {
         return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+    }
+}
+
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
+    try {
+        const response = await request.json()
+        const { latitude, longitude, name, plant } = response
+        const newZone = await prisma.zones.create({
+            data: {
+                latitude,
+                longitude,
+                name,
+                plantId: parseInt(plant),
+            },
+        })
+        return NextResponse.json<ResponseAPI<Zones>>({
+            data: newZone as Zones,
+            ok: true,
+            message: "The zone was created successfuly",
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<{}>>({
+            data: {},
+            ok: false,
+            message: "Failed to create new zone",
+        })
     }
 }
