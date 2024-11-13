@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { addUserAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
 import { Form } from "@halvaradop/ui-form"
@@ -8,8 +9,7 @@ import { Button } from "@halvaradop/ui-button"
 import { AddUserActionState } from "@/lib/@types/types"
 import { Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import Image from "next/image"
-import { getRoles } from "@/lib/services/dashboard"
+import { getRoles } from "@/lib/services"
 import arrowDown from "@/public/arrow.svg"
 
 export const AddUser = () => {
