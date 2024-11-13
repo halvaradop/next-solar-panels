@@ -1,10 +1,10 @@
 "use server"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
+import { Samples, Zones } from "@prisma/client"
 import { auth, signIn } from "@/lib/auth"
 import { SampleSchema, ZoneSchema } from "./schemas"
 import { AddSampleActionState, AddZonesActionState, LoginActionState } from "@/lib/@types/types"
-import { Samples, Zones } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**

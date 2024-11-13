@@ -1,8 +1,8 @@
+import Link from "next/link"
 import { Params } from "@/lib/@types/types"
-import { getSamplesById } from "@/lib/services/dashboard"
+import { getSamplesById } from "@/lib/services/samples"
 import { camelCaseToWords } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
-import Link from "next/link"
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const getSample = await getSamplesById(parseInt(params.sampleId))
