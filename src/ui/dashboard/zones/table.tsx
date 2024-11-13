@@ -1,35 +1,25 @@
-import { FilterProps } from "@/lib/@types/props"
+import { TableZonesProps } from "@/lib/@types/props"
 
-export const Table = async ({ zones }: FilterProps) => {
+export const Table = async ({ zones }: TableZonesProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
                 <tr>
-                    <th className="w-[10%] p-3 text-start font-medium sm:w-[10%]">Id</th>
-                    <th className="w-[30%] p-3 text-start font-medium sm:w-[30%] md:w-[20%]">Name</th>
-                    <th className="hidden w-[20%] p-3 text-start font-medium sm:table-cell base:w-[15%]">Longitude</th>
-                    <th className="hidden w-[20%] p-3 text-start font-medium md:table-cell base:w-[15%]">Latitude</th>
-                    <th className="w-[15%] p-3 text-start font-medium sm:w-[15%] md:w-[10%]">Plant</th>
+                    <th className="py-3 pl-3">Id</th>
+                    <th className="hidden p-3 xs:table-cell">Name</th>
+                    <th className="max-w-0 p-3">Longitude</th>
+                    <th className="max-w-0 p-3">Latitude</th>
+                    <th className="hidden p-3 sm:table-cell">Plant</th>
                 </tr>
             </thead>
             <tbody>
                 {zones.map(({ zoneId, name, latitude, longitude, plantId }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={zoneId}>
-                        <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[10%]">
-                            {zoneId}
-                        </td>
-                        <td className="w-[40%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[30%]">
-                            {name}
-                        </td>
-                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">
-                            {longitude.toString()}
-                        </td>
-                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t md:table-cell">
-                            {latitude.toString()}
-                        </td>
-                        <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[15%]">
-                            {plantId}
-                        </td>
+                        <td className="p-3 pr-0 border-t">{zoneId}</td>
+                        <td className="hidden p-3 border-t xs:table-cell">{name}</td>
+                        <td className="p-3 border-t">{longitude.toString()}</td>
+                        <td className="p-3 border-t">{latitude.toString()}</td>
+                        <td className="hidden p-3 border-t sm:table-cell">{plantId}</td>
                     </tr>
                 ))}
             </tbody>

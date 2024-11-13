@@ -1,12 +1,10 @@
 import Image from "next/image"
-import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-
-import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services/dashboard"
-import arrowIcon from "@/public/arrow.svg"
 import { Table } from "@/ui/dashboard/zones/table"
 import { Filter } from "@/ui/dashboard/zones/filter"
+import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services"
+import arrowIcon from "@/public/arrow.svg"
 
 const DashboardZonesPage = async () => {
     const session = await auth()

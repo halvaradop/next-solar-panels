@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
-import { Suspense, useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
+import { Suspense, useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
 import { SessionProvider } from "next-auth/react"
 import { merge } from "@/lib/utils"

@@ -1,10 +1,10 @@
 "use server"
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
+import { Samples, Zones } from "@prisma/client"
 import { auth, signIn } from "@/lib/auth"
 import { SampleSchema, ZoneSchema } from "./schemas"
 import { AddSampleActionState, AddZonesActionState, LoginActionState } from "@/lib/@types/types"
-import { Samples, Zones } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**
@@ -55,9 +55,17 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
     redirect("/dashboard")
 }
 
+/**
+ * Adds a zone to the database and checks if the action was successful
+ *
+ * @param previous state of the zone to be added
+ * @param formData form data sent by the user
+ * @returns state of the zone and the result of the action
+ */
 export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["name"], false)
     const validate = ZoneSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/zones`, {
@@ -73,7 +81,6 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
             schema: {} as Zones,
         }
     }
-
     const errors = validate?.error?.flatten().fieldErrors
     const schema = Object.keys(errors)
         .filter((key) => errors[key as keyof typeof errors])

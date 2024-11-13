@@ -33,8 +33,12 @@ export const SampleSchema = object({
 })
 
 export const ZoneSchema = object({
-    latitude: string(),
-    longitude: string(),
+    latitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
+    longitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
     name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
-    plant: string(),
+    plant: number(),
 })

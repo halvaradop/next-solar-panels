@@ -4,7 +4,7 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/dashboard/filter"
-import { getSamplesByUser, getZonesByUser } from "@/lib/services/dashboard"
+import { getSamplesByUser, getZonesByUser } from "@/lib/services"
 import arrowIcon from "@/public/arrow.svg"
 
 export const metadata: Metadata = {

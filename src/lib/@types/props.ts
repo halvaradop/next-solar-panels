@@ -50,3 +50,7 @@ export interface SelectProps {
     name: string
     values: Entry[]
 }
+
+export interface TableZonesProps {
+    zones: Zones[]
+}
