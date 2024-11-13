@@ -8,7 +8,6 @@ import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
 import { AddCompanieActionState } from "@/lib/@types/types"
 
-
 export const AddCompany = () => {
     const { data: session } = useSession()
     const [state, formAction] = useFormState(addCompanyAction, {

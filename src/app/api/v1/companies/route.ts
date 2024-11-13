@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 export const GET = async (): Promise<NextResponse> => {
     try {
         const data = await prisma.companies.findMany()
-        return NextResponse.json< ResponseAPI<Companies[]>>({
+        return NextResponse.json<ResponseAPI<Companies[]>>({
             data,
             ok: true,
             message: "The resource was retrieved successfuly",

@@ -12,7 +12,7 @@ export const Table = async ({ companies }: FilterPropsComapany) => {
                 </tr>
             </thead>
             <tbody>
-                {companies.map(({ companyId, companyName,email }) => (
+                {companies.map(({ companyId, companyName, email }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={companyId}>
                         <td className="w-[15%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[10%]">
                             {companyId}
@@ -20,13 +20,8 @@ export const Table = async ({ companies }: FilterPropsComapany) => {
                         <td className="w-[40%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[30%]">
                             {companyName}
                         </td>
-                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">
-                            {email}
-                        </td>
-                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t md:table-cell">
-                           
-                        </td>
-                     
+                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">{email}</td>
+                        <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t md:table-cell"></td>
                     </tr>
                 ))}
             </tbody>

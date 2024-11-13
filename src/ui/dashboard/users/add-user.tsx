@@ -1,17 +1,16 @@
 "use client"
-import {  addUserAction } from "@/lib/actions"
+import { addUserAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
-import {  AddUserActionState } from "@/lib/@types/types"
-import { Roles} from "@prisma/client"
+import { AddUserActionState } from "@/lib/@types/types"
+import { Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { getRoles } from "@/lib/services/dashboard"
 import arrowDown from "@/public/arrow.svg"
-
 
 export const AddUser = () => {
     const [roles, setRoles] = useState<Roles[]>([])
@@ -20,9 +19,9 @@ export const AddUser = () => {
         isSuccess: false,
     } as AddUserActionState)
 
-     useEffect(() => {
+    useEffect(() => {
         const fetchRoles = async () => {
-            const response = await getRoles();
+            const response = await getRoles()
             setRoles(response)
         }
         fetchRoles()

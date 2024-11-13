@@ -3,12 +3,9 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 
-import { getCompanies, getUserByCompany} from "@/lib/services/dashboard"
+import { getCompanies, getUserByCompany } from "@/lib/services/dashboard"
 import arrowIcon from "@/public/arrow.svg"
 import { Table } from "@/ui/dashboard/users/table"
-
-
-
 
 const DashboardCompaniesPage = async () => {
     const session = await auth()
@@ -16,7 +13,6 @@ const DashboardCompaniesPage = async () => {
     const users = await getUserByCompany(userId)
     return (
         <section className="min-h-main py-4 space-y-4">
-       
             <Suspense fallback={<p>Table...</p>}>
                 <Table users={users} />
             </Suspense>

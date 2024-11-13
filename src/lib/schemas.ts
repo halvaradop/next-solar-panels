@@ -33,19 +33,17 @@ export const SampleSchema = object({
     zoneId: range(0, "", 0, ""),
 })
 
-export const CompanySchema= z.object({
-     companyName: z.string(),
-     email:z.string(),
-     phone:z.string(),
-}
-)
+export const CompanySchema = z.object({
+    companyName: z.string(),
+    email: z.string(),
+    phone: z.string(),
+})
 
-export const UserSchema= z.object({
+export const UserSchema = z.object({
     firstName: z.string(),
-    lastName:z.string(),
-    email:z.string(),
-    password:z.string(),
-    phone:z.string(),
-    rol:z.string(),
-}
-)
+    lastName: z.string(),
+    email: z.string(),
+    password: z.string(),
+    phone: z.string(),
+    rol: z.string(),
+})

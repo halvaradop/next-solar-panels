@@ -6,31 +6,30 @@ import { NextRequest, NextResponse } from "next/server"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-     
-        const { companyName, email, phone } = response;
+
+        const { companyName, email, phone } = response
         const data = await prisma.companies.create({
             data: {
                 companyName,
                 email,
                 PhoneCompanies: {
                     create: {
-                        phoneNumber: parseInt(phone), 
+                        phoneNumber: parseInt(phone),
                     },
                 },
-               
             },
             include: {
-                PhoneCompanies: true, 
+                PhoneCompanies: true,
             },
-        });
-       
+        })
+
         return NextResponse.json<ResponseAPI<Companies>>({
             data,
             ok: true,
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        console.error("Error creating company and phone:", error);
+        console.error("Error creating company and phone:", error)
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
