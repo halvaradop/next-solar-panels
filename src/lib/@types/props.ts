@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zones, Samples, Plants } from "@prisma/client"
+import { Zones, Samples, Companies, Users, Plants } from "@prisma/client"
 import { Entry, MenuState } from "./types"
 
 export interface ProductProps {
@@ -39,6 +39,14 @@ export interface SampleListProps {
 
 export interface FilterProps {
     zones: Zones[]
+}
+
+export interface FilterComapaniesProps {
+    companies: Companies[]
+}
+
+export interface FilterUserProps {
+    users: Users[]
 }
 
 export interface FilterPlantsProps {

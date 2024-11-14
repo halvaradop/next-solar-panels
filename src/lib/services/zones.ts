@@ -1,5 +1,5 @@
 import { Zones } from "@prisma/client"
-import { ResponseAPI } from "../@types/types"
+import { ResponseAPI } from "@/lib/@types/types"
 
 /**
  * TODO: Adds caching to the fetch request when the module to adds zones is implemented.
