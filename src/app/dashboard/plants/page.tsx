@@ -1,10 +1,9 @@
 import Image from "next/image"
-import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getPlantByCompany } from "@/lib/services/dashboard"
-import arrowIcon from "@/public/arrow.svg"
+import { getPlantByCompany } from "@/lib/services"
 import { Table } from "@/ui/dashboard/plants/table"
+import arrowIcon from "@/public/arrow.svg"
 
 const DashboardPlantsPage = async () => {
     const session = await auth()

@@ -1,11 +1,11 @@
-import { Params, ResponseAPI } from "@/lib/@types/types"
+import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Plants } from "@prisma/client"
-import { NextRequest, NextResponse } from "next/server"
+import { Params, ResponseAPI } from "@/lib/@types/types"
 
-export const POST = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
+export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const userId = parseInt(params.userId)
+        const userId = parseInt("0")
         const response = await request.json()
         const { plantName, latitude, longitude } = response
 
@@ -51,7 +51,6 @@ export const POST = async (request: NextRequest, { params }: Params<"userId">): 
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        console.error("Error creating company and phone:", error)
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,

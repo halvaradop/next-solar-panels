@@ -1,7 +1,7 @@
-import { ResponseAPI } from "@/lib/@types/types"
+import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Companies } from "@prisma/client"
-import { NextRequest, NextResponse } from "next/server"
+import { ResponseAPI } from "@/lib/@types/types"
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
@@ -14,7 +14,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         })
 
         if (existEmail) {
-            return NextResponse.json<ResponseAPI<{}>>({ data: {}, ok: false, message: "This email is already registered" })
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "This email is already registered",
+            })
         }
         const data = await prisma.companies.create({
             data: {
@@ -37,7 +41,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        console.error("Error creating company and phone:", error)
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,

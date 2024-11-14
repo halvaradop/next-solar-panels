@@ -1,15 +1,9 @@
 "use client"
-
 import { useFormState } from "react-dom"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
-import { Plants, Zones } from "@prisma/client"
-import { useEffect, useState } from "react"
-import Image from "next/image"
-import { getRoles } from "@/lib/services/dashboard"
-import arrowDown from "@/public/arrow.svg"
 import { addPlantAction } from "@/lib/actions"
 import { AddPlantActionState } from "@/lib/@types/types"
 
