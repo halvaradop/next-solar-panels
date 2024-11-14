@@ -6,14 +6,14 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 /**
  * TODO: migrate this route to companies
  *
- * Handle the GET request to retrieve the zones related to a specific employee.
+ * Handle the GET request to retrieve the zones related to a specific users.
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - HTTP response with the zones related to the employee.
+ * @returns {Promise<NextResponse>} - HTTP response with the zones related to the users.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/zonesByCompany")
+ * const response = await fetch("/api/v1/users/{userId}/zonesByCompany")
  * const data = await response.json()
  * ```
  */

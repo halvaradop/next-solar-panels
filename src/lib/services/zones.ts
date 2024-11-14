@@ -11,7 +11,7 @@ import { getFetch } from "@/lib/utils"
  * @returns - A list of zones related to the user
  */
 export const getZonesByUser = async (userId: number): Promise<Zones[]> => {
-    const { data } = await getFetch<Zones[]>(`employees/${userId}/zones`)
+    const { data } = await getFetch<Zones[]>(`users/${userId}/zones`)
     return data
 }
 

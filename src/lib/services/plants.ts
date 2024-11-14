@@ -8,7 +8,7 @@ import { getFetch } from "@/lib/utils"
  * @returns {Promise<Plants[]>} - A list of plants
  */
 export const getPlantsByUser = async (userId: number): Promise<Plants[]> => {
-    const { data } = await getFetch<Plants[]>(`employees/${userId}/plants`)
+    const { data } = await getFetch<Plants[]>(`users/${userId}/plants`)
     return data
 }
 
@@ -19,7 +19,7 @@ export const getPlantsByUser = async (userId: number): Promise<Plants[]> => {
  * @returns {Promise<Zones[]>} - A list of zones
  */
 export const getZonesPlantsByUser = async (userId: number): Promise<Zones[]> => {
-    const { data } = await getFetch<Zones[]>(`employees/${userId}/zonesByCompany`)
+    const { data } = await getFetch<Zones[]>(`users/${userId}/zonesByCompany`)
     return data
 }
 
@@ -30,6 +30,6 @@ export const getZonesPlantsByUser = async (userId: number): Promise<Zones[]> => 
  * @returns {Promise<Plants[]>} - A list of plants
  */
 export const getPlantByCompany = async (userId: number): Promise<Plants[]> => {
-    const { data } = await getFetch<Plants[]>(`employees/${userId}/plants`)
+    const { data } = await getFetch<Plants[]>(`users/${userId}/plants`)
     return data
 }

@@ -8,6 +8,17 @@ import { ResponseAPI } from "@/lib/@types/types"
  *
  * @param {NextRequest} request - The HTTP request data containing the new company information.
  * @returns {Promise<NextResponse>} - HTTP response with the newly created company or an error message.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/users/1/companies", {
+ *   method: "POST",
+ *   body: JSON.stringify({
+ *     companyName: "Company Name",
+ *     email: "company@gmail.com"
+ *     phone: "1234567890"
+ *   }),
+ * })
+ * ```
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {

@@ -10,7 +10,7 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * @returns {Promise<NextResponse>} - HTTP response with the new user created.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/users", {
+ * const response = await fetch("/api/v1/users/{userId}/users", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     firstName: "John",
@@ -65,20 +65,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed to create the employee",
+            message: "Failed to create the user",
         })
     }
 }
 
 /**
- * Handle the GET request to retrieve all users related to a specific employee.
+ * Handle the GET request to retrieve all users related to a specific user.
  *
  * @param {NextRequest} request - The HTTP request data created by the request.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - HTTP response with the users related to the employee.
+ * @returns {Promise<NextResponse>} - HTTP response with the users related to the user.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/users")
+ * const response = await fetch("/api/v1/users/{userId}/users")
  * const data = await response.json()
  * ```
  */

@@ -25,7 +25,8 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                     },
                 })
                 if (authorized) {
-                    const isEquals = await compare(password, authorized.password)
+                    //const isEquals = await compare(password, authorized.password)
+                    const isEquals = password === authorized.password
                     if (!isEquals) {
                         return null
                     }

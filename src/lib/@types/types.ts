@@ -11,23 +11,18 @@ export interface MenuState {
     hash: string
 }
 
-export interface AddSampleActionState {
+export interface ActionState<T> {
     message: string
     isSuccess: boolean
-    schema: SamplesWithoutIds
+    schema: T
 }
 
-export interface AddCompanieActionState {
-    message: string
-    isSuccess: boolean
-    schema: Omit<Companies, "companyId">
-}
+export type AddSampleActionState = ActionState<SamplesWithoutIds>
 
-export interface AddUserActionState {
-    message: string
-    isSuccess: boolean
-    schema: Omit<Users, "userId">
-}
+export type AddCompanieActionState = ActionState<Omit<Companies, "companyId">>
+
+export type AddUserActionState = ActionState<Omit<Users, "userId">>
+
 export interface Entry {
     key: string
     value: string
@@ -48,17 +43,11 @@ export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
 }
-export interface AddZonesActionState {
-    message: string
-    isSuccess: boolean
-    schema: Omit<Zones, "zoneId" | "plantId" | "state">
-}
 
-export interface AddPlantActionState {
-    message: string
-    isSuccess: boolean
-    schema: Omit<Plants, "plantId" | "state">
-}
+export type AddZonesActionState = ActionState<Omit<Zones, "zoneId" | "plantId" | "state">>
+
+export type AddPlantActionState = ActionState<Omit<Plants, "plantId" | "state">>
+
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 
 export interface UsersResponse {
