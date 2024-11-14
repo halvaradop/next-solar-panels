@@ -7,6 +7,7 @@ const range = (min: number, minMessage: string, max: number, maxMessage: string)
 export const SampleSchema = object({
     soilTime: range(0, "Soil time must be a positive number", 100, "Soil time must be less than 100"),
     soilResistivity: range(0, "Soil resistivity must be a positive number", 1000, "Soil resistivity must be less than 1000"),
+    moistureContent: range(0, "Moisture content must be a positive number", 100, "Moisture content must be less than 100"),
     pHValue: range(0, "pH value must be a positive number", 50, "pH value must be less than 50"),
     bufferCapacityPH4_3: range(
         0,
@@ -29,7 +30,8 @@ export const SampleSchema = object({
     soilTypeHomogeneity: enums(["homogeneous", "heterogeneous"]),
     pHSoilHomogeneity: range(0, "Soil homogeneity must be a positive number", 10, "Soild homogeneity must be less than 10"),
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
-    zoneId: range(0, "", 0, ""),
+    zoneId: number(),
+    userId: number(),
 })
 
 export const CompanySchema = object({
