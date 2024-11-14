@@ -1,8 +1,12 @@
 import { Roles } from "@prisma/client"
-import { ResponseAPI } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
+/**
+ * Fetches all roles from the database
+ *
+ * @returns {Promise<Roles[]>} - A list of roles
+ */
 export const getRoles = async (): Promise<Roles[]> => {
-    const response = await fetch("http://localhost:3000/api/v1/roles")
-    const json: ResponseAPI<Roles[]> = await response.json()
-    return json.data
+    const { data } = await getFetch<Roles[]>("roles")
+    return data
 }

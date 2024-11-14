@@ -1,8 +1,12 @@
 import { Companies } from "@prisma/client"
-import { ResponseAPI } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
+/**
+ * Fetches all companies from the database
+ *
+ * @returns {Promise<Companies[]>} - A list of companies
+ */
 export const getCompanies = async (): Promise<Companies[]> => {
-    const response = await fetch("http://localhost:3000/api/v1/companies")
-    const json: ResponseAPI<Companies[]> = await response.json()
-    return json.data
+    const { data } = await getFetch<Companies[]>("companies")
+    return data
 }
