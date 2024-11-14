@@ -1,6 +1,6 @@
-import { FilterPropsPlants} from "@/lib/@types/props"
+import { FilterPlantsProps } from "@/lib/@types/props"
 
-export const Table = async ({ plants }: FilterPropsPlants) => {
+export const Table = async ({ plants }: FilterPlantsProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
@@ -18,14 +18,14 @@ export const Table = async ({ plants }: FilterPropsPlants) => {
                             {plantId}
                         </td>
                         <td className="w-[20%] p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[30%]">
-                            {plantName} 
+                            {plantName}
                         </td>
                         <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">
                             {latitude.toString()}
-                            </td>
+                        </td>
                         <td className="hidden w-[20%] p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">
-                            {longitude.toString() }
-                            </td>
+                            {longitude.toString()}
+                        </td>
                     </tr>
                 ))}
             </tbody>

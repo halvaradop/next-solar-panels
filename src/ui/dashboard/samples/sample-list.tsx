@@ -1,6 +1,6 @@
+import Link from "next/link"
 import { Button } from "@halvaradop/ui-button"
 import { SampleListProps } from "@/lib/@types/props"
-import Link from "next/link"
 
 export const SampleList = ({ samples }: SampleListProps) => {
     return (

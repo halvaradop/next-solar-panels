@@ -1,29 +1,27 @@
-import { Params, ResponseAPI } from "@/lib/@types/types";
-import { prisma } from "@/lib/prisma";
-import { Plants } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { Params, ResponseAPI } from "@/lib/@types/types"
+import { prisma } from "@/lib/prisma"
+import { Plants } from "@prisma/client"
+import { NextRequest, NextResponse } from "next/server"
 
 export const POST = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
         const response = await request.json()
-        const { plantName  , latitude , longitude } = response
+        const { plantName, latitude, longitude } = response
 
-        const existcoordinates= await prisma.plants.findFirst({
+        const existcoordinates = await prisma.plants.findFirst({
             where: {
                 latitude,
-                longitude
+                longitude,
             },
+        })
 
-        });
-        
-        if (existcoordinates){
-            return NextResponse.json<ResponseAPI<{}>>(
-               { data:{},
-                ok:false,
-                message:"There is already a plant with those coordinates"}
-            )
-            
+        if (existcoordinates) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "There is already a plant with those coordinates",
+            })
         }
         const company = await prisma.companies.findFirst({
             where: {
@@ -45,7 +43,6 @@ export const POST = async (request: NextRequest, { params }: Params<"userId">): 
                 latitude,
                 longitude,
             },
-        
         })
 
         return NextResponse.json<ResponseAPI<Plants>>({
@@ -66,22 +63,24 @@ export const POST = async (request: NextRequest, { params }: Params<"userId">): 
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
-        const data = await prisma.companies.findMany({
-            where: {
-                Plants: {
-                    some: {
-                        UserPlants: {
-                            some: {
-                                userId: userId,
+        const data = await prisma.companies
+            .findMany({
+                where: {
+                    Plants: {
+                        some: {
+                            UserPlants: {
+                                some: {
+                                    userId: userId,
+                                },
                             },
                         },
                     },
                 },
-            },
-            include: {
-                Plants: true,
-            }
-        }).then((companies) => companies.flatMap((companies) => companies.Plants))
+                include: {
+                    Plants: true,
+                },
+            })
+            .then((companies) => companies.flatMap((companies) => companies.Plants))
         return NextResponse.json<ResponseAPI<Plants[]>>({
             data,
             ok: true,

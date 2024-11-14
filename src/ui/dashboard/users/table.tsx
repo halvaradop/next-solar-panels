@@ -1,6 +1,6 @@
-import { FilterPropsUser } from "@/lib/@types/props"
+import { FilterUserProps } from "@/lib/@types/props"
 
-export const Table = async ({ users }: FilterPropsUser) => {
+export const Table = async ({ users }: FilterUserProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>

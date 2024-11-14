@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { addUserAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
 import { Form } from "@halvaradop/ui-form"
@@ -8,8 +9,7 @@ import { Button } from "@halvaradop/ui-button"
 import { AddUserActionState } from "@/lib/@types/types"
 import { Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import Image from "next/image"
-import { getRoles } from "@/lib/services/dashboard"
+import { getRoles } from "@/lib/services"
 import arrowDown from "@/public/arrow.svg"
 
 export const AddUser = () => {
@@ -18,7 +18,7 @@ export const AddUser = () => {
         message: "",
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
-    } )
+    })
 
     useEffect(() => {
         const fetchRoles = async () => {
@@ -70,13 +70,9 @@ export const AddUser = () => {
                     name="password"
                     required
                 />
-                       {state.schema.password && (
-                    <p className="text-red-600 text-sm mt-1">
-                        {state.schema.password}
-                    </p>
-                )}
+                {state.schema.password && <p className="text-red-600 text-sm mt-1">{state.schema.password}</p>}
             </Label>
-     
+
             <Label className="w-full text-neutral-700" size="sm">
                 Phone
                 <Input
@@ -105,12 +101,9 @@ export const AddUser = () => {
                 Add
             </Button>
 
-            
             {state.message && (
                 <div
-                    className={`mt-4 p-2 rounded ${
-                        state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                    }`}
+                    className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
                 >
                     {state.message}
                 </div>

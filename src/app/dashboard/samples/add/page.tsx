@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { SessionProvider } from "next-auth/react"
 import { AddSample } from "@/ui/dashboard/samples/add-sample"
+import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
     title: "Add sample",
@@ -8,8 +9,9 @@ export const metadata: Metadata = {
 }
 
 const AddSamplesPage = async () => {
+    const session = await auth()
     return (
-        <SessionProvider>
+        <SessionProvider session={session}>
             <AddSample />
         </SessionProvider>
     )

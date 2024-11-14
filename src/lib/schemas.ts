@@ -34,27 +34,37 @@ export const SampleSchema = object({
 })
 
 export const CompanySchema = object({
-    companyName:  string().regex(/^[A-Za-z]+$/, {
+    companyName: string().regex(/^[A-Za-z]+$/, {
         message: "Only letters",
-      }),
-    email:  string(),
+    }),
+    email: string(),
     phone: string(),
 })
 
 export const UserSchema = object({
     firstName: string(),
-    lastName:string(),
+    lastName: string(),
     email: string(),
     password: string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
-        message:"Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
-}),
+        message:
+            "Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
+    }),
     phone: string(),
     rol: string(),
 })
 
 export const PlantSchema = object({
-       plantName: string(),
-       latitude: string(),
-       longitude:string(),
-
+    plantName: string(),
+    latitude: string(),
+    longitude: string(),
+})
+export const ZoneSchema = object({
+    latitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
+    longitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
+    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    plant: number(),
 })

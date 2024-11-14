@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `samples` MODIFY `sampleDateTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

@@ -5,7 +5,7 @@ import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
-import {  Plants, Zones } from "@prisma/client"
+import { Plants, Zones } from "@prisma/client"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { getRoles } from "@/lib/services/dashboard"
@@ -18,10 +18,7 @@ export const AddPlant = () => {
         message: "",
         isSuccess: false,
         schema: {} as AddPlantActionState["schema"],
-    } )
-
-
-
+    })
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
@@ -60,12 +57,9 @@ export const AddPlant = () => {
                 Add
             </Button>
 
-            
             {state.message && (
                 <div
-                    className={`mt-4 p-2 rounded ${
-                        state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                    }`}
+                    className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
                 >
                     {state.message}
                 </div>

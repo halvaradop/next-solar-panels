@@ -78,7 +78,6 @@ export const getUsers = async (): Promise<Users[]> => {
     return json.data
 }
 
-
 export const getPlantByCompany = async (userId: number): Promise<Plants[]> => {
     const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/plants`)
     const json: ResponseAPI<Plants[]> = await response.json()

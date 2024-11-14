@@ -13,8 +13,8 @@ export const AddCompany = () => {
     const [state, formAction] = useFormState(addCompanyAction, {
         message: "",
         isSuccess: false,
-        schema:{} as AddCompanieActionState["schema"]
-    } )
+        schema: {} as AddCompanieActionState["schema"],
+    })
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
@@ -27,11 +27,7 @@ export const AddCompany = () => {
                     name="companyName"
                     required
                 />
-                 {state.schema.companyName && (
-                    <p className="text-red-600 text-sm mt-1">
-                        {state.schema.companyName}
-                    </p>
-                )}
+                {state.schema.companyName && <p className="text-red-600 text-sm mt-1">{state.schema.companyName}</p>}
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Email
@@ -61,14 +57,11 @@ export const AddCompany = () => {
 
             {state.message && (
                 <div
-                    className={`mt-4 p-2 rounded ${
-                        state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                    }`}
+                    className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
                 >
                     {state.message}
                 </div>
             )}
-            
         </Form>
     )
 }

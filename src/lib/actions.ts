@@ -2,9 +2,17 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { CompanySchema, PlantSchema, SampleSchema, UserSchema } from "./schemas"
-import { AddCompanieActionState, AddPlantActionState, AddSampleActionState, AddUserActionState, LoginActionState } from "@/lib/@types/types"
-import { Companies, Plants, Samples, Users } from "@prisma/client"
+import { Companies, Plants, Samples, Users, Zones } from "@prisma/client"
+import { CompanySchema, SampleSchema, UserSchema, ZoneSchema, PlantSchema } from "./schemas"
+import {
+    AddPlantActionState,
+    AddCompanieActionState,
+    AddSampleActionState,
+    AddUserActionState,
+    AddZonesActionState,
+    LoginActionState,
+} from "@/lib/@types/types"
+
 import { mapToNumber } from "./utils"
 
 /**
@@ -66,16 +74,16 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
         })
         const result = await request.json()
         if (request.ok) {
-            if(!result.ok){
+            if (!result.ok) {
                 return {
-                    message: result.message ,
+                    message: result.message,
                     isSuccess: result.ok,
                     schema: {} as Companies,
                 }
             }
             redirect("/dashboard")
         }
-     
+
         return {
             message: "Failed to add the company",
             isSuccess: false,
@@ -93,13 +101,49 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
     }
 }
 
+/**
+ * Adds a zone to the database and checks if the action was successful
+ *
+ * @param previous state of the zone to be added
+ * @param formData form data sent by the user
+ * @returns state of the zone and the result of the action
+ */
+export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["name"], false)
+    const validate = ZoneSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/zones`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        if (request.ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message: "Check the invalid fields",
+            isSuccess: false,
+            schema: {} as Zones,
+        }
+    }
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: schema as Zones,
+    }
+}
+
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
 
     const validate = UserSchema.safeParse(entries)
- 
-  
+
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/users`, {
             method: "POST",
@@ -107,16 +151,16 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
         })
         const result = await request.json()
         if (request.ok) {
-            if(!result.ok){
+            if (!result.ok) {
                 return {
-                    message: result.message ,
+                    message: result.message,
                     isSuccess: result.ok,
                     schema: {} as Users,
                 }
             }
             redirect("/dashboard")
         }
-     
+
         return {
             message: "Failed to add the sample",
             isSuccess: false,
@@ -145,16 +189,16 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
         })
         const result = await request.json()
         if (request.ok) {
-            if(!result.ok){
+            if (!result.ok) {
                 return {
-                    message: result.message ,
+                    message: result.message,
                     isSuccess: result.ok,
                     schema: {} as Plants,
                 }
             }
             redirect("/dashboard")
         }
-     
+
         return {
             message: "Failed to add the sample",
             isSuccess: false,

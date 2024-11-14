@@ -1,18 +1,22 @@
 import Image from "next/image"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getCompanies } from "@/lib/services"
-import { Table } from "@/ui/dashboard/companies/table"
+import { Table } from "@/ui/dashboard/zones/table"
+import { Filter } from "@/ui/dashboard/zones/filter"
+import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services"
 import arrowIcon from "@/public/arrow.svg"
 
-const DashboardCompaniesPage = async () => {
+const DashboardZonesPage = async () => {
     const session = await auth()
     const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-    const companies = await getCompanies()
+    const zones = await getZonesPlantsByUser(userId)
+    const plants = await getPlantsByUser(userId)
+
     return (
         <section className="min-h-main py-4 space-y-4">
+            <Filter plants={plants} />
             <Suspense fallback={<p>Table...</p>}>
-                <Table companies={companies} />
+                <Table zones={zones} />
             </Suspense>
             <div className="w-full flex items-center justify-between">
                 <p className="text-sm">showing </p>
@@ -29,4 +33,4 @@ const DashboardCompaniesPage = async () => {
     )
 }
 
-export default DashboardCompaniesPage
+export default DashboardZonesPage

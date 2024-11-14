@@ -6,12 +6,10 @@ import { getPlantByCompany } from "@/lib/services/dashboard"
 import arrowIcon from "@/public/arrow.svg"
 import { Table } from "@/ui/dashboard/plants/table"
 
-
-
 const DashboardPlantsPage = async () => {
     const session = await auth()
     const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-    const plants =await getPlantByCompany(userId)
+    const plants = await getPlantByCompany(userId)
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>

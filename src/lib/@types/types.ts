@@ -1,5 +1,7 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Companies, Plants, Samples, Users } from "@prisma/client"
+
+import { Companies, Plants, Samples, Users, Zones } from "@prisma/client"
+
 export interface LayoutProps {
     children: React.ReactNode
 }
@@ -47,10 +49,34 @@ export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
 }
+export interface AddZonesActionState {
+    message: string
+    isSuccess: boolean
+    schema: Omit<Zones, "zoneId" | "plantId" | "state">
+}
 
 export interface AddPlantActionState {
     message: string
     isSuccess: boolean
-    schema: Omit<Plants, "plantId"|"state">
+    schema: Omit<Plants, "plantId" | "state">
 }
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+
+export interface UsersResponse {
+    userId: number
+    email: string
+    firstName: string
+    lastName: string
+    role: {
+        roleId: number
+        roleName: string
+        state: string
+    }
+    UserPlants: Array<{
+        plant: {
+            company: {
+                companyId: number
+            }
+        }
+    }>
+}

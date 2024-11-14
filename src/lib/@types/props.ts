@@ -41,16 +41,15 @@ export interface FilterProps {
     zones: Zones[]
 }
 
-export interface FilterPropsComapany {
+export interface FilterComapaniesProps {
     companies: Companies[]
 }
 
-export interface FilterPropsUser {
+export interface FilterUserProps {
     users: Users[]
 }
 
-
-export interface FilterPropsPlants {
+export interface FilterPlantsProps {
     plants: Plants[]
 }
 export interface SelectProps {
@@ -58,4 +57,8 @@ export interface SelectProps {
     classNameOption?: string
     name: string
     values: Entry[]
+}
+
+export interface TableZonesProps {
+    zones: Zones[]
 }
