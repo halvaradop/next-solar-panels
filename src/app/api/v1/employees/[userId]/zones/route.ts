@@ -7,7 +7,8 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * Handle the GET request to retrieve all zones related to a specific employee
  * in the database.
  *
- * @param request - The HTTP request data received with the employee ID.
+ * @param {NextRequest} request - The HTTP request containing the request data.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
  * @returns {Promise<NextResponse>} - HTTP response with the zones related to the employee.
  * @example
  * ```ts
@@ -46,10 +47,36 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Zones[]>>(
+            {
+                data: [],
+                ok: false,
+                message: "Failed to retrieve zones",
+            },
+            { status: 404 }
+        )
     }
 }
 
+/**
+ * Handle the POST request to create a new zone associated with a specific plant in the database.
+ *
+ * @param {NextRequest} request - The HTTP request containing the information of the new zone.
+ * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/zones", {
+ *   method: "POST",
+ *   body: JSON.stringify({
+ *     latitude: 40.7128,
+ *     longitude: -74.0060,
+ *     name: "New Zone",
+ *     plant: "1"
+ *   })
+ * })
+ * const data = await response.json()
+ * ```
+ */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()

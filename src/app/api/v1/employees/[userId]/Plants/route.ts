@@ -3,6 +3,24 @@ import { prisma } from "@/lib/prisma"
 import { Plants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
+/**
+ * Handle the POST request to create a new plant related to a specific employee
+ *
+ * @param {NextRequest} request - The HTTP request data received with the new plant information.
+ * @returns {Promise<NextResponse>} - HTTP response with the new plant created.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/plants", {
+ *   method: "POST",
+ *   body: JSON.stringify({
+ *     plantName: "Plant Name",
+ *     latitude: 1,
+ *     longitude: 1,
+ *   }),
+ * })
+ * const data = await response.json()
+ * ```
+ */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const userId = parseInt("0")
@@ -20,7 +38,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "There is already a plant with those coordinates",
+                message: "A plant with the specified coordinates already exists.",
             })
         }
         const company = await prisma.companies.findFirst({
@@ -51,14 +69,29 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<{}>>({
-            data: {},
-            ok: false,
-            message: "Failed ",
-        })
+        return NextResponse.json<ResponseAPI<{}>>(
+            {
+                data: {},
+                ok: false,
+                message: "Failed to create the plant",
+            },
+            { status: 500 }
+        )
     }
 }
 
+/**
+ * Handle the GET request to retrieve all plants related to a specific employee
+ *
+ * @param {NextRequest} request - The HTTP request containing the request data.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the plants related to the employee.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/plants")
+ * const data = await response.json()
+ * ```
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
@@ -85,6 +118,13 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Plants[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Plants[]>>(
+            {
+                data: [],
+                ok: false,
+                message: "Failed to retrieve the data",
+            },
+            { status: 404 }
+        )
     }
 }

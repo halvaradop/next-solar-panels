@@ -3,6 +3,12 @@ import { prisma } from "@/lib/prisma"
 import { Companies } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
+/**
+ * Handle the POST request to create a new company in the database.
+ *
+ * @param {NextRequest} request - The HTTP request data containing the new company information.
+ * @returns {Promise<NextResponse>} - HTTP response with the newly created company or an error message.
+ */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
@@ -44,7 +50,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed ",
+            message: "Failed to create the company",
         })
     }
 }

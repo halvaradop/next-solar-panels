@@ -2,6 +2,20 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
 
+/**
+ * TODO: move this route to /api/v1/users/{userId}
+ *
+ * Handle the GET request to retrieve a specific employee information
+ *
+ * @param {NextRequest} request - The HTTP request containing the request data.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
+ * @returns {Promise<NextResponse>} - The HTTP response containing the employee information.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}")
+ * const data = await response.json()
+ * ```
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
@@ -35,7 +49,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 {
                     data: {} as UsersResponse,
                     ok: false,
-                    message: "Failed to retrieve zones",
+                    message: "Failed to retrieve the user information",
                 },
                 { status: 404 }
             )
@@ -50,7 +64,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             {
                 data: {} as UsersResponse,
                 ok: false,
-                message: "Failed to retrieve zones",
+                message: "Failed to retrieve the user information",
             },
             { status: 404 }
         )

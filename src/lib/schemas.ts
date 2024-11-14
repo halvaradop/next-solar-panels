@@ -1,4 +1,3 @@
-import Email from "next-auth/providers/email"
 import { object, number, enum as enums, string } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
