@@ -17,7 +17,8 @@ export const AddUser = () => {
     const [state, formAction] = useFormState(addUserAction, {
         message: "",
         isSuccess: false,
-    } as AddUserActionState)
+        schema: {} as AddUserActionState["schema"],
+    } )
 
     useEffect(() => {
         const fetchRoles = async () => {
@@ -69,8 +70,13 @@ export const AddUser = () => {
                     name="password"
                     required
                 />
+                       {state.schema.password && (
+                    <p className="text-red-600 text-sm mt-1">
+                        {state.schema.password}
+                    </p>
+                )}
             </Label>
-
+     
             <Label className="w-full text-neutral-700" size="sm">
                 Phone
                 <Input
@@ -98,6 +104,17 @@ export const AddUser = () => {
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
+
+            
+            {state.message && (
+                <div
+                    className={`mt-4 p-2 rounded ${
+                        state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                    }`}
+                >
+                    {state.message}
+                </div>
+            )}
         </Form>
     )
 }

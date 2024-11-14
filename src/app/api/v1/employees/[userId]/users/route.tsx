@@ -7,6 +7,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { firstName, email, phone, lastName, password, rol } = response
+
+        const existEmail= await prisma.users.findFirst({
+            where: {email},
+
+        });
+        
+        if (existEmail){
+            return NextResponse.json<ResponseAPI<{}>>(
+               { data:{},
+                ok:false,
+                message:"This email is already registered"}
+            )
+            
+        }
         const data = await prisma.users.create({
             data: {
                 firstName,

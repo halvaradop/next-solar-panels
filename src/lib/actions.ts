@@ -2,9 +2,9 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { CompanySchema, SampleSchema, UserSchema } from "./schemas"
-import { AddCompanieActionState, AddSampleActionState, AddUserActionState, LoginActionState } from "@/lib/@types/types"
-import { Companies, Samples, Users } from "@prisma/client"
+import { CompanySchema, PlantSchema, SampleSchema, UserSchema } from "./schemas"
+import { AddCompanieActionState, AddPlantActionState, AddSampleActionState, AddUserActionState, LoginActionState } from "@/lib/@types/types"
+import { Companies, Plants, Samples, Users } from "@prisma/client"
 import { mapToNumber } from "./utils"
 
 /**
@@ -59,17 +59,25 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
     const session = await auth()
     const entries = Object.fromEntries(formData)
     const validate = CompanySchema.safeParse(entries)
-
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/companies`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
+        const result = await request.json()
         if (request.ok) {
+            if(!result.ok){
+                return {
+                    message: result.message ,
+                    isSuccess: result.ok,
+                    schema: {} as Companies,
+                }
+            }
             redirect("/dashboard")
         }
+     
         return {
-            message: "Failed to add the sample",
+            message: "Failed to add the company",
             isSuccess: false,
             schema: {} as Companies,
         }
@@ -88,16 +96,27 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    const validate = UserSchema.safeParse(entries)
 
+    const validate = UserSchema.safeParse(entries)
+ 
+  
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/users`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
+        const result = await request.json()
         if (request.ok) {
+            if(!result.ok){
+                return {
+                    message: result.message ,
+                    isSuccess: result.ok,
+                    schema: {} as Users,
+                }
+            }
             redirect("/dashboard")
         }
+     
         return {
             message: "Failed to add the sample",
             isSuccess: false,
@@ -112,5 +131,43 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
         message: "Check the invalid fields",
         isSuccess: false,
         schema: schema as Users,
+    }
+}
+
+export const addPlantAction = async (previous: AddPlantActionState, formData: FormData): Promise<AddPlantActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = PlantSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/employees/${session?.user?.id}/plants`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const result = await request.json()
+        if (request.ok) {
+            if(!result.ok){
+                return {
+                    message: result.message ,
+                    isSuccess: result.ok,
+                    schema: {} as Plants,
+                }
+            }
+            redirect("/dashboard")
+        }
+     
+        return {
+            message: "Failed to add the sample",
+            isSuccess: false,
+            schema: {} as Plants,
+        }
+    }
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema: schema as Plants,
     }
 }

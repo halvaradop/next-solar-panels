@@ -8,6 +8,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
 
         const { companyName, email, phone } = response
+
+        const existEmail= await prisma.companies.findFirst({
+            where: {email},
+
+        });
+        
+        if (existEmail){
+            return NextResponse.json<ResponseAPI<{}>>(
+               { data:{},
+                ok:false,
+                message:"This email is already registered"}
+            )
+            
+        }
         const data = await prisma.companies.create({
             data: {
                 companyName,

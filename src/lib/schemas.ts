@@ -1,5 +1,5 @@
 import Email from "next-auth/providers/email"
-import { object, number, enum as enums, z } from "zod"
+import { object, number, enum as enums, string } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -33,17 +33,28 @@ export const SampleSchema = object({
     zoneId: range(0, "", 0, ""),
 })
 
-export const CompanySchema = z.object({
-    companyName: z.string(),
-    email: z.string(),
-    phone: z.string(),
+export const CompanySchema = object({
+    companyName:  string().regex(/^[A-Za-z]+$/, {
+        message: "Only letters",
+      }),
+    email:  string(),
+    phone: string(),
 })
 
-export const UserSchema = z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    email: z.string(),
-    password: z.string(),
-    phone: z.string(),
-    rol: z.string(),
+export const UserSchema = object({
+    firstName: string(),
+    lastName:string(),
+    email: string(),
+    password: string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+        message:"Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
+}),
+    phone: string(),
+    rol: string(),
+})
+
+export const PlantSchema = object({
+       plantName: string(),
+       latitude: string(),
+       longitude:string(),
+
 })
