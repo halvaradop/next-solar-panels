@@ -3,6 +3,24 @@ import { prisma } from "@/lib/prisma"
 import { Plants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
+/**
+ * Handle the POST request to create a new plant related to a specific employee
+ *
+ * @param {NextRequest} request - The HTTP request data received with the new plant information.
+ * @returns {Promise<NextResponse>} - HTTP response with the new plant created.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/plants", {
+ *   method: "POST",
+ *   body: JSON.stringify({
+ *     plantName: "Plant Name",
+ *     latitude: 1,
+ *     longitude: 1,
+ *   }),
+ * })
+ * const data = await response.json()
+ * ```
+ */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const userId = parseInt("0")
@@ -59,6 +77,18 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     }
 }
 
+/**
+ * Handle the GET request to retrieve all plants related to a specific employee
+ *
+ * @param {NextRequest} request - The HTTP request containing the request data.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the plants related to the employee.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/plants")
+ * const data = await response.json()
+ * ```
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)

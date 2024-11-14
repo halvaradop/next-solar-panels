@@ -1,5 +1,4 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-
 import { Companies, Plants, Samples, Users, Zones } from "@prisma/client"
 
 export interface LayoutProps {

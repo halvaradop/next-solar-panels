@@ -5,9 +5,10 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific employee
- * in the database.
+ * from the database.
  *
- * @param {NextRequest} request - The HTTP request data received with the employee ID.
+ * @param {NextRequest} request - The HTTP request object.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
  * @returns {Promise<NextResponse>} - HTTP response with the samples related to the employee.
  * @example
  * ```ts

@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Plants, Zones } from "@prisma/client"
+import { Zones } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
-import { request } from "http"
 
+/**
+ * TODO: migrate this route to companies
+ *
+ * Handle the GET request to retrieve the zones related to a specific employee.
+ *
+ * @param {NextRequest} request - The HTTP request containing the request data.
+ * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the zones related to the employee.
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/employees/{userId}/zonesByCompany")
+ * const data = await response.json()
+ * ```
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
@@ -39,6 +52,12 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Zones[]>>(
+            {
+                data: [],
+                ok: true,
+            },
+            { status: 404 }
+        )
     }
 }

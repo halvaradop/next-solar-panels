@@ -1,24 +1,34 @@
-import { ResponseAPI } from "@/lib/@types/types"
+import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Users } from "@prisma/client"
-import { NextResponse } from "next/server"
+import { ResponseAPI } from "@/lib/@types/types"
 
+/**
+ * Handle the GET request to retrieve all users from the database.
+ *
+ * @returns {Promise<NextResponse>} - The HTTP response with the users fetched
+ * @example
+ * ```ts
+ * const response = await fetch("/api/v1/users")
+ * const data = await response.json()
+ * ```
+ */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.users.findMany()
+        const users = await prisma.users.findMany()
         return NextResponse.json<ResponseAPI<Users[]>>({
-            data,
+            data: users,
             ok: true,
-            message: "The resource was retrieved successfuly",
+            message: "Users retrieved successfully",
         })
     } catch (error) {
         return NextResponse.json<ResponseAPI<Users[]>>(
             {
                 data: [],
                 ok: false,
-                message: "Failed companies",
+                message: "Failed to retrieve users",
             },
-            { status: 404 }
+            { status: 500 }
         )
     }
 }
