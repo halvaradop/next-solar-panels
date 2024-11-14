@@ -30,9 +30,9 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve samples related to the employee",
+                message: "Failed to retrieve samples for the specified employee",
             },
-            { status: 404 }
+            { status: 500 }
         )
     }
 }

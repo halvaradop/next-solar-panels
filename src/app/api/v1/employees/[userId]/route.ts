@@ -49,7 +49,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 {
                     data: {} as UsersResponse,
                     ok: false,
-                    message: "Failed to retrieve zones",
+                    message: "Failed to retrieve the user information",
                 },
                 { status: 404 }
             )
@@ -64,7 +64,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             {
                 data: {} as UsersResponse,
                 ok: false,
-                message: "Failed to retrieve zones",
+                message: "Failed to retrieve the user information",
             },
             { status: 404 }
         )

@@ -39,7 +39,7 @@ export const GET = async (request: NextRequest, { params }: Params<"sampleId">):
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "An error occurred while fetching the sample.",
+            message: "Failed to retrieve a specific sample.",
         })
     }
 }

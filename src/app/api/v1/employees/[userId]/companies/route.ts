@@ -50,7 +50,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed ",
+            message: "Failed to create the company",
         })
     }
 }

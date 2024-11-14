@@ -27,9 +27,9 @@ export const GET = async (): Promise<NextResponse> => {
             {
                 data: [],
                 ok: false,
-                message: "Failed companies",
+                message: "Failed to retrieve roles",
             },
-            { status: 404 }
+            { status: 500 }
         )
     }
 }

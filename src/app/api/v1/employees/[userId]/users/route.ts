@@ -65,7 +65,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed ",
+            message: "Failed to create the employee",
         })
     }
 }
@@ -117,7 +117,8 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
         return NextResponse.json<ResponseAPI<Users[]>>(
             {
                 data: [],
-                ok: true,
+                ok: false,
+                message: "Failed to retrieve the users",
             },
             { status: 404 }
         )

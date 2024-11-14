@@ -38,7 +38,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "There is already a plant with those coordinates",
+                message: "A plant with the specified coordinates already exists.",
             })
         }
         const company = await prisma.companies.findFirst({
@@ -69,11 +69,14 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<{}>>({
-            data: {},
-            ok: false,
-            message: "Failed ",
-        })
+        return NextResponse.json<ResponseAPI<{}>>(
+            {
+                data: {},
+                ok: false,
+                message: "Failed to create the plant",
+            },
+            { status: 500 }
+        )
     }
 }
 
@@ -115,6 +118,13 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Plants[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Plants[]>>(
+            {
+                data: [],
+                ok: false,
+                message: "Failed to retrieve the data",
+            },
+            { status: 404 }
+        )
     }
 }

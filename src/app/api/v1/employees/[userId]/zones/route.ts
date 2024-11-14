@@ -47,7 +47,14 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>({ data: [], ok: true }, { status: 404 })
+        return NextResponse.json<ResponseAPI<Zones[]>>(
+            {
+                data: [],
+                ok: false,
+                message: "Failed to retrieve zones",
+            },
+            { status: 404 }
+        )
     }
 }
 

@@ -22,13 +22,13 @@ export const GET = async (): Promise<NextResponse> => {
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Companies[]>>(
+        return NextResponse.json<ResponseAPI<null>>(
             {
-                data: [],
+                data: null,
                 ok: false,
-                message: "Failed companies",
+                message: "Failed to retrieve companies",
             },
-            { status: 404 }
+            { status: 500 }
         )
     }
 }
