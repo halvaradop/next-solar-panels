@@ -1,5 +1,5 @@
 import { Zones } from "@prisma/client"
-import { ResponseAPI } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
 /**
  * TODO: Adds caching to the fetch request when the module to adds zones is implemented.
@@ -11,9 +11,8 @@ import { ResponseAPI } from "@/lib/@types/types"
  * @returns - A list of zones related to the user
  */
 export const getZonesByUser = async (userId: number): Promise<Zones[]> => {
-    const response = await fetch(`http://localhost:3000/api/v1/employees/${userId}/zones`)
-    const json: ResponseAPI<Zones[]> = await response.json()
-    return json.data
+    const { data } = await getFetch<Zones[]>(`employees/${userId}/zones`)
+    return data
 }
 
 /**
@@ -25,7 +24,6 @@ export const getZonesByUser = async (userId: number): Promise<Zones[]> => {
  * @returns - A list of zones from the database
  */
 export const getZones = async (): Promise<Zones[]> => {
-    const response = await fetch("http://localhost:3000/api/v1/zones")
-    const json: ResponseAPI<Zones[]> = await response.json()
-    return json.data
+    const { data } = await getFetch<Zones[]>(`zones`)
+    return data
 }
