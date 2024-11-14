@@ -8,7 +8,7 @@ import { getFetch } from "@/lib/utils"
  * @returns {Promise<Samples[]>} - A list of samples related to the user
  */
 export const getSamplesByUser = async (userId: number): Promise<Samples[]> => {
-    const { data } = await getFetch<Samples[]>(`employees/${userId}/samples`)
+    const { data } = await getFetch<Samples[]>(`users/${userId}/samples`)
     return data
 }
 

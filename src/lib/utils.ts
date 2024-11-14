@@ -3,6 +3,7 @@ import clsx, { ClassValue } from "clsx"
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
+import { SafeParseError, SafeParseReturnType } from "zod"
 
 /**
  * Merges the classes and returns a string
@@ -63,7 +64,7 @@ export const encrypt = async (data: string): Promise<string> => {
  * @throws {BadRequestError} if there is an error fetching data from the API
  */
 export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Promise<ResponseAPI<T>> => {
-    const URL = `${process.env.AUTH_URL}/api/v1/${endpoint}`
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`
     const { headers: headersInit, ...spread } = init
     try {
         const response = await fetch(URL, {
@@ -78,4 +79,19 @@ export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Pro
     } catch (error) {
         throw new BadRequestError("Error fetching data from the API")
     }
+}
+
+/**
+ * Extracts and maps the errors from a Zod schema validation result.
+ * It removes fields that do not have errors.
+ *
+ * @param {SafeParseError<T>} validate - The validation result from a Zod schema.
+ * @returns {T} - The mapped errors.
+ */
+export const mapErrors = <T>(validate: SafeParseError<T>): T => {
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return schema as T
 }

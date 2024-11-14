@@ -3,16 +3,14 @@ import { prisma } from "@/lib/prisma"
 import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
 
 /**
- * TODO: move this route to /api/v1/users/{userId}
- *
- * Handle the GET request to retrieve a specific employee information
+ * Handle the GET request to retrieve a specific user information
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - The HTTP response containing the employee information.
+ * @returns {Promise<NextResponse>} - The HTTP response containing the user information.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}")
+ * const response = await fetch("/api/v1/users/{userId}")
  * const data = await response.json()
  * ```
  */

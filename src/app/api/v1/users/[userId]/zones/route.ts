@@ -4,15 +4,15 @@ import { Zones } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all zones related to a specific employee
+ * Handle the GET request to retrieve all zones related to a specific user
  * in the database.
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - HTTP response with the zones related to the employee.
+ * @returns {Promise<NextResponse>} - HTTP response with the zones related to the user.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/zones")
+ * const response = await fetch("/api/v1/users/{userId}/zones")
  * const data = await response.json()
  * ```
  */
@@ -65,7 +65,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
  * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/zones", {
+ * const response = await fetch("/api/v1/users/{userId}/zones", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     latitude: 40.7128,

@@ -4,15 +4,15 @@ import { Samples } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all samples related to a specific employee
+ * Handle the GET request to retrieve all samples related to a specific user
  * from the database.
  *
  * @param {NextRequest} request - The HTTP request object.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - HTTP response with the samples related to the employee.
+ * @returns {Promise<NextResponse>} - HTTP response with the samples related to the user.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/samples")
+ * const response = await fetch("/api/v1/users/{userId}/samples")
  * const data = await response.json()
  * ```
  */
@@ -30,7 +30,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve samples for the specified employee",
+                message: "Failed to retrieve samples for the specified user",
             },
             { status: 500 }
         )
@@ -38,16 +38,16 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
 }
 
 /**
- * TODO: Create the new sample related to the employee other than create it by zone.
+ * TODO: Create the new sample related to the user other than create it by zone.
  *
- * Handle the POST request to create a new sample related to a specific employee
+ * Handle the POST request to create a new sample related to a specific user
  * in the database.
  *
  * @param {NextRequest} request - The HTTP request data received with the new sample information.
  * @returns {Promise<NextResponse>} - HTTP response with the new sample created.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/employees/{userId}/samples", {
+ * const response = await fetch("/api/v1/users/{userId}/samples", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     userId: 1,
