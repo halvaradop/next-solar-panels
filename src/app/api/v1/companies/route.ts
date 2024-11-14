@@ -15,7 +15,11 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.companies.findMany()
+        const data = await prisma.companies.findMany({
+            include: {
+                PhoneCompanies: true,
+            },
+        });
         return NextResponse.json<ResponseAPI<Companies[]>>({
             data,
             ok: true,
