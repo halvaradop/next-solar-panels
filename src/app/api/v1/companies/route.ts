@@ -19,7 +19,7 @@ export const GET = async (): Promise<NextResponse> => {
             include: {
                 PhoneCompanies: true,
             },
-        });
+        })
         return NextResponse.json<ResponseAPI<Companies[]>>({
             data,
             ok: true,

@@ -43,11 +43,11 @@ export interface FilterProps {
 
 export interface FilterComapaniesProps {
     companies: {
-        companyId: number;
-        companyName: string;
-        email: string;
-        PhoneCompanies: { phoneNumber: string }[]; 
-    }[];
+        companyId: number
+        companyName: string
+        email: string
+        PhoneCompanies: { phoneNumber: string }[]
+    }[]
 }
 
 export interface FilterUserProps {
