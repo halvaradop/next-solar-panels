@@ -1,5 +1,6 @@
 import { twMerge } from "tw-merge"
 import clsx, { ClassValue } from "clsx"
+import { hash, genSalt } from "bcryptjs"
 
 /**
  * Merges the classes and returns a string
@@ -38,4 +39,15 @@ export const mapToNumber = (entries: Record<string, unknown>, fields: string[], 
  */
 export const camelCaseToWords = (str: string): string => {
     return str.replace(/([A-Z])/g, " $1").trim()
+}
+
+/**
+ * Encrypts a string using bcrypt with a salt of 10
+ *
+ * @param data the string to be encrypted
+ * @returns the encrypted string
+ */
+export const encrypt = async (data: string): Promise<string> => {
+    const salt = await genSalt(10)
+    return hash(data, salt)
 }
