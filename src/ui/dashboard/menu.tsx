@@ -9,6 +9,18 @@ const links = {
         { href: "/dashboard/zones", label: "List" },
         { href: "/dashboard/zones/add", label: "Add" },
     ],
+    users: [
+        { href: "/dashboard/users", label: "List" },
+        { href: "/dashboard/users/add", label: "Add" },
+    ],
+    companies: [
+        { href: "/dashboard/companies", label: "List" },
+        { href: "/dashboard/companies/add", label: "Add" },
+    ],
+    plants: [
+        { href: "/dashboard/plants", label: "List" },
+        { href: "/dashboard/plants/add", label: "Add" },
+    ],
 }
 
 export const Menu = () => {
