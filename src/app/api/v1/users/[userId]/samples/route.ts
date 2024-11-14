@@ -77,7 +77,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const json: Samples = response
         const data = await prisma.samples.create({
-            data: json,
+            data: {
+                ...json,
+                sampleDateTime: new Date(),
+            },
         })
         return NextResponse.json<ResponseAPI<Samples>>({
             data,
