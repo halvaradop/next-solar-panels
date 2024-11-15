@@ -7,12 +7,12 @@ export const Table = async ({ companies }: FilterComapaniesProps) => {
                 <tr>
                     <th className=" p-3 text-start font-medium sm:w-[10%]">Id</th>
                     <th className=" p-3 text-start font-medium sm:w-[30%] md:w-[20%]">Name</th>
-                    <th className="hidden  p-3 text-start font-medium sm:table-cell base:w-[15%]">Longitude</th>
+                    <th className="hidden  p-3 text-start font-medium sm:table-cell base:w-[15%]">Email</th>
                     <th className=" p-3 text-start font-medium sm:w-[15%] md:w-[10%]">Phone</th>
                 </tr>
             </thead>
             <tbody>
-                {companies.map(({ companyId, companyName, email, PhoneCompanies = [] }) => (
+                {companies.map(({ companyId, companyName, email, phoneCompanies = [] }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={companyId}>
                         <td className=" p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[10%]">{companyId}</td>
                         <td className=" p-3 whitespace-nowrap text-ellipsis border-t overflow-hidden sm:w-[30%]">
@@ -20,8 +20,8 @@ export const Table = async ({ companies }: FilterComapaniesProps) => {
                         </td>
                         <td className="hidden  p-3 whitespace-nowrap text-ellipsis border-t sm:table-cell">{email}</td>
                         <td className="hidden  p-3 whitespace-nowrap text-ellipsis border-t md:table-cell">
-                            {PhoneCompanies.length > 0
-                                ? PhoneCompanies.map((phone, index) => <div key={index}>{phone.phoneNumber}</div>)
+                            {phoneCompanies.length > 0
+                                ? phoneCompanies.map((phone, index) => <div key={index}>{phone.phoneNumber}</div>)
                                 : ""}
                         </td>
                     </tr>

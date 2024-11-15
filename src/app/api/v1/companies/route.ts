@@ -20,8 +20,13 @@ export const GET = async (): Promise<NextResponse> => {
                 PhoneCompanies: true,
             },
         })
+        const map = data.map(({ PhoneCompanies, ...spread }) => ({
+            phoneCompanies: PhoneCompanies,
+            ...spread,
+        }))
+
         return NextResponse.json<ResponseAPI<Companies[]>>({
-            data,
+            data: map,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
