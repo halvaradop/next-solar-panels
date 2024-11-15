@@ -49,6 +49,7 @@ export const AddSample = () => {
                         <Input
                             className="mt-1 focus-within:border-black focus-within:ring-black"
                             type="number"
+                            step="0.01"
                             variant="outline"
                             name={name}
                         />

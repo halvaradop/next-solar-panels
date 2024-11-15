@@ -1,6 +1,15 @@
+"use client"
+import { useSearchParams } from "next/navigation"
 import { TableZonesProps } from "@/lib/@types/props"
 
-export const Table = async ({ zones }: TableZonesProps) => {
+export const Table = ({ zones }: TableZonesProps) => {
+    const params = useSearchParams()
+
+    const filteredZones = zones.filter(({ plantId }) => {
+        const plant = params.get("plant")
+        return plant ? plant === plantId.toString() : true
+    })
+
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
@@ -13,7 +22,7 @@ export const Table = async ({ zones }: TableZonesProps) => {
                 </tr>
             </thead>
             <tbody>
-                {zones.map(({ zoneId, name, latitude, longitude, plantId }) => (
+                {filteredZones.map(({ zoneId, name, latitude, longitude, plantId }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={zoneId}>
                         <td className="p-3 pr-0 border-t">{zoneId}</td>
                         <td className="hidden p-3 border-t xs:table-cell">{name}</td>

@@ -24,6 +24,7 @@ import { SafeParseError } from "zod"
  */
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
     const session = await auth()
+    formData.set("userId", session?.user?.id as string)
     const entries = Object.fromEntries(formData)
     mapToNumber(entries, ["undergroundWaterPresence", "soilTypeHomogeneity"], false)
     const validate = SampleSchema.safeParse(entries)
