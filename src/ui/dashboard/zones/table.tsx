@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation"
 import { TableZonesProps } from "@/lib/@types/props"
 
-export const Table = async ({ zones }: TableZonesProps) => {
+export const Table = ({ zones }: TableZonesProps) => {
     const params = useSearchParams()
 
     const filteredZones = zones.filter(({ plantId }) => {

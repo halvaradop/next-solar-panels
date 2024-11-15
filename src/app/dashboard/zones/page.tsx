@@ -1,10 +1,8 @@
-import Image from "next/image"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { Table } from "@/ui/dashboard/zones/table"
 import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
-import arrowIcon from "@/public/arrow.svg"
 
 const getInformation = async () => {
     const session = await auth()
@@ -29,17 +27,6 @@ const DashboardZonesPage = async () => {
             <Suspense fallback={<p>Table...</p>}>
                 <Table zones={zones} />
             </Suspense>
-            <div className="w-full flex items-center justify-between">
-                <p className="text-sm">showing </p>
-                <figure className="h-8 flex items-center border border-gray-1000 rounded-md divide-x">
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="-rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                </figure>
-            </div>
         </section>
     )
 }

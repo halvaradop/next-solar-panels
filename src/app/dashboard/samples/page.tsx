@@ -1,11 +1,9 @@
-import Image from "next/image"
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/common/filter"
 import { getSamplesByUser, getZonesByUser } from "@/lib/services"
-import arrowIcon from "@/public/arrow.svg"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -35,17 +33,6 @@ const DashboardSamplesPage = async () => {
             <Suspense fallback={<p>Table...</p>}>
                 <SampleList samples={samples} />
             </Suspense>
-            <div className="w-full flex items-center justify-between">
-                <p className="text-sm">showing</p>
-                <figure className="h-8 flex items-center border border-gray-1000 rounded-md divide-x">
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="-rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                </figure>
-            </div>
         </section>
     )
 }
