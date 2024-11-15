@@ -2,8 +2,8 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Companies, Plants, Samples, Users, Zones } from "@prisma/client"
-import { CompanySchema, SampleSchema, UserSchema, ZoneSchema, PlantSchema } from "./schemas"
+import { Companies, Plants, Samples, UserPlants, Users, Zones } from "@prisma/client"
+import { CompanySchema, SampleSchema, UserSchema, ZoneSchema, PlantSchema, UserPlantSchema } from "./schemas"
 import {
     AddPlantActionState,
     AddCompanieActionState,
@@ -11,6 +11,7 @@ import {
     AddUserActionState,
     AddZonesActionState,
     LoginActionState,
+    AddPUserPlantsActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -154,7 +155,6 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-
     const validate = UserSchema.safeParse(entries)
 
     if (validate.success) {
@@ -222,6 +222,42 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
         }
     }
     const schema = mapErrors(validate as SafeParseError<Plants>)
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema,
+    }
+}
+
+export const addUserPlantsAction = async (
+    previous: AddPUserPlantsActionState,
+    formData: FormData
+): Promise<AddPUserPlantsActionState> => {
+    const entries = Object.fromEntries(formData)
+    const validate = UserPlantSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/userPlant`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const result = await request.json()
+        if (request.ok) {
+            if (!result.ok) {
+                return {
+                    message: result.message,
+                    isSuccess: result.ok,
+                    schema: {} as UserPlants,
+                }
+            }
+            redirect("/dashboard")
+        }
+        return {
+            message: "Failed to add the Uset to plant",
+            isSuccess: false,
+            schema: {} as UserPlants,
+        }
+    }
+    const schema = mapErrors(validate as SafeParseError<UserPlants>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
