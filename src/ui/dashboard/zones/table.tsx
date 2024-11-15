@@ -1,8 +1,8 @@
 "use client"
 import { useSearchParams } from "next/navigation"
-import { TableZonesProps } from "@/lib/@types/props"
+import { TableZonesPropsp } from "@/lib/@types/props"
 
-export const Table = ({ zones }: TableZonesProps) => {
+export const Table = ({ zones }: TableZonesPropsp) => {
     const params = useSearchParams()
 
     const filteredZones = zones.filter(({ plantId }) => {
@@ -22,13 +22,13 @@ export const Table = ({ zones }: TableZonesProps) => {
                 </tr>
             </thead>
             <tbody>
-                {filteredZones.map(({ zoneId, name, latitude, longitude, plantId }) => (
+                {filteredZones.map(({ zoneId, name, latitude, longitude, plant }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={zoneId}>
                         <td className="p-3 pr-0 border-t">{zoneId}</td>
                         <td className="hidden p-3 border-t xs:table-cell">{name}</td>
                         <td className="p-3 border-t">{longitude.toString()}</td>
                         <td className="p-3 border-t">{latitude.toString()}</td>
-                        <td className="hidden p-3 border-t sm:table-cell">{plantId}</td>
+                        <td className="hidden p-3 border-t sm:table-cell">{plant?.plantName}</td>
                     </tr>
                 ))}
             </tbody>

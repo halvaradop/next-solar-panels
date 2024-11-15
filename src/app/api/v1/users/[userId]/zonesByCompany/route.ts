@@ -40,11 +40,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 },
             },
             include: {
-                plant: {
-                    select: {
-                        plantName: true,
-                    },
-                },
+                plant: true,
             },
         })
         return NextResponse.json<ResponseAPI<Zones[]>>({
