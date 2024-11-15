@@ -6,22 +6,35 @@ import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
 import { AddUserActionState } from "@/lib/@types/types"
-import { Roles } from "@prisma/client"
+import { Plants, Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { getRoles } from "@/lib/services"
+import { getPlantByCompany, getRoles } from "@/lib/services"
 import { Select } from "@/ui/common/select"
 import dataJson from "@/lib/data.json"
+import { useSession } from "next-auth/react"
 
 const { userInputs } = dataJson
 
 export const AddUser = () => {
+    const { data: session } = useSession()
     const [roles, setRoles] = useState<Roles[]>([])
+    const [plants, setPlants] = useState<Plants[]>([])
     const [state, formAction] = useFormState(addUserAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
     })
     const mapRoles = roles.map(({ roleId, roleName }) => ({ key: roleName, value: roleId.toString() }))
+    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
+
+    useEffect(() => {
+        const fetchPlants = async () => {
+            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
+            const response = await getPlantByCompany(userId)
+            setPlants(response)
+        }
+        fetchPlants()
+    }, [])
 
     useEffect(() => {
         const fetchRoles = async () => {
@@ -51,6 +64,10 @@ export const AddUser = () => {
             <Label className="w-full text-neutral-700" size="sm">
                 Role
                 <Select name="rol" values={mapRoles} />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Plant
+                <Select name="plant" values={mapPlants} />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

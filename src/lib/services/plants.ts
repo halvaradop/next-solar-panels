@@ -1,4 +1,4 @@
-import { Plants, Zones } from "@prisma/client"
+import { Plants, UserPlants, Zones } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
@@ -31,5 +31,10 @@ export const getZonesPlantsByUser = async (userId: number): Promise<Zones[]> => 
  */
 export const getPlantByCompany = async (userId: number): Promise<Plants[]> => {
     const { data } = await getFetch<Plants[]>(`users/${userId}/plants`)
+    return data
+}
+
+export const getUserPlantByCompany = async (userId: number): Promise<UserPlants[]> => {
+    const { data } = await getFetch<UserPlants[]>(`users/${userId}/userPlants`)
     return data
 }

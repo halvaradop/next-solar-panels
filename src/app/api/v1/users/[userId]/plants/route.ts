@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Plants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
+import { create } from "domain"
 
 /**
  * Handle the POST request to create a new plant related to a specific user
@@ -25,7 +26,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const userId = parseInt("0")
         const response = await request.json()
-        const { plantName, latitude, longitude } = response
+        const { plantName, latitude, longitude, user } = response
 
         const existcoordinates = await prisma.plants.findFirst({
             where: {
@@ -60,6 +61,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 companyId: company?.companyId ?? 0,
                 latitude,
                 longitude,
+                UserPlants: {
+                    create: {
+                        userId: parseInt(user),
+                    },
+                },
             },
         })
 

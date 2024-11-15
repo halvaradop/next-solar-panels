@@ -49,6 +49,14 @@ export interface FilterComapaniesProps {
         phoneCompanies?: { phoneNumber: string }[]
     }[]
 }
+export interface FilterUserPlantsProps {
+    userPlants: {
+        userId: number
+        plantId: number
+        plant?: { plantName: string }
+        user?: { firstName: string; lastName: string }
+    }[]
+}
 
 export interface FilterUserProps {
     users: Users[]

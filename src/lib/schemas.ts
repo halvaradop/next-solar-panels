@@ -52,12 +52,14 @@ export const UserSchema = object({
     }),
     phone: string(),
     rol: string(),
+    plant: string(),
 })
 
 export const PlantSchema = object({
     plantName: string(),
     latitude: string(),
     longitude: string(),
+    user: string(),
 })
 export const ZoneSchema = object({
     latitude: number()
@@ -68,4 +70,9 @@ export const ZoneSchema = object({
         .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
     name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
     plant: number(),
+})
+
+export const UserPlantSchema = object({
+    plant: string(),
+    user: string(),
 })
