@@ -3,14 +3,12 @@ import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { FilterBy } from "./filter-by"
 import { FilterProps } from "@/lib/@types/props"
-import { Entry } from "@/lib/@types/types"
 import resetIcon from "@/public/reset.svg"
 import filterIcon from "@/public/filter.svg"
 
-export const Filter = ({ zones }: FilterProps) => {
+export const Filter = ({ filters }: FilterProps) => {
     const router = useRouter()
     const patname = usePathname()
-    const mapZones = zones.map<Entry>(({ zoneId, name }) => ({ key: name, value: zoneId.toString() }))
 
     const handleResetFilter = () => {
         router.push(patname)
@@ -22,7 +20,9 @@ export const Filter = ({ zones }: FilterProps) => {
                 <Image src={filterIcon} alt="Filter icon" />
             </figure>
             <p className="h-full px-3 flex items-center justify-center">Filter By</p>
-            <FilterBy title="Zone" options={mapZones} />
+            {filters.map(({ className, title, options }, index) => (
+                <FilterBy key={index} className={className} title={title} options={options} />
+            ))}
             <figure
                 className="h-full px-3 flex items-center justify-center gap-x-2 hover:cursor-pointer"
                 onClick={handleResetFilter}
