@@ -6,7 +6,7 @@ import { Plants, Users } from "@prisma/client"
 import { addUserPlantsAction } from "@/lib/actions"
 import { AddPUserPlantsActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByCompanyId, getPlantsByCompanyId } from "@/lib/services"
-import { Button, Form, Label, Select } from "@/ui/common/form"
+import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
 
 export const AddUserPlant = () => {
     const { data: session } = useSession()
@@ -33,11 +33,11 @@ export const AddUserPlant = () => {
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 User
-                <Select values={users} id="lastName" value="userId" name="user" />
+                <SelectGeneric values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select values={plants} id="plantName" value="plantId" name="plant" />
+                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

@@ -6,7 +6,7 @@ import { Zones } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByCompanyId, getUserById } from "@/lib/services"
-import { Button, Form, Input, Label, Select } from "@/ui/common/form"
+import { Button, Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { sampleInputs } = dataJson
@@ -57,7 +57,7 @@ export const AddSample = () => {
             ))}
             <Label>
                 Zone
-                <Select values={zones} id="name" value="zoneId" name="zoneId" />
+                <SelectGeneric values={zones} id="name" value="zoneId" name="zoneId" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

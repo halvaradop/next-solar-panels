@@ -6,7 +6,7 @@ import { Plants, Roles } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
 import { AddUserActionState } from "@/lib/@types/types"
 import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
-import { Button, Form, InputList, Label, Select } from "@/ui/common/form"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { userInputs } = dataJson
@@ -44,11 +44,11 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <Select values={roles} id="roleName" value="roleId" name="rol" />
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="rol" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select values={plants} id="plantName" value="plantId" name="plant" />
+                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add
