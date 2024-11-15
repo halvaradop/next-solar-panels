@@ -17,8 +17,6 @@ export const AddUserPlant = () => {
         isSuccess: false,
         schema: {} as AddPUserPlantsActionState["schema"],
     })
-    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
-    const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
 
     useEffect(() => {
         const getData = async () => {
@@ -35,11 +33,11 @@ export const AddUserPlant = () => {
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 User
-                <Select name="user" values={mapUsers} />
+                <Select values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select name="plant" values={mapPlants} />
+                <Select values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

@@ -10,6 +10,7 @@ import { Button, Form, InputList, Label, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { plantInputs } = dataJson
+export const fetchCache = "force-no-store"
 
 export const AddPlant = () => {
     const { data: session } = useSession()
@@ -19,9 +20,11 @@ export const AddPlant = () => {
         isSuccess: false,
         schema: {} as AddPlantActionState["schema"],
     })
-    const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
 
     useEffect(() => {
+        /**
+         * TODO: fix bug
+         */
         const fetchUsers = async () => {
             const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
             const { companyId } = await getUserById(userId)
@@ -36,7 +39,7 @@ export const AddPlant = () => {
             <InputList inputs={plantInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 User
-                <Select name="user" values={mapUsers} />
+                <Select values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

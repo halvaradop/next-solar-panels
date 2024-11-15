@@ -20,8 +20,6 @@ export const AddUser = () => {
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
     })
-    const mapRoles = roles.map(({ roleId, roleName }) => ({ key: roleName, value: roleId.toString() }))
-    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
 
     useEffect(() => {
         const fetchPlants = async () => {
@@ -46,11 +44,11 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <Select name="rol" values={mapRoles} />
+                <Select values={roles} id="roleName" value="roleId" name="rol" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select name="plant" values={mapPlants} />
+                <Select values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

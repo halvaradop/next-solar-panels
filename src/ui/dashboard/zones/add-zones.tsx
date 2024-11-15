@@ -18,7 +18,6 @@ export const AddZone = () => {
         message: "",
         isSuccess: false,
     } as AddZonesActionState)
-    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
 
     useEffect(() => {
         const fetchPlants = async () => {
@@ -35,7 +34,7 @@ export const AddZone = () => {
             <InputList inputs={zoneInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select name="plant" values={mapPlants} />
+                <Select values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

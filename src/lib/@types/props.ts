@@ -61,12 +61,23 @@ export interface TableUsersProps {
 export interface TablePlantsProps {
     plants: Plants[]
 }
+
+export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
+    className?: string
+    classNameOption?: string
+    name: string
+    id: K
+    value: K
+    values: T[]
+}
+
 export interface SelectProps {
     className?: string
     classNameOption?: string
     name: string
     values: Entry[]
 }
+
 export interface TableZonesProps {
     zones: (Zones & { plant?: Pick<Plants, "plantName"> })[]
 }
