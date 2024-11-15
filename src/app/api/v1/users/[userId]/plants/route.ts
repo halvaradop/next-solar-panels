@@ -26,14 +26,14 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { plantName, latitude, longitude, id } = response
-        if(!id) {
+        if (!id) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "user id was not sent"
+                message: "user id was not sent",
             })
         }
-        const userId = parseInt(id)     
+        const userId = parseInt(id)
 
         const existcoordinates = await prisma.plants.findFirst({
             where: {
