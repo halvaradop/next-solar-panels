@@ -6,7 +6,10 @@ import { Users } from "@prisma/client"
 import { addPlantAction } from "@/lib/actions"
 import { AddPlantActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByCompanyId } from "@/lib/services"
-import { Button, Form, Input, Label, Select } from "@/ui/common/form"
+import { Button, Form, InputList, Label, Select } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { plantInputs } = dataJson
 
 export const AddPlant = () => {
     const { data: session } = useSession()
@@ -30,36 +33,7 @@ export const AddPlant = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <Label className="w-full text-neutral-700" size="sm">
-                PLant Name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="plantName"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Latitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="latitude"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Longitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="longitude"
-                    required
-                />
-            </Label>
+            <InputList inputs={plantInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 User
                 <Select name="user" values={mapUsers} />

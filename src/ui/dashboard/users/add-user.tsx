@@ -6,7 +6,7 @@ import { Plants, Roles } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
 import { AddUserActionState } from "@/lib/@types/types"
 import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
-import { Button, Form, Input, Label, Select } from "@/ui/common/form"
+import { Button, Form, InputList, Label, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { userInputs } = dataJson
@@ -43,21 +43,7 @@ export const AddUser = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            {userInputs.map(({ label, name, type }) => (
-                <Label className="w-full text-neutral-700" size="sm" key={label}>
-                    {label}
-                    <Input
-                        className="mt-1 focus-within:border-black focus-within:ring-black"
-                        type={type}
-                        variant="outline"
-                        name={name}
-                        required
-                    />
-                    {state.schema && state.schema[name as keyof AddUserActionState["schema"]] && (
-                        <p className="mt-1 text-xs text-red-400">{state.schema[name as keyof AddUserActionState["schema"]]}</p>
-                    )}
-                </Label>
-            ))}
+            <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
                 <Select name="rol" values={mapRoles} />
