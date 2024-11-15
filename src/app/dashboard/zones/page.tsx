@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { Table } from "@/ui/dashboard/zones/table"
+import { TableZones } from "@/ui/dashboard/zones/table"
 import { getUserById, getPlantsByCompanyId, getZonesByCompanyId } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
 
@@ -26,7 +26,7 @@ const DashboardZonesPage = async () => {
                 ]}
             />
             <Suspense fallback={<p>Table...</p>}>
-                <Table zones={zones} />
+                <TableZones zones={zones} />
             </Suspense>
         </section>
     )

@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zones, Samples, Companies, Users, Plants } from "@prisma/client"
-import { Entry, MenuState, Params } from "./types"
+import { Zones, Samples, Users, Plants, Companies, PhoneUsers, PhoneCompanies } from "@prisma/client"
+import { Entry, MenuState } from "./types"
 import { Decimal } from "@prisma/client/runtime/library"
+import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
 export interface ProductProps {
     className?: string
@@ -42,40 +43,24 @@ export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface FilterComapaniesProps {
-    companies: {
-        companyId: number
-        companyName: string
-        email: string
-        phoneCompanies?: { phoneNumber: string }[]
-    }[]
+export interface TableCompaniesProps {
+    companies: (Omit<Companies, "state"> & { phoneCompanies?: Pick<PhoneCompanies, "phoneNumber">[] })[]
 }
-export interface FilterUserPlantsProps {
+
+export interface TableUserPlantsProps {
     userPlants: {
         userId: number
         plantId: number
-        plant?: { plantName: string }
-        user?: { firstName: string; lastName: string }
+        plant?: Pick<Plants, "plantName">
+        user?: Pick<Users, "firstName" | "lastName">
     }[]
 }
 
-export interface FilterUsersProps {
-    users: {
-        userId: number
-        firstName: string
-        lastName: string
-        email: string
-        state: string
-        roleId: number
-        role?: { roleName: string }
-        phoneUsers?: { phoneNumber: string }[]
-    }[]
-}
-export interface FilterUserProps {
-    users: Users[]
+export interface TableUsersProps {
+    users: (Omit<Users, "state"> & { phoneUsers?: Pick<PhoneUsers, "phoneNumber">[] } & { role?: { roleName: string } })[]
 }
 
-export interface FilterPlantsProps {
+export interface TablePlantsProps {
     plants: Plants[]
 }
 export interface SelectProps {
@@ -84,17 +69,6 @@ export interface SelectProps {
     name: string
     values: Entry[]
 }
-export interface TableZonesPropsp {
-    zones: {
-        zoneId: number
-        plantId: number
-        latitude: Decimal
-        longitude: Decimal
-        name: string
-        state: string
-        plant?: { plantName: string }
-    }[]
-}
 export interface TableZonesProps {
-    zones: Zones[]
+    zones: (Zones & { plant?: Pick<Plants, "plantName"> })[]
 }

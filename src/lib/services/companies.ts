@@ -6,8 +6,8 @@ import { getFetch } from "@/lib/utils"
  *
  * @returns {Promise<Companies[]>} - A promise that resolves to a list of companies
  */
-export const getCompanies = async (): Promise<Companies[]> => {
-    const { data } = await getFetch<Companies[]>("companies")
+export const getCompanies = async <T extends unknown[] = Companies[]>(): Promise<T> => {
+    const { data } = await getFetch<T>("companies")
     return data
 }
 

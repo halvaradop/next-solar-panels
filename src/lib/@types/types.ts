@@ -52,15 +52,9 @@ export type AddPUserPlantsActionState = ActionState<UserPlants>
 
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 
-export interface UsersResponse {
-    userId: number
-    email: string
-    firstName: string
-    lastName: string
+export type UserSession = Omit<Users, "state" | "roleId"> & {
     role: {
         roleId: number
         roleName: string
-        state: string
     }
-    companyId: number
 }
