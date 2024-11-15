@@ -99,5 +99,32 @@
       "name": "externalCathodes",
       "unit": ""
     }
+  ],
+  "userInputs": [
+    {
+      "label": "First name",
+      "name": "firstName",
+      "type": "text"
+    },
+    {
+      "label": "Last name",
+      "name": "lastName",
+      "type": "text"
+    },
+    {
+      "label": "Email",
+      "name": "email",
+      "type": "email"
+    },
+    {
+      "label": "Password",
+      "name": "password",
+      "type": "password"
+    },
+    {
+      "label": "Phone",
+      "name": "phone",
+      "type": "number"
+    }
   ]
 }

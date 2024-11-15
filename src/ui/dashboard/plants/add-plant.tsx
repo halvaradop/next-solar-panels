@@ -46,11 +46,9 @@ export const AddPlant = () => {
                     required
                 />
             </Label>
-
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
-
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
