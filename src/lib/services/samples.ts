@@ -7,7 +7,7 @@ import { getFetch } from "@/lib/utils"
  * @param sampleId - The id of the sample to fetch
  * @returns {Promise<Samples>} - A sample by its id
  */
-export const getSamplesById = async (sampleId: number): Promise<Samples> => {
-    const { data } = await getFetch<Samples>(`samples/${sampleId}`)
+export const getSamplesById = async <T extends object = Samples>(sampleId: number): Promise<T> => {
+    const { data } = await getFetch<T>(`samples/${sampleId}`)
     return data
 }

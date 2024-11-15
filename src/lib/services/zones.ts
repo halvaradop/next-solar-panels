@@ -9,7 +9,7 @@ import { getFetch } from "@/lib/utils"
  *
  * @returns - A list of zones from the database
  */
-export const getZones = async (): Promise<Zones[]> => {
-    const { data } = await getFetch<Zones[]>(`zones`)
+export const getZones = async <T extends unknown[] = Zones[]>(): Promise<T> => {
+    const { data } = await getFetch<T>(`zones`)
     return data
 }

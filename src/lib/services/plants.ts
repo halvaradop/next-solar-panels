@@ -7,7 +7,7 @@ import { getFetch } from "@/lib/utils"
  * @param {number} userId - The user id.
  * @returns {Promise<UserPlants[]>} - A promise that resolves to an array of UserPlants.
  */
-export const getUserPlantByCompany = async (userId: number): Promise<UserPlants[]> => {
-    const { data } = await getFetch<UserPlants[]>(`companies/${userId}`)
+export const getUserPlantByCompany = async <T extends unknown[] = UserPlants[]>(userId: number): Promise<T> => {
+    const { data } = await getFetch<T>(`companies/${userId}`)
     return data
 }

@@ -17,8 +17,8 @@ export const getCompanies = async <T extends unknown[] = Companies[]>(): Promise
  * @param {number} companyId - The ID of the company to fetch plants for
  * @returns {Promise<Plants[]>} - A promise that resolves to a list of plants
  */
-export const getPlantsByCompanyId = async (companyId: number): Promise<Plants[]> => {
-    const { data } = await getFetch<Plants[]>(`companies/${companyId}/plants`)
+export const getPlantsByCompanyId = async <T extends unknown[] = Plants[]>(companyId: number): Promise<T> => {
+    const { data } = await getFetch<T>(`companies/${companyId}/plants`)
     return data
 }
 
@@ -28,8 +28,8 @@ export const getPlantsByCompanyId = async (companyId: number): Promise<Plants[]>
  * @param {number} companyId - The ID of the company to fetch zones for
  * @returns {Promise<Zones[]>} - A promise that resolves to a list of zones
  */
-export const getZonesByCompanyId = async (companyId: number): Promise<Zones[]> => {
-    const { data } = await getFetch<Zones[]>(`companies/${companyId}/zones`)
+export const getZonesByCompanyId = async <T extends unknown[] = Zones[]>(companyId: number): Promise<T> => {
+    const { data } = await getFetch<T>(`companies/${companyId}/zones`)
     return data
 }
 
@@ -39,7 +39,7 @@ export const getZonesByCompanyId = async (companyId: number): Promise<Zones[]> =
  * @param {number} companyId - The ID of the company to fetch users for
  * @returns {Promise<Users[]>} - A promise that resolves to a list of users
  */
-export const getUsersByCompanyId = async (companyId: number): Promise<Users[]> => {
-    const { data } = await getFetch<Users[]>(`companies/${companyId}/users`)
+export const getUsersByCompanyId = async <T extends unknown[] = Users[]>(companyId: number): Promise<T> => {
+    const { data } = await getFetch<T>(`companies/${companyId}/users`)
     return data
 }

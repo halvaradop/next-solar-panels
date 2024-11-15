@@ -6,7 +6,7 @@ import { getFetch } from "@/lib/utils"
  *
  * @returns {Promise<Roles[]>} - A list of roles
  */
-export const getRoles = async (): Promise<Roles[]> => {
-    const { data } = await getFetch<Roles[]>("roles")
+export const getRoles = async <T extends unknown[] = Roles[]>(): Promise<T> => {
+    const { data } = await getFetch<T>("roles")
     return data
 }
