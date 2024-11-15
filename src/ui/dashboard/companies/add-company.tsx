@@ -1,6 +1,5 @@
 "use client"
 import { addCompanyAction } from "@/lib/actions"
-import { useSession } from "next-auth/react"
 import { useFormState } from "react-dom"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
@@ -9,7 +8,6 @@ import { Button } from "@halvaradop/ui-button"
 import { AddCompanieActionState } from "@/lib/@types/types"
 
 export const AddCompany = () => {
-    const { data: session } = useSession()
     const [state, formAction] = useFormState(addCompanyAction, {
         message: "",
         isSuccess: false,
@@ -39,7 +37,6 @@ export const AddCompany = () => {
                     required
                 />
             </Label>
-
             <Label className="w-full text-neutral-700" size="sm">
                 phone
                 <Input
@@ -50,11 +47,9 @@ export const AddCompany = () => {
                     required
                 />
             </Label>
-
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
-
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
