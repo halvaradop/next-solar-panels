@@ -1,6 +1,5 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-
 import { getUserPlantByCompany } from "@/lib/services"
 import { Table } from "@/ui/dashboard/usersPlants/table"
 

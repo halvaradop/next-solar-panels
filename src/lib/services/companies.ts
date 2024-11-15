@@ -4,7 +4,7 @@ import { getFetch } from "@/lib/utils"
 /**
  * Fetches all companies from the database
  *
- * @returns {Promise<Companies[]>} - A list of companies
+ * @returns {Promise<Companies[]>} - A promise that resolves to a list of companies
  */
 export const getCompanies = async (): Promise<Companies[]> => {
     const { data } = await getFetch<Companies[]>("companies")
@@ -14,8 +14,8 @@ export const getCompanies = async (): Promise<Companies[]> => {
 /**
  * Fetches all plants from the database by the company
  *
- * @param userId - The companyId to fetch plants
- * @returns {Promise<Plants[]>} - A list of plants
+ * @param {number} companyId - The ID of the company to fetch plants for
+ * @returns {Promise<Plants[]>} - A promise that resolves to a list of plants
  */
 export const getPlantsByCompanyId = async (companyId: number): Promise<Plants[]> => {
     const { data } = await getFetch<Plants[]>(`companies/${companyId}/plants`)
@@ -25,8 +25,8 @@ export const getPlantsByCompanyId = async (companyId: number): Promise<Plants[]>
 /**
  * Fetches all zones from the database by the company
  *
- * @param userId - the userId to fetch zones
- * @returns {Promise<Zones[]>} - A list of zones
+ * @param {number} companyId - The ID of the company to fetch zones for
+ * @returns {Promise<Zones[]>} - A promise that resolves to a list of zones
  */
 export const getZonesByCompanyId = async (companyId: number): Promise<Zones[]> => {
     const { data } = await getFetch<Zones[]>(`companies/${companyId}/zones`)
@@ -34,10 +34,9 @@ export const getZonesByCompanyId = async (companyId: number): Promise<Zones[]> =
 }
 
 /**
- * TODO: migrate the `getUserByCompany` function to the `company` module.
- *
  * Fetches all users associated with a specific company from the database
- * @param {number} companyId - The ID of the user whose company users are to be fetched
+ *
+ * @param {number} companyId - The ID of the company to fetch users for
  * @returns {Promise<Users[]>} - A promise that resolves to a list of users
  */
 export const getUsersByCompanyId = async (companyId: number): Promise<Users[]> => {

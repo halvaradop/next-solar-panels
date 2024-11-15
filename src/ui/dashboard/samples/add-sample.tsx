@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react"
 import { Zones } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, Entry, SamplesWithoutIds } from "@/lib/@types/types"
-import { getZonesByUser } from "@/lib/services"
+import { getZonesByCompanyId, getUserById } from "@/lib/services"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
@@ -31,7 +31,8 @@ export const AddSample = () => {
          */
         const fetchZones = async () => {
             const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getZonesByUser(userId)
+            const { companyId } = await getUserById(userId)
+            const response = await getZonesByCompanyId(companyId)
             setZones(response)
         }
         fetchZones()

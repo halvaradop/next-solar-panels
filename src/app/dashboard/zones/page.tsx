@@ -1,13 +1,14 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { Table } from "@/ui/dashboard/zones/table"
-import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services"
+import { getUserById, getPlantsByCompanyId, getZonesByCompanyId } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
 
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-    const [zones, plants] = await Promise.all([getZonesPlantsByUser(userId), getPlantsByUser(userId)])
+    const { companyId } = await getUserById(userId)
+    const [zones, plants] = await Promise.all([getZonesByCompanyId(companyId), getPlantsByCompanyId(companyId)])
     return { zones, plants }
 }
 

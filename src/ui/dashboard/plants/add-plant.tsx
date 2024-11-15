@@ -9,7 +9,7 @@ import { AddPlantActionState } from "@/lib/@types/types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { Users } from "@prisma/client"
-import { getUserByCompany } from "@/lib/services"
+import { getUserById, getUsersByCompanyId } from "@/lib/services"
 import { Select } from "@/ui/common/select"
 
 export const AddPlant = () => {
@@ -21,10 +21,12 @@ export const AddPlant = () => {
         schema: {} as AddPlantActionState["schema"],
     })
     const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
+
     useEffect(() => {
         const fetchUsers = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getUserByCompany(userId)
+            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const { companyId } = await getUserById(userId)
+            const response = await getUsersByCompanyId(companyId)
             setUsers(response)
         }
         fetchUsers()
