@@ -24,9 +24,16 @@ import { create } from "domain"
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const userId = parseInt("0")
         const response = await request.json()
-        const { plantName, latitude, longitude, user } = response
+        const { plantName, latitude, longitude, id } = response
+        if (!id) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "user id was not sent",
+            })
+        }
+        const userId = parseInt(id)
 
         const existcoordinates = await prisma.plants.findFirst({
             where: {
@@ -48,7 +55,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                     some: {
                         UserPlants: {
                             some: {
-                                userId: userId,
+                                userId,
                             },
                         },
                     },
@@ -63,7 +70,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 longitude,
                 UserPlants: {
                     create: {
-                        userId: parseInt(user),
+                        userId,
                     },
                 },
             },
