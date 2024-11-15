@@ -2,8 +2,6 @@ import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zones, Samples, Users, Plants, Companies, PhoneUsers, PhoneCompanies } from "@prisma/client"
 import { Entry, MenuState } from "./types"
-import { Decimal } from "@prisma/client/runtime/library"
-import { AddPropertyToObject } from "@halvaradop/ts-utility-types"
 
 export interface ProductProps {
     className?: string

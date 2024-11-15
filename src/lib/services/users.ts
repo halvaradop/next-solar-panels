@@ -1,6 +1,6 @@
 import { Samples, Users } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
-import { UsersResponse } from "../@types/types"
+import { UserSession } from "@/lib/@types/types"
 
 /**
  * Fetches all users from the database
@@ -16,10 +16,10 @@ export const getUsers = async (): Promise<Users[]> => {
  * Fetches a specific user from the database by their id.
  *
  * @param {number} userId - The user id to get the user from the database
- * @returns {Promise<UsersResponse>} - A user object
+ * @returns {Promise<UserSession>} - A user object
  */
-export const getUserById = async (userId: number): Promise<UsersResponse> => {
-    const { data } = await getFetch<UsersResponse>(`users/${userId}`)
+export const getUserById = async (userId: number): Promise<UserSession> => {
+    const { data } = await getFetch<UserSession>(`users/${userId}`)
     return data
 }
 

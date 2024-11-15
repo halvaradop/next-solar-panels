@@ -52,9 +52,10 @@ export type AddPUserPlantsActionState = ActionState<UserPlants>
 
 export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 
-export type UserSession = Omit<Users, "state" | "roleId"> & {
+export type UserSession = Omit<Users, "state" | "roleId" | "password"> & {
     role: {
         roleId: number
         roleName: string
     }
+    companyId: number
 }

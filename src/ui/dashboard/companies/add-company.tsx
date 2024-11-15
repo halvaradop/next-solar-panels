@@ -1,11 +1,8 @@
 "use client"
 import { addCompanyAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
 import { AddCompanieActionState } from "@/lib/@types/types"
+import { Button, Form, Input, Label } from "@/ui/common/form"
 
 export const AddCompany = () => {
     const [state, formAction] = useFormState(addCompanyAction, {

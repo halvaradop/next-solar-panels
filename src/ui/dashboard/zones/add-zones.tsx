@@ -5,12 +5,8 @@ import { useSession } from "next-auth/react"
 import { Plants } from "@prisma/client"
 import { addZonesAction } from "@/lib/actions"
 import { AddZonesActionState } from "@/lib/@types/types"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { Select } from "@/ui/common/select"
 import { getPlantsByCompanyId, getUserById } from "@/lib/services"
+import { Button, Form, Input, Label, Select } from "@/ui/common/form"
 
 export const AddZone = () => {
     const { data: session } = useSession()

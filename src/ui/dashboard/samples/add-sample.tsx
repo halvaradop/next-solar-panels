@@ -6,11 +6,7 @@ import { Zones } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, Entry, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByCompanyId, getUserById } from "@/lib/services"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { Select } from "@/ui/common/select"
+import { Button, Form, Input, Label, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { sampleInputs } = dataJson
