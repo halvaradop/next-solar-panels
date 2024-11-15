@@ -7,6 +7,7 @@ const DashboardPlantsPage = async () => {
     const session = await auth()
     const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
     const plants = await getPlantByCompany(userId)
+
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
