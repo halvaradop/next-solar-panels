@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
 
 /**
+ * TODO: What happens if the user has multiples companies?
+ *
  * Handle the GET request to retrieve a specific user information
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
@@ -52,8 +54,12 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 { status: 404 }
             )
         }
+        const { UserPlants, ...spread } = data
         return NextResponse.json<ResponseAPI<UsersResponse>>({
-            data,
+            data: {
+                ...spread,
+                companyId: UserPlants[0].plant.company.companyId,
+            },
             ok: true,
             message: "The resource was retrieved successfuly",
         })

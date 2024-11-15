@@ -8,7 +8,7 @@ import { AddPUserPlantsActionState } from "@/lib/@types/types"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { Plants, Users } from "@prisma/client"
-import { getPlantByCompany, getUserByCompany } from "@/lib/services"
+import { getUserById, getUsersByCompanyId, getPlantsByCompanyId } from "@/lib/services"
 import { Select } from "@/ui/common/select"
 
 export const AddUserPlant = () => {
@@ -22,21 +22,16 @@ export const AddUserPlant = () => {
     })
     const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
     const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getUserByCompany(userId)
-            setUsers(response)
+        const getData = async () => {
+            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const { companyId } = await getUserById(userId)
+            const [users, plants] = await Promise.all([getUsersByCompanyId(companyId), getPlantsByCompanyId(companyId)])
+            setUsers(users)
+            setPlants(plants)
         }
-        fetchUsers()
-    }, [])
-    useEffect(() => {
-        const fetchPlants = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getPlantByCompany(userId)
-            setPlants(response)
-        }
-        fetchPlants()
+        getData()
     }, [])
 
     return (

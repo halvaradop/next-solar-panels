@@ -1,28 +1,22 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { UserPlants, Users } from "@prisma/client"
+import { UserPlants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
-export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
+/**
+ * TODO: add documentation ???
+ *
+ * @param {NextRequest} request -
+ * @param {Params<"companyId">} param1 -
+ * @returns {Promise<NextResponse>} -
+ */
+export const GET = async (request: NextRequest, { params }: Params<"companyId">): Promise<NextResponse> => {
     try {
-        const userId = parseInt(params.userId)
-        const company = await prisma.companies.findFirst({
-            where: {
-                Plants: {
-                    some: {
-                        UserPlants: {
-                            some: {
-                                userId: userId,
-                            },
-                        },
-                    },
-                },
-            },
-        })
+        const companyId = parseInt(params.companyId)
         const data = await prisma.userPlants.findMany({
             where: {
                 plant: {
-                    companyId: company?.companyId,
+                    companyId,
                 },
             },
             include: {

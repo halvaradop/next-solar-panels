@@ -8,10 +8,10 @@ import { Button } from "@halvaradop/ui-button"
 import { AddUserActionState } from "@/lib/@types/types"
 import { Plants, Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { getPlantByCompany, getRoles } from "@/lib/services"
+import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
 import { Select } from "@/ui/common/select"
-import dataJson from "@/lib/data.json"
 import { useSession } from "next-auth/react"
+import dataJson from "@/lib/data.json"
 
 const { userInputs } = dataJson
 
@@ -29,8 +29,9 @@ export const AddUser = () => {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getPlantByCompany(userId)
+            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const { companyId } = await getUserById(userId)
+            const response = await getPlantsByCompanyId(companyId)
             setPlants(response)
         }
         fetchPlants()

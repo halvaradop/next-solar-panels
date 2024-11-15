@@ -62,11 +62,5 @@ export interface UsersResponse {
         roleName: string
         state: string
     }
-    UserPlants: Array<{
-        plant: {
-            company: {
-                companyId: number
-            }
-        }
-    }>
+    companyId: number
 }

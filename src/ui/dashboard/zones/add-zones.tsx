@@ -4,13 +4,13 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { Plants } from "@prisma/client"
 import { addZonesAction } from "@/lib/actions"
-import { getPlantsByUser } from "@/lib/services/plants"
 import { AddZonesActionState } from "@/lib/@types/types"
 import { Form } from "@halvaradop/ui-form"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
 import { Select } from "@/ui/common/select"
+import { getPlantsByCompanyId, getUserById } from "@/lib/services"
 
 export const AddZone = () => {
     const { data: session } = useSession()
@@ -23,8 +23,9 @@ export const AddZone = () => {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getPlantsByUser(userId)
+            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const { companyId } = await getUserById(userId)
+            const response = await getPlantsByCompanyId(companyId)
             setPlants(response)
         }
         fetchPlants()

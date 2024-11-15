@@ -3,12 +3,23 @@ import { prisma } from "@/lib/prisma"
 import { UserPlants } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
+/**
+ * Handle the POST request to assign a plant to a user
+ *
+ * @param {NextRequest} request - The HTTP request data containing the user and plant id
+ * @returns {Promise<NextResponse>} - HTTP response containing the created userPlant
+ */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { user, plant } = response
+        const userId = parseInt(user)
+        const plantId = parseInt(plant)
         const existUser = await prisma.userPlants.findFirst({
-            where: { plantId: parseInt(plant), userId: parseInt(user) },
+            where: {
+                plantId,
+                userId,
+            },
         })
 
         if (existUser) {
@@ -20,15 +31,15 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         }
         const data = await prisma.userPlants.create({
             data: {
-                plantId: parseInt(plant),
-                userId: parseInt(user),
+                plantId,
+                userId,
             },
         })
 
         return NextResponse.json<ResponseAPI<UserPlants>>({
             data,
             ok: true,
-            message: "The resource was created successfuly",
+            message: "The resource was created successfully",
         })
     } catch (error) {
         return NextResponse.json<ResponseAPI<{}>>({
