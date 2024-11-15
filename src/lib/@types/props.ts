@@ -46,7 +46,7 @@ export interface FilterComapaniesProps {
         companyId: number
         companyName: string
         email: string
-        PhoneCompanies: { phoneNumber: string }[]
+        PhoneCompanies?: { phoneNumber: string }[]
     }[]
 }
 
