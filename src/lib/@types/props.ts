@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zones, Samples, Companies, Users, Plants } from "@prisma/client"
 import { Entry, MenuState, Params } from "./types"
+import { Decimal } from "@prisma/client/runtime/library"
 
 export interface ProductProps {
     className?: string
@@ -49,6 +50,14 @@ export interface FilterComapaniesProps {
         phoneCompanies?: { phoneNumber: string }[]
     }[]
 }
+export interface FilterUserPlantsProps {
+    userPlants: {
+        userId: number
+        plantId: number
+        plant?: { plantName: string }
+        user?: { firstName: string; lastName: string }
+    }[]
+}
 
 export interface FilterUsersProps {
     users: {
@@ -75,7 +84,17 @@ export interface SelectProps {
     name: string
     values: Entry[]
 }
-
+export interface TableZonesPropsp {
+    zones: {
+        zoneId: number
+        plantId: number
+        latitude: Decimal
+        longitude: Decimal
+        name: string
+        state: string
+        plant?: { plantName: string }
+    }[]
+}
 export interface TableZonesProps {
     zones: Zones[]
 }

@@ -1,22 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Zones } from "@prisma/client"
+import { UserPlants, Users } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
-/**
- * TODO: migrate this route to companies
- *
- * Handle the GET request to retrieve the zones related to a specific users.
- *
- * @param {NextRequest} request - The HTTP request containing the request data.
- * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
- * @returns {Promise<NextResponse>} - HTTP response with the zones related to the users.
- * @example
- * ```ts
- * const response = await fetch("/api/v1/users/{userId}/zonesByCompany")
- * const data = await response.json()
- * ```
- */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
         const userId = parseInt(params.userId)
@@ -33,26 +19,27 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 },
             },
         })
-        const data = await prisma.zones.findMany({
+        const data = await prisma.userPlants.findMany({
             where: {
                 plant: {
                     companyId: company?.companyId,
                 },
             },
             include: {
+                user: true,
                 plant: true,
             },
         })
-        return NextResponse.json<ResponseAPI<Zones[]>>({
+        return NextResponse.json<ResponseAPI<UserPlants[]>>({
             data,
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>(
+        return NextResponse.json<ResponseAPI<UserPlants[]>>(
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve the data",
+                message: "Failed to retrieve the users",
             },
             { status: 404 }
         )

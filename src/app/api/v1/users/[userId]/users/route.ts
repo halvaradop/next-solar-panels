@@ -25,7 +25,7 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { firstName, email, phone, lastName, password, rol } = response
+        const { firstName, email, phone, lastName, password, rol, plant } = response
 
         const existEmail = await prisma.users.findFirst({
             where: { email },
@@ -48,6 +48,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 PhoneUsers: {
                     create: {
                         phoneNumber: parseInt(phone),
+                    },
+                },
+                UserPlants: {
+                    create: {
+                        plantId: parseInt(plant),
                     },
                 },
             },

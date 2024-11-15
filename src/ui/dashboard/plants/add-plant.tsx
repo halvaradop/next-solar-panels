@@ -6,13 +6,29 @@ import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
 import { addPlantAction } from "@/lib/actions"
 import { AddPlantActionState } from "@/lib/@types/types"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { Users } from "@prisma/client"
+import { getUserByCompany } from "@/lib/services"
+import { Select } from "@/ui/common/select"
 
 export const AddPlant = () => {
+    const { data: session } = useSession()
+    const [users, setUsers] = useState<Users[]>([])
     const [state, formAction] = useFormState(addPlantAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddPlantActionState["schema"],
     })
+    const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
+            const response = await getUserByCompany(userId)
+            setUsers(response)
+        }
+        fetchUsers()
+    }, [])
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
@@ -45,6 +61,10 @@ export const AddPlant = () => {
                     name="longitude"
                     required
                 />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                User
+                <Select name="user" values={mapUsers} />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add
