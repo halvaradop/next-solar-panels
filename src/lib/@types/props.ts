@@ -50,6 +50,18 @@ export interface FilterComapaniesProps {
     }[]
 }
 
+export interface FilterUsersProps {
+    users: {
+        userId: number
+        firstName: string
+        lastName: string
+        email: string
+        state: string
+        roleId: number
+        role?: { roleName: string }
+        phoneUsers?: { phoneNumber: string }[]
+    }[]
+}
 export interface FilterUserProps {
     users: Users[]
 }

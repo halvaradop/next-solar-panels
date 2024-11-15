@@ -202,7 +202,10 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/plants`, {
             method: "POST",
-            body: JSON.stringify(validate.data),
+            body: JSON.stringify({
+                userId: session?.user?.id,
+                ...validate.data,
+            }),
         })
         const result = await request.json()
         if (request.ok) {

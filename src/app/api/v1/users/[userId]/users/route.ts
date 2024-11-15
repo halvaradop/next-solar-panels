@@ -108,9 +108,17 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                     },
                 },
             },
+            include: {
+                PhoneUsers: true,
+                role: true,
+            },
         })
+        const map = data.map(({ PhoneUsers, ...spread }) => ({
+            phoneUsers: PhoneUsers,
+            ...spread,
+        }))
         return NextResponse.json<ResponseAPI<Users[]>>({
-            data,
+            data: map,
             ok: true,
         })
     } catch (error) {

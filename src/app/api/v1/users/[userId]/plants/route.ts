@@ -23,9 +23,9 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const userId = parseInt("0")
         const response = await request.json()
-        const { plantName, latitude, longitude } = response
+        const { plantName, latitude, longitude, id } = response
+        const userId = parseInt(id)
 
         const existcoordinates = await prisma.plants.findFirst({
             where: {
