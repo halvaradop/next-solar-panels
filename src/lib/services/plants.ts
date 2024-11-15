@@ -4,6 +4,7 @@ import { getFetch } from "@/lib/utils"
 /**
  * Fetches all plants from the database by user
  *
+ * @deprecated
  * @param userId - The userId to fetch plants
  * @returns {Promise<Plants[]>} - A list of plants
  */
@@ -15,6 +16,7 @@ export const getPlantsByUser = async (userId: number): Promise<Plants[]> => {
 /**
  * Fetches all zones from the database by the company associated with the user
  *
+ * @deprecated
  * @param userId - the userId to fetch zones
  * @returns {Promise<Zones[]>} - A list of zones
  */
@@ -26,6 +28,7 @@ export const getZonesPlantsByUser = async (userId: number): Promise<Zones[]> => 
 /**
  * Fetches all plants from the database by company
  *
+ * @deprecated
  * @param userId - The userId to fetch plants
  * @returns {Promise<Plants[]>} - A list of plants
  */
@@ -34,6 +37,9 @@ export const getPlantByCompany = async (userId: number): Promise<Plants[]> => {
     return data
 }
 
+/**
+ * @deprecated
+ */
 export const getUserPlantByCompany = async (userId: number): Promise<UserPlants[]> => {
     const { data } = await getFetch<UserPlants[]>(`users/${userId}/userPlants`)
     return data

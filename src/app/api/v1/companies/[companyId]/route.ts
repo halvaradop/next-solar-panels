@@ -4,7 +4,7 @@ import { UserPlants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * TODO: add documentation
+ * TODO: add documentation ???
  *
  * @param {NextRequest} request -
  * @param {Params<"companyId">} param1 -

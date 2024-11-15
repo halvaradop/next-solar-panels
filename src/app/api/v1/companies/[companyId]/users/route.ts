@@ -4,11 +4,13 @@ import { Users } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * TODO: add documentation
+ * TODO: update schema
  *
- * @param {NextRequest} request - The HTTP request data
- * @param {Params<"userId">} params - The dynamic parameter to extract the ``.
- * @returns {Promise<NextResponse>} - HTTP response
+ * Handle the GET request to retrieve the users related to a specific company
+ *
+ * @param {NextRequest} request - The HTTP request data containing the request data.
+ * @param {Params<"companyId">} params - The dynamic parameter to extract the `companyId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the users related to the company.
  * @example
  * ```ts
  * const response = await fetch("/api/v1/companies/{companyId}/users")

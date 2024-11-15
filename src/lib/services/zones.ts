@@ -7,6 +7,7 @@ import { getFetch } from "@/lib/utils"
  * Fetches the zones associated with a specific user from the database.
  * The data is cached, and can be updated using the `revalidateTags` with the `zonesByUser` tag.
  *
+ * @deprecated
  * @param userId - The user id to get the zones related to them from the database
  * @returns - A list of zones related to the user
  */

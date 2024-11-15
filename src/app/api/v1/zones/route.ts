@@ -40,7 +40,7 @@ export const GET = async (): Promise<NextResponse> => {
  * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/", {
+ * const response = await fetch("/api/v1/zones", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     latitude: 40.7128,
