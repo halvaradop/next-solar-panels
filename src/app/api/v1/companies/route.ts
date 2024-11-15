@@ -15,9 +15,18 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.companies.findMany()
+        const data = await prisma.companies.findMany({
+            include: {
+                PhoneCompanies: true,
+            },
+        })
+        const map = data.map(({ PhoneCompanies, ...spread }) => ({
+            phoneCompanies: PhoneCompanies,
+            ...spread,
+        }))
+
         return NextResponse.json<ResponseAPI<Companies[]>>({
-            data,
+            data: map,
             ok: true,
             message: "The resource was retrieved successfuly",
         })

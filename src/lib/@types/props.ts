@@ -42,7 +42,12 @@ export interface FilterProps {
 }
 
 export interface FilterComapaniesProps {
-    companies: Companies[]
+    companies: {
+        companyId: number
+        companyName: string
+        email: string
+        phoneCompanies?: { phoneNumber: string }[]
+    }[]
 }
 
 export interface FilterUserProps {
