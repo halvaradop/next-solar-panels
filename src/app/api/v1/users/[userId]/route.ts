@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
+import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
 
 /**
  * TODO: What happens if the user has multiples companies?
@@ -45,9 +45,9 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             },
         })
         if (!data) {
-            return NextResponse.json<ResponseAPI<UsersResponse>>(
+            return NextResponse.json<ResponseAPI<UserSession>>(
                 {
-                    data: {} as UsersResponse,
+                    data: {} as UserSession,
                     ok: false,
                     message: "Failed to retrieve the user information",
                 },
@@ -55,7 +55,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             )
         }
         const { UserPlants, ...spread } = data
-        return NextResponse.json<ResponseAPI<UsersResponse>>({
+        return NextResponse.json<ResponseAPI<UserSession>>({
             data: {
                 ...spread,
                 companyId: UserPlants[0].plant.company.companyId,
@@ -64,9 +64,9 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<UsersResponse>>(
+        return NextResponse.json<ResponseAPI<UserSession>>(
             {
-                data: {} as UsersResponse,
+                data: {} as UserSession,
                 ok: false,
                 message: "Failed to retrieve the user information",
             },

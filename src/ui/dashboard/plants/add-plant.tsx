@@ -1,16 +1,16 @@
 "use client"
+import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
+import { useSession } from "next-auth/react"
+import { Users } from "@prisma/client"
 import { addPlantAction } from "@/lib/actions"
 import { AddPlantActionState } from "@/lib/@types/types"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
-import { Users } from "@prisma/client"
 import { getUserById, getUsersByCompanyId } from "@/lib/services"
-import { Select } from "@/ui/common/select"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { plantInputs } = dataJson
+export const fetchCache = "force-no-store"
 
 export const AddPlant = () => {
     const { data: session } = useSession()
@@ -20,9 +20,11 @@ export const AddPlant = () => {
         isSuccess: false,
         schema: {} as AddPlantActionState["schema"],
     })
-    const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
 
     useEffect(() => {
+        /**
+         * TODO: fix bug
+         */
         const fetchUsers = async () => {
             const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
             const { companyId } = await getUserById(userId)
@@ -34,39 +36,10 @@ export const AddPlant = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <Label className="w-full text-neutral-700" size="sm">
-                PLant Name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="plantName"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Latitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="latitude"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Longitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="longitude"
-                    required
-                />
-            </Label>
+            <InputList inputs={plantInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 User
-                <Select name="user" values={mapUsers} />
+                <SelectGeneric values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

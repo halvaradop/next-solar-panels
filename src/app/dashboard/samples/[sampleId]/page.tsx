@@ -6,7 +6,7 @@ import { Button } from "@halvaradop/ui-button"
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const getSample = await getSamplesById(parseInt(params.sampleId))
-    const { zoneId, sampleId, userId, sampleDateTime, ...spread } = getSample
+    const { zoneId, sampleDateTime, ...spread } = getSample
     const date = new Date(sampleDateTime).toLocaleString()
 
     return (

@@ -1,16 +1,12 @@
 "use client"
-import { addUserAction } from "@/lib/actions"
-import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { AddUserActionState } from "@/lib/@types/types"
-import { Plants, Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
-import { Select } from "@/ui/common/select"
+import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
+import { Plants, Roles } from "@prisma/client"
+import { addUserAction } from "@/lib/actions"
+import { AddUserActionState } from "@/lib/@types/types"
+import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { userInputs } = dataJson
@@ -24,8 +20,6 @@ export const AddUser = () => {
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
     })
-    const mapRoles = roles.map(({ roleId, roleName }) => ({ key: roleName, value: roleId.toString() }))
-    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
 
     useEffect(() => {
         const fetchPlants = async () => {
@@ -47,28 +41,14 @@ export const AddUser = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            {userInputs.map(({ label, name, type }) => (
-                <Label className="w-full text-neutral-700" size="sm" key={label}>
-                    {label}
-                    <Input
-                        className="mt-1 focus-within:border-black focus-within:ring-black"
-                        type={type}
-                        variant="outline"
-                        name={name}
-                        required
-                    />
-                    {state.schema && state.schema[name as keyof AddUserActionState["schema"]] && (
-                        <p className="mt-1 text-xs text-red-400">{state.schema[name as keyof AddUserActionState["schema"]]}</p>
-                    )}
-                </Label>
-            ))}
+            <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <Select name="rol" values={mapRoles} />
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="rol" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select name="plant" values={mapPlants} />
+                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

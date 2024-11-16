@@ -1,7 +1,6 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
-import { compare } from "bcryptjs"
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     providers: [
@@ -25,7 +24,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                     },
                 })
                 if (authorized) {
-                    //const isEquals = await compare(password, authorized.password)
                     const isEquals = password === authorized.password
                     if (!isEquals) {
                         return null

@@ -1,8 +1,8 @@
 "use client"
 import { useSearchParams } from "next/navigation"
-import { TableZonesPropsp } from "@/lib/@types/props"
+import { TableZonesProps } from "@/lib/@types/props"
 
-export const Table = ({ zones }: TableZonesPropsp) => {
+export const TableZones = ({ zones }: TableZonesProps) => {
     const params = useSearchParams()
 
     const filteredZones = zones.filter(({ plantId }) => {

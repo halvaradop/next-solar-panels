@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getUserById, getUsersByCompanyId } from "@/lib/services"
-import { Table } from "@/ui/dashboard/users/table"
+import { TableUsers } from "@/ui/dashboard/users/table"
 
 const getInformation = async () => {
     const session = await auth()
@@ -17,7 +17,7 @@ const DashboardCompaniesPage = async () => {
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
-                <Table users={users} />
+                <TableUsers users={users} />
             </Suspense>
         </section>
     )

@@ -4,13 +4,9 @@ import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
 import { Zones } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
-import { AddSampleActionState, Entry, SamplesWithoutIds } from "@/lib/@types/types"
+import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByCompanyId, getUserById } from "@/lib/services"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { Select } from "@/ui/common/select"
+import { Button, Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { sampleInputs } = dataJson
@@ -23,7 +19,6 @@ export const AddSample = () => {
         isSuccess: false,
         schema: {} as AddSampleActionState["schema"],
     })
-    const mapZones = zones.map<Entry>(({ zoneId, name }) => ({ key: name, value: zoneId.toString() }))
 
     useEffect(() => {
         /**
@@ -62,7 +57,7 @@ export const AddSample = () => {
             ))}
             <Label>
                 Zone
-                <Select name="zoneId" values={mapZones} />
+                <SelectGeneric values={zones} id="name" value="zoneId" name="zoneId" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

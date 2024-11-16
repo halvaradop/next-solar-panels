@@ -1,6 +1,6 @@
-import { FilterPlantsProps } from "@/lib/@types/props"
+import { TablePlantsProps } from "@/lib/@types/props"
 
-export const Table = async ({ plants }: FilterPlantsProps) => {
+export const TablePlants = async ({ plants }: TablePlantsProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>

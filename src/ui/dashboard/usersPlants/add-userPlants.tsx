@@ -1,15 +1,12 @@
 "use client"
+import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
+import { useSession } from "next-auth/react"
+import { Plants, Users } from "@prisma/client"
 import { addUserPlantsAction } from "@/lib/actions"
 import { AddPUserPlantsActionState } from "@/lib/@types/types"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
-import { Plants, Users } from "@prisma/client"
 import { getUserById, getUsersByCompanyId, getPlantsByCompanyId } from "@/lib/services"
-import { Select } from "@/ui/common/select"
+import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
 
 export const AddUserPlant = () => {
     const { data: session } = useSession()
@@ -20,8 +17,6 @@ export const AddUserPlant = () => {
         isSuccess: false,
         schema: {} as AddPUserPlantsActionState["schema"],
     })
-    const mapPlants = plants.map(({ plantId, plantName }) => ({ key: plantName, value: plantId.toString() }))
-    const mapUsers = users.map(({ userId, lastName }) => ({ key: lastName, value: userId.toString() }))
 
     useEffect(() => {
         const getData = async () => {
@@ -38,11 +33,11 @@ export const AddUserPlant = () => {
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <Label className="w-full text-neutral-700" size="sm">
                 User
-                <Select name="user" values={mapUsers} />
+                <SelectGeneric values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <Select name="plant" values={mapPlants} />
+                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

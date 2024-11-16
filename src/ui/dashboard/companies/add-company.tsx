@@ -1,11 +1,11 @@
 "use client"
 import { addCompanyAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
 import { AddCompanieActionState } from "@/lib/@types/types"
+import { Button, Form, InputList } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { companyInputs } = dataJson
 
 export const AddCompany = () => {
     const [state, formAction] = useFormState(addCompanyAction, {
@@ -16,37 +16,7 @@ export const AddCompany = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <Label className="w-full text-neutral-700" size="sm">
-                Name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="companyName"
-                    required
-                />
-                {state.schema.companyName && <p className="text-red-600 text-sm mt-1">{state.schema.companyName}</p>}
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Email
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="email"
-                    variant="outline"
-                    name="email"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                phone
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="phone"
-                    required
-                />
-            </Label>
+            <InputList inputs={companyInputs} state={state} />
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
