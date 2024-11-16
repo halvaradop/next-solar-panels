@@ -3,7 +3,7 @@ import clsx, { ClassValue } from "clsx"
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
-import { SafeParseError, SafeParseReturnType } from "zod"
+import { SafeParseError } from "zod"
 
 /**
  * Merges the classes and returns a string
