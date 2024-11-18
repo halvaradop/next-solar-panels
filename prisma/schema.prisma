@@ -7,66 +7,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AuditLogs {
+model AuditLog {
   auditId    Int        @id @default(autoincrement())
   tableName  String     @db.VarChar(100)
   actionType ActionType
   date       DateTime   @default(now())
   state      State      @default(ACTIVE)
   userId     String
-  user       Users      @relation(fields: [userId], references: [userId])
+  user       User       @relation(fields: [userId], references: [userId])
 }
 
-model Roles {
-  roleId           Int                @id @default(autoincrement())
-  roleName         String             @db.VarChar(50)
-  state            State              @default(ACTIVE)
-  users            Users[]
-  rolesPermissions RolesPermissions[]
+model Role {
+  roleId           Int               @id @default(autoincrement())
+  roleName         String            @db.VarChar(50)
+  state            State             @default(ACTIVE)
+  users            User[]
+  rolesPermissions RolesPermission[]
 }
 
-model Permissions {
-  permissionId     Int                @id @default(autoincrement())
-  permissionName   String             @db.VarChar(100)
-  state            State              @default(ACTIVE)
-  rolesPermissions RolesPermissions[]
+model Permission {
+  permissionId     Int               @id @default(autoincrement())
+  permissionName   String            @db.VarChar(100)
+  state            State             @default(ACTIVE)
+  rolesPermissions RolesPermission[]
 }
 
-model RolesPermissions {
+model RolesPermission {
   roleId       Int
   permissionId Int
-  role         Roles       @relation(fields: [roleId], references: [roleId])
-  permission   Permissions @relation(fields: [permissionId], references: [permissionId])
+  role         Role       @relation(fields: [roleId], references: [roleId])
+  permission   Permission @relation(fields: [permissionId], references: [permissionId])
 
   @@id([roleId, permissionId])
 }
 
-model Phones {
-  phoneId         Int      @id @default(autoincrement())
-  number          String
-  users           Users?   @relation(fields: [usersUserId], references: [userId])
-  usersUserId     String?
-  Clients         Clients? @relation(fields: [clientsClientId], references: [clientId])
-  clientsClientId String?
+model Phone {
+  phoneId  Int     @id @default(autoincrement())
+  number   String
+  userId   String?
+  users    User?   @relation(fields: [userId], references: [userId])
+  clientId String?
+  clients  Client? @relation(fields: [clientId], references: [clientId])
 }
 
-model Users {
-  userId    String      @id @default(uuid())
-  firstName String      @db.VarChar(50)
-  lastName  String      @db.VarChar(50)
-  email     String      @db.VarChar(100)
-  password  String      @db.VarChar(50)
-  state     State       @default(ACTIVE)
+model User {
+  userId    String     @id @default(uuid())
+  firstName String     @db.VarChar(50)
+  lastName  String     @db.VarChar(50)
+  email     String     @db.VarChar(100)
+  password  String     @db.VarChar(50)
+  state     State      @default(ACTIVE)
   fax       String
   website   String
   roleId    Int
-  role      Roles       @relation(fields: [roleId], references: [roleId])
-  auditLogs AuditLogs[]
-  phones    Phones[]
-  Samples   Samples[]
+  role      Role       @relation(fields: [roleId], references: [roleId])
+  phones    Phone[]
+  samples   Sample[]
+  projects  Project[]
+  auditLogs AuditLog[]
+  clients   Client[]
 }
 
-model Samples {
+model Sample {
   sampleId                  Int      @id @default(autoincrement())
   date                      DateTime @default(now()) @updatedAt
   soilTime                  Decimal  @db.Decimal(5, 2)
@@ -84,16 +86,16 @@ model Samples {
   soilTypeHomogeneity       String   @db.VarChar(50)
   pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
   externalCathodes          Decimal  @db.Decimal(5, 2)
+  b0                        String
   b1                        String
-  b2                        String
   userId                    String
-  user                      Users    @relation(fields: [userId], references: [userId])
-  zoneId                    Int
-  zone                      Zones    @relation(fields: [zoneId], references: [zoneId])
+  user                      User     @relation(fields: [userId], references: [userId])
+  zoneId                    String
+  zone                      Zone     @relation(fields: [zoneId], references: [zoneId])
 }
 
 model Address {
-  addressId Int        @id @default(autoincrement())
+  addressId Int       @id @default(autoincrement())
   country   String
   state     String
   city      String
@@ -101,44 +103,48 @@ model Address {
   street    String
   number    String
   isActive  Boolean
-  clients   Clients[]
-  Projects  Projects[]
+  clients   Client[]
+  projects  Project[]
 }
 
-model Clients {
-  clientId  String     @id @default(uuid())
-  name      String     @db.VarChar(100)
-  email     String     @db.VarChar(100)
-  password  String     @db.VarChar(50)
-  state     State      @default(ACTIVE)
+model Client {
+  clientId  String    @id @default(uuid())
+  name      String    @db.VarChar(100)
+  email     String    @db.VarChar(100)
+  password  String    @db.VarChar(50)
+  state     State     @default(ACTIVE)
   fax       String
   website   String
-  phones    Phones[]
-  projects  Projects[]
+  phones    Phone[]
+  projects  Project[]
   addressId Int?
-  address   Address?   @relation(fields: [addressId], references: [addressId])
+  address   Address?  @relation(fields: [addressId], references: [addressId])
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [userId])
 }
 
-model Projects {
+model Project {
   projectId String   @id @default(uuid())
   name      String   @db.VarChar(100)
   state     State    @default(ACTIVE)
   latitude  Decimal  @db.Decimal(10, 8)
   longitude Decimal  @db.Decimal(11, 8)
   clientsId String?
-  clients   Clients? @relation(fields: [clientsId], references: [clientId])
+  clients   Client?  @relation(fields: [clientsId], references: [clientId])
   addressId Int?
   address   Address? @relation(fields: [addressId], references: [addressId])
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [userId])
 }
 
-model Zones {
-  zoneId    Int       @id @default(autoincrement())
-  latitude  Decimal   @db.Decimal(10, 8)
-  longitude Decimal   @db.Decimal(11, 8)
-  state     State     @default(ACTIVE)
-  name      String    @db.VarChar(50)
+model Zone {
+  zoneId    String   @id @default(uuid())
+  latitude  Decimal  @db.Decimal(10, 8)
+  longitude Decimal  @db.Decimal(11, 8)
+  state     State    @default(ACTIVE)
+  name      String   @db.VarChar(50)
   projectId String
-  samples   Samples[]
+  samples   Sample[]
 }
 
 enum State {
