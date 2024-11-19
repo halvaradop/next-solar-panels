@@ -34,8 +34,8 @@ export const SampleSchema = object({
     userId: number(),
 })
 
-export const CompanySchema = object({
-    companyName: string().regex(/^[A-Za-z]+$/, {
+export const ClientSchema = object({
+    name: string().regex(/^[A-Za-z]+$/, {
         message: "Only letters",
     }),
     email: string(),
@@ -55,7 +55,7 @@ export const UserSchema = object({
     plant: string(),
 })
 
-export const PlantSchema = object({
+export const ProjectSchema = object({
     plantName: string(),
     latitude: string(),
     longitude: string(),
@@ -72,7 +72,7 @@ export const ZoneSchema = object({
     plant: number(),
 })
 
-export const UserPlantSchema = object({
+export const ProjectOnUserSchema = object({
     plant: string(),
     user: string(),
 })
