@@ -26,8 +26,8 @@ export const AddSample = () => {
          */
         const fetchZones = async () => {
             const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const { companyId } = await getUserById(userId)
-            const response = await getZonesByClientId(companyId)
+            const { clientId } = await getUserById(userId)
+            const response = await getZonesByClientId(clientId)
             setZones(response)
         }
         fetchZones()

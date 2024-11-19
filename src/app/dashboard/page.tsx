@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
-import { getSamplesByUser, getUserById, getZonesByCompanyId } from "@/lib/services"
+import { getSamplesByUser, getUserById, getZonesByClientId } from "@/lib/services"
 import samplesIcon from "@/public/samples.svg"
 import zonesIcon from "@/public/zone.svg"
 
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 const DashboardPage = async () => {
     const session = await auth()
     const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-    const { companyId } = await getUserById(userId)
-    const samples = await getSamplesByUser(companyId)
-    const zones = await getZonesByCompanyId(userId)
+    const { clientId } = await getUserById(userId)
+    const samples = await getSamplesByUser(clientId)
+    const zones = await getZonesByClientId(userId.toString())
 
     return (
         <section className="mt-4 self-start">
