@@ -10,15 +10,15 @@ import { Params } from "@/lib/@types/types"
  * @returns {Promise<NextResponse>} - HTTP response with the plant data.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/plants/1")
+ * const response = await fetch("/api/v1/proyect/1")
  * const data = await response.json()
  * ```
  */
-export const GET = async (request: NextRequest, { params }: Params<"plantId">): Promise<NextResponse> => {
+export const GET = async (request: NextRequest, { params }: Params<"projectId">): Promise<NextResponse> => {
     try {
-        const data = await prisma.plants.findUnique({
+        const data = await prisma.project.findUnique({
             where: {
-                plantId: parseInt(params.plantId),
+                projectId: params.projectId,
             },
         })
         return NextResponse.json({
