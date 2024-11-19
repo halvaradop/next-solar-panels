@@ -55,7 +55,7 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { firstName,website ,email, number, lastName, password, rol, project,fax } = response
+        const { firstName, website, email, number, lastName, password, rol, project, fax } = response
 
         const existEmail = await prisma.user.findFirst({
             where: { email },
@@ -79,7 +79,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 roleId: parseInt(rol),
                 phones: {
                     create: {
-                        number
+                        number,
                     },
                 },
                 projectsOnUsers: {
