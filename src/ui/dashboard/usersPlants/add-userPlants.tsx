@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
 import { Project, User } from "@prisma/client"
-import { addUserPlantsAction } from "@/lib/actions"
-import { AddPUserPlantsActionState } from "@/lib/@types/types"
+import { addProjectOnUserAction } from "@/lib/actions"
+import { AddProjectOnUserActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByClientId, getProjectsByClientId } from "@/lib/services"
 import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
 
@@ -12,10 +12,10 @@ export const AddUserPlant = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
     const [projects, setProjects] = useState<Project[]>([])
-    const [state, formAction] = useFormState(addUserPlantsAction, {
+    const [state, formAction] = useFormState(addProjectOnUserAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddPUserPlantsActionState["schema"],
+        schema: {} as AddProjectOnUserActionState["schema"],
     })
 
     useEffect(() => {

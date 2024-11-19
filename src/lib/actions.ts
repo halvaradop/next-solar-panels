@@ -5,13 +5,13 @@ import { auth, signIn } from "@/lib/auth"
 import { Client, Project, Sample, ProjectsOnUsers, User, Zone } from "@prisma/client"
 import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema } from "./schemas"
 import {
-    AddPlantActionState,
-    AddCompanieActionState,
+    AddProjectActionState,
+    AddClientActionState,
     AddSampleActionState,
     AddUserActionState,
     AddZonesActionState,
     LoginActionState,
-    AddPUserPlantsActionState,
+    AddProjectOnUserActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -74,16 +74,15 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
  *
  * Adds a company to the database and checks if the action was successful
  *
- * @param {AddCompanieActionState} previous - The previous state of the company to be added
+ * @param {AddClientActionState} previous - The previous state of the company to be added
  * @param {FormData} formData - The form data sent by the user
- * @returns {Promise<AddCompanieActionState>} - The state of the company and the result of the action, redirecting to the dashboard if successful
+ * @returns {Promise<AddClientActionState>} - The state of the company and the result of the action, redirecting to the dashboard if successful
  */
-export const addCompanyAction = async (previous: AddCompanieActionState, formData: FormData): Promise<AddCompanieActionState> => {
-    const session = await auth()
+export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
     const entries = Object.fromEntries(formData)
     const validate = ClientSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/companies`, {
+        const request = await fetch(`http://localhost:3000/api/v1/clients`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -121,12 +120,11 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
  * @returns {Promise<AddZonesActionState>} - The state of the zone and the result of the action, redirecting to the dashboard if successful
  */
 export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
     mapToNumber(entries, ["name"], false)
     const validate = ZoneSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/zones`, {
+        const request = await fetch(`http://localhost:3000/api/v1/zones`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -155,12 +153,11 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
  * @returns {Promise<AddUserActionState>} - The state of the user and the result of the action, redirecting to the dashboard if successful
  */
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
     const validate = UserSchema.safeParse(entries)
 
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/users`, {
+        const request = await fetch(`http://localhost:3000/api/v1/users`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -193,16 +190,16 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
 /**
  * Adds a new plant to the database and checks if the action was successful.
  *
- * @param {AddPlantActionState} previous - The previous state of the plant to be added.
+ * @param {AddProjectActionState} previous - The previous state of the plant to be added.
  * @param {FormData} formData - The form data sent by the user.
- * @returns {Promise<AddPlantActionState>} - The state of the plant and the result of the action, redirecting to the dashboard if successful.
+ * @returns {Promise<AddProjectActionState>} - The state of the plant and the result of the action, redirecting to the dashboard if successful.
  */
-export const addPlantAction = async (previous: AddPlantActionState, formData: FormData): Promise<AddPlantActionState> => {
+export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
     const validate = ProjectSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/plants`, {
+        const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",
             body: JSON.stringify({
                 userId: session?.user?.id,
@@ -234,14 +231,14 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
     }
 }
 
-export const addUserPlantsAction = async (
-    previous: AddPUserPlantsActionState,
+export const addProjectOnUserAction = async (
+    previous: AddProjectOnUserActionState,
     formData: FormData
-): Promise<AddPUserPlantsActionState> => {
+): Promise<AddProjectOnUserActionState> => {
     const entries = Object.fromEntries(formData)
     const validate = ProjectOnUserSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/userPlant`, {
+        const request = await fetch(`http://localhost:3000/api/v1/user-project`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
