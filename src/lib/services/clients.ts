@@ -1,12 +1,12 @@
-import { Companies, Plants, Users, Zones } from "@prisma/client"
+import { Client, Project, User, Zone } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
  * Fetches all companies from the database
  *
- * @returns {Promise<Companies[]>} - A promise that resolves to a list of companies
+ * @returns {Promise<Client[]>} - A promise that resolves to a list of companies
  */
-export const getCompanies = async <T extends unknown[] = Companies[]>(): Promise<T> => {
+export const getClients = async <T extends unknown[] = Client[]>(): Promise<T> => {
     const { data } = await getFetch<T>("companies")
     return data
 }
@@ -15,9 +15,9 @@ export const getCompanies = async <T extends unknown[] = Companies[]>(): Promise
  * Fetches all plants from the database by the company
  *
  * @param {number} companyId - The ID of the company to fetch plants for
- * @returns {Promise<Plants[]>} - A promise that resolves to a list of plants
+ * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
  */
-export const getPlantsByCompanyId = async <T extends unknown[] = Plants[]>(companyId: number): Promise<T> => {
+export const getProjectsByClientId = async <T extends unknown[] = Project[]>(companyId: number): Promise<T> => {
     const { data } = await getFetch<T>(`companies/${companyId}/plants`)
     return data
 }
@@ -28,7 +28,7 @@ export const getPlantsByCompanyId = async <T extends unknown[] = Plants[]>(compa
  * @param {number} companyId - The ID of the company to fetch zones for
  * @returns {Promise<Zones[]>} - A promise that resolves to a list of zones
  */
-export const getZonesByCompanyId = async <T extends unknown[] = Zones[]>(companyId: number): Promise<T> => {
+export const getZonesByClientId = async <T extends unknown[] = Zone[]>(companyId: number): Promise<T> => {
     const { data } = await getFetch<T>(`companies/${companyId}/zones`)
     return data
 }
@@ -37,9 +37,9 @@ export const getZonesByCompanyId = async <T extends unknown[] = Zones[]>(company
  * Fetches all users associated with a specific company from the database
  *
  * @param {number} companyId - The ID of the company to fetch users for
- * @returns {Promise<Users[]>} - A promise that resolves to a list of users
+ * @returns {Promise<User[]>} - A promise that resolves to a list of users
  */
-export const getUsersByCompanyId = async <T extends unknown[] = Users[]>(companyId: number): Promise<T> => {
+export const getUsersByClientId = async <T extends unknown[] = User[]>(companyId: number): Promise<T> => {
     const { data } = await getFetch<T>(`companies/${companyId}/users`)
     return data
 }

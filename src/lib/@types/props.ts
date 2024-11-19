@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zones, Samples, Users, Plants, Companies, PhoneUsers, PhoneCompanies } from "@prisma/client"
+import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
 import { ActionState, Entry, MenuState } from "./types"
 
 export interface ProductProps {
@@ -34,7 +34,7 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Samples[]
+    samples: Sample[]
 }
 
 export interface FilterProps {
@@ -42,24 +42,27 @@ export interface FilterProps {
 }
 
 export interface TableCompaniesProps {
-    companies: (Omit<Companies, "state"> & { phoneCompanies?: Pick<PhoneCompanies, "phoneNumber">[] })[]
+    companies: (Omit<Client, "state"> & { phoneCompanies?: Pick<Phone, "number">[] })[]
 }
 
 export interface TableUserPlantsProps {
     userPlants: {
         userId: number
         plantId: number
-        plant?: Pick<Plants, "plantName">
-        user?: Pick<Users, "firstName" | "lastName">
+        plant?: Project
+        user?: Pick<User, "firstName" | "lastName">
     }[]
 }
 
 export interface TableUsersProps {
-    users: (Omit<Users, "state"> & { phoneUsers?: Pick<PhoneUsers, "phoneNumber">[] } & { role?: { roleName: string } })[]
+    /**
+     * TODO: fix
+     */
+    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
-    plants: Plants[]
+    plants: Project[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
@@ -79,7 +82,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zones & { plant?: Pick<Plants, "plantName"> })[]
+    zones: (Zone & { plant?: Pick<Project, "name"> })[]
 }
 
 export interface InputListProps<T> {

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Samples } from "@prisma/client"
+import { Sample } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -15,14 +15,14 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.samples.findMany()
-        return NextResponse.json<ResponseAPI<Samples[]>>({
+        const data = await prisma.sample.findMany()
+        return NextResponse.json<ResponseAPI<Sample[]>>({
             data,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Samples[]>>(
+        return NextResponse.json<ResponseAPI<Sample[]>>(
             {
                 data: [],
                 ok: false,
