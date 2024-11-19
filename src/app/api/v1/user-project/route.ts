@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { UserPlants } from "@prisma/client"
+import { ProjectsOnUsers } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -13,11 +13,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { user, plant } = response
-        const userId = parseInt(user)
-        const plantId = parseInt(plant)
-        const existUser = await prisma.userPlants.findFirst({
+        const userId = user
+        const projectId = plant
+        const existUser = await prisma.projectsOnUsers.findFirst({
             where: {
-                plantId,
+                projectId,
                 userId,
             },
         })
@@ -29,14 +29,14 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This user is assigned to this plant",
             })
         }
-        const data = await prisma.userPlants.create({
+        const data = await prisma.projectsOnUsers.create({
             data: {
-                plantId,
+                projectId,
                 userId,
             },
         })
 
-        return NextResponse.json<ResponseAPI<UserPlants>>({
+        return NextResponse.json<ResponseAPI<ProjectsOnUsers>>({
             data,
             ok: true,
             message: "The resource was created successfully",
