@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Roles } from "@prisma/client"
+import { Role } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -10,24 +10,24 @@ import { ResponseAPI } from "@/lib/@types/types"
  * retrieved from the database.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/roles")
+ * const response = await fetch("/api/v1/role")
  * const data = await response.json()
  * ```
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.roles.findMany()
-        return NextResponse.json<ResponseAPI<Roles[]>>({
+        const data = await prisma.role.findMany()
+        return NextResponse.json<ResponseAPI<Role[]>>({
             data,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Roles[]>>(
+        return NextResponse.json<ResponseAPI<Role[]>>(
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve roles",
+                message: "Failed to retrieve role",
             },
             { status: 500 }
         )

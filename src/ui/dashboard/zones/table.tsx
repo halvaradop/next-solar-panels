@@ -5,9 +5,9 @@ import { TableZonesProps } from "@/lib/@types/props"
 export const TableZones = ({ zones }: TableZonesProps) => {
     const params = useSearchParams()
 
-    const filteredZones = zones.filter(({ plantId }) => {
+    const filteredZones = zones.filter(({ projectId }) => {
         const plant = params.get("plant")
-        return plant ? plant === plantId.toString() : true
+        return plant ? plant === projectId.toString() : true
     })
 
     return (
@@ -28,7 +28,7 @@ export const TableZones = ({ zones }: TableZonesProps) => {
                         <td className="hidden p-3 border-t xs:table-cell">{name}</td>
                         <td className="p-3 border-t">{longitude.toString()}</td>
                         <td className="p-3 border-t">{latitude.toString()}</td>
-                        <td className="hidden p-3 border-t sm:table-cell">{plant?.plantName}</td>
+                        <td className="hidden p-3 border-t sm:table-cell">{plant?.name}</td>
                     </tr>
                 ))}
             </tbody>

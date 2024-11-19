@@ -16,10 +16,14 @@ import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
  * const data = await response.json()
  * ```
  */
+
+/**
+ * TODO: fix companyId
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
-        const userId = parseInt(params.userId)
-        const data = await prisma.users.findUnique({
+        const userId = params.userId
+        const data = await prisma.user.findUnique({
             where: {
                 userId,
             },
@@ -29,13 +33,13 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 firstName: true,
                 lastName: true,
                 role: true,
-                UserPlants: {
+                projectsOnUsers: {
                     select: {
-                        plant: {
+                        project: {
                             select: {
-                                company: {
+                                clients: {
                                     select: {
-                                        companyId: true,
+                                        clientId: true,
                                     },
                                 },
                             },
@@ -54,12 +58,9 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 { status: 404 }
             )
         }
-        const { UserPlants, ...spread } = data
+        const { projectsOnUsers, ...spread } = data
         return NextResponse.json<ResponseAPI<UserSession>>({
-            data: {
-                ...spread,
-                companyId: UserPlants[0].plant.company.companyId,
-            },
+            data: {} as UserSession,
             ok: true,
             message: "The resource was retrieved successfuly",
         })

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Zones } from "@prisma/client"
+import { Zone } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -15,14 +15,14 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.zones.findMany()
-        return NextResponse.json<ResponseAPI<Zones[]>>({
+        const data = await prisma.zone.findMany()
+        return NextResponse.json<ResponseAPI<Zone[]>>({
             data,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zones[]>>(
+        return NextResponse.json<ResponseAPI<Zone[]>>(
             {
                 data: [],
                 ok: false,
@@ -55,17 +55,17 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { latitude, longitude, name, plant } = response
-        const newZone = await prisma.zones.create({
+        const { latitude, longitude, name, project } = response
+        const newZone = await prisma.zone.create({
             data: {
                 latitude,
                 longitude,
                 name,
-                plantId: parseInt(plant),
+                projectId: project,
             },
         })
-        return NextResponse.json<ResponseAPI<Zones>>({
-            data: newZone as Zones,
+        return NextResponse.json<ResponseAPI<Zone>>({
+            data: newZone as Zone,
             ok: true,
             message: "The zone was created successfuly",
         })

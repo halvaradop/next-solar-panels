@@ -12,7 +12,7 @@ export const TableUserPlants = ({ userPlants }: TableUserPlantsProps) => {
             <tbody>
                 {userPlants.map(({ userId, plantId, plant, user }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={`${userId}-${plantId}`}>
-                        <td className="p-3 pr-0 border-t">{plant?.plantName}</td>
+                        <td className="p-3 pr-0 border-t">{plant?.name}</td>
                         <td className="hidden p-3 border-t xs:table-cell">
                             {user?.firstName} {user?.lastName}
                         </td>

@@ -2,10 +2,10 @@
 import { useFormState } from "react-dom"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
-import { Zones } from "@prisma/client"
+import { Zone } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
-import { getZonesByCompanyId, getUserById } from "@/lib/services"
+import { getZonesByClientId, getUserById } from "@/lib/services"
 import { Button, Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
@@ -13,7 +13,7 @@ const { sampleInputs } = dataJson
 
 export const AddSample = () => {
     const { data: session } = useSession()
-    const [zones, setZones] = useState<Zones[]>([])
+    const [zones, setZones] = useState<Zone[]>([])
     const [state, formAction] = useFormState(addSampleAction, {
         message: "",
         isSuccess: false,
@@ -25,9 +25,9 @@ export const AddSample = () => {
          * TODO: Implement the right logic to fetch zones by company of the user that is logged in
          */
         const fetchZones = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const { companyId } = await getUserById(userId)
-            const response = await getZonesByCompanyId(companyId)
+            const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
+            const { clientId } = await getUserById(userId)
+            const response = await getZonesByClientId(clientId)
             setZones(response)
         }
         fetchZones()

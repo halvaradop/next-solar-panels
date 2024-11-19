@@ -1,12 +1,12 @@
 import { Suspense } from "react"
-import { getCompanies } from "@/lib/services"
+import { getClients } from "@/lib/services"
 import { TableCompanies } from "@/ui/dashboard/companies/table"
 import { TableCompaniesProps } from "@/lib/@types/props"
 import { auth } from "@/lib/auth"
 
 const DashboardCompaniesPage = async () => {
     const session = await auth()
-    const companies = await getCompanies<TableCompaniesProps["companies"]>()
+    const companies = await getClients<TableCompaniesProps["companies"]>()
 
     return (
         <section className="min-h-main py-4 space-y-4">

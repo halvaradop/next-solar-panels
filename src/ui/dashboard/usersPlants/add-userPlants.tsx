@@ -2,29 +2,29 @@
 import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
-import { Plants, Users } from "@prisma/client"
-import { addUserPlantsAction } from "@/lib/actions"
-import { AddPUserPlantsActionState } from "@/lib/@types/types"
-import { getUserById, getUsersByCompanyId, getPlantsByCompanyId } from "@/lib/services"
+import { Project, User } from "@prisma/client"
+import { addProjectOnUserAction } from "@/lib/actions"
+import { AddProjectOnUserActionState } from "@/lib/@types/types"
+import { getUserById, getUsersByClientId, getProjectsByClientId } from "@/lib/services"
 import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
 
 export const AddUserPlant = () => {
     const { data: session } = useSession()
-    const [users, setUsers] = useState<Users[]>([])
-    const [plants, setPlants] = useState<Plants[]>([])
-    const [state, formAction] = useFormState(addUserPlantsAction, {
+    const [users, setUsers] = useState<User[]>([])
+    const [projects, setProjects] = useState<Project[]>([])
+    const [state, formAction] = useFormState(addProjectOnUserAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddPUserPlantsActionState["schema"],
+        schema: {} as AddProjectOnUserActionState["schema"],
     })
 
     useEffect(() => {
         const getData = async () => {
-            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-            const { companyId } = await getUserById(userId)
-            const [users, plants] = await Promise.all([getUsersByCompanyId(companyId), getPlantsByCompanyId(companyId)])
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+            const { clientId } = await getUserById(userId)
+            const [users, projects] = await Promise.all([getUsersByClientId(clientId), getProjectsByClientId(clientId)])
             setUsers(users)
-            setPlants(plants)
+            setProjects(projects)
         }
         getData()
     }, [])
@@ -37,7 +37,7 @@ export const AddUserPlant = () => {
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
+                <SelectGeneric values={projects} id="name" value="projectId" name="plant" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

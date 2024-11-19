@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
-import { Users } from "@prisma/client"
-import { addPlantAction } from "@/lib/actions"
-import { AddPlantActionState } from "@/lib/@types/types"
-import { getUserById, getUsersByCompanyId } from "@/lib/services"
+import { User } from "@prisma/client"
+import { addProjectAction } from "@/lib/actions"
+import { AddProjectActionState } from "@/lib/@types/types"
+import { getUserById, getUsersByClientId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
@@ -14,11 +14,11 @@ export const fetchCache = "force-no-store"
 
 export const AddPlant = () => {
     const { data: session } = useSession()
-    const [users, setUsers] = useState<Users[]>([])
-    const [state, formAction] = useFormState(addPlantAction, {
+    const [users, setUsers] = useState<User[]>([])
+    const [state, formAction] = useFormState(addProjectAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddPlantActionState["schema"],
+        schema: {} as AddProjectActionState["schema"],
     })
 
     useEffect(() => {
@@ -26,9 +26,9 @@ export const AddPlant = () => {
          * TODO: fix bug
          */
         const fetchUsers = async () => {
-            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-            const { companyId } = await getUserById(userId)
-            const response = await getUsersByCompanyId(companyId)
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+            const { clientId } = await getUserById(userId)
+            const response = await getUsersByClientId(clientId)
             setUsers(response)
         }
         fetchUsers()
