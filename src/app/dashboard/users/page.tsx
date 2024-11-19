@@ -5,7 +5,7 @@ import { TableUsers } from "@/ui/dashboard/users/table"
 
 const getInformation = async () => {
     const session = await auth()
-    const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const { clientId } = await getUserById(userId)
     const users = await getUsersByClientId(clientId)
     return { users }

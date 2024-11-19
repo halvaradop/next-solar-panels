@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const getInformation = async () => {
     const session = await auth()
-    const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const { clientId } = await getUserById(userId)
     const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId.toString())])
     return { zones, samples }

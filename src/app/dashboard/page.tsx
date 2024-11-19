@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const DashboardPage = async () => {
     const session = await auth()
-    const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
+    const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
     const { clientId } = await getUserById(userId)
     const samples = await getSamplesByUser(clientId)
     const zones = await getZonesByClientId(userId.toString())

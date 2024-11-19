@@ -20,7 +20,7 @@ export const AddUserPlant = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const { clientId } = await getUserById(userId)
             const [users, projects] = await Promise.all([getUsersByClientId(clientId), getProjectsByClientId(clientId)])
             setUsers(users)

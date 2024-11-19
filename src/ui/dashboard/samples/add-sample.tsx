@@ -25,7 +25,7 @@ export const AddSample = () => {
          * TODO: Implement the right logic to fetch zones by company of the user that is logged in
          */
         const fetchZones = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
+            const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
             const { clientId } = await getUserById(userId)
             const response = await getZonesByClientId(clientId)
             setZones(response)

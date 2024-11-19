@@ -26,7 +26,7 @@ export const AddPlant = () => {
          * TODO: fix bug
          */
         const fetchUsers = async () => {
-            const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const { clientId } = await getUserById(userId)
             const response = await getUsersByClientId(clientId)
             setUsers(response)

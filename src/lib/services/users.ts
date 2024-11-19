@@ -15,10 +15,10 @@ export const getUsers = async <T extends unknown[] = User[]>(): Promise<T> => {
 /**
  * Fetches a specific user from the database by their id.
  *
- * @param {number} userId - The user id to get the user from the database
+ * @param {string} userId - The user id to get the user from the database
  * @returns {Promise<UserSession>} - A user object
  */
-export const getUserById = async <T extends object = UserSession>(userId: number): Promise<T> => {
+export const getUserById = async <T extends object = UserSession>(userId: string): Promise<T> => {
     const { data } = await getFetch<T>(`users/${userId}`)
     return data
 }
