@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
 import { User } from "@prisma/client"
-import { addPlantAction } from "@/lib/actions"
-import { AddPlantActionState } from "@/lib/@types/types"
+import { addProjectAction } from "@/lib/actions"
+import { AddProjectActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByClientId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
@@ -15,10 +15,10 @@ export const fetchCache = "force-no-store"
 export const AddPlant = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
-    const [state, formAction] = useFormState(addPlantAction, {
+    const [state, formAction] = useFormState(addProjectAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddPlantActionState["schema"],
+        schema: {} as AddProjectActionState["schema"],
     })
 
     useEffect(() => {

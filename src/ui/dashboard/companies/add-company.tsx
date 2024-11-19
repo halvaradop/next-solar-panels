@@ -1,17 +1,17 @@
 "use client"
-import { addCompanyAction } from "@/lib/actions"
+import { addClientAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
-import { AddCompanieActionState } from "@/lib/@types/types"
+import { AddClientActionState } from "@/lib/@types/types"
 import { Button, Form, InputList } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { companyInputs } = dataJson
 
 export const AddCompany = () => {
-    const [state, formAction] = useFormState(addCompanyAction, {
+    const [state, formAction] = useFormState(addClientAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddCompanieActionState["schema"],
+        schema: {} as AddClientActionState["schema"],
     })
 
     return (

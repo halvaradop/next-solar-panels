@@ -19,7 +19,7 @@ export interface ActionState<T> {
 
 export type AddSampleActionState = ActionState<SamplesWithoutIds>
 
-export type AddCompanieActionState = ActionState<Omit<Client, "clientId">>
+export type AddClientActionState = ActionState<Omit<Client, "clientId">>
 
 export type AddUserActionState = ActionState<Omit<User, "userId">>
 
@@ -46,9 +46,9 @@ export interface Params<T extends string> {
 
 export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
 
-export type AddPlantActionState = ActionState<Omit<Project, "plantId" | "state">>
+export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
 
-export type AddPUserPlantsActionState = ActionState<ProjectsOnUsers>
+export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
 
 export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 

@@ -7,7 +7,7 @@ import { getFetch } from "@/lib/utils"
  * @returns {Promise<Client[]>} - A promise that resolves to a list of companies
  */
 export const getClients = async <T extends unknown[] = Client[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("companies")
+    const { data } = await getFetch<T>("clients")
     return data
 }
 
@@ -18,7 +18,7 @@ export const getClients = async <T extends unknown[] = Client[]>(): Promise<T> =
  * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
  */
 export const getProjectsByClientId = async <T extends unknown[] = Project[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`companies/${clientId}/plants`)
+    const { data } = await getFetch<T>(`clients/${clientId}/project`)
     return data
 }
 
@@ -29,7 +29,7 @@ export const getProjectsByClientId = async <T extends unknown[] = Project[]>(cli
  * @returns {Promise<Zones[]>} - A promise that resolves to a list of zones
  */
 export const getZonesByClientId = async <T extends unknown[] = Zone[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`companies/${clientId}/zones`)
+    const { data } = await getFetch<T>(`clients/${clientId}/zones`)
     return data
 }
 
@@ -40,6 +40,6 @@ export const getZonesByClientId = async <T extends unknown[] = Zone[]>(clientId:
  * @returns {Promise<User[]>} - A promise that resolves to a list of users
  */
 export const getUsersByClientId = async <T extends unknown[] = User[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`companies/${clientId}/users`)
+    const { data } = await getFetch<T>(`clients/${clientId}/users`)
     return data
 }
