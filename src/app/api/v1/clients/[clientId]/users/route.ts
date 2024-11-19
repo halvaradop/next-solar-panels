@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Users } from "@prisma/client"
+import { User } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -9,7 +9,7 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * Handle the GET request to retrieve the users related to a specific company
  *
  * @param {NextRequest} request - The HTTP request data containing the request data.
- * @param {Params<"companyId">} params - The dynamic parameter to extract the `companyId`.
+ * @param {Params<"clientId">} params - The dynamic parameter to extract the `companyId`.
  * @returns {Promise<NextResponse>} - HTTP response with the users related to the company.
  * @example
  * ```ts
@@ -17,34 +17,31 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * const data = await response.json()
  * ```
  */
-export const GET = async (request: NextRequest, { params }: Params<"companyId">): Promise<NextResponse> => {
+export const GET = async (request: NextRequest, { params }: Params<"clientId">): Promise<NextResponse> => {
     try {
-        const companyId = parseInt(params.companyId)
-        const data = await prisma.users.findMany({
+        const clientsId = params.clientId
+        const data = await prisma.user.findMany({
             where: {
-                UserPlants: {
+                projectsOnUsers: {
                     some: {
-                        plant: {
-                            companyId,
+                        project: {
+                            clientsId,
                         },
                     },
                 },
             },
             include: {
-                PhoneUsers: true,
+                phones: true,
                 role: true,
             },
         })
-        const map = data.map(({ PhoneUsers, ...spread }) => ({
-            phoneUsers: PhoneUsers,
-            ...spread,
-        }))
-        return NextResponse.json<ResponseAPI<Users[]>>({
-            data: map,
+
+        return NextResponse.json<ResponseAPI<User[]>>({
+            data,
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Users[]>>(
+        return NextResponse.json<ResponseAPI<User[]>>(
             {
                 data: [],
                 ok: false,

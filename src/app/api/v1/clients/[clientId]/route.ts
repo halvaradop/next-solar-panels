@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { UserPlants } from "@prisma/client"
+import { ProjectsOnUsers } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -10,26 +10,26 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * @param {Params<"companyId">} param1 -
  * @returns {Promise<NextResponse>} -
  */
-export const GET = async (request: NextRequest, { params }: Params<"companyId">): Promise<NextResponse> => {
+export const GET = async (request: NextRequest, { params }: Params<"clientId">): Promise<NextResponse> => {
     try {
-        const companyId = parseInt(params.companyId)
-        const data = await prisma.userPlants.findMany({
+        const clientsId = params.clientId
+        const data = await prisma.projectsOnUsers.findMany({
             where: {
-                plant: {
-                    companyId,
+                project: {
+                    clientsId,
                 },
             },
             include: {
                 user: true,
-                plant: true,
+                project: true,
             },
         })
-        return NextResponse.json<ResponseAPI<UserPlants[]>>({
+        return NextResponse.json<ResponseAPI<ProjectsOnUsers[]>>({
             data,
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<UserPlants[]>>(
+        return NextResponse.json<ResponseAPI<ProjectsOnUsers[]>>(
             {
                 data: [],
                 ok: false,
