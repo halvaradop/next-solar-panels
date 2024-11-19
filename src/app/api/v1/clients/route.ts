@@ -1,31 +1,41 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Companies } from "@prisma/client"
+import { Client } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all companies in the database.
+ * Handle the GET request to retrieve all client in the database.
  *
- * @returns {Promise<NextResponse>} - The HTTP response with the companies retrieved.
+ * @returns {Promise<NextResponse>} - The HTTP response with the client retrieved.
  * @example
  * ```ts
- * const response = await fetch("{domain}/api/v1/companies")
+ * const response = await fetch("{domain}/api/v1/client")
  * const data = await response.json()
  * ```
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.companies.findMany({
+        const data = await prisma.client.findMany({
+            where: {
+                NOT: {
+                    phones: {
+                        some: {
+                            userId: null,
+                        },
+                    },
+                },
+            },
             include: {
-                PhoneCompanies: true,
+                phones: true,
             },
         })
-        const map = data.map(({ PhoneCompanies, ...spread }) => ({
-            phoneCompanies: PhoneCompanies,
+
+        const map = data.map(({ phones, ...spread }) => ({
+            phone: phones,
             ...spread,
         }))
 
-        return NextResponse.json<ResponseAPI<Companies[]>>({
+        return NextResponse.json<ResponseAPI<Client[]>>({
             data: map,
             ok: true,
             message: "The resource was retrieved successfuly",
@@ -35,7 +45,7 @@ export const GET = async (): Promise<NextResponse> => {
             {
                 data: null,
                 ok: false,
-                message: "Failed to retrieve companies",
+                message: "Failed to retrieve client",
             },
             { status: 500 }
         )
@@ -49,12 +59,15 @@ export const GET = async (): Promise<NextResponse> => {
  * @returns {Promise<NextResponse>} - HTTP response with the newly created company or an error message.
  * @example
  * ```ts
- * const response = await fetch("{domain}/api/v1/companies", {
+ * const response = await fetch("{domain}/api/v1/client", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     companyName: "Company Name",
- *     email: "company@gmail.com"
- *     phone: "1234567890"
+ *     clientName: "Company Name",
+ *     mail: "company@gmail.com",
+ *     phone: "1234567890",
+ *     fax: "1234567890",
+ *     website: "company.info",
+ *     password:"savepassword",
  *   }),
  * })
  * ```
@@ -62,9 +75,9 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { companyName, email, phone } = response
+        const { name, email, phones, fax, website, password } = response
 
-        const existEmail = await prisma.companies.findFirst({
+        const existEmail = await prisma.client.findFirst({
             where: { email },
         })
 
@@ -75,22 +88,25 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-        const data = await prisma.companies.create({
+        const data = await prisma.client.create({
             data: {
-                companyName,
+                name,
                 email,
-                PhoneCompanies: {
+                phones: {
                     create: {
-                        phoneNumber: parseInt(phone),
+                        number: phones,
                     },
                 },
+                fax,
+                website,
+                password,
             },
             include: {
-                PhoneCompanies: true,
+                phones: true,
             },
         })
 
-        return NextResponse.json<ResponseAPI<Companies>>({
+        return NextResponse.json<ResponseAPI<Client>>({
             data,
             ok: true,
             message: "The resource was created successfuly",
@@ -99,7 +115,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed to create the company",
+            message: "Failed to create the client",
         })
     }
 }

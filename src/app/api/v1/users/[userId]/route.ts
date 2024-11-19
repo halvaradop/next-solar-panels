@@ -60,10 +60,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
         }
         const { projectsOnUsers, ...spread } = data
         return NextResponse.json<ResponseAPI<UserSession>>({
-            data: {
-                ...spread,
-                companyId: projectsOnUsers[0].project.clients?.clientId as never,
-            },
+            data: {} as UserSession,
             ok: true,
             message: "The resource was retrieved successfuly",
         })

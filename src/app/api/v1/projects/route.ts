@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Plants } from "@prisma/client"
+import { Project } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -16,18 +16,18 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.plants.findMany()
-        return NextResponse.json<ResponseAPI<Plants[]>>({
+        const data = await prisma.project.findMany()
+        return NextResponse.json<ResponseAPI<Project[]>>({
             data,
             ok: true,
             message: "The resource was retrieved successfully",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Plants[]>>(
+        return NextResponse.json<ResponseAPI<Project[]>>(
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve the plants",
+                message: "Failed to retrieve the project",
             },
             { status: 500 }
         )
@@ -55,7 +55,7 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { plantName, latitude, longitude, id } = response
+        const { name, latitude, longitude, id } = response
         if (!id) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
@@ -63,9 +63,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "user id was not sent",
             })
         }
-        const userId = parseInt(id)
+        const userId = id
 
-        const existcoordinates = await prisma.plants.findFirst({
+        const existcoordinates = await prisma.project.findFirst({
             where: {
                 latitude,
                 longitude,
@@ -79,11 +79,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "A plant with the specified coordinates already exists.",
             })
         }
-        const company = await prisma.companies.findFirst({
+        const client = await prisma.client.findFirst({
             where: {
-                Plants: {
+                projects: {
                     some: {
-                        UserPlants: {
+                        projectsOnUsers: {
                             some: {
                                 userId,
                             },
@@ -92,13 +92,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 },
             },
         })
-        const data = await prisma.plants.create({
+        const data = await prisma.project.create({
             data: {
-                plantName,
-                companyId: company?.companyId ?? 0,
+                name,
+                clientsId: client?.clientId ?? "",
                 latitude,
                 longitude,
-                UserPlants: {
+                projectsOnUsers: {
                     create: {
                         userId,
                     },
@@ -106,7 +106,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             },
         })
 
-        return NextResponse.json<ResponseAPI<Plants>>({
+        return NextResponse.json<ResponseAPI<Project>>({
             data,
             ok: true,
             message: "The resource was created successfuly",
@@ -116,7 +116,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             {
                 data: {},
                 ok: false,
-                message: "Failed to create the plant",
+                message: "Failed to create the project",
             },
             { status: 500 }
         )

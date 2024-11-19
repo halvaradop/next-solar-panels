@@ -27,8 +27,8 @@ export const AddPlant = () => {
          */
         const fetchUsers = async () => {
             const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-            const { companyId } = await getUserById(userId)
-            const response = await getUsersByClientId(companyId)
+            const { clientId } = await getUserById(userId)
+            const response = await getUsersByClientId(clientId)
             setUsers(response)
         }
         fetchUsers()

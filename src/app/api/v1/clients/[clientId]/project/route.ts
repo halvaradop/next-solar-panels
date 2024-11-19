@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Plants } from "@prisma/client"
+import { Project } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
  * Handle the GET request to retrieve all plants related to a specific company
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
- * @param {Params<"companyId">} params - The dynamic parameter to extract the `companyId`.
+ * @param {Params<"clientId">} params - The dynamic parameter to extract the `companyId`.
  * @returns {Promise<NextResponse>} - HTTP response with the plants related to the user.
  * @example
  * ```ts
@@ -15,12 +15,12 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * const data = await response.json()
  * ```
  */
-export const GET = async (request: NextRequest, { params }: Params<"companyId">): Promise<NextResponse> => {
+export const GET = async (request: NextRequest, { params }: Params<"clientId">): Promise<NextResponse> => {
     try {
-        const companyId = parseInt(params.companyId)
-        const data = await prisma.plants.findMany({
+        const clientsId = params.clientId
+        const data = await prisma.project.findMany({
             where: {
-                companyId,
+                clientsId,
             },
         })
         return NextResponse.json<ResponseAPI<unknown>>({
@@ -28,7 +28,7 @@ export const GET = async (request: NextRequest, { params }: Params<"companyId">)
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Plants[]>>(
+        return NextResponse.json<ResponseAPI<Project[]>>(
             {
                 data: [],
                 ok: false,

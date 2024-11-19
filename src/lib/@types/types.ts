@@ -57,5 +57,5 @@ export type UserSession = Omit<User, "state" | "roleId" | "password"> & {
         roleId: number
         roleName: string
     }
-    companyId: number
+    clientId: string
 }
