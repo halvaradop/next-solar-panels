@@ -2,8 +2,8 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Companies, Plants, Samples, UserPlants, Users, Zones } from "@prisma/client"
-import { CompanySchema, SampleSchema, UserSchema, ZoneSchema, PlantSchema, UserPlantSchema } from "./schemas"
+import { Client, Project, Sample, ProjectsOnUsers, User, Zone } from "@prisma/client"
+import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema } from "./schemas"
 import {
     AddPlantActionState,
     AddCompanieActionState,
@@ -40,10 +40,10 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
         return {
             message: "Failed to add the sample",
             isSuccess: false,
-            schema: {} as Samples,
+            schema: {} as Sample,
         }
     }
-    const schema = mapErrors<Samples>(validate as SafeParseError<Samples>)
+    const schema = mapErrors<Sample>(validate as SafeParseError<Sample>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -70,6 +70,8 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 }
 
 /**
+ * TODO: fix types
+ *
  * Adds a company to the database and checks if the action was successful
  *
  * @param {AddCompanieActionState} previous - The previous state of the company to be added
@@ -79,7 +81,7 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 export const addCompanyAction = async (previous: AddCompanieActionState, formData: FormData): Promise<AddCompanieActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    const validate = CompanySchema.safeParse(entries)
+    const validate = ClientSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/companies`, {
             method: "POST",
@@ -91,7 +93,7 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
                 return {
                     message: result.message,
                     isSuccess: result.ok,
-                    schema: {} as Companies,
+                    schema: {} as Client,
                 }
             }
             redirect("/dashboard")
@@ -100,10 +102,10 @@ export const addCompanyAction = async (previous: AddCompanieActionState, formDat
         return {
             message: "Failed to add the company",
             isSuccess: false,
-            schema: {} as Companies,
+            schema: {} as Client,
         }
     }
-    const schema = mapErrors<Companies>(validate as SafeParseError<Companies>)
+    const schema = mapErrors<Client>(validate as SafeParseError<Client>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -134,10 +136,10 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
         return {
             message: "Check the invalid fields",
             isSuccess: false,
-            schema: {} as Zones,
+            schema: {} as Zone,
         }
     }
-    const schema = mapErrors(validate as SafeParseError<Zones>)
+    const schema = mapErrors(validate as SafeParseError<Zone>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -168,7 +170,7 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
                 return {
                     message: result.message,
                     isSuccess: result.ok,
-                    schema: {} as Users,
+                    schema: {} as User,
                 }
             }
             redirect("/dashboard")
@@ -177,10 +179,10 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
         return {
             message: "Failed to add the sample",
             isSuccess: false,
-            schema: {} as Users,
+            schema: {} as User,
         }
     }
-    const schema = mapErrors(validate as SafeParseError<Users>)
+    const schema = mapErrors(validate as SafeParseError<User>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -198,7 +200,7 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
 export const addPlantAction = async (previous: AddPlantActionState, formData: FormData): Promise<AddPlantActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    const validate = PlantSchema.safeParse(entries)
+    const validate = ProjectSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/plants`, {
             method: "POST",
@@ -213,7 +215,7 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
                 return {
                     message: result.message,
                     isSuccess: result.ok,
-                    schema: {} as Plants,
+                    schema: {} as Project,
                 }
             }
             redirect("/dashboard")
@@ -221,10 +223,10 @@ export const addPlantAction = async (previous: AddPlantActionState, formData: Fo
         return {
             message: "Failed to add the sample",
             isSuccess: false,
-            schema: {} as Plants,
+            schema: {} as Project,
         }
     }
-    const schema = mapErrors(validate as SafeParseError<Plants>)
+    const schema = mapErrors(validate as SafeParseError<Project>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -237,7 +239,7 @@ export const addUserPlantsAction = async (
     formData: FormData
 ): Promise<AddPUserPlantsActionState> => {
     const entries = Object.fromEntries(formData)
-    const validate = UserPlantSchema.safeParse(entries)
+    const validate = ProjectOnUserSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/userPlant`, {
             method: "POST",
@@ -249,7 +251,7 @@ export const addUserPlantsAction = async (
                 return {
                     message: result.message,
                     isSuccess: result.ok,
-                    schema: {} as UserPlants,
+                    schema: {} as ProjectsOnUsers,
                 }
             }
             redirect("/dashboard")
@@ -257,10 +259,10 @@ export const addUserPlantsAction = async (
         return {
             message: "Failed to add the Uset to plant",
             isSuccess: false,
-            schema: {} as UserPlants,
+            schema: {} as ProjectsOnUsers,
         }
     }
-    const schema = mapErrors(validate as SafeParseError<UserPlants>)
+    const schema = mapErrors(validate as SafeParseError<ProjectsOnUsers>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,

@@ -1,13 +1,13 @@
-import { Samples, Users } from "@prisma/client"
+import { Sample, User } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 import { UserSession } from "@/lib/@types/types"
 
 /**
  * Fetches all users from the database
  *
- * @returns {Promise<Users[]>} - A list of users
+ * @returns {Promise<User[]>} - A list of users
  */
-export const getUsers = async <T extends unknown[] = Users[]>(): Promise<T> => {
+export const getUsers = async <T extends unknown[] = User[]>(): Promise<T> => {
     const { data } = await getFetch<T>("users")
     return data
 }
@@ -27,9 +27,9 @@ export const getUserById = async <T extends object = UserSession>(userId: number
  * Fetches the sample data associated with a specific user from the database.
  *
  * @param {number} userId - The user id to get the samples related to them from the database
- * @returns {Promise<Samples[]>} - A list of samples related to the user
+ * @returns {Promise<Sample[]>} - A list of samples related to the user
  */
-export const getSamplesByUser = async <T extends unknown[] = Samples[]>(userId: number): Promise<T> => {
+export const getSamplesByUser = async <T extends unknown[] = Sample[]>(userId: number): Promise<T> => {
     const { data } = await getFetch<T>(`users/${userId}/samples`)
     return data
 }
