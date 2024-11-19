@@ -32,21 +32,21 @@ model RolesPermission {
 }
 
 model User {
-  userId    String     @id @default(uuid())
-  firstName String     @db.VarChar(50)
-  lastName  String     @db.VarChar(50)
-  email     String     @db.VarChar(100)
-  password  String     @db.VarChar(50)
-  state     State      @default(ACTIVE)
-  fax       String
-  website   String
-  roleId    Int
-  role      Role       @relation(fields: [roleId], references: [roleId])
-  phones    Phone[]
-  samples   Sample[]
-  projects  Project[]
-  auditLogs AuditLog[]
-  clients   Client[]
+  userId          String            @id @default(uuid())
+  firstName       String            @db.VarChar(50)
+  lastName        String            @db.VarChar(50)
+  email           String            @db.VarChar(100)
+  password        String            @db.VarChar(50)
+  state           State             @default(ACTIVE)
+  fax             String
+  website         String
+  roleId          Int
+  role            Role              @relation(fields: [roleId], references: [roleId])
+  phones          Phone[]
+  samples         Sample[]
+  auditLogs       AuditLog[]
+  clients         Client[]
+  projectsOnUsers ProjectsOnUsers[]
 }
 
 model AuditLog {
@@ -98,17 +98,25 @@ model Phone {
 }
 
 model Project {
-  projectId String   @id @default(uuid())
-  name      String   @db.VarChar(100)
-  state     State    @default(ACTIVE)
-  latitude  Decimal  @db.Decimal(10, 8)
-  longitude Decimal  @db.Decimal(11, 8)
-  clientsId String?
-  clients   Client?  @relation(fields: [clientsId], references: [clientId])
-  addressId Int?
-  address   Address? @relation(fields: [addressId], references: [addressId])
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [userId])
+  projectId       String            @id @default(uuid())
+  name            String            @db.VarChar(100)
+  state           State             @default(ACTIVE)
+  latitude        Decimal           @db.Decimal(10, 8)
+  longitude       Decimal           @db.Decimal(11, 8)
+  clientsId       String?
+  clients         Client?           @relation(fields: [clientsId], references: [clientId])
+  addressId       Int?
+  address         Address?          @relation(fields: [addressId], references: [addressId])
+  projectsOnUsers ProjectsOnUsers[]
+}
+
+model ProjectsOnUsers {
+  projectId String
+  project   Project @relation(fields: [projectId], references: [projectId])
+  userId    String
+  user      User    @relation(fields: [userId], references: [userId])
+
+  @@id([projectId, userId])
 }
 
 model Zone {
