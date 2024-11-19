@@ -108,6 +108,7 @@ model Project {
   addressId       Int?
   address         Address?          @relation(fields: [addressId], references: [addressId])
   projectsOnUsers ProjectsOnUsers[]
+  zones            Zone[]
 }
 
 model ProjectsOnUsers {
@@ -126,6 +127,7 @@ model Zone {
   longitude Decimal  @db.Decimal(11, 8)
   state     State    @default(ACTIVE)
   projectId String
+  project   Project  @relation(fields: [projectId], references: [projectId])
   samples   Sample[]
 }
 
