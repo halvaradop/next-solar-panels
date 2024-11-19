@@ -24,9 +24,7 @@ export const TableUsers = async ({ users }: TableUsersProps) => {
                         </td>
                         <td className="hidden p-3 truncate border-t sm:table-cell">{email}</td>
                         <td className="hidden p-3 truncate border-t md:table-cell">
-                            {phoneUsers.length > 0
-                                ? phoneUsers.map((phone, index) => <div key={index}>0</div>)
-                                : ""}
+                            {phoneUsers.length > 0 ? phoneUsers.map((phone, index) => <div key={index}>0</div>) : ""}
                         </td>
                         <td className="hidden p-3 truncate border-t md:table-cell">{role?.roleName}</td>
                     </tr>
