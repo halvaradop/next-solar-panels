@@ -14,7 +14,7 @@ const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
     const { clientId } = await getUserById(userId)
-    const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId)])
+    const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId.toString())])
     return { zones, samples }
 }
 
