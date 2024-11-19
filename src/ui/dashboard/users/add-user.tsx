@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { useSession } from "next-auth/react"
-import { Plants, Roles } from "@prisma/client"
+import { Project, Role } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
 import { AddUserActionState } from "@/lib/@types/types"
-import { getPlantsByCompanyId, getRoles, getUserById } from "@/lib/services"
+import { getProjectsByClientId, getRoles, getUserById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
@@ -13,8 +13,8 @@ const { userInputs } = dataJson
 
 export const AddUser = () => {
     const { data: session } = useSession()
-    const [roles, setRoles] = useState<Roles[]>([])
-    const [plants, setPlants] = useState<Plants[]>([])
+    const [roles, setRoles] = useState<Role[]>([])
+    const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useFormState(addUserAction, {
         message: "",
         isSuccess: false,
@@ -25,8 +25,8 @@ export const AddUser = () => {
         const fetchPlants = async () => {
             const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
             const { companyId } = await getUserById(userId)
-            const response = await getPlantsByCompanyId(companyId)
-            setPlants(response)
+            const response = await getProjectsByClientId(companyId)
+            setProjects(response)
         }
         fetchPlants()
     }, [])
@@ -44,11 +44,11 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <SelectGeneric values={roles} id="roleName" value="roleId" name="rol" />
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="role" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <SelectGeneric values={plants} id="plantName" value="plantId" name="plant" />
+                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

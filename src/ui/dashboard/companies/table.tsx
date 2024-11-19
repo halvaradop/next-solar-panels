@@ -12,15 +12,13 @@ export const TableCompanies = async ({ companies }: TableCompaniesProps) => {
                 </tr>
             </thead>
             <tbody>
-                {companies.map(({ companyId, companyName, email, phoneCompanies = [] }) => (
-                    <tr className="text-sm td:text-start td:font-normal" key={companyId}>
-                        <td className=" p-3 truncate border-t overflow-hidden">{companyId}</td>
-                        <td className=" p-3 truncate border-t overflow-hidden">{companyName}</td>
+                {companies.map(({ clientId, name, email, phoneCompanies = [] }) => (
+                    <tr className="text-sm td:text-start td:font-normal" key={clientId}>
+                        <td className=" p-3 truncate border-t overflow-hidden">{clientId}</td>
+                        <td className=" p-3 truncate border-t overflow-hidden">{name}</td>
                         <td className="hidden p-3 truncate border-t sm:table-cell">{email}</td>
                         <td className="hidden p-3 truncate border-t md:table-cell">
-                            {phoneCompanies.length > 0
-                                ? phoneCompanies.map((phone, index) => <div key={index}>{phone.phoneNumber}</div>)
-                                : ""}
+                            {phoneCompanies.length > 0 ? phoneCompanies.map((phone, index) => <div key={index}>{0}</div>) : ""}
                         </td>
                     </tr>
                 ))}

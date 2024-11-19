@@ -12,10 +12,10 @@ export const TablePlants = async ({ plants }: TablePlantsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {plants.map(({ plantId, plantName, latitude, longitude }) => (
-                    <tr className="text-sm td:text-start td:font-normal" key={plantId}>
-                        <td className="p-3 truncate border-t overflow-hidden">{plantId}</td>
-                        <td className="p-3 truncate border-t overflow-hidden">{plantName}</td>
+                {plants.map(({ projectId, name, latitude, longitude }) => (
+                    <tr className="text-sm td:text-start td:font-normal" key={projectId}>
+                        <td className="p-3 truncate border-t overflow-hidden">{projectId}</td>
+                        <td className="p-3 truncate border-t overflow-hidden">{name}</td>
                         <td className="hidden p-3 truncate border-t sm:table-cell">{latitude.toString()}</td>
                         <td className="hidden p-3 truncate border-t sm:table-cell">{longitude.toString()}</td>
                     </tr>
