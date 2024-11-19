@@ -22,8 +22,14 @@ import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
+<<<<<<< HEAD
         const userId = params.userId
         const data = await prisma.user.findUnique({
+=======
+        const slug = (await params).userId
+        const userId = parseInt(slug)
+        const data = await prisma.users.findUnique({
+>>>>>>> d3d5ea4 (chore: implement `Promise` in `Params` type)
             where: {
                 userId,
             },

@@ -17,7 +17,7 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"clientId">): Promise<NextResponse> => {
     try {
-        const clientsId = params.clientId
+        const clientsId = (await params).clientId
         const data = await prisma.project.findMany({
             where: {
                 clientsId,

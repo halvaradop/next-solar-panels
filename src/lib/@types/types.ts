@@ -43,8 +43,8 @@ export interface ResponseAPI<T> {
 }
 
 export interface Params<T extends string> {
-    params: Record<T, string>
-    searchParams: ReadonlyURLSearchParams
+    params: Promise<Record<T, string>>
+    searchParams: Promise<ReadonlyURLSearchParams>
 }
 
 export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
