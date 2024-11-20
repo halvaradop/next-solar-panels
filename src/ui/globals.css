@@ -25,4 +25,9 @@
     th {
         @apply text-start font-medium;
     }
+
+    th,
+    td {
+        @apply truncate;
+    }
 }

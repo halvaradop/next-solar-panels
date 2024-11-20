@@ -1,4 +1,4 @@
-import { object, number, string, enum as enums } from "zod"
+import { object, number, enum as enums, string } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
@@ -7,6 +7,7 @@ const range = (min: number, minMessage: string, max: number, maxMessage: string)
 export const SampleSchema = object({
     soilTime: range(0, "Soil time must be a positive number", 100, "Soil time must be less than 100"),
     soilResistivity: range(0, "Soil resistivity must be a positive number", 1000, "Soil resistivity must be less than 1000"),
+    moistureContent: range(0, "Moisture content must be a positive number", 100, "Moisture content must be less than 100"),
     pHValue: range(0, "pH value must be a positive number", 50, "pH value must be less than 50"),
     bufferCapacityPH4_3: range(
         0,
@@ -29,12 +30,49 @@ export const SampleSchema = object({
     soilTypeHomogeneity: enums(["homogeneous", "heterogeneous"]),
     pHSoilHomogeneity: range(0, "Soil homogeneity must be a positive number", 10, "Soild homogeneity must be less than 10"),
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
-    zoneId: range(0, "", 0, ""),
+    zoneId: number(),
+    userId: number(),
 })
 
-export const ZoneSchema = object({
+export const ClientSchema = object({
+    name: string().regex(/^[A-Za-z]+$/, {
+        message: "Only letters",
+    }),
+    email: string(),
+    phone: string(),
+})
+
+export const UserSchema = object({
+    firstName: string(),
+    lastName: string(),
+    email: string(),
+    password: string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
+        message:
+            "Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
+    }),
+    phone: string(),
+    rol: string(),
+    plant: string(),
+})
+
+export const ProjectSchema = object({
+    plantName: string(),
     latitude: string(),
     longitude: string(),
+    user: string(),
+})
+export const ZoneSchema = object({
+    latitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
+    longitude: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
     name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    plant: number(),
+})
+
+export const ProjectOnUserSchema = object({
     plant: string(),
+    user: string(),
 })

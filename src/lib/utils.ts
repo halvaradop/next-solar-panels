@@ -1,5 +1,9 @@
 import { twMerge } from "tw-merge"
 import clsx, { ClassValue } from "clsx"
+import { hash, genSalt } from "bcryptjs"
+import { BadRequestError } from "@/lib/errors"
+import { ResponseAPI } from "@/lib/@types/types"
+import { SafeParseError } from "zod"
 
 /**
  * Merges the classes and returns a string
@@ -38,4 +42,56 @@ export const mapToNumber = (entries: Record<string, unknown>, fields: string[], 
  */
 export const camelCaseToWords = (str: string): string => {
     return str.replace(/([A-Z])/g, " $1").trim()
+}
+
+/**
+ * Encrypts a string using bcrypt with a salt of 10
+ *
+ * @param data the string to be encrypted
+ * @returns the encrypted string
+ */
+export const encrypt = async (data: string): Promise<string> => {
+    const salt = await genSalt(10)
+    return hash(data, salt)
+}
+
+/**
+ * Fetches data from the API
+ *
+ * @param {string} endpoint the API endpoint to fetch data from
+ * @param {RequestInit} init the request options
+ * @returns the response from the fetch request
+ * @throws {BadRequestError} if there is an error fetching data from the API
+ */
+export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Promise<ResponseAPI<T>> => {
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`
+    const { headers: headersInit, ...spread } = init
+    try {
+        const response = await fetch(URL, {
+            headers: {
+                "Content-Type": "application/json",
+                ...headersInit,
+            },
+            ...spread,
+        })
+        const json: ResponseAPI<T> = await response.json()
+        return json
+    } catch (error) {
+        throw new BadRequestError(`Error fetching data from the API: ${JSON.stringify(error, null, 2)}`)
+    }
+}
+
+/**
+ * Extracts and maps the errors from a Zod schema validation result.
+ * It removes fields that do not have errors.
+ *
+ * @param {SafeParseError<T>} validate - The validation result from a Zod schema.
+ * @returns {T} - The mapped errors.
+ */
+export const mapErrors = <T>(validate: SafeParseError<T>): T => {
+    const errors = validate?.error?.flatten().fieldErrors
+    const schema = Object.keys(errors)
+        .filter((key) => errors[key as keyof typeof errors])
+        .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
+    return schema as T
 }

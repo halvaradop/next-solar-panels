@@ -1,36 +1,33 @@
-import Image from "next/image"
-import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
+import { TableZones } from "@/ui/dashboard/zones/table"
+import { getUserById, getProjectsByClientId, getZonesByClientId } from "@/lib/services"
+import { Filter } from "@/ui/common/filter"
 
-import { getPlantsByUser, getZonesPlantsByUser } from "@/lib/services/dashboard"
-import arrowIcon from "@/public/arrow.svg"
-import { Table } from "@/ui/dashboard/zones/table"
-import { Filter } from "@/ui/dashboard/zones/filter"
+const getInformation = async () => {
+    const session = await auth()
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    const { clientId } = await getUserById(userId)
+    const [zones, plants] = await Promise.all([getZonesByClientId(clientId), getProjectsByClientId(clientId)])
+    return { zones, plants }
+}
 
 const DashboardZonesPage = async () => {
-    const session = await auth()
-    const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-    const zones = await getZonesPlantsByUser(userId)
-    const plants = await getPlantsByUser(userId)
+    const { zones, plants } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
-            <Filter plants={plants} />
+            <Filter
+                filters={[
+                    {
+                        title: "Plants",
+                        options: plants.map(({ projectId, name }) => ({ key: name, value: projectId.toString() })),
+                    },
+                ]}
+            />
             <Suspense fallback={<p>Table...</p>}>
-                <Table zones={zones} />
+                <TableZones zones={zones} />
             </Suspense>
-            <div className="w-full flex items-center justify-between">
-                <p className="text-sm">showing </p>
-                <figure className="h-8 flex items-center border border-gray-1000 rounded-md divide-x">
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                    <figure className="px-1 hover:cursor-pointer">
-                        <Image className="-rotate-90" src={arrowIcon} alt="arrow icon" />
-                    </figure>
-                </figure>
-            </div>
         </section>
     )
 }

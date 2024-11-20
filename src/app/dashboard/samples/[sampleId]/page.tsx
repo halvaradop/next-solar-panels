@@ -1,13 +1,13 @@
+import Link from "next/link"
 import { Params } from "@/lib/@types/types"
-import { getSamplesById } from "@/lib/services/dashboard"
+import { getSampleById } from "@/lib/services/samples"
 import { camelCaseToWords } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
-import Link from "next/link"
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
-    const getSample = await getSamplesById(parseInt(params.sampleId))
-    const { zoneId, sampleId, userId, sampleDateTime, ...spread } = getSample
-    const date = new Date(sampleDateTime).toLocaleString()
+    const getSample = await getSampleById(parseInt(params.sampleId))
+    const { zoneId, date: dateTime, ...spread } = getSample
+    const date = new Date(dateTime).toLocaleString()
 
     return (
         <section className="pt-4 pb-12 self-start grid place-content-center base:pb-0 base:relative">

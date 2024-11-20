@@ -1,12 +1,20 @@
-import { Button } from "@halvaradop/ui-button"
-import { SampleListProps } from "@/lib/@types/props"
+"use client"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { SampleListProps } from "@/lib/@types/props"
 
 export const SampleList = ({ samples }: SampleListProps) => {
+    const params = useSearchParams()
+
+    const filteredSamples = samples.filter(({ zoneId }) => {
+        const zone = params.get("zone")
+        return zone ? zone === zoneId.toString() : true
+    })
+
     return (
         <section>
             <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-                {samples.map(({ sampleId, userId, zoneId, sampleDateTime }) => (
+                {filteredSamples.map(({ sampleId, userId, zoneId, date }) => (
                     <article key={sampleId}>
                         <Link
                             className="p-4 flex items-center justify-between font-normal border rounded-lg shadow hover:cursor-pointer"
@@ -21,11 +29,8 @@ export const SampleList = ({ samples }: SampleListProps) => {
                                     <p>B0: {0}</p>
                                     <p>B1: {1}</p>
                                 </div>
-                                <p className="text-neutral-600">Date: {new Date(sampleDateTime).toLocaleString()}</p>
+                                <p className="text-neutral-600">Date: {new Date(date).toLocaleString()}</p>
                             </div>
-                            <Button className="text-green-500 hover:bg-green-500 hover:text-white" variant="ghost">
-                                Edit
-                            </Button>
                         </Link>
                     </article>
                 ))}

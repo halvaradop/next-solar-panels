@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Samples, Zones } from "@prisma/client"
+import { Project, Sample, ProjectsOnUsers, User, Zone, Client } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -11,11 +11,17 @@ export interface MenuState {
     hash: string
 }
 
-export interface AddSampleActionState {
+export interface ActionState<T> {
     message: string
     isSuccess: boolean
-    schema: SamplesWithoutIds
+    schema: T
 }
+
+export type AddSampleActionState = ActionState<SamplesWithoutIds>
+
+export type AddClientActionState = ActionState<Omit<Client, "clientId">>
+
+export type AddUserActionState = ActionState<Omit<User, "userId">>
 
 export interface Entry {
     key: string
@@ -37,29 +43,19 @@ export interface Params<T extends string> {
     params: Record<T, string>
     searchParams: ReadonlyURLSearchParams
 }
-export interface AddZonesActionState {
-    message: string
-    isSuccess: boolean
-    schema: Omit<Zones, "zoneId" | "plantId" | "state">
-}
 
-export type SamplesWithoutIds = Omit<Samples, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
 
-export interface UsersResponse {
-    userId: number
-    email: string
-    firstName: string
-    lastName: string
+export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
+
+export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
+
+export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+
+export type UserSession = Omit<User, "state" | "roleId" | "password"> & {
     role: {
         roleId: number
         roleName: string
-        state: string
     }
-    UserPlants: Array<{
-        plant: {
-            company: {
-                companyId: number
-            }
-        }
-    }>
+    clientId: string
 }

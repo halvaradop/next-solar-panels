@@ -2,36 +2,32 @@
 import { useFormState } from "react-dom"
 import { useEffect, useState } from "react"
 import { useSession } from "next-auth/react"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { Zones } from "@prisma/client"
-import { Select } from "@/ui/common/select"
+import { Zone } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
-import { AddSampleActionState, Entry, SamplesWithoutIds } from "@/lib/@types/types"
-import { getZonesByUser } from "@/lib/services/dashboard"
+import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
+import { getZonesByClientId, getUserById } from "@/lib/services"
+import { Button, Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
 const { sampleInputs } = dataJson
 
 export const AddSample = () => {
     const { data: session } = useSession()
-    const [zones, setZones] = useState<Zones[]>([])
+    const [zones, setZones] = useState<Zone[]>([])
     const [state, formAction] = useFormState(addSampleAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddSampleActionState["schema"],
     })
-    const mapZones = zones.map<Entry>(({ zoneId, name }) => ({ key: name, value: zoneId.toString() }))
 
     useEffect(() => {
         /**
          * TODO: Implement the right logic to fetch zones by company of the user that is logged in
          */
         const fetchZones = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getZonesByUser(userId)
+            const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
+            const { clientId } = await getUserById(userId)
+            const response = await getZonesByClientId(clientId)
             setZones(response)
         }
         fetchZones()
@@ -49,6 +45,7 @@ export const AddSample = () => {
                         <Input
                             className="mt-1 focus-within:border-black focus-within:ring-black"
                             type="number"
+                            step="0.01"
                             variant="outline"
                             name={name}
                         />
@@ -60,7 +57,7 @@ export const AddSample = () => {
             ))}
             <Label>
                 Zone
-                <Select name="zoneId" values={mapZones} />
+                <SelectGeneric values={zones} id="name" value="zoneId" name="zoneId" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

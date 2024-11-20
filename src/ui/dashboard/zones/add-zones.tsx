@@ -1,21 +1,19 @@
 "use client"
-import { AddZonesActionState } from "@/lib/@types/types"
-import { addZonesAction } from "@/lib/actions"
-import { getPlantsByUser } from "@/lib/services/dashboard"
-import { Plants } from "@prisma/client"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import Image from "next/image"
-import arrowDown from "@/public/arrow.svg"
+import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
+import { Project } from "@prisma/client"
+import { addZonesAction } from "@/lib/actions"
+import { AddZonesActionState } from "@/lib/@types/types"
+import { getProjectsByClientId, getUserById } from "@/lib/services"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { zoneInputs } = dataJson
 
 export const AddZone = () => {
     const { data: session } = useSession()
-    const [plants, setPlants] = useState<Plants[]>([])
+    const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useFormState(addZonesAction, {
         message: "",
         isSuccess: false,
@@ -23,48 +21,20 @@ export const AddZone = () => {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            const userId = Number(session?.user?.id) || Number.MAX_SAFE_INTEGER
-            const response = await getPlantsByUser(userId)
-            setPlants(response)
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+            const { clientId } = await getUserById(userId)
+            const response = await getProjectsByClientId(clientId)
+            setProjects(response)
         }
         fetchPlants()
     }, [])
+
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <Label className="w-full text-neutral-700" size="sm">
-                Name
-                <Input className="mt-1 focus-within:border-black focus-within:ring-black" variant="outline" name="name" />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Latitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="latitude"
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Longitude
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="longitude"
-                />
-            </Label>
+            <InputList inputs={zoneInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <div className="mt1 flex items-center relative">
-                    <select className="w-full h-10 pl-3 border rounded-lg appearance-none" name="plant">
-                        {plants.map(({ plantId, plantName }) => (
-                            <option key={plantId} value={plantId}>
-                                {plantName}
-                            </option>
-                        ))}
-                    </select>
-                    <Image className="absolute right-2" src={arrowDown} alt="arrow down icon" />
-                </div>
+                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add
