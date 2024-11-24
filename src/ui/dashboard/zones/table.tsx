@@ -18,17 +18,17 @@ export const TableZones = ({ zones }: TableZonesProps) => {
                     <th className="hidden p-3 xs:table-cell">Name</th>
                     <th className="max-w-0 p-3">Longitude</th>
                     <th className="max-w-0 p-3">Latitude</th>
-                    <th className="hidden p-3 sm:table-cell">Plant</th>
+                    <th className="hidden p-3 sm:table-cell">Project</th>
                 </tr>
             </thead>
             <tbody>
-                {filteredZones.map(({ zoneId, name, latitude, longitude, plant }) => (
+                {filteredZones.map(({ zoneId, name, latitude, longitude, project }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={zoneId}>
                         <td className="p-3 pr-0 border-t">{zoneId}</td>
                         <td className="hidden p-3 border-t xs:table-cell">{name}</td>
                         <td className="p-3 border-t">{longitude.toString()}</td>
                         <td className="p-3 border-t">{latitude.toString()}</td>
-                        <td className="hidden p-3 border-t sm:table-cell">{plant?.name}</td>
+                        <td className="hidden p-3 border-t sm:table-cell">{project?.name}</td>
                     </tr>
                 ))}
             </tbody>

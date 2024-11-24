@@ -21,7 +21,7 @@ export type AddSampleActionState = ActionState<SamplesWithoutIds>
 
 export type AddClientActionState = ActionState<Omit<Client, "clientId">>
 
-export type AddUserActionState = ActionState<Omit<User, "userId">>
+export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & { project?: string; phone?: string }
 
 export interface Entry {
     key: string
@@ -52,10 +52,17 @@ export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
 
 export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
 
-export type UserSession = Omit<User, "state" | "roleId" | "password"> & {
+export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "website"> & {
     role: {
         roleId: number
         roleName: string
+        state: string
     }
-    clientId: string
+    projectsOnUsers: Array<{
+        project: {
+            clients: {
+                clientId: string
+            }
+        }
+    }>
 }

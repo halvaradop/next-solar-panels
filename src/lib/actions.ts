@@ -80,7 +80,9 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
  */
 export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     const validate = ClientSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/clients`, {
             method: "POST",
@@ -113,6 +115,7 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
 }
 
 /**
+ *  TODO: fix types
  * Adds a zone to the database and checks if the action was successful
  *
  * @param {AddZonesActionState} previous - The previous state of the zone to be added
@@ -121,7 +124,7 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
  */
 export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["name"], false)
+    //mapToNumber(entries, ["name"], false)
     const validate = ZoneSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/zones`, {
@@ -155,7 +158,6 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
     const entries = Object.fromEntries(formData)
     const validate = UserSchema.safeParse(entries)
-
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users`, {
             method: "POST",
@@ -174,7 +176,7 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
         }
 
         return {
-            message: "Failed to add the sample",
+            message: "Failed to add the user",
             isSuccess: false,
             schema: {} as User,
         }
@@ -197,7 +199,9 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     const validate = ProjectSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",
@@ -218,7 +222,7 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the sample",
+            message: "Failed to add the project",
             isSuccess: false,
             schema: {} as Project,
         }

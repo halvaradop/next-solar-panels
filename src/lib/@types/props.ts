@@ -82,7 +82,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zone & { plant?: Pick<Project, "name"> })[]
+    zones: (Zone & { project?: Pick<Project, "name"> })[]
 }
 
 export interface InputListProps<T> {

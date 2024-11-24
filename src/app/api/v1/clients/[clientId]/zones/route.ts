@@ -25,6 +25,9 @@ export const GET = async (request: NextRequest, { params }: Params<"clientId">):
                     clientsId,
                 },
             },
+            include: {
+                project: true,
+            },
         })
         return NextResponse.json<ResponseAPI<Zone[]>>({
             data,

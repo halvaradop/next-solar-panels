@@ -55,15 +55,15 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { name, latitude, longitude, id } = response
-        if (!id) {
+        const { name, latitude, longitude, user } = response
+        if (!user) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
                 message: "user id was not sent",
             })
         }
-        const userId = id
+        const userId = user
 
         const existcoordinates = await prisma.project.findFirst({
             where: {

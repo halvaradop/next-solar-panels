@@ -122,9 +122,19 @@
       "type": "password"
     },
     {
+      "label": "FAX",
+      "name": "fax",
+      "type": "text"
+    },
+    {
+      "label": "Web Sitie",
+      "name": "website",
+      "type": "text"
+    },
+    {
       "label": "Phone",
-      "name": "phone",
-      "type": "number"
+      "name": "number",
+      "type": "string"
     }
   ],
   "zoneInputs": [
@@ -142,17 +152,12 @@
       "label": "Longitude",
       "name": "longitude",
       "type": "number"
-    },
-    {
-      "label": "Radius",
-      "name": "radius",
-      "type": "number"
     }
   ],
-  "companyInputs": [
+  "clientInputs": [
     {
       "label": "Name",
-      "name": "companyName",
+      "name": "name",
       "type": "text"
     },
     {
@@ -166,10 +171,10 @@
       "type": "number"
     }
   ],
-  "plantInputs": [
+  "projectInputs": [
     {
-      "label": "Plant name",
-      "name": "plantName",
+      "label": "Project name",
+      "name": "name",
       "type": "text"
     },
     {

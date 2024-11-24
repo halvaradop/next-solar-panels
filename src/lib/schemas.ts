@@ -1,3 +1,5 @@
+import { Project } from "@/ui/projects/project"
+import { s } from "framer-motion/m"
 import { object, number, enum as enums, string } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
@@ -50,18 +52,23 @@ export const UserSchema = object({
         message:
             "Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
     }),
-    phone: string(),
-    rol: string(),
-    plant: string(),
+    number: string(),
+    roleId: string(),
+    project: string(),
+    fax: string(),
+    website: string(),
 })
 
 export const ProjectSchema = object({
-    plantName: string(),
+    name: string(),
     latitude: string(),
     longitude: string(),
     user: string(),
 })
-export const ZoneSchema = object({
+/**
+ * TODO: fix types
+ *
+/*export const ZoneSchema = object({
     latitude: number()
         .nonnegative()
         .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
@@ -69,7 +76,13 @@ export const ZoneSchema = object({
         .nonnegative()
         .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
     name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
-    plant: number(),
+    project: string(),
+})*/
+export const ZoneSchema = object({
+    latitude: string(),
+    longitude: string(),
+    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
+    project: string(),
 })
 
 export const ProjectOnUserSchema = object({

@@ -20,15 +20,15 @@ export const AddZone = () => {
     } as AddZonesActionState)
 
     useEffect(() => {
-        const fetchPlants = async () => {
+        const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const { projectsOnUsers } = await getUserById(userId)
+            const clientId = projectsOnUsers[0]?.project.clients.clientId
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
-        fetchPlants()
+        fetchProjects()
     }, [])
-
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <InputList inputs={zoneInputs} state={state} />

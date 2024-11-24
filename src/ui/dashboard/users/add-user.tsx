@@ -24,7 +24,8 @@ export const AddUser = () => {
     useEffect(() => {
         const fetchPlants = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const { projectsOnUsers } = await getUserById(userId)
+            const clientId = projectsOnUsers[0]?.project.clients.clientId
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
@@ -44,10 +45,10 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <SelectGeneric values={roles} id="roleName" value="roleId" name="role" />
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="roleId" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
-                Plant
+                Project
                 <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
