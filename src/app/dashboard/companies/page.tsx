@@ -2,8 +2,13 @@ import { Suspense } from "react"
 import { getClients } from "@/lib/services"
 import { TableCompanies } from "@/ui/dashboard/companies/table"
 import { TableCompaniesProps } from "@/lib/@types/props"
+import { auth } from "@/lib/auth"
 
 const DashboardCompaniesPage = async () => {
+    /**
+     * TODO: fix bug created if auth() function is not called
+     */
+    const session = await auth()
     const companies = await getClients<TableCompaniesProps["companies"]>()
 
     return (
