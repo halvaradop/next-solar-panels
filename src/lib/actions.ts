@@ -129,7 +129,15 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
             method: "POST",
             body: JSON.stringify(validate.data),
         })
+        const result = await request.json()
         if (request.ok) {
+            if (!result.ok) {
+                return {
+                    message: result.message,
+                    isSuccess: result.ok,
+                    schema: {} as Zone,
+                }
+            }
             redirect("/dashboard")
         }
         return {
