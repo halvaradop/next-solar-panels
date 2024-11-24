@@ -13,7 +13,8 @@ export const metadata: Metadata = {
 const DashboardPage = async () => {
     const session = await auth()
     const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-    const { clientId } = await getUserById(userId)
+    const { projectsOnUsers } = await getUserById(userId)
+    const clientId = projectsOnUsers[0]?.project.clients.clientId
     const samples = await getSamplesByUser(clientId)
     const zones = await getZonesByClientId(userId.toString())
 
