@@ -14,6 +14,14 @@ export const SampleList = ({ samples }: SampleListProps) => {
         const zone = params.get("zone")
         return zone ? zone === zoneId.toString() : true
     })
+    const filteredUsers = samples.filter(({ zoneId }) => {
+        const zone = params.get("zone")
+        return zone ? zone === zoneId.toString() : true
+    })
+    const filteredZones = samples.filter(({ zoneId }) => {
+        const zone = params.get("zone")
+        return zone ? zone === zoneId.toString() : true
+    })
 
     return (
         <section>
@@ -26,7 +34,7 @@ export const SampleList = ({ samples }: SampleListProps) => {
                         >
                             <div>
                                 <div className="flex items-center justify-between gap-x-5 mb-2">
-                                    <p className="text-neutral-800 font-medium">User ID: {userId}</p>
+                                    <p className="text-neutral-800 font-medium">User Name: {userId}</p>
                                     <p className="px-4 py-1 text-white text-xs rounded-full bg-green-500">Zone {zoneId}</p>
                                 </div>
                                 <div className="mb-2 text-neutral-700">
