@@ -80,9 +80,7 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
  */
 export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
     const entries = Object.fromEntries(formData)
-    console.log(entries)
     const validate = ClientSchema.safeParse(entries)
-    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/clients`, {
             method: "POST",
@@ -124,7 +122,7 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
  */
 export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
     const entries = Object.fromEntries(formData)
-    //mapToNumber(entries, ["name"], false)
+    mapToNumber(entries, ["longitude", "latitude"])
     const validate = ZoneSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/zones`, {
@@ -199,9 +197,7 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    console.log(entries)
     const validate = ProjectSchema.safeParse(entries)
-    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",

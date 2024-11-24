@@ -69,7 +69,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-        console.log(response)
         const data = await prisma.user.create({
             data: {
                 firstName,
@@ -91,8 +90,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 },
             },
         })
-        console.log("data")
-        console.log(data)
 
         return NextResponse.json<ResponseAPI<User>>({
             data,

@@ -65,22 +65,14 @@ export const ProjectSchema = object({
     longitude: string(),
     user: string(),
 })
-/**
- * TODO: fix types
- *
-/*export const ZoneSchema = object({
+
+export const ZoneSchema = object({
     latitude: number()
         .nonnegative()
         .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
     longitude: number()
         .nonnegative()
         .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
-    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
-    project: string(),
-})*/
-export const ZoneSchema = object({
-    latitude: string(),
-    longitude: string(),
     name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
     project: string(),
 })

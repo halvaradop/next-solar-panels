@@ -3,6 +3,10 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { SampleListProps } from "@/lib/@types/props"
 
+/**
+ * TODO: update userId to display the name of the user logged in and update
+ * zoneId to display the name of the zone
+ */
 export const SampleList = ({ samples }: SampleListProps) => {
     const params = useSearchParams()
 
@@ -13,7 +17,7 @@ export const SampleList = ({ samples }: SampleListProps) => {
 
     return (
         <section>
-            <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+            <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,500px))]">
                 {filteredSamples.map(({ sampleId, userId, zoneId, date }) => (
                     <article key={sampleId}>
                         <Link
