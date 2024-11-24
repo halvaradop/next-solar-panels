@@ -50,9 +50,6 @@ importers:
       next-auth:
         specifier: 5.0.0-beta.25
         version: 5.0.0-beta.25(next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      next-solar-panels:
-        specifier: 'file:'
-        version: file:(prisma@5.22.0)
       react:
         specifier: ^18
         version: 18.3.1
@@ -1437,9 +1434,6 @@ packages:
         optional: true
       nodemailer:
         optional: true
-
-  'next-solar-panels@file:':
-    resolution: {directory: '', type: directory}
 
   next@14.2.15:
     resolution: {integrity: sha512-h9ctmOokpoDphRvMGnwOJAedT6zKhwqyZML9mDtspgf4Rh3Pn7UTYKqePNoDvhsWBAO5GoPNYshnAUGIazVGmw==}
@@ -3479,39 +3473,6 @@ snapshots:
       '@auth/core': 0.37.2
       next: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
-
-  next-solar-panels@file:(prisma@5.22.0):
-    dependencies:
-      '@halvaradop/tailwindcss-utilities': 0.2.3
-      '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-button': 0.3.1
-      '@halvaradop/ui-form': 0.1.1
-      '@halvaradop/ui-input': 0.2.1
-      '@halvaradop/ui-label': 0.1.1
-      '@prisma/client': 5.22.0(prisma@5.22.0)
-      bcryptjs: 2.4.3
-      clsx: 2.1.1
-      dotenv-cli: 7.4.2
-      framer-motion: 11.11.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      jspdf: 2.5.2
-      next: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      next-auth: 5.0.0-beta.25(next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      sharp: 0.33.5
-      tw-merge: 0.0.1-alpha.3
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@emotion/is-prop-valid'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - '@simplewebauthn/browser'
-      - '@simplewebauthn/server'
-      - babel-plugin-macros
-      - nodemailer
-      - prisma
-      - sass
 
   next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
