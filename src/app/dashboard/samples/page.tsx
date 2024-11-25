@@ -13,8 +13,9 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const { projectsOnUsers } = await getUserById(userId)
-    const clientId = projectsOnUsers[0]?.project.clients.clientId
+    const {
+        clients: [{ clientId }],
+    } = await getUserById(userId)
     const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId.toString())])
     return { zones, samples }
 }

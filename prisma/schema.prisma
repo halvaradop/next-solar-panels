@@ -149,8 +149,8 @@ model Sample {
   soilTypeHomogeneity       Decimal  @db.Decimal(5, 2)
   pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
   externalCathodes          Decimal  @db.Decimal(5, 2)
-  b0                        String
-  b1                        String
+  b0                        Decimal
+  b1                        Decimal
   userId                    String
   user                      User     @relation(fields: [userId], references: [userId])
   zoneId                    String

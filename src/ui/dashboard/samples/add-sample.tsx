@@ -23,8 +23,9 @@ export const AddSample = () => {
     useEffect(() => {
         const fetchZones = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-            const { projectsOnUsers } = await getUserById(userId)
-            const clientId = projectsOnUsers[0]?.project.clients.clientId
+            const {
+                clients: [{ clientId }],
+            } = await getUserById(userId)
             const response = await getZonesByClientId(clientId)
             setZones(response)
         }

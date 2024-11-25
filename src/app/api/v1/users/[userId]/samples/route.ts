@@ -113,8 +113,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             data: {
                 ...json,
                 date: new Date(),
-                b0: b0.toString(),
-                b1: b1.toString(),
+                b0,
+                b1,
             },
         })
         if (!data) {
