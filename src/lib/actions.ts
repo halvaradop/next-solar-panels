@@ -34,11 +34,12 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        if (request.ok) {
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the sample",
+            message,
             isSuccess: false,
             schema: {} as Sample,
         }
@@ -86,20 +87,12 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as Client,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
-
         return {
-            message: "Failed to add the company",
+            message,
             isSuccess: false,
             schema: {} as Client,
         }
@@ -129,11 +122,12 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        if (request.ok) {
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Check the invalid fields",
+            message,
             isSuccess: false,
             schema: {} as Zone,
         }
@@ -161,20 +155,12 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as User,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
-
         return {
-            message: "Failed to add the user",
+            message,
             isSuccess: false,
             schema: {} as User,
         }
@@ -206,19 +192,12 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
                 ...validate.data,
             }),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as Project,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the project",
+            message,
             isSuccess: false,
             schema: {} as Project,
         }
@@ -242,19 +221,12 @@ export const addProjectOnUserAction = async (
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as ProjectsOnUsers,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the Uset to plant",
+            message,
             isSuccess: false,
             schema: {} as ProjectsOnUsers,
         }
