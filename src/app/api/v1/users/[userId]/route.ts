@@ -59,8 +59,6 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 { status: 404 }
             )
         }
-
-        const { projectsOnUsers, ...spread } = data
         return NextResponse.json<ResponseAPI<UserSession>>({
             data: data as UserSession,
             ok: true,
