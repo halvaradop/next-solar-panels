@@ -87,12 +87,12 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             json.sulfurReducingBacteria,
             json.sulfateContent,
             json.neutralSalts,
-            //json.undergroundWaterPresence,
+            json.undergroundWaterPresence,
         ]
         const keysB1 = [
             json.horizontalSoilHomogeneity,
             json.verticalSoilHomogeneity,
-            // json.soilTypeHomogeneity,
+            json.soilTypeHomogeneity,
             json.pHSoilHomogeneity,
             json.externalCathodes,
         ]

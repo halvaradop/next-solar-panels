@@ -108,7 +108,7 @@ model Project {
   addressId       Int?
   address         Address?          @relation(fields: [addressId], references: [addressId])
   projectsOnUsers ProjectsOnUsers[]
-  zones            Zone[]
+  zones           Zone[]
 }
 
 model ProjectsOnUsers {
@@ -143,10 +143,10 @@ model Sample {
   sulfurReducingBacteria    Decimal  @db.Decimal(5, 2)
   sulfateContent            Decimal  @db.Decimal(5, 2)
   neutralSalts              Decimal  @db.Decimal(5, 2)
-  undergroundWaterPresence  String   @db.VarChar(50)
+  undergroundWaterPresence  Decimal  @db.Decimal(5, 2)
   horizontalSoilHomogeneity Decimal  @db.Decimal(5, 2)
   verticalSoilHomogeneity   Decimal  @db.Decimal(5, 2)
-  soilTypeHomogeneity       String   @db.VarChar(50)
+  soilTypeHomogeneity       Decimal  @db.Decimal(5, 2)
   pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
   externalCathodes          Decimal  @db.Decimal(5, 2)
   b0                        String
