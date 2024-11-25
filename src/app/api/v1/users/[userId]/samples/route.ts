@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { Sample } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 import { Decimal } from "@prisma/client/runtime/library"
+import { sampleCalcs } from "@/lib/utils"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific user
@@ -89,29 +90,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const json: Sample = response
-        const keysB0 = [
-            json.soilType,
-            json.soilResistivity,
-            json.moistureContent,
-            json.pHValue,
-            json.bufferCapacityPH4_3,
-            json.bufferCapacityPH7_0,
-            json.sulfurReducingBacteria,
-            json.sulfateContent,
-            json.neutralSalts,
-            json.undergroundWaterPresence,
-        ]
-        const keysB1 = [
-            json.horizontalSoilHomogeneity,
-            json.verticalSoilHomogeneity,
-            json.soilTypeHomogeneity,
-            json.pHSoilHomogeneity,
-            json.externalCathodes,
-        ]
-
-        const b0 = keysB0.reduce((prev, now) => prev + now, 0)
-        const b1 = keysB1.reduce((prev, now) => prev + now, 0)
-
+        const { b0, b1 } = sampleCalcs(json)
         const data = await prisma.sample.create({
             data: {
                 ...json,

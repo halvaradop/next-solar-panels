@@ -27,10 +27,8 @@ export const AddSample = () => {
             const {
                 clients: [{ clientId } = { clientId: "" }],
             } = await getUserById(userId)
-            console.log("Client ID: ", clientId)
             const response = await getZonesByClientId(clientId)
             setZones(response)
-            console.log("Zones: ", response)
         }
         fetchZones()
     }, [])

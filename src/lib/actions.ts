@@ -26,6 +26,10 @@ import { SafeParseError } from "zod"
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
     const session = await auth()
     formData.set("userId", session?.user?.id as string)
+    /**
+     * TODO: fix the zoneId
+     */
+    formData.set("zoneId", "9d0d8e89-81f3-41c9-b3c0-7766b26f93f1")
     const entries = Object.fromEntries(formData)
     mapToNumber(entries, ["zoneId", "userId"], false)
     const validate = SampleSchema.safeParse(entries)
@@ -45,6 +49,7 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
         }
     }
     const schema = mapErrors<Sample>(validate as SafeParseError<Sample>)
+    console.log("schema", schema)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
