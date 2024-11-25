@@ -7,6 +7,7 @@ import { addZonesAction } from "@/lib/actions"
 import { AddZonesActionState } from "@/lib/@types/types"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
 const { zoneInputs } = dataJson
@@ -39,6 +40,15 @@ export const AddZone = () => {
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
+            {state.message && (
+                <div
+                    className={merge("mt-4 p-2 text-green-700 rounded bg-green-100 ", {
+                        "text-red-700 bg-red-100": !state.isSuccess,
+                    })}
+                >
+                    {state.message}
+                </div>
+            )}
         </Form>
     )
 }

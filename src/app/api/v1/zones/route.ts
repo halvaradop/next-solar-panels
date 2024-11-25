@@ -56,6 +56,21 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { latitude, longitude, name, project } = response
+
+        const existcoordinates = await prisma.zone.findFirst({
+            where: {
+                latitude,
+                longitude,
+            },
+        })
+
+        if (existcoordinates) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "A zone with the specified coordinates already exists.",
+            })
+        }
         const newZone = await prisma.zone.create({
             data: {
                 latitude,
