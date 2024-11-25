@@ -14,7 +14,7 @@ const DashboardPage = async () => {
     const session = await auth()
     const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId }],
+        clients: [{ clientId } = { clientId: "" }],
     } = await getUserById(userId)
     const samples = await getSamplesByUser(userId)
     const zones = await getZonesByClientId(clientId)

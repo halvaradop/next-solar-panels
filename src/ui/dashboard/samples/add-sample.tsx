@@ -6,7 +6,8 @@ import { Zone } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByClientId, getUserById } from "@/lib/services"
-import { Button, Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
+import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
+import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
 
 const { sampleInputs } = dataJson
@@ -24,10 +25,12 @@ export const AddSample = () => {
         const fetchZones = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
             const {
-                clients: [{ clientId }],
+                clients: [{ clientId } = { clientId: "" }],
             } = await getUserById(userId)
+            console.log("Client ID: ", clientId)
             const response = await getZonesByClientId(clientId)
             setZones(response)
+            console.log("Zones: ", response)
         }
         fetchZones()
     }, [])
@@ -58,9 +61,9 @@ export const AddSample = () => {
                 Zone
                 <SelectGeneric values={zones} id="name" value="zoneId" name="zoneId" />
             </Label>
-            <Button className="mt-6" fullWidth>
+            <Submit className="mt-6" fullWidth>
                 Add
-            </Button>
+            </Submit>
             {state.message && <p className="mt-4 py-2 px-10 text-sm text-red-500 rounded-md bg-red-100">{state.message}</p>}
         </Form>
     )

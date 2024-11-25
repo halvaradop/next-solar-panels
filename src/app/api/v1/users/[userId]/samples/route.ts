@@ -34,7 +34,10 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 },
             },
         })
-        return NextResponse.json<ResponseAPI<Sample[]>>({ data, ok: true })
+        return NextResponse.json<ResponseAPI<Sample[]>>({
+            data,
+            ok: true,
+        })
     } catch (error) {
         return NextResponse.json<ResponseAPI<Sample[]>>(
             {
@@ -106,10 +109,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             json.externalCathodes,
         ]
 
-        const b0 = keysB0.reduce((prev, now) => prev.add(now), new Decimal(0))
-        const b1 = keysB1.reduce((prev, now) => prev.add(now), new Decimal(0))
+        const b0 = keysB0.reduce((prev, now) => prev + now, 0)
+        const b1 = keysB1.reduce((prev, now) => prev + now, 0)
 
-        const data = await prisma.sample.create({
+        /*const data = await prisma.sample.create({
             data: {
                 ...json,
                 date: new Date(),
@@ -117,6 +120,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 b1,
             },
         })
+        */
+        console.log("json", JSON.stringify(json, null, 2), ", b0: ", b0, ", b1: ", b1)
+        const data = null
         if (!data) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},

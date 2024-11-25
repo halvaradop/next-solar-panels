@@ -7,7 +7,7 @@ const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId }],
+        clients: [{ clientId } = { clientId: "" }],
     } = await getUserById(userId)
     const users = await getUsersByClientId(clientId)
     return { users }
