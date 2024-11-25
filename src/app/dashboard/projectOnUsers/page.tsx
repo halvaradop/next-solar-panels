@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth"
 import { getUserById, getUserProjectsByClients } from "@/lib/services"
 import { TableProjectOnuser } from "@/ui/dashboard/projectOnUsers/table"
 
-
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
@@ -12,7 +11,6 @@ const getInformation = async () => {
     const projectsOnUser = await getUserProjectsByClients(clientId)
     return { projectsOnUser }
 }
-
 
 const DashboardProjectOnUserPage = async () => {
     const { projectsOnUser } = await getInformation()
