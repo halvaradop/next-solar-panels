@@ -27,7 +27,7 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
     const session = await auth()
     formData.set("userId", session?.user?.id as string)
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["undergroundWaterPresence", "soilTypeHomogeneity"], false)
+    mapToNumber(entries, ["undergroundWaterPresence", "soilTypeHomogeneity", "zoneId", "userId"], false)
     const validate = SampleSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/samples`, {

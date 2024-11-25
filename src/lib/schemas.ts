@@ -32,8 +32,8 @@ export const SampleSchema = object({
     soilTypeHomogeneity: enums(["homogeneous", "heterogeneous"]),
     pHSoilHomogeneity: range(0, "Soil homogeneity must be a positive number", 10, "Soild homogeneity must be less than 10"),
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
-    zoneId: number(),
-    userId: number(),
+    zoneId: string().optional().default(""),
+    userId: string().optional().default(""),
 })
 
 export const ClientSchema = object({

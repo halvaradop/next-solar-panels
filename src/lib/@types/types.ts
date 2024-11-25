@@ -50,7 +50,7 @@ export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state
 
 export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
 
-export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "date" | "sampleId" | "b0" | "b1">
 
 export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "website"> & {
     role: {

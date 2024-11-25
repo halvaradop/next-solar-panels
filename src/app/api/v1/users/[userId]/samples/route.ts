@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Sample } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
+import { Decimal } from "@prisma/client/runtime/library"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific user
@@ -76,10 +77,44 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const json: Sample = response
+        const KeysB0 = [
+            json.soilTime,
+            json.soilResistivity,
+            json.moistureContent,
+            json.pHValue,
+            json.bufferCapacityPH4_3,
+            json.bufferCapacityPH7_0,
+            json.sulfurReducingBacteria,
+            json.sulfateContent,
+            json.neutralSalts,
+            //json.undergroundWaterPresence,
+        ]
+        const KeysB1 = [
+            json.horizontalSoilHomogeneity,
+            json.verticalSoilHomogeneity,
+            // json.soilTypeHomogeneity,
+            json.pHSoilHomogeneity,
+            json.externalCathodes,
+        ]
+
+        let b0 = new Decimal(0)
+        let b1 = new Decimal(0)
+
+        for (const key of KeysB0) {
+            b0 = b0.add(key)
+        }
+        b1 = b1.add(b0)
+
+        for (const key of KeysB1) {
+            b1 = b1.add(key)
+        }
+
         const data = await prisma.sample.create({
             data: {
                 ...json,
                 date: new Date(),
+                b0: b0.toString(),
+                b1: b1.toString(),
             },
         })
         return NextResponse.json<ResponseAPI<Sample>>({
