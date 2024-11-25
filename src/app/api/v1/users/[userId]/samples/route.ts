@@ -90,7 +90,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const json: Sample = response
         const keysB0 = [
-            json.soilTime,
+            json.soilType,
             json.soilResistivity,
             json.moistureContent,
             json.pHValue,
@@ -112,7 +112,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const b0 = keysB0.reduce((prev, now) => prev + now, 0)
         const b1 = keysB1.reduce((prev, now) => prev + now, 0)
 
-        /*const data = await prisma.sample.create({
+        const data = await prisma.sample.create({
             data: {
                 ...json,
                 date: new Date(),
@@ -120,9 +120,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 b1,
             },
         })
-        */
-        console.log("json", JSON.stringify(json, null, 2), ", b0: ", b0, ", b1: ", b1)
-        const data = null
         if (!data) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},

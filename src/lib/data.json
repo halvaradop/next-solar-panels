@@ -2,7 +2,7 @@
   "sampleInputs": [
     {
       "label": "Soil type",
-      "name": "soilTime",
+      "name": "soilType",
       "unit": "%"
     },
     {

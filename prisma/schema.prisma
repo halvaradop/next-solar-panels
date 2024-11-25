@@ -134,7 +134,7 @@ model Zone {
 model Sample {
   sampleId                  String   @id @default(uuid())
   date                      DateTime @default(now()) @updatedAt
-  soilTime                  Int
+  soilType                  Int
   soilResistivity           Int
   moistureContent           Int
   pHValue                   Int
