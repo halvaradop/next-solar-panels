@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
 import { ActionState, Entry, MenuState } from "./types"
+import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 
 export interface ProductProps {
     className?: string
@@ -34,7 +35,7 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Sample[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
@@ -87,4 +88,9 @@ export interface InputListProps<T> {
         name: string
         type: string
     }[]
+}
+
+export type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
 }
