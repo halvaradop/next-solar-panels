@@ -6,9 +6,15 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 /**
  * TODO: add documentation ???
  *
- * @param {NextRequest} request -
+ * Handles the GET request to retrieve all users associated with projects for a specific client.
+ *
+ * @param {NextRequest} request - The HTTP request data containing the request data.
  * @param {Params<"companyId">} param1 -
  * @returns {Promise<NextResponse>} -
+ * ```ts
+ * const response = await fetch("/api/v1/clients/{clientId}/users")
+ * const data = await response.json()
+ * ```
  */
 export const GET = async (request: NextRequest, { params }: Params<"clientId">): Promise<NextResponse> => {
     try {

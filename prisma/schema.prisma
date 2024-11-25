@@ -159,6 +159,7 @@ model Sample {
 
 enum State {
   ACTIVE
+  INACTIVE
   DELETED
 }
 

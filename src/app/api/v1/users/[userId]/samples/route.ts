@@ -24,6 +24,15 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
             where: {
                 userId,
             },
+            include: {
+                zone: true,
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                    },
+                },
+            },
         })
         return NextResponse.json<ResponseAPI<Sample[]>>({ data, ok: true })
     } catch (error) {
