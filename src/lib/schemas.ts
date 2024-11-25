@@ -1,5 +1,3 @@
-import { Project } from "@/ui/projects/project"
-import { s } from "framer-motion/m"
 import { object, number, enum as enums, string } from "zod"
 
 const range = (min: number, minMessage: string, max: number, maxMessage: string) => {
@@ -8,30 +6,55 @@ const range = (min: number, minMessage: string, max: number, maxMessage: string)
 
 export const SampleSchema = object({
     soilTime: range(0, "Soil time must be a positive number", 100, "Soil time must be less than 100"),
-    soilResistivity: range(0, "Soil resistivity must be a positive number", 1000, "Soil resistivity must be less than 1000"),
+    soilResistivity: range(0, "Soil resistivity must be a positive number", 10000, "Soil resistivity must be less than 1000"),
     moistureContent: range(0, "Moisture content must be a positive number", 100, "Moisture content must be less than 100"),
-    pHValue: range(0, "pH value must be a positive number", 50, "pH value must be less than 50"),
+    pHValue: range(0, "pH value must be a positive number", 14, "pH value must be less than 50"),
     bufferCapacityPH4_3: range(
         0,
         "Buffer capacity pH4.3 must be a positive number",
-        20,
+        10000,
         "Buffer capacity pH4.3 must be less than 20"
     ),
     bufferCapacityPH7_0: range(
         0,
         "Buffer capacity pH7.0 must be a positive number",
-        50,
+        500,
         "Buffer capacity pH7.0 must be less than 50"
     ),
     sulfurReducingBacteria: range(0, "Sulphate reducing must be a positive number", 50, "Sulphate reducing must be less than 50"),
     sulfateContent: range(0, "Sulphate content must be a positive number", 50, "Sulphate content must be less than 50"),
-    neutralSalts: range(0, "Neutral salts must be a positive number", 200, "Neutral salts must be less than 200"),
-    undergroundWaterPresence: enums(["never", "constant", "intermittent"]),
-    horizontalSoilHomogeneity: range(0, "Horizontal soil must be a positive number", 10, "Horizontal soild must be less than 10"),
-    verticalSoilHomogeneity: range(0, "Vertical soil must be a positive number", 10, "Vertical soild must be less than 10"),
-    soilTypeHomogeneity: enums(["homogeneous", "heterogeneous"]),
-    pHSoilHomogeneity: range(0, "Soil homogeneity must be a positive number", 10, "Soild homogeneity must be less than 10"),
-    externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 1, "Foreign cathodes must be less than 1"),
+    neutralSalts: range(0, "Neutral salts must be a positive number", 500, "Neutral salts must be less than 200"),
+    undergroundWaterPresence: range(
+        -2,
+        "Underground water presence must be greater than -2",
+        0,
+        "Underground water presence must be less than 2"
+    ),
+    horizontalSoilHomogeneity: range(
+        -4,
+        "Horizontal soil homogeneity must be greater than -4",
+        0,
+        "Horizontal soil homogeneity must be less than 4"
+    ),
+    verticalSoilHomogeneity: range(
+        -2,
+        "Vertical soil homogeneity must be greater than -2",
+        0,
+        "Vertical soil homogeneity must be less than 2"
+    ),
+    soilTypeHomogeneity: range(
+        -6,
+        "Soil type homogeneity must be greater than -6",
+        0,
+        "Soil type homogeneity must be less than 6"
+    ),
+    pHSoilHomogeneity: range(
+        0,
+        "pH soil homogeneity must be a positive number",
+        100,
+        "pH soil homogeneity must be less than 100"
+    ),
+    externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 0, "Foreign cathodes must be less than 1"),
     zoneId: string().optional().default(""),
     userId: string().optional().default(""),
 })

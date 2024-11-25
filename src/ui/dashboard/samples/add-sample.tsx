@@ -21,9 +21,6 @@ export const AddSample = () => {
     })
 
     useEffect(() => {
-        /**
-         * TODO: Implement the right logic to fetch zones by company of the user that is logged in
-         */
         const fetchZones = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
             const { projectsOnUsers } = await getUserById(userId)
@@ -63,6 +60,7 @@ export const AddSample = () => {
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
+            {state.message && <p className="mt-4 py-2 px-10 text-sm text-red-500 rounded-md bg-red-100">{state.message}</p>}
         </Form>
     )
 }

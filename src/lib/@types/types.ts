@@ -25,7 +25,7 @@ export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & {
 
 export interface Entry {
     key: string
-    value: string
+    value: string | number
 }
 
 export interface LoginActionState {

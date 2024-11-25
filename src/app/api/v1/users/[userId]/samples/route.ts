@@ -77,7 +77,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const json: Sample = response
-        const KeysB0 = [
+        const keysB0 = [
             json.soilTime,
             json.soilResistivity,
             json.moistureContent,
@@ -89,7 +89,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             json.neutralSalts,
             //json.undergroundWaterPresence,
         ]
-        const KeysB1 = [
+        const keysB1 = [
             json.horizontalSoilHomogeneity,
             json.verticalSoilHomogeneity,
             // json.soilTypeHomogeneity,
@@ -97,17 +97,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             json.externalCathodes,
         ]
 
-        let b0 = new Decimal(0)
-        let b1 = new Decimal(0)
-
-        for (const key of KeysB0) {
-            b0 = b0.add(key)
-        }
-        b1 = b1.add(b0)
-
-        for (const key of KeysB1) {
-            b1 = b1.add(key)
-        }
+        const b0 = keysB0.reduce((prev, now) => prev.add(now), new Decimal(0))
+        const b1 = keysB1.reduce((prev, now) => prev.add(now), new Decimal(0))
 
         const data = await prisma.sample.create({
             data: {
@@ -117,6 +108,14 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 b1: b1.toString(),
             },
         })
+        if (!data) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "Failed to create the new sample",
+            })
+        }
+
         return NextResponse.json<ResponseAPI<Sample>>({
             data,
             ok: true,
