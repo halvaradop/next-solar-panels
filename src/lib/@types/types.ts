@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Sample, ProjectsOnUsers, User, Zone, Client } from "@prisma/client"
+import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Role } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -25,7 +25,7 @@ export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & {
 
 export interface Entry {
     key: string
-    value: string
+    value: string | number
 }
 
 export interface LoginActionState {
@@ -50,19 +50,9 @@ export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state
 
 export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
 
-export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "sampleDateTime" | "sampleId">
+export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "date" | "sampleId" | "b0" | "b1">
 
 export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "website"> & {
-    role: {
-        roleId: number
-        roleName: string
-        state: string
-    }
-    projectsOnUsers: Array<{
-        project: {
-            clients: {
-                clientId: string
-            }
-        }
-    }>
+    role: Omit<Role, "users" | "rolesPermissions">
+    clients: { clientId: string }[]
 }

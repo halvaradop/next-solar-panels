@@ -17,7 +17,7 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export const GET = async (request: NextRequest, { params }: Params<"sampleId">): Promise<NextResponse> => {
     try {
-        const sampleId = parseInt(params.sampleId)
+        const sampleId = params.sampleId
         const sample = await prisma.sample.findUnique({
             where: {
                 sampleId,

@@ -14,13 +14,13 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
             <Button className="mb-6 base:absolute base:top-4">
                 <Link href="./">Go back</Link>
             </Button>
-            <article>
+            <article className="w-full">
                 <div className="flex items-center justify-between">
                     <h1 className="text-neutral-700 text-lg font-medium">Sample information</h1>
                     <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500">Zone {zoneId}</span>
                 </div>
                 <time className="text-neutral-600" dateTime={date}>
-                    Date: {date}
+                    Date: {0}
                 </time>
                 <table className="mt-2 py-4 px-2 border border-separate rounded-lg">
                     <thead>
