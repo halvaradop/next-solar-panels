@@ -21,9 +21,9 @@ const links = {
         { href: "/dashboard/plants", label: "List" },
         { href: "/dashboard/plants/add", label: "Add" },
     ],
-    UserPlants: [
-        { href: "/dashboard/userPlant", label: "List" },
-        { href: "/dashboard/userPlant/add", label: "Add" },
+    projectOnUser: [
+        { href: "/dashboard/projectOnUsers", label: "List" },
+        { href: "/dashboard/projectOnUsers/add", label: "Add" },
     ],
 }
 
