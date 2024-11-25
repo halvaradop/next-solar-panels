@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
+import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
 
 /**
+ * TODO: What happens if the user has multiples companies?
+ *
  * Handle the GET request to retrieve a specific user information
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
@@ -14,10 +16,14 @@ import { Params, ResponseAPI, UsersResponse } from "@/lib/@types/types"
  * const data = await response.json()
  * ```
  */
+
+/**
+ * TODO: fix companyId
+ */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
-        const userId = parseInt(params.userId)
-        const data = await prisma.users.findUnique({
+        const userId = params.userId
+        const data = await prisma.user.findUnique({
             where: {
                 userId,
             },
@@ -27,13 +33,13 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 firstName: true,
                 lastName: true,
                 role: true,
-                UserPlants: {
+                projectsOnUsers: {
                     select: {
-                        plant: {
+                        project: {
                             select: {
-                                company: {
+                                clients: {
                                     select: {
-                                        companyId: true,
+                                        clientId: true,
                                     },
                                 },
                             },
@@ -42,25 +48,35 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 },
             },
         })
+
         if (!data) {
-            return NextResponse.json<ResponseAPI<UsersResponse>>(
+            return NextResponse.json<ResponseAPI<UserSession>>(
                 {
-                    data: {} as UsersResponse,
+                    data: {} as UserSession,
                     ok: false,
                     message: "Failed to retrieve the user information",
                 },
                 { status: 404 }
             )
         }
-        return NextResponse.json<ResponseAPI<UsersResponse>>({
-            data,
+
+        const { projectsOnUsers, ...spread } = data
+        const clients = projectsOnUsers
+            .filter((project) => project.project.clients?.clientId)
+            .flatMap((project) => ({ clientId: project.project.clients?.clientId }))
+
+        return NextResponse.json<ResponseAPI<UserSession>>({
+            data: {
+                ...spread,
+                clients,
+            } as UserSession,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<UsersResponse>>(
+        return NextResponse.json<ResponseAPI<UserSession>>(
             {
-                data: {} as UsersResponse,
+                data: {} as UserSession,
                 ok: false,
                 message: "Failed to retrieve the user information",
             },

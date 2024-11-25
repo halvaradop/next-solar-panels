@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Samples } from "@prisma/client"
+import { Sample } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
+import { Decimal } from "@prisma/client/runtime/library"
+import { sampleCalcs } from "@/lib/utils"
 
 /**
  * Handle the GET request to retrieve all samples related to a specific user
@@ -18,15 +20,27 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
-        const userId = parseInt(params.userId)
-        const data = await prisma.samples.findMany({
+        const userId = params.userId
+        const data = await prisma.sample.findMany({
             where: {
                 userId,
             },
+            include: {
+                zone: true,
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                    },
+                },
+            },
         })
-        return NextResponse.json<ResponseAPI<Samples[]>>({ data, ok: true })
+        return NextResponse.json<ResponseAPI<Sample[]>>({
+            data,
+            ok: true,
+        })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Samples[]>>(
+        return NextResponse.json<ResponseAPI<Sample[]>>(
             {
                 data: [],
                 ok: false,
@@ -75,14 +89,25 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const json: Samples = response
-        const data = await prisma.samples.create({
+        const json: Sample = response
+        const { b0, b1 } = sampleCalcs(json)
+        const data = await prisma.sample.create({
             data: {
                 ...json,
-                sampleDateTime: new Date(),
+                date: new Date(),
+                b0,
+                b1,
             },
         })
-        return NextResponse.json<ResponseAPI<Samples>>({
+        if (!data) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "Failed to create the new sample",
+            })
+        }
+
+        return NextResponse.json<ResponseAPI<Sample>>({
             data,
             ok: true,
             message: "The resource was created successfuly",

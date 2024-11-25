@@ -1,17 +1,25 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getPlantByCompany } from "@/lib/services"
-import { Table } from "@/ui/dashboard/plants/table"
+import { getProjectsByClientId, getUserById } from "@/lib/services"
+import { TablePlants } from "@/ui/dashboard/projects/table"
+
+const getInformation = async () => {
+    const session = await auth()
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
+    const plants = await getProjectsByClientId(clientId)
+    return { plants }
+}
 
 const DashboardPlantsPage = async () => {
-    const session = await auth()
-    const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-    const plants = await getPlantByCompany(userId)
+    const { plants } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
-                <Table plants={plants} />
+                <TablePlants plants={plants} />
             </Suspense>
         </section>
     )

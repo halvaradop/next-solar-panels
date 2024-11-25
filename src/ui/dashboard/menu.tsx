@@ -21,6 +21,10 @@ const links = {
         { href: "/dashboard/plants", label: "List" },
         { href: "/dashboard/plants/add", label: "Add" },
     ],
+    projectOnUser: [
+        { href: "/dashboard/projectOnUsers", label: "List" },
+        { href: "/dashboard/projectOnUsers/add", label: "Add" },
+    ],
 }
 
 export const Menu = () => {

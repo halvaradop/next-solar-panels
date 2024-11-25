@@ -1,24 +1,35 @@
-import { Users } from "@prisma/client"
+import { Sample, User } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
-
-/**
- * TODO: migrate the `getUserByCompany` function to the `company` module.
- *
- * Fetches all users associated with a specific company from the database
- * @param {number} userId - The ID of the user whose company users are to be fetched
- * @returns {Promise<Users[]>} - A promise that resolves to a list of users
- */
-export const getUserByCompany = async (userId: number): Promise<Users[]> => {
-    const { data } = await getFetch<Users[]>(`users/${userId}/users`)
-    return data
-}
+import { UserSession } from "@/lib/@types/types"
 
 /**
  * Fetches all users from the database
  *
- * @returns {Promise<Users[]>} - A list of users
+ * @returns {Promise<User[]>} - A list of users
  */
-export const getUsers = async (): Promise<Users[]> => {
-    const { data } = await getFetch<Users[]>(`users`)
+export const getUsers = async <T extends unknown[] = User[]>(): Promise<T> => {
+    const { data } = await getFetch<T>("users")
+    return data
+}
+
+/**
+ * Fetches a specific user from the database by their id.
+ *
+ * @param {string} userId - The user id to get the user from the database
+ * @returns {Promise<UserSession>} - A user object
+ */
+export const getUserById = async <T extends object = UserSession>(userId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`users/${userId}`)
+    return data
+}
+
+/**
+ * Fetches the sample data associated with a specific user from the database.
+ *
+ * @param {string} userId - The user id to get the samples related to them from the database
+ * @returns {Promise<Sample[]>} - A list of samples related to the user
+ */
+export const getSamplesByUser = async <T extends unknown[] = Sample[]>(userId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`users/${userId}/samples`)
     return data
 }

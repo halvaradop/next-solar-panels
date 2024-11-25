@@ -1,3 +1,4 @@
+import { User as UserPrisma } from "@prisma/client"
 import { DefaultSession, Session } from "next-auth"
 import { DefaultJWT, JWT } from "next-auth/jwt"
 
@@ -9,6 +10,6 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
     interface JWT extends DefaultJWT {
-        user: User
+        user: UserPrisma
     }
 }

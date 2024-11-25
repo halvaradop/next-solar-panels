@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zones, Samples, Companies, Users, Plants } from "@prisma/client"
-import { Entry, MenuState, Params } from "./types"
+import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
+import { ActionState, Entry, MenuState } from "./types"
+import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 
 export interface ProductProps {
     className?: string
@@ -34,24 +35,41 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Samples[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface FilterComapaniesProps {
-    companies: Companies[]
+export interface TableCompaniesProps {
+    companies: (Omit<Client, "state"> & { phoneCompanies?: Pick<Phone, "number">[] })[]
 }
 
-export interface FilterUserProps {
-    users: Users[]
+export interface TableProjectOnUserProps {
+    projectsOnUsers: (ProjectsOnUsers & { project?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
-export interface FilterPlantsProps {
-    plants: Plants[]
+export interface TableUsersProps {
+    /**
+     * TODO: fix
+     */
+    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
+
+export interface TablePlantsProps {
+    plants: Project[]
+}
+
+export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
+    className?: string
+    classNameOption?: string
+    name: string
+    id: K
+    value: K
+    values: T[]
+}
+
 export interface SelectProps {
     className?: string
     classNameOption?: string
@@ -60,5 +78,19 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: Zones[]
+    zones: (Zone & { project?: Pick<Project, "name"> })[]
+}
+
+export interface InputListProps<T> {
+    state: ActionState<T>
+    inputs: {
+        label: string
+        name: string
+        type: string
+    }[]
+}
+
+export type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
 }

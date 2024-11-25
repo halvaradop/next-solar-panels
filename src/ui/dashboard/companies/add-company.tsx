@@ -1,60 +1,25 @@
 "use client"
-import { addCompanyAction } from "@/lib/actions"
-import { useSession } from "next-auth/react"
+import { addClientAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { AddCompanieActionState } from "@/lib/@types/types"
+import { AddClientActionState } from "@/lib/@types/types"
+import { Button, Form, InputList } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { clientInputs } = dataJson
 
 export const AddCompany = () => {
-    const { data: session } = useSession()
-    const [state, formAction] = useFormState(addCompanyAction, {
+    const [state, formAction] = useFormState(addClientAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddCompanieActionState["schema"],
+        schema: {} as AddClientActionState["schema"],
     })
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <Label className="w-full text-neutral-700" size="sm">
-                Name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="companyName"
-                    required
-                />
-                {state.schema.companyName && <p className="text-red-600 text-sm mt-1">{state.schema.companyName}</p>}
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Email
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="email"
-                    variant="outline"
-                    name="email"
-                    required
-                />
-            </Label>
-
-            <Label className="w-full text-neutral-700" size="sm">
-                phone
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="number"
-                    variant="outline"
-                    name="phone"
-                    required
-                />
-            </Label>
-
+            <InputList inputs={clientInputs} state={state} />
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
-
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}

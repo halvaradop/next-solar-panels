@@ -1,24 +1,37 @@
 "use client"
-import Image from "next/image"
-import { addUserAction } from "@/lib/actions"
-import { useFormState } from "react-dom"
-import { Form } from "@halvaradop/ui-form"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
-import { AddUserActionState } from "@/lib/@types/types"
-import { Roles } from "@prisma/client"
 import { useEffect, useState } from "react"
-import { getRoles } from "@/lib/services"
-import arrowDown from "@/public/arrow.svg"
+import { useFormState } from "react-dom"
+import { useSession } from "next-auth/react"
+import { Project, Role } from "@prisma/client"
+import { addUserAction } from "@/lib/actions"
+import { AddUserActionState } from "@/lib/@types/types"
+import { getProjectsByClientId, getRoles, getUserById } from "@/lib/services"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import dataJson from "@/lib/data.json"
+
+const { userInputs } = dataJson
 
 export const AddUser = () => {
-    const [roles, setRoles] = useState<Roles[]>([])
+    const { data: session } = useSession()
+    const [roles, setRoles] = useState<Role[]>([])
+    const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useFormState(addUserAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
     })
+
+    useEffect(() => {
+        const fetchPlants = async () => {
+            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
+            const response = await getProjectsByClientId(clientId)
+            setProjects(response)
+        }
+        fetchPlants()
+    }, [])
 
     useEffect(() => {
         const fetchRoles = async () => {
@@ -30,71 +43,14 @@ export const AddUser = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
+            <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                Frist name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="firstName"
-                    required
-                />
+                Role
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="roleId" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
-                Last Name
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="lastName"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Email
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="email"
-                    variant="outline"
-                    name="email"
-                    required
-                />
-            </Label>
-            <Label className="w-full text-neutral-700" size="sm">
-                Password
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="password"
-                    variant="outline"
-                    name="password"
-                    required
-                />
-                {state.schema.password && <p className="text-red-600 text-sm mt-1">{state.schema.password}</p>}
-            </Label>
-
-            <Label className="w-full text-neutral-700" size="sm">
-                Phone
-                <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="text"
-                    variant="outline"
-                    name="phone"
-                    required
-                />
-            </Label>
-
-            <Label className="w-full text-neutral-700" size="sm">
-                Rol
-                <div className="mt1 flex items-center relative">
-                    <select className="w-full h-10 pl-3 border rounded-lg appearance-none" name="rol">
-                        {roles.map(({ roleId, roleName }) => (
-                            <option key={roleId} value={roleId}>
-                                {roleName}
-                            </option>
-                        ))}
-                    </select>
-                    <Image className="absolute right-2" src={arrowDown} alt="arrow down icon" />
-                </div>
+                Project
+                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add
