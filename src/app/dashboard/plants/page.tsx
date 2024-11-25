@@ -12,6 +12,11 @@ export const metadata: Metadata = {
 =======
 >>>>>>> 38f79f1 (chore: migrate logic to new database (#65))
 
+export const metadata: Metadata = {
+    title: "Plants",
+    description: "List of plants",
+}
+
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
