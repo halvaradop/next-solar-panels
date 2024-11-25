@@ -22,6 +22,13 @@ export const GET = async (request: NextRequest, { params }: Params<"sampleId">):
             where: {
                 sampleId,
             },
+            include: {
+                zone: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         })
         if (!sample) {
             return NextResponse.json<ResponseAPI<{}>>({

@@ -34,7 +34,7 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Sample[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
