@@ -76,7 +76,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "A plant with the specified coordinates already exists.",
+                message: "A project with the specified coordinates already exists.",
             })
         }
         const client = await prisma.client.findFirst({
