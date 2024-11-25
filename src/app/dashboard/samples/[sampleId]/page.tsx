@@ -1,8 +1,15 @@
 import Link from "next/link"
+import { Metadata } from "next"
 import { Params } from "@/lib/@types/types"
 import { getSampleById } from "@/lib/services/samples"
 import { camelCaseToWords } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
+
+export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<Metadata> => {
+    return {
+        description: `Sample ${params.sampleId} information`,
+    }
+}
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const getSample = await getSampleById(parseInt(params.sampleId))

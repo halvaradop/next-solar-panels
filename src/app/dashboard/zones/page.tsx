@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { TableZones } from "@/ui/dashboard/zones/table"
 import { getUserById, getProjectsByClientId, getZonesByClientId } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
+
+export const metadata: Metadata = {
+    title: "Zones",
+    description: "List of zones",
+}
 
 const getInformation = async () => {
     const session = await auth()

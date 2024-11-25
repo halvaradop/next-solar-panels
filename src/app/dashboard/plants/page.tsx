@@ -1,7 +1,13 @@
+import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
 import { TablePlants } from "@/ui/dashboard/plants/table"
+
+export const metadata: Metadata = {
+    title: "Plants",
+    description: "List of plants",
+}
 
 const getInformation = async () => {
     const session = await auth()
