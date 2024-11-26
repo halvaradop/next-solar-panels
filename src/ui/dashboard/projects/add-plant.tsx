@@ -9,7 +9,7 @@ import { getUserById, getUsersByClientId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
-const { plantInputs } = dataJson
+const { projectInputs } = dataJson
 export const fetchCache = "force-no-store"
 
 export const AddPlant = () => {
@@ -27,7 +27,9 @@ export const AddPlant = () => {
          */
         const fetchUsers = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
             const response = await getUsersByClientId(clientId)
             setUsers(response)
         }
@@ -36,7 +38,7 @@ export const AddPlant = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <InputList inputs={plantInputs} state={state} />
+            <InputList inputs={projectInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 User
                 <SelectGeneric values={users} id="lastName" value="userId" name="user" />

@@ -5,7 +5,7 @@ import { AddClientActionState } from "@/lib/@types/types"
 import { Button, Form, InputList } from "@/ui/common/form"
 import dataJson from "@/lib/data.json"
 
-const { companyInputs } = dataJson
+const { clientInputs } = dataJson
 
 export const AddCompany = () => {
     const [state, formAction] = useFormState(addClientAction, {
@@ -16,7 +16,7 @@ export const AddCompany = () => {
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <InputList inputs={companyInputs} state={state} />
+            <InputList inputs={clientInputs} state={state} />
             <Button className="mt-6" fullWidth>
                 Add
             </Button>

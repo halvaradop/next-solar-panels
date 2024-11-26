@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getUserById, getUsersByClientId } from "@/lib/services"
-import { TableUsers } from "@/ui/dashboard/users/table"
+import { getUserById, getUserProjectsByClients } from "@/lib/services"
+import { TableProjectOnuser } from "@/ui/dashboard/projectOnUsers/table"
 
 const getInformation = async () => {
     const session = await auth()
@@ -9,20 +9,20 @@ const getInformation = async () => {
     const {
         clients: [{ clientId } = { clientId: "" }],
     } = await getUserById(userId)
-    const users = await getUsersByClientId(clientId)
-    return { users }
+    const projectsOnUser = await getUserProjectsByClients(clientId)
+    return { projectsOnUser }
 }
 
-const DashboardCompaniesPage = async () => {
-    const { users } = await getInformation()
+const DashboardProjectOnUserPage = async () => {
+    const { projectsOnUser } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
-                <TableUsers users={users} />
+                <TableProjectOnuser projectsOnUsers={projectsOnUser} />
             </Suspense>
         </section>
     )
 }
 
-export default DashboardCompaniesPage
+export default DashboardProjectOnUserPage

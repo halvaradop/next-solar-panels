@@ -7,7 +7,7 @@ import { getFetch } from "@/lib/utils"
  * @param {string} userId - The user id.
  * @returns {Promise<ProjectsOnUsers[]>} - A promise that resolves to an array of ProjectsOnUsers.
  */
-export const getUserProjectsByClients = async <T extends unknown[] = ProjectsOnUsers[]>(userId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`clients/${userId}`)
+export const getUserProjectsByClients = async <T extends unknown[] = ProjectsOnUsers[]>(clientId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`clients/${clientId}`)
     return data
 }
