@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
 import { Client, Project, Sample, ProjectsOnUsers, User, Zone, Address } from "@prisma/client"
-import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema } from "./schemas"
+import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema, AddressSchema } from "./schemas"
 import {
     AddProjectActionState,
     AddClientActionState,
@@ -243,7 +243,7 @@ export const addProjectOnUserAction = async (
 export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    const validate = ProjectSchema.safeParse(entries)
+    const validate = AddressSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/address`, {
             method: "POST",
