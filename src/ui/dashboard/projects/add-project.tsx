@@ -12,7 +12,7 @@ import dataJson from "@/lib/data.json"
 const { projectInputs } = dataJson
 export const fetchCache = "force-no-store"
 
-export const AddPlant = () => {
+export const AddProject = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
     const [state, formAction] = useFormState(addProjectAction, {

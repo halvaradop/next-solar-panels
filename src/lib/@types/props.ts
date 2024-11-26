@@ -57,8 +57,8 @@ export interface TableUsersProps {
     users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
-export interface TablePlantsProps {
-    plants: Project[]
+export interface TableProjectsProps {
+    project: Project[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {

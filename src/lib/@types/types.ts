@@ -47,9 +47,9 @@ export interface Params<T extends string> {
     searchParams: ReadonlyURLSearchParams
 }
 
-export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
+export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "projectId" | "state">>
 
-export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
+export type AddProjectActionState = ActionState<Omit<Project, "projectId" | "state">>
 
 export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
 

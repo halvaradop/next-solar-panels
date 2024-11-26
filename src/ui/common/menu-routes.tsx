@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { camelCaseToWords, merge } from "@/lib/utils"
 import { MenuRoutesProps } from "@/lib/@types/props"
+import { Project } from "../projects/project"
 
 const links = {
     samples: [
@@ -19,13 +20,13 @@ const links = {
         { href: "/dashboard/companies", label: "List" },
         { href: "/dashboard/companies/add", label: "Add" },
     ],
-    plants: [
-        { href: "/dashboard/plants", label: "List" },
-        { href: "/dashboard/plants/add", label: "Add" },
+    projects: [
+        { href: "/dashboard/projects", label: "List" },
+        { href: "/dashboard/projects/add", label: "Add" },
     ],
     userToProjects: [
-        { href: "/dashboard/userPlant", label: "List" },
-        { href: "/dashboard/userPlant/add", label: "Add" },
+        { href: "/dashboard/projectOnUsers", label: "List" },
+        { href: "/dashboard/projectOnUsers/add", label: "Add" },
     ],
 }
 

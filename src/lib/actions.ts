@@ -180,11 +180,11 @@ export const addUserAction = async (previous: AddUserActionState, formData: Form
 }
 
 /**
- * Adds a new plant to the database and checks if the action was successful.
+ * Adds a new project to the database and checks if the action was successful.
  *
- * @param {AddProjectActionState} previous - The previous state of the plant to be added.
+ * @param {AddProjectActionState} previous - The previous state of the project to be added.
  * @param {FormData} formData - The form data sent by the user.
- * @returns {Promise<AddProjectActionState>} - The state of the plant and the result of the action, redirecting to the dashboard if successful.
+ * @returns {Promise<AddProjectActionState>} - The state of the project and the result of the action, redirecting to the dashboard if successful.
  */
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()

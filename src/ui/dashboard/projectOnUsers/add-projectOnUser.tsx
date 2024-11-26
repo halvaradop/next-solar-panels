@@ -38,8 +38,8 @@ export const AddProjectOnUser = () => {
                 <SelectGeneric values={users} id="lastName" value="userId" name="user" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
-                Plant
-                <SelectGeneric values={projects} id="name" value="projectId" name="plant" />
+                Project
+                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

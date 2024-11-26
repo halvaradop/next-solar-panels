@@ -2,11 +2,11 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
-import { TablePlants } from "@/ui/dashboard/projects/table"
+import { TableProjects } from "@/ui/dashboard/projects/table"
 
 export const metadata: Metadata = {
-    title: "Plants",
-    description: "List of plants",
+    title: "Project",
+    description: "List of projects",
 }
 
 const getInformation = async () => {
@@ -15,20 +15,20 @@ const getInformation = async () => {
     const {
         clients: [{ clientId } = { clientId: "" }],
     } = await getUserById(userId)
-    const plants = await getProjectsByClientId(clientId)
-    return { plants }
+    const project = await getProjectsByClientId(clientId)
+    return { project }
 }
 
-const DashboardPlantsPage = async () => {
-    const { plants } = await getInformation()
+const DashboardProjectsPage = async () => {
+    const { project } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
-                <TablePlants plants={plants} />
+                <TableProjects project={project} />
             </Suspense>
         </section>
     )
 }
 
-export default DashboardPlantsPage
+export default DashboardProjectsPage

@@ -3,11 +3,11 @@ import { prisma } from "@/lib/prisma"
 import { Params } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve the plant data related to a specific plantId
+ * Handle the GET request to retrieve the project data related to a specific projectId
  *
  * @param {NextRequest} request - The HTTP request data containing request data
- * @param {Params<"plantId">} params - The dynamic parameter to extract the `plantId`.
- * @returns {Promise<NextResponse>} - HTTP response with the plant data.
+ * @param {Params<"projectId">} params - The dynamic parameter to extract the `projectId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the project data.
  * @example
  * ```ts
  * const response = await fetch("/api/v1/proyect/1")
