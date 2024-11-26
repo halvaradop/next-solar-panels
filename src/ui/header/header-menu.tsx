@@ -7,9 +7,6 @@ import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-m
 import { Loggin } from "./loggin"
 import { MenuRoutes } from "@/ui/common/menu-routes"
 
-/**
- * NOTE: Investigate and resolve the issue related to the className property in motion components from framer-motion.
- */
 export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProps) => {
     const session = useSession()
     const isLoggin = new RegExp("^/dashboard.*$").test(pathname) && session
@@ -23,7 +20,7 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
 
     return (
         <motion.div
-            //className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
+            className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
             animate="visible"
