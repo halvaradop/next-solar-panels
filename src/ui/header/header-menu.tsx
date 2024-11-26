@@ -54,11 +54,6 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                                     </Link>
                                 </motion.li>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#solar-panels" onClick={() => handleHashChange()}>
-                                        Solar panels
-                                    </Link>
-                                </motion.li>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
                                     <Link href="/#about-us" onClick={() => handleHashChange()}>
                                         About us
                                     </Link>
