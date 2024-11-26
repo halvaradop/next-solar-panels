@@ -11,6 +11,9 @@ export const metadata: Metadata = {
 }
 
 const DashboardCompaniesPage = async () => {
+    /**
+     * TODO: fix bug created if auth() function is not called
+     */
     const session = await auth()
     const companies = await getClients<TableCompaniesProps["companies"]>()
 

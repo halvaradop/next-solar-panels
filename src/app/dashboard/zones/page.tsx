@@ -13,21 +13,23 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const { clientId } = await getUserById(userId)
-    const [zones, plants] = await Promise.all([getZonesByClientId(clientId), getProjectsByClientId(clientId)])
-    return { zones, plants }
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
+    const [zones, projects] = await Promise.all([getZonesByClientId(clientId), getProjectsByClientId(clientId)])
+    return { zones, projects }
 }
 
 const DashboardZonesPage = async () => {
-    const { zones, plants } = await getInformation()
+    const { zones, projects } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
             <Filter
                 filters={[
                     {
-                        title: "Plants",
-                        options: plants.map(({ projectId, name }) => ({ key: name, value: projectId.toString() })),
+                        title: "Projects",
+                        options: projects.map(({ projectId, name }) => ({ key: name, value: projectId.toString() })),
                     },
                 ]}
             />

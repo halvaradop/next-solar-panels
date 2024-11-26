@@ -7,6 +7,7 @@ import { addZonesAction } from "@/lib/actions"
 import { AddZonesActionState } from "@/lib/@types/types"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
 const { zoneInputs } = dataJson
@@ -20,15 +21,16 @@ export const AddZone = () => {
     } as AddZonesActionState)
 
     useEffect(() => {
-        const fetchPlants = async () => {
+        const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
-        fetchPlants()
+        fetchProjects()
     }, [])
-
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <InputList inputs={zoneInputs} state={state} />
@@ -39,6 +41,15 @@ export const AddZone = () => {
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
+            {state.message && (
+                <div
+                    className={merge("mt-4 p-2 text-green-700 rounded bg-green-100 ", {
+                        "text-red-700 bg-red-100": !state.isSuccess,
+                    })}
+                >
+                    {state.message}
+                </div>
+            )}
         </Form>
     )
 }
