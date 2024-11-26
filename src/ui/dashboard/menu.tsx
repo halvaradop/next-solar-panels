@@ -1,31 +1,6 @@
 import Link from "next/link"
 
-const links = {
-    samples: [
-        { href: "/dashboard/samples", label: "List" },
-        { href: "/dashboard/samples/add", label: "Add" },
-    ],
-    zones: [
-        { href: "/dashboard/zones", label: "List" },
-        { href: "/dashboard/zones/add", label: "Add" },
-    ],
-    users: [
-        { href: "/dashboard/users", label: "List" },
-        { href: "/dashboard/users/add", label: "Add" },
-    ],
-    companies: [
-        { href: "/dashboard/companies", label: "List" },
-        { href: "/dashboard/companies/add", label: "Add" },
-    ],
-    plants: [
-        { href: "/dashboard/plants", label: "List" },
-        { href: "/dashboard/plants/add", label: "Add" },
-    ],
-    projectOnUser: [
-        { href: "/dashboard/projectOnUsers", label: "List" },
-        { href: "/dashboard/projectOnUsers/add", label: "Add" },
-    ],
-}
+import { MenuRoutes } from "@/ui/common/menu-routes"
 
 export const Menu = () => {
     return (
@@ -33,16 +8,7 @@ export const Menu = () => {
             <h2 className="text-lg text-neutral-800 font-medium">
                 <Link href="/dashboard">Dashboard</Link>
             </h2>
-            {Object.entries(links).map(([key, links]) => (
-                <ul className="text-neutral-500 space-y-1" key={key}>
-                    <li className="text-neutral-600 font-medium capitalize">{key}</li>
-                    {links.map(({ href, label }, key) => (
-                        <li className="ml-3" key={key}>
-                            <Link href={href}>{label}</Link>
-                        </li>
-                    ))}
-                </ul>
-            ))}
+            <MenuRoutes className="text-neutral-500" classTitle="text-neutral-600" />
         </aside>
     )
 }

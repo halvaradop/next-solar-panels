@@ -90,6 +90,12 @@ export interface InputListProps<T> {
     }[]
 }
 
+export interface MenuRoutesProps {
+    className?: string
+    classTitle?: string
+    classOption?: string
+}
+
 export type SubmitProps = ButtonProps<typeof buttonVariants> & {
     children: React.ReactNode
     pending?: string

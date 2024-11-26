@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
+
         const { country, state, city, postbox, street, number } = response
 
         const data = await prisma.address.create({
@@ -16,6 +17,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 postbox,
                 street,
                 number,
+
                 isActive: true,
             },
         })

@@ -78,6 +78,7 @@ export const UserSchema = object({
     number: string(),
     roleId: string(),
     project: string(),
+
     fax: string().regex(/^\+?[0-9]{1,4}[-.\s]?(\(?[0-9]+\)?[-.\s]?)+[0-9]+$/, {
         message: "The fax number you entered is incorrect. Please try again with the correct format (e.g., +1-800-123-4567).",
     }),
