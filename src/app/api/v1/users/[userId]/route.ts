@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
 
 /**
- * TODO: What happens if the user has multiples companies?
+ * TODO: What happens if the user has multiples client?
  *
  * Handle the GET request to retrieve a specific user information
  *
@@ -18,7 +18,7 @@ import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
  */
 
 /**
- * TODO: fix companyId
+ * TODO: fix clientId
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {

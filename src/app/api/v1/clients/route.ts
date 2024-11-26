@@ -16,17 +16,9 @@ import { ResponseAPI } from "@/lib/@types/types"
 export const GET = async (): Promise<NextResponse> => {
     try {
         const data = await prisma.client.findMany({
-            where: {
-                NOT: {
-                    phones: {
-                        some: {
-                            userId: null,
-                        },
-                    },
-                },
-            },
             include: {
                 phones: true,
+                user: true,
             },
         })
 
@@ -53,20 +45,20 @@ export const GET = async (): Promise<NextResponse> => {
 }
 
 /**
- * Handle the POST request to create a new company in the database.
+ * Handle the POST request to create a new client in the database.
  *
- * @param {NextRequest} request - The HTTP request data containing the new company information.
- * @returns {Promise<NextResponse>} - HTTP response with the newly created company or an error message.
+ * @param {NextRequest} request - The HTTP request data containing the new client information.
+ * @returns {Promise<NextResponse>} - HTTP response with the newly created client or an error message.
  * @example
  * ```ts
  * const response = await fetch("{domain}/api/v1/client", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     clientName: "Company Name",
- *     mail: "company@gmail.com",
+ *     clientName: "client Name",
+ *     mail: "client@gmail.com",
  *     phone: "1234567890",
  *     fax: "1234567890",
- *     website: "company.info",
+ *     website: "client.info",
  *     password:"savepassword",
  *   }),
  * })
@@ -75,7 +67,7 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { name, email, phones, fax, website, password } = response
+        const { name, email, number, fax, website, password, user } = response
 
         const existEmail = await prisma.client.findFirst({
             where: { email },
@@ -94,15 +86,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 email,
                 phones: {
                     create: {
-                        number: phones,
+                        number,
                     },
                 },
                 fax,
                 website,
                 password,
-            },
-            include: {
-                phones: true,
+                userId: user,
             },
         })
 

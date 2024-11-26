@@ -42,8 +42,8 @@ export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface TableCompaniesProps {
-    companies: (Omit<Client, "state"> & { phoneCompanies?: Pick<Phone, "number">[] })[]
+export interface TableClientsProps {
+    clients: (Omit<Client, "state"> & { phone?: Pick<Phone, "number">[] } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface TableProjectOnUserProps {
