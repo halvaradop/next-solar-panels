@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { UserPlants } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -26,12 +25,12 @@ export const GET = async (request: NextRequest, { params }: Params<"companyId">)
             },
         })
         */
-        return NextResponse.json<ResponseAPI<UserPlants[]>>({
+        return NextResponse.json<ResponseAPI<unknown[]>>({
             data: [],
             ok: true,
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<UserPlants[]>>(
+        return NextResponse.json<ResponseAPI<unknown[]>>(
             {
                 data: [],
                 ok: false,
