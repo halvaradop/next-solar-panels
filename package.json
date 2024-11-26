@@ -17,11 +17,13 @@
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
     "@halvaradop/ts-utility-types": "^0.13.0",
-    "@halvaradop/ui-button": "^0.3.1",
-    "@halvaradop/ui-form": "^0.1.1",
-    "@halvaradop/ui-input": "^0.2.1",
-    "@halvaradop/ui-label": "^0.1.1",
+    "@halvaradop/ui-button": "^0.3.2",
+    "@halvaradop/ui-form": "^0.1.2",
+    "@halvaradop/ui-input": "^0.2.2",
+    "@halvaradop/ui-label": "^0.1.2",
     "@prisma/client": "^5.22.0",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "dotenv-cli": "^7.4.4",
@@ -33,9 +35,7 @@
     "react-dom": "19.0.0-rc.1",
     "sharp": "^0.33.5",
     "tw-merge": "0.0.1-alpha.3",
-    "zod": "^3.23.8",
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -15,17 +15,17 @@ importers:
         specifier: ^0.13.0
         version: 0.13.0
       '@halvaradop/ui-button':
-        specifier: ^0.3.1
-        version: 0.3.1
+        specifier: ^0.3.2
+        version: 0.3.2
       '@halvaradop/ui-form':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.2
+        version: 0.1.2
       '@halvaradop/ui-input':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.2
+        version: 0.2.2
       '@halvaradop/ui-label':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.1.2
+        version: 0.1.2
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
@@ -160,20 +160,20 @@ packages:
   '@halvaradop/ts-utility-types@0.13.0':
     resolution: {integrity: sha512-wV1FNFKOHxECCMJ09K9jQaO2grdzol8PSkimpye2vUROJqYUg7MTQVKSi+7/XLlWMRzUB7xvmb9Lw3iHkkqf8w==}
 
-  '@halvaradop/ui-button@0.3.1':
-    resolution: {integrity: sha512-Xm3VaomefyZyiBDfdiYTliyfKW4ivIue0PaYtez5/27ZX8/vFGjIUvnTs9JR2IRmBwKs4b5BDiPAub0l8Qr0pg==}
+  '@halvaradop/ui-button@0.3.2':
+    resolution: {integrity: sha512-2nuN1caZ/OYTLIswhoc1De1uLJDUtQndTFMVvN5phf/yDf+SIj1qMYbHiWVyB0peb1G99phq/z574RmcWIlxXA==}
 
-  '@halvaradop/ui-core@0.2.0':
-    resolution: {integrity: sha512-v677p9fPHsgy46QTvbNZJKrlpNhRJIikV1pa/m7CnoOYULbKRSk6ODOYP5xIrU61N4PXSdlR1VQeZRPWzuJJLg==}
+  '@halvaradop/ui-core@0.2.1':
+    resolution: {integrity: sha512-AblOzPb7d7K0+iEQPf6Ti1yF4dY2XGP/03ZAQQNHOkUZlZD4IYdSQ1/U5z5ffJKiKPBGLXNiE4nPRUhYVD4QPw==}
 
-  '@halvaradop/ui-form@0.1.1':
-    resolution: {integrity: sha512-+NGwteHlY3LtWZBXIUKOhLKKC8sp2iD1FZwv3CfNjdZP+ksQB9lIy8QBZbrguArUCMdOjYqI0tVVeeUXbSH8Tw==}
+  '@halvaradop/ui-form@0.1.2':
+    resolution: {integrity: sha512-yLnn2icfc+wpugrDfrr1RNT+u6bgKpQQAsbN5SXiM+XKpWrMZG805b63CzTEnwk3vf6hyc5lEzI9Sjb/4SAszQ==}
 
-  '@halvaradop/ui-input@0.2.1':
-    resolution: {integrity: sha512-FMBuJdzJ8dX+KVq2qUoQ7ZIETnbJUCNzZ/zoZvFqJbG6kVp2FPOZL6gHuH5uwy6K9H7/VCbmi/cHzqu/onNpxQ==}
+  '@halvaradop/ui-input@0.2.2':
+    resolution: {integrity: sha512-vyRoxgCQzYGIxuyvv3Vt5QfNOkGZrAz6mvbAFyBCZBeH91aZj5BRNuo5TY36GVbKnK2esfJixeIsAMYFqzp1JA==}
 
-  '@halvaradop/ui-label@0.1.1':
-    resolution: {integrity: sha512-RhBBuN1jgYI/9M/cRqrkb7lRUcJ1SIuHKDyL2v9v7H0dzmRoRUxzEXfzgszbOVRoflj1wEWNZOwUV0Ce7S4EEQ==}
+  '@halvaradop/ui-label@0.1.2':
+    resolution: {integrity: sha512-CjgEudXZvlrDVYm+qJYjJ/dvPgqeSeIe+nbQPIb3O9EoARM4CVzgmJ7xN4JR8NhEm/iIc9oFnxDE3bhMXzLX4g==}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -849,8 +849,8 @@ packages:
   es-shim-unscopables@1.0.2:
     resolution: {integrity: sha512-J3yBRXCzDu4ULnQwxyToo/OjdMx6akgVC7K6few0a7F/0wLtmKKN7I73AH5T2836UuXRqN7Qg+IIUw/+YJksRw==}
 
-  es-to-primitive@1.2.1:
-    resolution: {integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==}
+  es-to-primitive@1.3.0:
+    resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
     engines: {node: '>= 0.4'}
 
   escape-string-regexp@4.0.0:
@@ -2038,30 +2038,30 @@ snapshots:
 
   '@halvaradop/ts-utility-types@0.13.0': {}
 
-  '@halvaradop/ui-button@0.3.1':
+  '@halvaradop/ui-button@0.3.2':
     dependencies:
       '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.0
+      '@halvaradop/ui-core': 0.2.1
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-core@0.2.0': {}
+  '@halvaradop/ui-core@0.2.1': {}
 
-  '@halvaradop/ui-form@0.1.1':
+  '@halvaradop/ui-form@0.1.2':
     dependencies:
       '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.0
+      '@halvaradop/ui-core': 0.2.1
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-input@0.2.1':
+  '@halvaradop/ui-input@0.2.2':
     dependencies:
       '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.0
+      '@halvaradop/ui-core': 0.2.1
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-label@0.1.1':
+  '@halvaradop/ui-label@0.1.2':
     dependencies:
       '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.0
+      '@halvaradop/ui-core': 0.2.1
       class-variance-authority: 0.7.0
 
   '@humanwhocodes/config-array@0.13.0':
@@ -2695,7 +2695,7 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.0.0
       es-set-tostringtag: 2.0.3
-      es-to-primitive: 1.2.1
+      es-to-primitive: 1.3.0
       function.prototype.name: 1.1.6
       get-intrinsic: 1.2.4
       get-symbol-description: 1.0.2
@@ -2769,7 +2769,7 @@ snapshots:
     dependencies:
       hasown: 2.0.2
 
-  es-to-primitive@1.2.1:
+  es-to-primitive@1.3.0:
     dependencies:
       is-callable: 1.2.7
       is-date-object: 1.0.5
