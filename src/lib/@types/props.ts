@@ -90,7 +90,6 @@ export interface InputListProps<T> {
     }[]
 }
 
-
 export interface MenuRoutesProps {
     className?: string
     classTitle?: string

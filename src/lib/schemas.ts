@@ -85,7 +85,6 @@ export const UserSchema = object({
     website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
-
 })
 
 export const ProjectSchema = object({
