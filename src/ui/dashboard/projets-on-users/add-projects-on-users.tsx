@@ -6,7 +6,7 @@ import { Project, User } from "@prisma/client"
 import { addProjectOnUserAction } from "@/lib/actions"
 import { AddProjectOnUserActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByClientId, getProjectsByClientId } from "@/lib/services"
-import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
+import { Button, Form, Label, SelectGeneric } from "@/ui/common/form-elements"
 
 export const AddProjectOnUser = () => {
     const { data: session } = useSession()

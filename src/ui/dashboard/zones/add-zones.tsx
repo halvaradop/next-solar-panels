@@ -6,7 +6,7 @@ import { Project } from "@prisma/client"
 import { addZonesAction } from "@/lib/actions"
 import { AddZonesActionState } from "@/lib/@types/types"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 

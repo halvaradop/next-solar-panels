@@ -6,6 +6,10 @@ import { ProductList } from "@/ui/products/product-list"
 import clouds from "@/public/clouds.jpg"
 import arrowIcon from "@/public/arrow.svg"
 
+/**
+ * Note: Ensure that the components imported from @halvaradop/ui-* packages
+ * are correctly installed and configured to avoid build errors.
+ */
 const Index = () => {
     return (
         <section className="w-11/12 mx-auto lg:w-10/12 xl:max-w-screen-xl">

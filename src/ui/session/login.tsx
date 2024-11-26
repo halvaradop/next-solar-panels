@@ -7,6 +7,10 @@ import { Button } from "@halvaradop/ui-button"
 import { merge } from "@/lib/utils"
 import { loginAction } from "@/lib/actions"
 
+/**
+ * Note: Ensure that the components imported from @halvaradop/ui-* packages
+ * are correctly installed and configured to avoid build errors.
+ */
 export const Login = () => {
     const [state, formAction] = useFormState(loginAction, {
         message: "",

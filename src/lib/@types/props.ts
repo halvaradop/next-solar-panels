@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
 import { ActionState, Entry, MenuState } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
+import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 
 export interface ProductProps {
     className?: string
@@ -99,4 +100,8 @@ export interface MenuRoutesProps {
 export type SubmitProps = ButtonProps<typeof buttonVariants> & {
     children: React.ReactNode
     pending?: string
+}
+
+export type FormProps = FormVariantProps<typeof formVariants> & {
+    action: NonNullable<HTMLProps<HTMLFormElement>["action"]>
 }
