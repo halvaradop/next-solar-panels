@@ -54,7 +54,7 @@ export interface TableUsersProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
@@ -88,6 +88,12 @@ export interface InputListProps<T> {
         name: string
         type: string
     }[]
+}
+
+export interface MenuRoutesProps {
+    className?: string
+    classTitle?: string
+    classOption?: string
 }
 
 export type SubmitProps = ButtonProps<typeof buttonVariants> & {

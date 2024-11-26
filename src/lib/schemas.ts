@@ -104,3 +104,12 @@ export const ProjectOnUserSchema = object({
     plant: string(),
     user: string(),
 })
+
+export const AddressSchema = object({
+    country: string(),
+    state: string(),
+    city: string(),
+    postbox: string(),
+    street: string(),
+    number: string(),
+})

@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { Suspense } from "react"
 import { getClients } from "@/lib/services"
 import { TableCompanies } from "@/ui/dashboard/companies/table"
 import { TableCompaniesProps } from "@/lib/@types/props"
 import { auth } from "@/lib/auth"
+
+export const metadata: Metadata = {
+    title: "Companies",
+    description: "List of companies",
+}
 
 const DashboardCompaniesPage = async () => {
     /**

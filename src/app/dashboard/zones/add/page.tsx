@@ -1,6 +1,12 @@
+import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import { AddZone } from "@/ui/dashboard/zones/add-zones"
 import { SessionProvider } from "next-auth/react"
+
+export const metadata: Metadata = {
+    title: "Add Zone",
+    description: "Add a new zone",
+}
 
 const AddZonePage = async () => {
     const session = await auth()
