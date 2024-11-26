@@ -7,13 +7,15 @@ import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
 
 export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<Metadata> => {
+    const slug = (await params).sampleId
     return {
-        description: `Sample ${params.sampleId} information`,
+        description: `Sample ${slug} information`,
     }
 }
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
-    const getSample = await getSampleById(params.sampleId)
+    const slug = (await params).sampleId
+    const getSample = await getSampleById(slug)
     const {
         zoneId,
         sampleId,

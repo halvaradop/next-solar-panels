@@ -20,7 +20,7 @@ import { sampleCalcs } from "@/lib/utils"
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
-        const userId = params.userId
+        const userId = (await params).userId
         const data = await prisma.sample.findMany({
             where: {
                 userId,

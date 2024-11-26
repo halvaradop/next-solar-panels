@@ -6,7 +6,7 @@ import { Zone } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
 import { getZonesByClientId, getUserById } from "@/lib/services"
-import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form"
+import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
 

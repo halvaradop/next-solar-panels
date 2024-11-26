@@ -6,7 +6,7 @@ import { User } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByClientId } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 
 const { projectInputs } = dataJson

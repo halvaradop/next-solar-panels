@@ -22,7 +22,7 @@ import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {
-        const userId = params.userId
+        const userId = (await params).userId
         const data = await prisma.user.findUnique({
             where: {
                 userId,

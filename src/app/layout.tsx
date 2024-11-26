@@ -1,8 +1,6 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
 import { Poppins } from "next/font/google"
 import { LayoutProps } from "@/lib/@types/types"
-import { Header } from "@/ui/header/header"
 import { Footer } from "@/ui/footer"
 import "@/ui/globals.css"
 
@@ -44,9 +42,6 @@ export default function RootLayout({ children }: LayoutProps) {
             <body
                 className={`${poppins.className} antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
-                <Suspense fallback={<p>Loading...</p>}>
-                    <Header />
-                </Suspense>
                 {children}
                 <Footer />
             </body>

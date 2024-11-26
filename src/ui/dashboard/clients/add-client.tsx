@@ -2,7 +2,7 @@
 import { addClientAction } from "@/lib/actions"
 import { useFormState } from "react-dom"
 import { AddClientActionState } from "@/lib/@types/types"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 import { useEffect, useState } from "react"
 import { getUserById, getUsersByClientId } from "@/lib/services"

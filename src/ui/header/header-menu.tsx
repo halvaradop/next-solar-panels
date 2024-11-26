@@ -19,7 +19,7 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
     }
 
     return (
-        <motion.aside
+        <motion.div
             className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
@@ -38,29 +38,35 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                             </aside>
                         ) : (
                             <>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/">Home</Link>
-                                </motion.li>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#corrosion" onClick={() => handleHashChange()}>
-                                        Corrosion
-                                    </Link>
-                                </motion.li>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/#about-us" onClick={() => handleHashChange()}>
-                                        About us
-                                    </Link>
-                                </motion.li>
+                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
+                                    <motion.div variants={headerMenuListVariants}>
+                                        <Link href="/">Home</Link>
+                                    </motion.div>
+                                </li>
+                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
+                                    <motion.div variants={headerMenuListVariants}>
+                                        <Link href="/#corrosion" onClick={() => handleHashChange()}>
+                                            Corrosion
+                                        </Link>
+                                    </motion.div>
+                                </li>
+                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
+                                    <motion.div variants={headerMenuListVariants}>
+                                        <Link href="/#about-us" onClick={() => handleHashChange()}>
+                                            About us
+                                        </Link>
+                                    </motion.div>
+                                </li>
                             </>
                         )}
-                        <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                        <li className="[--nav-li:100%] base:[--nav-li:0%]">
                             <Button className="px-8" asChild>
                                 <Link href={isLoggin ? "/" : "/dashboard"}>{isLoggin ? "Log out" : "Login"}</Link>
                             </Button>
-                        </motion.li>
+                        </li>
                     </ul>
                 )}
             </div>
-        </motion.aside>
+        </motion.div>
     )
 }
