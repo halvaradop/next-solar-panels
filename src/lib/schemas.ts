@@ -78,12 +78,14 @@ export const UserSchema = object({
     number: string(),
     roleId: string(),
     project: string(),
+
     fax: string().regex(/^\+?[0-9]{1,4}[-.\s]?(\(?[0-9]+\)?[-.\s]?)+[0-9]+$/, {
         message: "The fax number you entered is incorrect. Please try again with the correct format (e.g., +1-800-123-4567).",
     }),
     website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
+
 })
 
 export const ProjectSchema = object({

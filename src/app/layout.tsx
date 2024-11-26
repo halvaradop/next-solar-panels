@@ -40,9 +40,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps) {
     return (
-        <html className="scroll-smooth" lang="en">
+        <html className="relative scroll-smooth" lang="en">
             <body
-                className={`${poppins.className} relative antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
+                className={`${poppins.className} antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
                 <Suspense fallback={<p>Loading...</p>}>
                     <Header />
