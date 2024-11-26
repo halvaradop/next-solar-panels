@@ -13,3 +13,8 @@ export const getZones = async <T extends unknown[] = Zone[]>(): Promise<T> => {
     const { data } = await getFetch<T>(`zones`)
     return data
 }
+
+export const getZoneById = async (zoneId: string) => {
+    const { data } = await getFetch<Zone>(`zones/${zoneId}`)
+    return data
+}

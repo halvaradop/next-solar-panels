@@ -1,12 +1,14 @@
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
-import { TablePlants } from "@/ui/dashboard/plants/table"
+import { TablePlants } from "@/ui/dashboard/projects/table"
 
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const { clientId } = await getUserById(userId)
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
     const plants = await getProjectsByClientId(clientId)
     return { plants }
 }

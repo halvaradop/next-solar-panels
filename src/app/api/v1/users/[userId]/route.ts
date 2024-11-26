@@ -48,6 +48,7 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 },
             },
         })
+
         if (!data) {
             return NextResponse.json<ResponseAPI<UserSession>>(
                 {
@@ -58,9 +59,17 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
                 { status: 404 }
             )
         }
+
         const { projectsOnUsers, ...spread } = data
+        const clients = projectsOnUsers
+            .filter((project) => project.project.clients?.clientId)
+            .flatMap((project) => ({ clientId: project.project.clients?.clientId }))
+
         return NextResponse.json<ResponseAPI<UserSession>>({
-            data: {} as UserSession,
+            data: {
+                ...spread,
+                clients,
+            } as UserSession,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
