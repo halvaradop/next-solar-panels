@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Add a new address",
 }
 
-const AddAdrressPage = async () => {
+const AddAddressPage = async () => {
     const session = await auth()
 
     return (
@@ -18,4 +18,4 @@ const AddAdrressPage = async () => {
     )
 }
 
-export default AddAdrressPage
+export default AddAddressPage
