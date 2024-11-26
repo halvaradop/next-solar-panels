@@ -35,7 +35,7 @@ export const AddZone = () => {
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <InputList inputs={zoneInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                Plant
+                Project
                 <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>

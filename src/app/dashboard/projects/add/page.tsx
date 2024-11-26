@@ -1,20 +1,20 @@
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import { SessionProvider } from "next-auth/react"
-import { AddPlant } from "@/ui/dashboard/projects/add-plant"
+import { AddProject } from "@/ui/dashboard/projects/add-project"
 
 export const metadata: Metadata = {
-    title: "Add Plant",
-    description: "Add a new plant",
+    title: "Add Project",
+    description: "Add a new project",
 }
 
-const AddPlantPage = async () => {
+const AddProjectPage = async () => {
     const session = await auth()
     return (
         <SessionProvider session={session}>
-            <AddPlant />
+            <AddProject />
         </SessionProvider>
     )
 }
 
-export default AddPlantPage
+export default AddProjectPage

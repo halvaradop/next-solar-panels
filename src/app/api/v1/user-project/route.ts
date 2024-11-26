@@ -4,17 +4,17 @@ import { ProjectsOnUsers } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the POST request to assign a plant to a user
+ * Handle the POST request to assign a project to a user
  *
- * @param {NextRequest} request - The HTTP request data containing the user and plant id
- * @returns {Promise<NextResponse>} - HTTP response containing the created userPlant
+ * @param {NextRequest} request - The HTTP request data containing the user and project id
+ * @returns {Promise<NextResponse>} - HTTP response containing the created projectOnUser
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { user, plant } = response
+        const { user, project } = response
         const userId = user
-        const projectId = plant
+        const projectId = project
         const existUser = await prisma.projectsOnUsers.findFirst({
             where: {
                 projectId,
@@ -26,7 +26,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "This user is assigned to this plant",
+                message: "This user is assigned to this project",
             })
         }
         const data = await prisma.projectsOnUsers.create({
@@ -45,7 +45,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed to create the plant to user",
+            message: "Failed to create the project to user",
         })
     }
 }

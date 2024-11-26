@@ -4,13 +4,13 @@ import { Project } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handles the GET request to retrieve all plants from the database.
+ * Handles the GET request to retrieve all projects from the database.
  *
- * @returns {Promise<NextResponse>} - The HTTP response containing the plants
+ * @returns {Promise<NextResponse>} - The HTTP response containing the projects
  * retrieved from the database.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/plants")
+ * const response = await fetch("/api/v1/projects")
  * const data = await response.json()
  * ```
  */
@@ -35,16 +35,16 @@ export const GET = async (): Promise<NextResponse> => {
 }
 
 /**
- * Handle the POST request to create a new plant related to a specific user
+ * Handle the POST request to create a new projects related to a specific user
  *
- * @param {NextRequest} request - The HTTP request data received with the new plant information.
- * @returns {Promise<NextResponse>} - HTTP response with the new plant created.
+ * @param {NextRequest} request - The HTTP request data received with the new project information.
+ * @returns {Promise<NextResponse>} - HTTP response with the new project created.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users/{userId}/plants", {
+ * const response = await fetch("/api/v1/users/{userId}/projects", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     plantName: "Plant Name",
+ *     projectName: "Project Name",
  *     latitude: 1,
  *     longitude: 1,
  *   }),

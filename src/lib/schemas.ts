@@ -106,7 +106,7 @@ export const ZoneSchema = object({
 })
 
 export const ProjectOnUserSchema = object({
-    plant: string(),
+    project: string(),
     user: string(),
 })
 

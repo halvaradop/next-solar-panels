@@ -4,14 +4,14 @@ import { Project } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all plants related to a specific company
+ * Handle the GET request to retrieve all projects related to a specific company
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"clientId">} params - The dynamic parameter to extract the `companyId`.
- * @returns {Promise<NextResponse>} - HTTP response with the plants related to the user.
+ * @returns {Promise<NextResponse>} - HTTP response with the projects related to the user.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/companies/{companyId}/plants")
+ * const response = await fetch("/api/v1/companies/{companyId}/projects")
  * const data = await response.json()
  * ```
  */

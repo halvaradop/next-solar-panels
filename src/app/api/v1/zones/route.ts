@@ -34,7 +34,7 @@ export const GET = async (): Promise<NextResponse> => {
 }
 
 /**
- * Handle the POST request to create a new zone associated with a specific plant in the database.
+ * Handle the POST request to create a new zone associated with a specific project in the database.
  *
  * @param {NextRequest} request - The HTTP request containing the information of the new zone.
  * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
@@ -46,7 +46,7 @@ export const GET = async (): Promise<NextResponse> => {
  *     latitude: 40.7128,
  *     longitude: -74.0060,
  *     name: "New Zone",
- *     plant: "1"
+ *     project: "1"
  *   })
  * })
  * const data = await response.json()

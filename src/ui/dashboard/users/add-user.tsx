@@ -22,7 +22,7 @@ export const AddUser = () => {
     })
 
     useEffect(() => {
-        const fetchPlants = async () => {
+        const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const {
                 clients: [{ clientId } = { clientId: "" }],
@@ -30,7 +30,7 @@ export const AddUser = () => {
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
-        fetchPlants()
+        fetchProjects()
     }, [])
 
     useEffect(() => {

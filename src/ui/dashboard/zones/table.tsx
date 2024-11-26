@@ -6,8 +6,8 @@ export const TableZones = ({ zones }: TableZonesProps) => {
     const params = useSearchParams()
 
     const filteredZones = zones.filter(({ projectId }) => {
-        const plant = params.get("plant")
-        return plant ? plant === projectId.toString() : true
+        const project = params.get("project")
+        return project ? project === projectId.toString() : true
     })
 
     return (
