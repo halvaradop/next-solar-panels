@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
+import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
 import { ActionState, Entry, MenuState } from "./types"
+import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 
 export interface ProductProps {
     className?: string
@@ -34,7 +35,7 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Sample[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
@@ -45,20 +46,15 @@ export interface TableCompaniesProps {
     companies: (Omit<Client, "state"> & { phoneCompanies?: Pick<Phone, "number">[] })[]
 }
 
-export interface TableUserPlantsProps {
-    userPlants: {
-        userId: number
-        plantId: number
-        plant?: Project
-        user?: Pick<User, "firstName" | "lastName">
-    }[]
+export interface TableProjectOnUserProps {
+    projectsOnUsers: (ProjectsOnUsers & { project?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface TableUsersProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
@@ -82,7 +78,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zone & { plant?: Pick<Project, "name"> })[]
+    zones: (Zone & { project?: Pick<Project, "name"> })[]
 }
 
 export interface InputListProps<T> {
@@ -98,4 +94,9 @@ export interface MenuRoutesProps {
     className?: string
     classTitle?: string
     classOption?: string
+}
+
+export type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
 }

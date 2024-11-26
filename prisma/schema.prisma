@@ -108,7 +108,7 @@ model Project {
   addressId       Int?
   address         Address?          @relation(fields: [addressId], references: [addressId])
   projectsOnUsers ProjectsOnUsers[]
-  zones            Zone[]
+  zones           Zone[]
 }
 
 model ProjectsOnUsers {
@@ -132,25 +132,25 @@ model Zone {
 }
 
 model Sample {
-  sampleId                  Int      @id @default(autoincrement())
+  sampleId                  String   @id @default(uuid())
   date                      DateTime @default(now()) @updatedAt
-  soilTime                  Decimal  @db.Decimal(5, 2)
-  soilResistivity           Decimal  @db.Decimal(10, 2)
-  moistureContent           Decimal  @db.Decimal(5, 2)
-  pHValue                   Decimal  @db.Decimal(4, 2)
-  bufferCapacityPH4_3       Decimal  @db.Decimal(5, 2)
-  bufferCapacityPH7_0       Decimal  @db.Decimal(5, 2)
-  sulfurReducingBacteria    Decimal  @db.Decimal(5, 2)
-  sulfateContent            Decimal  @db.Decimal(5, 2)
-  neutralSalts              Decimal  @db.Decimal(5, 2)
-  undergroundWaterPresence  String   @db.VarChar(50)
-  horizontalSoilHomogeneity Decimal  @db.Decimal(5, 2)
-  verticalSoilHomogeneity   Decimal  @db.Decimal(5, 2)
-  soilTypeHomogeneity       String   @db.VarChar(50)
-  pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
-  externalCathodes          Decimal  @db.Decimal(5, 2)
-  b0                        String
-  b1                        String
+  soilType                  Int
+  soilResistivity           Int
+  moistureContent           Int
+  pHValue                   Int
+  bufferCapacityPH4_3       Int
+  bufferCapacityPH7_0       Int
+  sulfurReducingBacteria    Int
+  sulfateContent            Int
+  neutralSalts              Int
+  undergroundWaterPresence  Int
+  horizontalSoilHomogeneity Int
+  verticalSoilHomogeneity   Int
+  soilTypeHomogeneity       Int
+  pHSoilHomogeneity         Int
+  externalCathodes          Int
+  b0                        Int
+  b1                        Int
   userId                    String
   user                      User     @relation(fields: [userId], references: [userId])
   zoneId                    String
@@ -159,6 +159,7 @@ model Sample {
 
 enum State {
   ACTIVE
+  INACTIVE
   DELETED
 }
 

@@ -13,9 +13,11 @@ export const metadata: Metadata = {
 const DashboardPage = async () => {
     const session = await auth()
     const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-    const { clientId } = await getUserById(userId)
-    const samples = await getSamplesByUser(clientId)
-    const zones = await getZonesByClientId(userId.toString())
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
+    const samples = await getSamplesByUser(userId)
+    const zones = await getZonesByClientId(clientId)
 
     return (
         <section className="mt-4 self-start">

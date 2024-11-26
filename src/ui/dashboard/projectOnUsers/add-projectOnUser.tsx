@@ -8,7 +8,7 @@ import { AddProjectOnUserActionState } from "@/lib/@types/types"
 import { getUserById, getUsersByClientId, getProjectsByClientId } from "@/lib/services"
 import { Button, Form, Label, SelectGeneric } from "@/ui/common/form"
 
-export const AddUserPlant = () => {
+export const AddProjectOnUser = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
     const [projects, setProjects] = useState<Project[]>([])
@@ -21,7 +21,9 @@ export const AddUserPlant = () => {
     useEffect(() => {
         const getData = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
             const [users, projects] = await Promise.all([getUsersByClientId(clientId), getProjectsByClientId(clientId)])
             setUsers(users)
             setProjects(projects)
