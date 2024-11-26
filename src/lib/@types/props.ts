@@ -54,7 +54,7 @@ export interface TableUsersProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
