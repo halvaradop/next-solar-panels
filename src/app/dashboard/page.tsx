@@ -46,17 +46,25 @@ const DashboardPage = async () => {
         <section className="mt-4 self-start">
             <h1 className="text-2xl font-bold text-center">Dashboard</h1>
             <div className="mt-4 mb-6 grid grid-cols-2 gap-4">
-                <figure className="p-3 flex items-center justify-center flex-col gap-y-2 border border-gray-200 rounded-lg bg-white hover:shadow-lg transition-shadow duration-300">
-                    <Link href="https://github.com/halvaradop/next-solar-panels" target="_blank">
+                <figure className="p-3 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow duration-300">
+                    <Link
+                        className="flex items-center justify-center flex-col gap-y-2"
+                        href="https://github.com/halvaradop/next-solar-panels"
+                        target="_blank"
+                    >
                         <Image width={48} src={github} alt="GitHub icon" />
+                        <figcaption className="text-center text-sm font-medium">GitHub Repository</figcaption>
                     </Link>
-                    <figcaption className="text-center text-sm font-medium">GitHub Repository</figcaption>
                 </figure>
-                <figure className="p-3 flex items-center justify-center flex-col gap-y-2 border border-gray-200 rounded-lg bg-white hover:shadow-lg transition-shadow duration-300">
-                    <Link href="http://87.106.32.7/" target="_blank">
+                <figure className="p-3 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow duration-300">
+                    <Link
+                        className="flex items-center justify-center flex-col gap-y-2"
+                        href="http://87.106.32.7/"
+                        target="_blank"
+                    >
                         <Image width={48} src={web} alt="Website icon" />
+                        <figcaption className="text-center text-sm font-medium">Website</figcaption>
                     </Link>
-                    <figcaption className="text-center text-sm font-medium">Website</figcaption>
                 </figure>
             </div>
             <div className="flex items-center gap-x-4">

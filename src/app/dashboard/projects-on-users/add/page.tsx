@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth"
-import { AddProjectOnUser } from "@/ui/dashboard/projectOnUsers/add-projectOnUser"
+import { AddProjectOnUser } from "@/ui/dashboard/projets-on-users/add-projects-on-users"
 import { SessionProvider } from "next-auth/react"
 
 const AddProjectsOnUsersPage = async () => {

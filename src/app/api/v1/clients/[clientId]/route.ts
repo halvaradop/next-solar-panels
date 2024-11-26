@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { ProjectsOnUsers } from "@prisma/client"
+import { Project, ProjectsOnUsers, User } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -12,7 +12,7 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  * @param {Params<"companyId">} param1 -
  * @returns {Promise<NextResponse>} -
  * ```ts
- * const response = await fetch("/api/v1/clients/{clientId}/users")
+ * const response = await fetch("/api/v1/clients/{clientId}")
  * const data = await response.json()
  * ```
  */
@@ -25,13 +25,13 @@ export const GET = async (request: NextRequest, { params }: Params<"clientId">):
                     clientsId,
                 },
             },
-            include: {
+            select: {
                 user: true,
                 project: true,
             },
         })
-        return NextResponse.json<ResponseAPI<ProjectsOnUsers[]>>({
-            data,
+        return NextResponse.json<ResponseAPI<(User & Project)[]>>({
+            data: data as never,
             ok: true,
         })
     } catch (error) {

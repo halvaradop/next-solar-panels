@@ -12,8 +12,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@halvaradop/ts-utility-types':
-        specifier: ^0.11.1
-        version: 0.11.1
+        specifier: ^0.13.0
+        version: 0.13.0
       '@halvaradop/ui-button':
         specifier: ^0.3.1
         version: 0.3.1
@@ -156,6 +156,9 @@ packages:
 
   '@halvaradop/ts-utility-types@0.11.1':
     resolution: {integrity: sha512-7t86TIg5cKxPweNMR6olMtZkeTJ6uoXN+hjTu+A9t1nvWh5bS0LtWO3yjOZ1hobjcgH+uy6gM7ApoIkpx/6BeA==}
+
+  '@halvaradop/ts-utility-types@0.13.0':
+    resolution: {integrity: sha512-wV1FNFKOHxECCMJ09K9jQaO2grdzol8PSkimpye2vUROJqYUg7MTQVKSi+7/XLlWMRzUB7xvmb9Lw3iHkkqf8w==}
 
   '@halvaradop/ui-button@0.3.1':
     resolution: {integrity: sha512-Xm3VaomefyZyiBDfdiYTliyfKW4ivIue0PaYtez5/27ZX8/vFGjIUvnTs9JR2IRmBwKs4b5BDiPAub0l8Qr0pg==}
@@ -2045,6 +2048,8 @@ snapshots:
   '@halvaradop/tailwindcss-utilities@0.2.3': {}
 
   '@halvaradop/ts-utility-types@0.11.1': {}
+
+  '@halvaradop/ts-utility-types@0.13.0': {}
 
   '@halvaradop/ui-button@0.3.1':
     dependencies:
