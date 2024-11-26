@@ -2,7 +2,7 @@
   "sampleInputs": [
     {
       "label": "Soil type",
-      "name": "soilTime",
+      "name": "soilType",
       "unit": "%"
     },
     {
@@ -52,27 +52,55 @@
       "values": [
         {
           "key": "never",
-          "value": "never"
+          "value": 0
         },
         {
           "key": "constant",
-          "value": "constant"
+          "value": -1
         },
         {
           "key": "intermittent",
-          "value": "intermittent"
+          "value": -2
         }
       ]
     },
     {
       "label": "Horizontal soild homogeneity based on soild resistivity",
       "name": "horizontalSoilHomogeneity",
-      "unit": ""
+      "unit": "",
+      "values": [
+        {
+          "key": "< 2",
+          "value": 0
+        },
+        {
+          "key": "2 - 3",
+          "value": -2
+        },
+        {
+          "key": "> 3",
+          "value": -4
+        }
+      ]
     },
     {
       "label": "Vertical soild homogeneity",
       "name": "verticalSoilHomogeneity",
-      "unit": ""
+      "unit": "",
+      "values": [
+        {
+          "key": "< 2",
+          "value": 0
+        },
+        {
+          "key": "2 - 3",
+          "value": -1
+        },
+        {
+          "key": "> 3",
+          "value": -2
+        }
+      ]
     },
     {
       "label": "Soil homogeneity",
@@ -81,18 +109,28 @@
       "values": [
         {
           "key": "homogeneous",
-          "value": "homogeneous"
+          "value": 0
         },
         {
           "key": "heterogeneous",
-          "value": "heterogeneous"
+          "value": -6
         }
       ]
     },
     {
       "label": "Soil homogeneity / different pH values",
       "name": "pHSoilHomogeneity",
-      "unit": ""
+      "unit": "",
+      "values": [
+        {
+          "key": "< 1.5",
+          "value": 0
+        },
+        {
+          "key": ">= 1.5",
+          "value": 0
+        }
+      ]
     },
     {
       "label": "Presence of foreign cathodes",
@@ -122,9 +160,19 @@
       "type": "password"
     },
     {
+      "label": "FAX",
+      "name": "fax",
+      "type": "text"
+    },
+    {
+      "label": "Web Sitie",
+      "name": "website",
+      "type": "text"
+    },
+    {
       "label": "Phone",
-      "name": "phone",
-      "type": "number"
+      "name": "number",
+      "type": "string"
     }
   ],
   "zoneInputs": [
@@ -142,17 +190,12 @@
       "label": "Longitude",
       "name": "longitude",
       "type": "number"
-    },
-    {
-      "label": "Radius",
-      "name": "radius",
-      "type": "number"
     }
   ],
-  "companyInputs": [
+  "clientInputs": [
     {
       "label": "Name",
-      "name": "companyName",
+      "name": "name",
       "type": "text"
     },
     {
@@ -161,15 +204,30 @@
       "type": "email"
     },
     {
+      "label": "Password",
+      "name": "password",
+      "type": "password"
+    },
+    {
+      "label": "Fax",
+      "name": "fax",
+      "type": "text"
+    },
+    {
+      "label": "Web Sitie",
+      "name": "website",
+      "type": "text"
+    },
+    {
       "label": "Phone",
-      "name": "phone",
+      "name": "number",
       "type": "number"
     }
   ],
-  "plantInputs": [
+  "projectInputs": [
     {
-      "label": "Plant name",
-      "name": "plantName",
+      "label": "Project name",
+      "name": "name",
       "type": "text"
     },
     {

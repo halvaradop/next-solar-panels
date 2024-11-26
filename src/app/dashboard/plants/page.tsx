@@ -1,13 +1,21 @@
+import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getPlantsByCompanyId, getUserById } from "@/lib/services"
-import { TablePlants } from "@/ui/dashboard/plants/table"
+import { getProjectsByClientId, getUserById } from "@/lib/services"
+import { TablePlants } from "@/ui/dashboard/projects/table"
+
+export const metadata: Metadata = {
+    title: "Plants",
+    description: "List of plants",
+}
 
 const getInformation = async () => {
     const session = await auth()
-    const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-    const { companyId } = await getUserById(userId)
-    const plants = await getPlantsByCompanyId(companyId)
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
+    const plants = await getProjectsByClientId(clientId)
     return { plants }
 }
 

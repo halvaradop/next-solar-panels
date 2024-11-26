@@ -7,137 +7,159 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Roles {
-  roleId           Int                @id @default(autoincrement())
-  roleName         String             @db.VarChar(50)
-  state            State              @default(ACTIVE)
-  Users            Users[]
-  RolesPermissions RolesPermissions[]
+model Role {
+  roleId           Int               @id @default(autoincrement())
+  roleName         String            @db.VarChar(50)
+  state            State             @default(ACTIVE)
+  users            User[]
+  rolesPermissions RolesPermission[]
 }
 
-model Users {
-  userId     Int          @id @default(autoincrement())
-  firstName  String       @db.VarChar(50)
-  lastName   String       @db.VarChar(50)
-  email      String       @db.VarChar(100)
-  password   String       @db.VarChar(50)
-  state      State        @default(ACTIVE)
-  roleId     Int
-  role       Roles        @relation(fields: [roleId], references: [roleId])
-  AuditLogs  AuditLogs[]
-  PhoneUsers PhoneUsers[]
-  UserPlants UserPlants[]
-  Samples    Samples[]
+model Permission {
+  permissionId     Int               @id @default(autoincrement())
+  permissionName   String            @db.VarChar(100)
+  state            State             @default(ACTIVE)
+  rolesPermissions RolesPermission[]
 }
 
-model AuditLogs {
-  auditId    Int        @id @default(autoincrement())
-  tableName  String     @db.VarChar(100)
-  recordId   Int
-  actionType ActionType
-  userId     Int
-  timestamp  DateTime   @default(now())
-  state      State      @default(ACTIVE)
-  user       Users      @relation(fields: [userId], references: [userId])
-}
-
-model Permissions {
-  permissionId     Int                @id @default(autoincrement())
-  permissionName   String             @db.VarChar(100)
-  state            State              @default(ACTIVE)
-  RolesPermissions RolesPermissions[]
-}
-
-model RolesPermissions {
+model RolesPermission {
   roleId       Int
+  role         Role       @relation(fields: [roleId], references: [roleId])
   permissionId Int
-  role         Roles       @relation(fields: [roleId], references: [roleId])
-  permission   Permissions @relation(fields: [permissionId], references: [permissionId])
+  permission   Permission @relation(fields: [permissionId], references: [permissionId])
 
   @@id([roleId, permissionId])
 }
 
-model Companies {
-  companyId      Int              @id @default(autoincrement())
-  companyName    String           @db.VarChar(100)
-  email          String           @db.VarChar(100)
-  state          State            @default(ACTIVE)
-  PhoneCompanies PhoneCompanies[]
-  Plants         Plants[]
+model User {
+  userId          String            @id @default(uuid())
+  firstName       String            @db.VarChar(50)
+  lastName        String            @db.VarChar(50)
+  email           String            @db.VarChar(100)
+  password        String            @db.VarChar(50)
+  state           State             @default(ACTIVE)
+  fax             String
+  website         String
+  roleId          Int
+  role            Role              @relation(fields: [roleId], references: [roleId])
+  phones          Phone[]
+  samples         Sample[]
+  auditLogs       AuditLog[]
+  clients         Client[]
+  projectsOnUsers ProjectsOnUsers[]
 }
 
-model PhoneCompanies {
-  phoneId     Int       @id @default(autoincrement())
-  phoneNumber Int
-  companyId   Int
-  company     Companies @relation(fields: [companyId], references: [companyId])
+model AuditLog {
+  auditId    Int        @id @default(autoincrement())
+  tableName  String     @db.VarChar(100)
+  actionType ActionType
+  date       DateTime   @default(now())
+  state      State      @default(ACTIVE)
+  userId     String
+  user       User       @relation(fields: [userId], references: [userId])
 }
 
-model Plants {
-  plantId    Int          @id @default(autoincrement())
-  plantName  String       @db.VarChar(100)
-  companyId  Int
-  latitude   Decimal      @db.Decimal(10, 8)
-  longitude  Decimal      @db.Decimal(11, 8)
-  state      State        @default(ACTIVE)
-  company    Companies    @relation(fields: [companyId], references: [companyId])
-  Zones      Zones[]
-  UserPlants UserPlants[]
+model Address {
+  addressId Int       @id @default(autoincrement())
+  country   String
+  state     String
+  city      String
+  postbox   String
+  street    String
+  number    String
+  isActive  Boolean
+  clients   Client[]
+  projects  Project[]
 }
 
-model Zones {
-  zoneId    Int       @id @default(autoincrement())
-  plantId   Int
-  latitude  Decimal   @db.Decimal(10, 8)
-  longitude Decimal   @db.Decimal(11, 8)
+model Client {
+  clientId  String    @id @default(uuid())
+  name      String    @db.VarChar(100)
+  email     String    @db.VarChar(100)
+  password  String    @db.VarChar(50)
   state     State     @default(ACTIVE)
-  name      String    @db.VarChar(50)
-  plant     Plants    @relation(fields: [plantId], references: [plantId])
-  Samples   Samples[]
+  fax       String
+  website   String
+  phones    Phone[]
+  projects  Project[]
+  addressId Int?
+  address   Address?  @relation(fields: [addressId], references: [addressId])
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [userId])
 }
 
-model PhoneUsers {
-  phoneId     Int   @id @default(autoincrement())
-  phoneNumber Int
-  userId      Int
-  user        Users @relation(fields: [userId], references: [userId])
+model Phone {
+  phoneId  Int     @id @default(autoincrement())
+  number   String
+  userId   String?
+  users    User?   @relation(fields: [userId], references: [userId])
+  clientId String?
+  clients  Client? @relation(fields: [clientId], references: [clientId])
 }
 
-model UserPlants {
-  userId  Int
-  plantId Int
-  user    Users  @relation(fields: [userId], references: [userId])
-  plant   Plants @relation(fields: [plantId], references: [plantId])
-
-  @@id([userId, plantId])
+model Project {
+  projectId       String            @id @default(uuid())
+  name            String            @db.VarChar(100)
+  state           State             @default(ACTIVE)
+  latitude        Decimal           @db.Decimal(10, 8)
+  longitude       Decimal           @db.Decimal(11, 8)
+  clientsId       String?
+  clients         Client?           @relation(fields: [clientsId], references: [clientId])
+  addressId       Int?
+  address         Address?          @relation(fields: [addressId], references: [addressId])
+  projectsOnUsers ProjectsOnUsers[]
+  zones           Zone[]
 }
 
-model Samples {
-  sampleId                  Int      @id @default(autoincrement())
-  sampleDateTime            DateTime @default(now())
-  userId                    Int
-  zoneId                    Int
-  soilTime                  Int
-  soilResistivity           Decimal  @db.Decimal(10, 2)
-  moistureContent           Decimal  @db.Decimal(5, 2)
-  pHValue                   Decimal  @db.Decimal(4, 2)
-  bufferCapacityPH4_3       Decimal  @db.Decimal(5, 2)
-  bufferCapacityPH7_0       Decimal  @db.Decimal(5, 2)
-  sulfurReducingBacteria    Decimal  @db.Decimal(5, 2)
-  sulfateContent            Decimal  @db.Decimal(5, 2)
-  neutralSalts              Decimal  @db.Decimal(5, 2)
-  undergroundWaterPresence  String   @db.VarChar(50)
-  horizontalSoilHomogeneity Decimal  @db.Decimal(5, 2)
-  verticalSoilHomogeneity   Decimal  @db.Decimal(5, 2)
-  soilTypeHomogeneity       String   @db.VarChar(50)
-  pHSoilHomogeneity         Decimal  @db.Decimal(5, 2)
-  externalCathodes          Decimal  @db.Decimal(5, 2)
-  user                      Users    @relation(fields: [userId], references: [userId])
-  zone                      Zones    @relation(fields: [zoneId], references: [zoneId])
+model ProjectsOnUsers {
+  projectId String
+  project   Project @relation(fields: [projectId], references: [projectId])
+  userId    String
+  user      User    @relation(fields: [userId], references: [userId])
+
+  @@id([projectId, userId])
+}
+
+model Zone {
+  zoneId    String   @id @default(uuid())
+  name      String   @db.VarChar(50)
+  latitude  Decimal  @db.Decimal(10, 8)
+  longitude Decimal  @db.Decimal(11, 8)
+  state     State    @default(ACTIVE)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [projectId])
+  samples   Sample[]
+}
+
+model Sample {
+  sampleId                  String   @id @default(uuid())
+  date                      DateTime @default(now()) @updatedAt
+  soilType                  Int
+  soilResistivity           Int
+  moistureContent           Int
+  pHValue                   Int
+  bufferCapacityPH4_3       Int
+  bufferCapacityPH7_0       Int
+  sulfurReducingBacteria    Int
+  sulfateContent            Int
+  neutralSalts              Int
+  undergroundWaterPresence  Int
+  horizontalSoilHomogeneity Int
+  verticalSoilHomogeneity   Int
+  soilTypeHomogeneity       Int
+  pHSoilHomogeneity         Int
+  externalCathodes          Int
+  b0                        Int
+  b1                        Int
+  userId                    String
+  user                      User     @relation(fields: [userId], references: [userId])
+  zoneId                    String
+  zone                      Zone     @relation(fields: [zoneId], references: [zoneId])
 }
 
 enum State {
   ACTIVE
+  INACTIVE
   DELETED
 }
 

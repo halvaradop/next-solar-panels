@@ -1,6 +1,6 @@
 import { Params, ResponseAPI } from "@/lib/@types/types"
 import { prisma } from "@/lib/prisma"
-import { Samples } from "@prisma/client"
+import { Sample } from "@prisma/client"
 import { NextRequest, NextResponse } from "next/server"
 
 /**
@@ -17,10 +17,17 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export const GET = async (request: NextRequest, { params }: Params<"sampleId">): Promise<NextResponse> => {
     try {
-        const sampleId = parseInt(params.sampleId)
-        const sample = await prisma.samples.findUnique({
+        const sampleId = params.sampleId
+        const sample = await prisma.sample.findUnique({
             where: {
                 sampleId,
+            },
+            include: {
+                zone: {
+                    select: {
+                        name: true,
+                    },
+                },
             },
         })
         if (!sample) {
@@ -30,7 +37,7 @@ export const GET = async (request: NextRequest, { params }: Params<"sampleId">):
                 message: "Sample not found.",
             })
         }
-        return NextResponse.json<ResponseAPI<Samples>>({
+        return NextResponse.json<ResponseAPI<Sample>>({
             data: sample,
             ok: true,
             message: "Sample fetched successfully.",

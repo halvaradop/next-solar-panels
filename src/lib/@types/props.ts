@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zones, Samples, Users, Plants, Companies, PhoneUsers, PhoneCompanies } from "@prisma/client"
+import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
 import { ActionState, Entry, MenuState } from "./types"
+import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 
 export interface ProductProps {
     className?: string
@@ -34,32 +35,30 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Samples[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface TableCompaniesProps {
-    companies: (Omit<Companies, "state"> & { phoneCompanies?: Pick<PhoneCompanies, "phoneNumber">[] })[]
+export interface TableClientsProps {
+    clients: (Omit<Client, "state"> & { phone?: Pick<Phone, "number">[] } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
-export interface TableUserPlantsProps {
-    userPlants: {
-        userId: number
-        plantId: number
-        plant?: Pick<Plants, "plantName">
-        user?: Pick<Users, "firstName" | "lastName">
-    }[]
+export interface TableProjectOnUserProps {
+    projectsOnUsers: (User & Project)[]
 }
 
 export interface TableUsersProps {
-    users: (Omit<Users, "state"> & { phoneUsers?: Pick<PhoneUsers, "phoneNumber">[] } & { role?: { roleName: string } })[]
+    /**
+     * TODO: fix
+     */
+    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
-    plants: Plants[]
+    plants: Project[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
@@ -79,7 +78,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zones & { plant?: Pick<Plants, "plantName"> })[]
+    zones: (Zone & { project?: Pick<Project, "name"> })[]
 }
 
 export interface InputListProps<T> {
@@ -89,4 +88,15 @@ export interface InputListProps<T> {
         name: string
         type: string
     }[]
+}
+
+export interface MenuRoutesProps {
+    className?: string
+    classTitle?: string
+    classOption?: string
+}
+
+export type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
 }

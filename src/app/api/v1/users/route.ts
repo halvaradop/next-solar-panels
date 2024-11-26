@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Users } from "@prisma/client"
+import { User } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -15,14 +15,14 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const users = await prisma.users.findMany()
-        return NextResponse.json<ResponseAPI<Users[]>>({
+        const users = await prisma.user.findMany()
+        return NextResponse.json<ResponseAPI<User[]>>({
             data: users,
             ok: true,
             message: "Users retrieved successfully",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Users[]>>(
+        return NextResponse.json<ResponseAPI<User[]>>(
             {
                 data: [],
                 ok: false,
@@ -55,9 +55,10 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { firstName, email, phone, lastName, password, rol, plant } = response
 
-        const existEmail = await prisma.users.findFirst({
+        const { firstName, website, email, number, lastName, password, roleId, project, fax } = response
+
+        const existEmail = await prisma.user.findFirst({
             where: { email },
         })
 
@@ -68,30 +69,29 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-        const data = await prisma.users.create({
+        const data = await prisma.user.create({
             data: {
                 firstName,
                 email,
+                website,
                 lastName,
+                fax,
                 password,
-                roleId: parseInt(rol),
-                PhoneUsers: {
+                roleId: parseInt(roleId),
+                phones: {
                     create: {
-                        phoneNumber: parseInt(phone),
+                        number,
                     },
                 },
-                UserPlants: {
+                projectsOnUsers: {
                     create: {
-                        plantId: parseInt(plant),
+                        projectId: project,
                     },
                 },
-            },
-            include: {
-                PhoneUsers: true,
             },
         })
 
-        return NextResponse.json<ResponseAPI<Users>>({
+        return NextResponse.json<ResponseAPI<User>>({
             data,
             ok: true,
             message: "The resource was created successfuly",

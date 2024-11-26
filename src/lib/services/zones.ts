@@ -1,4 +1,4 @@
-import { Zones } from "@prisma/client"
+import { Zone } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
@@ -9,7 +9,12 @@ import { getFetch } from "@/lib/utils"
  *
  * @returns - A list of zones from the database
  */
-export const getZones = async <T extends unknown[] = Zones[]>(): Promise<T> => {
+export const getZones = async <T extends unknown[] = Zone[]>(): Promise<T> => {
     const { data } = await getFetch<T>(`zones`)
+    return data
+}
+
+export const getZoneById = async (zoneId: string) => {
+    const { data } = await getFetch<Zone>(`zones/${zoneId}`)
     return data
 }

@@ -14,8 +14,10 @@
         }
     }
 
-    body:has(header[data-open="true"]) header nav ul:hover:has(li:hover) > li:not(:hover) {
-        filter: blur(2px);
+    @media (min-width: 900px) {
+        body:has(header[data-open="true"]) header nav ul:hover:has(li:hover) > li:not(:hover) {
+            filter: blur(2px);
+        }
     }
 
     body:has(header[data-home="false"]) footer {

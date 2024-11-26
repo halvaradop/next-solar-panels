@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/common/filter"
-import { getSamplesByUser, getUserById, getZonesByCompanyId } from "@/lib/services"
+import { getSamplesByUser, getUserById, getZonesByClientId } from "@/lib/services"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 
 const getInformation = async () => {
     const session = await auth()
-    const userId = session?.user?.id ? Number(session.user.id) : Number.MAX_SAFE_INTEGER
-    const { companyId } = await getUserById(userId)
-    const [zones, samples] = await Promise.all([getZonesByCompanyId(companyId), getSamplesByUser(userId)])
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    const {
+        clients: [{ clientId } = { clientId: "" }],
+    } = await getUserById(userId)
+    const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId.toString())])
     return { zones, samples }
 }
 
