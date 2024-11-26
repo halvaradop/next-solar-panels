@@ -47,7 +47,7 @@ export interface TableCompaniesProps {
 }
 
 export interface TableProjectOnUserProps {
-    projectsOnUsers: (ProjectsOnUsers & { project?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
+    projectsOnUsers: (User & Project)[]
 }
 
 export interface TableUsersProps {

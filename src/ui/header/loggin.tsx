@@ -10,7 +10,7 @@ export const Loggin = () => {
             <div className="flex items-center gap-x-5">
                 <div className="size-10 rounded-full bg-slate-100"></div>
                 <div className="text-end">
-                    <p className="font-medium">{session.user?.name}</p>
+                    <p className="text-black font-medium">{session.user?.name}</p>
                     <p className="text-xs text-neutral-500">{session.user?.role ?? "User"}</p>
                 </div>
             </div>
