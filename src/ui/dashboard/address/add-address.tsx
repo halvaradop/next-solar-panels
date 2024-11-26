@@ -1,8 +1,7 @@
-/*
-
 export const AddAddress = () => {
-  
-    return(
+    return (
+        <div></div>
+        /*
         <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md mt-10">
         <h1 className="text-2xl font-bold mb-6 text-center">Register Address</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -76,7 +75,6 @@ export const AddAddress = () => {
           </button>
         </form>
       </div>
-    );
-
-    
-}*/
+      */
+    )
+}

@@ -1,6 +1,6 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 
-import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address , Role  } from "@prisma/client"
+import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address, Role } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
