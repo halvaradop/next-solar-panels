@@ -79,11 +79,11 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 /**
  * TODO: fix types
  *
- * Adds a company to the database and checks if the action was successful
+ * Adds a client to the database and checks if the action was successful
  *
- * @param {AddClientActionState} previous - The previous state of the company to be added
+ * @param {AddClientActionState} previous - The previous state of the client to be added
  * @param {FormData} formData - The form data sent by the user
- * @returns {Promise<AddClientActionState>} - The state of the company and the result of the action, redirecting to the dashboard if successful
+ * @returns {Promise<AddClientActionState>} - The state of the client and the result of the action, redirecting to the dashboard if successful
  */
 export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
     const entries = Object.fromEntries(formData)

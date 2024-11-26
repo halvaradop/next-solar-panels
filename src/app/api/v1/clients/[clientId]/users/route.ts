@@ -6,14 +6,14 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 /**
  * TODO: update schema
  *
- * Handle the GET request to retrieve the users related to a specific company
+ * Handle the GET request to retrieve the users related to a specific client
  *
  * @param {NextRequest} request - The HTTP request data containing the request data.
- * @param {Params<"clientId">} params - The dynamic parameter to extract the `companyId`.
- * @returns {Promise<NextResponse>} - HTTP response with the users related to the company.
+ * @param {Params<"clientId">} params - The dynamic parameter to extract the `clientId`.
+ * @returns {Promise<NextResponse>} - HTTP response with the users related to the client.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/companies/{companyId}/users")
+ * const response = await fetch("/api/v1/clients/{clientId}/users")
  * const data = await response.json()
  * ```
  */

@@ -15,9 +15,9 @@ const links = {
         { href: "/dashboard/users", label: "List" },
         { href: "/dashboard/users/add", label: "Add" },
     ],
-    companies: [
-        { href: "/dashboard/companies", label: "List" },
-        { href: "/dashboard/companies/add", label: "Add" },
+    clients: [
+        { href: "/dashboard/clients", label: "List" },
+        { href: "/dashboard/clients/add", label: "Add" },
     ],
     plants: [
         { href: "/dashboard/plants", label: "List" },
