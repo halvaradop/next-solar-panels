@@ -12,15 +12,15 @@ export const TableUsers = async ({ users }: TableUsersProps) => {
                 </tr>
             </thead>
             <tbody>
-                {users.map(({ userId, lastName, firstName, email, role, phoneUsers = [] }) => (
+                {users.map(({ userId, lastName, firstName, email, role, phones = [] }) => (
                     <tr className="text-sm td:text-start td:font-normal" key={userId}>
                         <td className="p-3 truncate border-t overflow-hidden">
                             {firstName} {lastName}
                         </td>
                         <td className="p-3 truncate border-t sm:table-cell">{email}</td>
                         <td className="hidden p-3 truncate border-t base:table-cell">
-                            {phoneUsers.length > 0
-                                ? phoneUsers.map(({ number }, index) => <div key={index}>{number}</div>)
+                            {phones.length > 0
+                                ? phones.map(({ number }, index) => <div key={index}>{number}</div>)
                                 : "No phone number"}
                         </td>
                         <td className="p-3 truncate border-t">{role?.roleName}</td>

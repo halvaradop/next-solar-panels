@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Client, Project, Sample, ProjectsOnUsers, User, Zone } from "@prisma/client"
+import { Client, Project, Sample, ProjectsOnUsers, User, Zone, Address } from "@prisma/client"
 import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema } from "./schemas"
 import {
     AddProjectActionState,
@@ -12,6 +12,7 @@ import {
     AddZonesActionState,
     LoginActionState,
     AddProjectOnUserActionState,
+    AddAddressActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -232,6 +233,33 @@ export const addProjectOnUserAction = async (
         }
     }
     const schema = mapErrors(validate as SafeParseError<ProjectsOnUsers>)
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema,
+    }
+}
+
+export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    const validate = ProjectSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/address`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message,
+            isSuccess: false,
+            schema: {} as Address,
+        }
+    }
+    const schema = mapErrors(validate as SafeParseError<Address>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
