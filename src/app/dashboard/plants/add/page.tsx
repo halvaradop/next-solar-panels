@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
-import { AddPlant } from "@/ui/dashboard/projects/add-plant"
 import { SessionProvider } from "next-auth/react"
+import { AddPlant } from "@/ui/dashboard/projects/add-plant"
 
 export const metadata: Metadata = {
     title: "Add Plant",
