@@ -1,8 +1,14 @@
+import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import { AddAddress } from "@/ui/dashboard/address/add-address"
 import { SessionProvider } from "next-auth/react"
 
-const AddAdrressPage = async () => {
+export const metadata: Metadata = {
+    title: "Add Address",
+    description: "Add a new address",
+}
+
+const AddAddressPage = async () => {
     const session = await auth()
 
     return (
@@ -12,4 +18,4 @@ const AddAdrressPage = async () => {
     )
 }
 
-export default AddAdrressPage
+export default AddAddressPage

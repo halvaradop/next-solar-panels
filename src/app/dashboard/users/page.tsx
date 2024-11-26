@@ -1,7 +1,13 @@
+import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getUserById, getUsersByClientId } from "@/lib/services"
 import { TableUsers } from "@/ui/dashboard/users/table"
+
+export const metadata: Metadata = {
+    title: "List of users",
+    description: "Manage users in the dashboard.",
+}
 
 const getInformation = async () => {
     const session = await auth()
@@ -13,7 +19,7 @@ const getInformation = async () => {
     return { users }
 }
 
-const DashboardCompaniesPage = async () => {
+const DashboardUsersPage = async () => {
     const { users } = await getInformation()
 
     return (
@@ -25,4 +31,4 @@ const DashboardCompaniesPage = async () => {
     )
 }
 
-export default DashboardCompaniesPage
+export default DashboardUsersPage
