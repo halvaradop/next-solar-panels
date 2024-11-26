@@ -4,7 +4,6 @@ import { SessionProvider } from "next-auth/react"
 
 const AddProjectsOnUsersPage = async () => {
     const session = await auth()
-
     return (
         <SessionProvider session={session}>
             <AddProjectOnUser />
