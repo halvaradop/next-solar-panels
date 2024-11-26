@@ -24,8 +24,9 @@ export const AddUser = () => {
     useEffect(() => {
         const fetchPlants = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { projectsOnUsers } = await getUserById(userId)
-            const clientId = projectsOnUsers[0]?.project.clients.clientId
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
