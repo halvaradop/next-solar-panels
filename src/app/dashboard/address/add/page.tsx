@@ -4,8 +4,8 @@ import { AddAddress } from "@/ui/dashboard/address/add-address"
 import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {
-    title: "Add User to Plant",
-    description: "Add a new user to an existing plant in the dashboard.",
+    title: "Add Address",
+    description: "Add a new address",
 }
 
 const AddAdrressPage = async () => {

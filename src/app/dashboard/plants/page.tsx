@@ -3,11 +3,14 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getProjectsByClientId, getUserById } from "@/lib/services"
 import { TablePlants } from "@/ui/dashboard/projects/table"
+<<<<<<< HEAD
 
 export const metadata: Metadata = {
     title: "Plants",
     description: "List of plants",
 }
+=======
+>>>>>>> 38f79f1 (chore: migrate logic to new database (#65))
 
 const getInformation = async () => {
     const session = await auth()
