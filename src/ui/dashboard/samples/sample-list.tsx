@@ -17,9 +17,9 @@ export const SampleList = ({ samples }: SampleListProps) => {
 
     return (
         <section>
-            <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,500px))]">
-                {filteredSamples.map(({ sampleId, date, zone, user }) => (
-                    <article key={sampleId}>
+            <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+                {filteredSamples.map(({ sampleId, date, zone, user, b0, b1 }) => (
+                    <article className="max-w-md" key={sampleId}>
                         <Link
                             className="p-4 flex items-center justify-between font-normal border rounded-lg shadow hover:cursor-pointer"
                             href={`/dashboard/samples/${sampleId}`}
@@ -32,8 +32,8 @@ export const SampleList = ({ samples }: SampleListProps) => {
                                     <p className="px-4 py-1 text-white text-xs rounded-full bg-green-500">Zone: {zone?.name}</p>
                                 </div>
                                 <div className="mb-2 text-neutral-700">
-                                    <p>B0: {0}</p>
-                                    <p>B1: {1}</p>
+                                    <p>B0: {b0}</p>
+                                    <p>B1: {b1}</p>
                                 </div>
                                 <p className="text-neutral-600">Date: {new Date(date).toLocaleString()}</p>
                             </div>

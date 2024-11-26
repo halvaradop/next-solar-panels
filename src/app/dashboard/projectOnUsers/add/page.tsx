@@ -1,14 +1,14 @@
 import { auth } from "@/lib/auth"
-import { AddUserPlant } from "@/ui/dashboard/usersPlants/add-userPlants"
+import { AddProjectOnUser } from "@/ui/dashboard/projectOnUsers/add-projectOnUser"
 import { SessionProvider } from "next-auth/react"
 
-const AddUserPlantPage = async () => {
+const AddProjectOnUserPage = async () => {
     const session = await auth()
     return (
         <SessionProvider session={session}>
-            <AddUserPlant />
+            <AddProjectOnUser />
         </SessionProvider>
     )
 }
 
-export default AddUserPlantPage
+export default AddProjectOnUserPage
