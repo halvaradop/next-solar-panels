@@ -204,8 +204,23 @@
       "type": "email"
     },
     {
+      "label": "Password",
+      "name": "password",
+      "type": "password"
+    },
+    {
+      "label": "Fax",
+      "name": "fax",
+      "type": "text"
+    },
+    {
+      "label": "Web Sitie",
+      "name": "website",
+      "type": "text"
+    },
+    {
       "label": "Phone",
-      "name": "phone",
+      "name": "number",
       "type": "number"
     }
   ],
