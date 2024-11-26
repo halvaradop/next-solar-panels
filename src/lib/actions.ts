@@ -246,9 +246,10 @@ export const addProjectOnUserAction = async (
 }
 
 export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     const validate = AddressSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/address`, {
             method: "POST",
