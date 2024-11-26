@@ -5,6 +5,7 @@ import { Button } from "@halvaradop/ui-button"
 import { HeaderMenuProps } from "@/lib/@types/props"
 import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Loggin } from "./loggin"
+import { MenuRoutes } from "@/ui/common/menu-routes"
 
 export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProps) => {
     const session = useSession()
@@ -19,7 +20,7 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
 
     return (
         <motion.aside
-            className="w-1/2 min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
+            className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
             animate="visible"
@@ -30,19 +31,11 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                 {isLoggin && menuState.isMatchMedia ? (
                     <Loggin />
                 ) : (
-                    <ul className="fluency-3xl font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:text-lg base:uppercase">
+                    <ul className="font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:uppercase">
                         {isLoggin ? (
-                            <>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/dashboard">Dashboard</Link>
-                                </motion.li>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/dashboard/samples">List</Link>
-                                </motion.li>
-                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                                    <Link href="/dashboard/samples/add">Add</Link>
-                                </motion.li>
-                            </>
+                            <aside className="mt-10 space-y-4">
+                                <MenuRoutes className="text-gray-100" />
+                            </aside>
                         ) : (
                             <>
                                 <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
@@ -61,7 +54,7 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                             </>
                         )}
                         <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
-                            <Button asChild>
+                            <Button className="px-8" asChild>
                                 <Link href={isLoggin ? "/" : "/dashboard"}>{isLoggin ? "Log out" : "Login"}</Link>
                             </Button>
                         </motion.li>
