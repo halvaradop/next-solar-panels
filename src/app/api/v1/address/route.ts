@@ -17,7 +17,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 postbox,
                 street,
                 number,
-
                 isActive: true,
             },
         })

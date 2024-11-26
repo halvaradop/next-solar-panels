@@ -1,5 +1,4 @@
 import Link from "next/link"
-
 import { MenuRoutes } from "@/ui/common/menu-routes"
 
 export const Menu = () => {
