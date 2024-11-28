@@ -1,4 +1,4 @@
-import { Project, ProjectsOnUsers, User } from "@prisma/client"
+import { Project, User } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**

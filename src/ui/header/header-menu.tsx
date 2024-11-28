@@ -2,25 +2,17 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useSession } from "next-auth/react"
 import { Button } from "@halvaradop/ui-button"
-import { HeaderMenuProps } from "@/lib/@types/props"
 import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Loggin } from "./loggin"
 import { MenuRoutes } from "@/ui/common/menu-routes"
 
-export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProps) => {
+export const HeaderMenu = () => {
     const session = useSession()
-    const isLoggin = new RegExp("^/dashboard.*$").test(pathname) && session
-
-    const handleHashChange = () => {
-        setMenuState((previous) => ({
-            ...previous,
-            isMenuOpen: false,
-        }))
-    }
+    const isLoggin = new RegExp("^/dashboard.*$").test("") && session
 
     return (
-        <motion.div
-            className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
+        <motion.aside
+            className="w-1/2 h-auto min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
             animate="visible"
@@ -28,7 +20,7 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
         >
             <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-min base:p-0">
                 <p className="pb-1 border-b border-gray base:hidden">Navigation</p>
-                {isLoggin && menuState.isMatchMedia ? (
+                {isLoggin ? (
                     <Loggin />
                 ) : (
                     <ul className="font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:uppercase">
@@ -38,25 +30,18 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                             </aside>
                         ) : (
                             <>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/">Home</Link>
-                                    </motion.div>
-                                </li>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/#corrosion" onClick={() => handleHashChange()}>
-                                            Corrosion
-                                        </Link>
-                                    </motion.div>
-                                </li>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/#about-us" onClick={() => handleHashChange()}>
-                                            About us
-                                        </Link>
-                                    </motion.div>
-                                </li>
+                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                                    <Link href="/">Home</Link>
+                                </motion.li>
+                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                                    <Link href="/#corrosion">Corrosion</Link>
+                                </motion.li>
+                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                                    <Link href="/#about-us">About us</Link>
+                                </motion.li>
+                                <motion.li className="[--nav-li:100%] base:[--nav-li:0%]" variants={headerMenuListVariants}>
+                                    <Link href="/imprint">Imprint</Link>
+                                </motion.li>
                             </>
                         )}
                         <li className="[--nav-li:100%] base:[--nav-li:0%]">
@@ -67,6 +52,6 @@ export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProp
                     </ul>
                 )}
             </div>
-        </motion.div>
+        </motion.aside>
     )
 }

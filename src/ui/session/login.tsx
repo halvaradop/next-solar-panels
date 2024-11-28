@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { useFormState } from "react-dom"
+import { useActionState } from "react"
 import { Input } from "@halvaradop/ui-input"
 import { Label } from "@halvaradop/ui-label"
 import { Button } from "@halvaradop/ui-button"
@@ -8,7 +8,7 @@ import { merge } from "@/lib/utils"
 import { loginAction } from "@/lib/actions"
 
 export const Login = () => {
-    const [state, formAction] = useFormState(loginAction, {
+    const [state, formAction] = useActionState(loginAction, {
         message: "",
         isSuccess: false,
     })

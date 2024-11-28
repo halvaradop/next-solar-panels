@@ -10,7 +10,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  * retrieved from the database.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/role")
+ * const response = await fetch("{domain}/api/v1/roles")
  * const data = await response.json()
  * ```
  */

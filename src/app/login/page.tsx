@@ -5,9 +5,6 @@ import { Login } from "@/ui/session/login"
 export const metadata: Metadata = {
     title: "Log In",
     description: "Log in to your account",
-    openGraph: {
-        url: "https://example.com/login",
-    },
 }
 
 const LoginPage = () => {

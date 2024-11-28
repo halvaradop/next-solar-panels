@@ -3,10 +3,6 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { SampleListProps } from "@/lib/@types/props"
 
-/**
- * TODO: update userId to display the name of the user logged in and update
- * zoneId to display the name of the zone
- */
 export const SampleList = ({ samples }: SampleListProps) => {
     const params = useSearchParams()
 

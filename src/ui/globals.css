@@ -3,6 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+    header:not([data-pathname="/"]) {
+        @apply border-b border-gray-1000;
+
+        nav {
+            @apply text-black;
+
+            span {
+                @apply bg-black;
+            }
+        }
+    }
+
+    header:not([data-pathname="/"]):is([data-open="true"]) {
+        #menu-icon span {
+            @apply bg-white;
+        }
+    }
+
+    body:has(header:not([data-pathname="/"])) footer {
+        display: none;
+    }
+
+    th {
+        @apply font-medium;
+    }
+
+    td {
+        @apply font-normal border-b;
+    }
+
+    th,
+    td {
+        @apply p-3 text-start truncate;
+    }
+
     @media (max-width: 900px) {
         body:has(header[data-open="true"]) {
             @apply scroll:bg-black thumb:bg-white;
@@ -12,24 +47,17 @@
                 font-size: inherit;
             }
         }
+
+        header:not([data-pathname="/"]):is([data-open="true"]) {
+            aside {
+                @apply text-white;
+            }
+        }
     }
 
     @media (min-width: 900px) {
         body:has(header[data-open="true"]) header nav ul:hover:has(li:hover) > li:not(:hover) {
             filter: blur(2px);
         }
-    }
-
-    body:has(header[data-home="false"]) footer {
-        display: none;
-    }
-
-    th {
-        @apply text-start font-medium;
-    }
-
-    th,
-    td {
-        @apply truncate;
     }
 }

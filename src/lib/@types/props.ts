@@ -1,7 +1,7 @@
 import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zone, Sample, User, Project, Client, Phone, ProjectsOnUsers } from "@prisma/client"
-import { ActionState, Entry, MenuState } from "./types"
+import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
+import { ActionState, Entry } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 
@@ -21,12 +21,6 @@ export interface ProjectProps {
     title: string
     city: string
     year: string
-}
-
-export interface HeaderMenuProps {
-    pathname: string
-    menuState: MenuState
-    setMenuState: Dispatch<SetStateAction<MenuState>>
 }
 
 export interface FilterByProps {

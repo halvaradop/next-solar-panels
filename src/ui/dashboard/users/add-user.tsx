@@ -1,6 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
-import { useFormState } from "react-dom"
+import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
 import { Project, Role } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
@@ -15,7 +14,7 @@ export const AddUser = () => {
     const { data: session } = useSession()
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
-    const [state, formAction] = useFormState(addUserAction, {
+    const [state, formAction] = useActionState(addUserAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],

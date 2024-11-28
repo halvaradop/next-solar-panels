@@ -16,7 +16,12 @@ export const Submit = ({
 }: SubmitProps) => {
     const { pending: status } = useFormStatus()
     return (
-        <Button className={buttonVariants({ className, variant, size, fullWidth, fullRounded })} disabled={status} {...props}>
+        <Button
+            className={buttonVariants({ className, variant, size, fullWidth, fullRounded })}
+            type="submit"
+            disabled={status}
+            {...props}
+        >
             {status ? pending : children}
         </Button>
     )

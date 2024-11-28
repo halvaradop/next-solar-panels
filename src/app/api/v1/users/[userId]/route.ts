@@ -3,22 +3,16 @@ import { prisma } from "@/lib/prisma"
 import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
 
 /**
- * TODO: What happens if the user has multiples client?
- *
- * Handle the GET request to retrieve a specific user information
+ * Handles the GET request to retrieve specific user information.
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"userId">} params - The dynamic parameter to extract the `userId`.
  * @returns {Promise<NextResponse>} - The HTTP response containing the user information.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users/{userId}")
- * const data = await response.json()
+ * const response = await fetch("{domain}/api/v1/users/{userId}");
+ * const data = await response.json();
  * ```
- */
-
-/**
- * TODO: fix clientId
  */
 export const GET = async (request: NextRequest, { params }: Params<"userId">): Promise<NextResponse> => {
     try {

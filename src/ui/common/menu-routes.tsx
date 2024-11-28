@@ -23,13 +23,10 @@ const links = {
         { href: "/dashboard/plants", label: "List" },
         { href: "/dashboard/plants/add", label: "Add" },
     ],
-    /*
-    TODO: unstable
     userToProjects: [
         { href: "/dashboard/projects-on-users", label: "List" },
         { href: "/dashboard/projects-on-users/add", label: "Add" },
     ],
-    */
 }
 
 export const MenuRoutes = ({ className, classTitle, classOption }: MenuRoutesProps) => {

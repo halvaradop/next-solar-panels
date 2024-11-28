@@ -9,7 +9,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  * @returns {Promise<NextResponse>} - The HTTP response with the users fetched
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users")
+ * const response = await fetch("{domain}/api/v1/users")
  * const data = await response.json()
  * ```
  */
@@ -32,7 +32,6 @@ export const GET = async (): Promise<NextResponse> => {
         )
     }
 }
-
 /**
  * Handle the POST request to create a new user in the database.
  *
@@ -40,17 +39,22 @@ export const GET = async (): Promise<NextResponse> => {
  * @returns {Promise<NextResponse>} - HTTP response with the new user created.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users", {
+ * const response = await fetch("{domain}/api/v1/users", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     firstName: "John",
  *     lastName: "Doe",
  *     email: "john@gmail.com",
- *     phone: 1234567890,
+ *     number: "1234567890",
  *     password: "password",
- *     rol: 1,
+ *     roleId: "1",
+ *     project: "projectId",
+ *     website: "https://example.com",
+ *     fax: "123-456-7890"
  *   }),
  * })
+ * const data = await response.json()
+ * ```
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
