@@ -4,6 +4,7 @@ import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
 import { ActionState, Entry } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
+import { Session } from "next-auth"
 
 export interface HeaderMenuProps {
     onCloseMenu: () => void
@@ -93,6 +94,7 @@ export interface MenuRoutesProps {
     className?: string
     classTitle?: string
     classOption?: string
+    session: Session | null
 }
 
 export type SubmitProps = ButtonProps<typeof buttonVariants> & {

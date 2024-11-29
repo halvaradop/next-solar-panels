@@ -52,3 +52,5 @@ export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "
     role: Omit<Role, "users" | "rolesPermissions">
     clients: { clientId: string }[]
 }
+
+export type Roles = "client-admin" | "internal-employee" | "user" | "user-employee"

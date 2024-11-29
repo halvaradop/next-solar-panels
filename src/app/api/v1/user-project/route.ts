@@ -56,3 +56,25 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         })
     }
 }
+
+/**
+ * Handles the GET request to fetch all the ProjectsOnUsers records.
+ *
+ * @returns {Promise<NextResponse>} - HTTP response containing the fetched ProjectsOnUsers records or an error message.
+ */
+export const GET = async (): Promise<NextResponse> => {
+    try {
+        const data = await prisma.projectsOnUsers.findMany()
+        return NextResponse.json<ResponseAPI<ProjectsOnUsers[]>>({
+            data,
+            ok: true,
+            message: "The resource was fetched successfully",
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<{}>>({
+            data: {},
+            ok: false,
+            message: "Failed to fetch the resource",
+        })
+    }
+}
