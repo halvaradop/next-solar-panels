@@ -3,20 +3,31 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AnimatePresence } from "framer-motion"
-import { merge } from "@/lib/utils"
 import { HeaderMenu } from "./header-menu"
 
 export const Header = () => {
     const pathname = usePathname()
-    const [isOpenMenu, setMenuState] = useState(false)
+    const [menuState, setMenuState] = useState({
+        isOpenMenu: false,
+        isMatchMedia: false,
+    })
+    const isOpenMenu = menuState.isOpenMenu || menuState.isMatchMedia
 
     const handleMenu = () => {
-        setMenuState(!isOpenMenu)
+        setMenuState((previous) => ({ ...previous, isOpenMenu: !previous.isOpenMenu }))
+    }
+
+    const handleCloseMenu = () => {
+        setMenuState((previous) => ({ ...previous, isOpenMenu: false }))
     }
 
     useEffect(() => {
+        handleCloseMenu()
+    }, [pathname])
+
+    useEffect(() => {
         const matchMedia = window.matchMedia("(min-width: 900px)")
-        const handleMatchMedia = () => setMenuState(matchMedia.matches)
+        const handleMatchMedia = () => setMenuState((previous) => ({ ...previous, isMatchMedia: matchMedia.matches }))
         handleMatchMedia()
         matchMedia.addEventListener("change", handleMatchMedia)
         return () => matchMedia.removeEventListener("change", handleMatchMedia)
@@ -33,7 +44,7 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded bg-white" />
                     <span className="w-8 h-0.5 block rounded bg-white" />
                 </div>
-                <AnimatePresence>{isOpenMenu && <HeaderMenu />}</AnimatePresence>
+                <AnimatePresence mode="wait">{isOpenMenu && <HeaderMenu onCloseMenu={handleCloseMenu} />}</AnimatePresence>
             </nav>
         </header>
     )

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    header nav aside {
+        @apply w-1/2 min-h-dvh min-w-72 max-w-md absolute inset-y-0 right-0 z-10 overflow-y-auto bg-black scroll:w-2 track:mt-20 track:mb-4 thumb:rounded thumb:bg-white;
+    }
+
     header:not([data-pathname="/"]) {
         @apply border-b border-gray-1000;
 
@@ -12,6 +16,10 @@
             span {
                 @apply bg-black;
             }
+        }
+
+        aside #aside-menu ul li.home-link {
+            @apply hidden;
         }
     }
 
@@ -41,11 +49,6 @@
     @media (max-width: 900px) {
         body:has(header[data-open="true"]) {
             @apply scroll:bg-black thumb:bg-white;
-
-            header nav > aside ul a {
-                padding: 0;
-                font-size: inherit;
-            }
         }
 
         header:not([data-pathname="/"]):is([data-open="true"]) {

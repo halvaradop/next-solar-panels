@@ -22,5 +22,6 @@ declare module "next-auth/jwt" {
 declare module "framer-motion" {
     interface MotionProps {
         className?: string
+        onClick?: () => void
     }
 }

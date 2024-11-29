@@ -5,6 +5,10 @@ import { ActionState, Entry } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 
+export interface HeaderMenuProps {
+    onCloseMenu: () => void
+}
+
 export interface ProductProps {
     className?: string
     id: string

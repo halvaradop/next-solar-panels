@@ -19,10 +19,14 @@ const Index = () => {
                         ACHE ENGINEERING <span className="text-lg tracking-wider">GmbH</span>
                     </h1>
                 </div>
-                <Button className="min-w-[fit-content] mx-auto gap-x-2 text-white base:mx-0 base:mb-3" variant="ghost" asChild>
+                <Button
+                    className="group min-w-[fit-content] mx-auto gap-x-2 text-white base:mx-0 base:mb-3"
+                    variant="ghost"
+                    asChild
+                >
                     <Link href="/#about-us">
                         <span className="break-words">Explore more</span>
-                        <Image src={arrowIcon} alt="arrow icon" />
+                        <Image className="group-hover:invert" src={arrowIcon} alt="arrow icon" />
                     </Link>
                 </Button>
             </div>
