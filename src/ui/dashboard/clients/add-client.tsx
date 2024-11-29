@@ -1,6 +1,6 @@
 "use client"
+import { useActionState } from "react"
 import { addClientAction } from "@/lib/actions"
-import { useFormState } from "react-dom"
 import { AddClientActionState } from "@/lib/@types/types"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
@@ -14,7 +14,7 @@ const { clientInputs } = dataJson
 export const AddClient = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
-    const [state, formAction] = useFormState(addClientAction, {
+    const [state, formAction] = useActionState(addClientAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddClientActionState["schema"],

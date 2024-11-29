@@ -9,7 +9,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  * @returns {Promise<NextResponse>} - The HTTP response with the client retrieved.
  * @example
  * ```ts
- * const response = await fetch("{domain}/api/v1/client")
+ * const response = await fetch("{domain}/api/v1/clients")
  * const data = await response.json()
  * ```
  */
@@ -22,13 +22,8 @@ export const GET = async (): Promise<NextResponse> => {
             },
         })
 
-        const map = data.map(({ phones, ...spread }) => ({
-            phone: phones,
-            ...spread,
-        }))
-
         return NextResponse.json<ResponseAPI<Client[]>>({
-            data: map,
+            data,
             ok: true,
             message: "The resource was retrieved successfuly",
         })

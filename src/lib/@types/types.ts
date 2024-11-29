@@ -1,15 +1,8 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-
 import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address, Role } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
-}
-
-export interface MenuState {
-    isMenuOpen: boolean
-    isMatchMedia: boolean
-    hash: string
 }
 
 export interface ActionState<T> {

@@ -1,13 +1,14 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
-import { User } from "@prisma/client"
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                email: {},
+                email: {
+                    type: "text",
+                },
                 password: {},
             },
             async authorize(credentials) {
@@ -19,27 +20,24 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                     select: {
                         userId: true,
                         email: true,
-                        roleId: true,
                         firstName: true,
                         password: true,
+                        role: {
+                            select: {
+                                roleName: true,
+                            },
+                        },
                     },
                 })
                 if (authorized) {
                     const isEquals = password === authorized.password
-                    if (!isEquals) {
-                        return null
-                    }
-                    const role = await prisma.role.findFirst({
-                        where: {
-                            roleId: authorized.roleId,
-                        },
-                    })
-                    const { email, firstName: name, userId: id } = authorized
-                    return {
-                        email,
-                        name,
-                        id: id.toString(),
-                        role: role?.roleName,
+                    if (isEquals) {
+                        return {
+                            email: authorized.email,
+                            name: authorized.firstName,
+                            id: authorized.userId.toString(),
+                            role: authorized.role?.roleName,
+                        }
                     }
                 }
                 return null
@@ -49,16 +47,13 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.user = user as User
+                token.user = user
             }
             return token
         },
         async session({ session, token }) {
-            /**
-             * TODO: fix
-             */
             if (token.user) {
-                session.user = token.user as never
+                session.user = token.user
             }
             return session
         },

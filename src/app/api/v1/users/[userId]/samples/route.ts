@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Sample } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
-import { Decimal } from "@prisma/client/runtime/library"
 import { sampleCalcs } from "@/lib/utils"
 
 /**
@@ -14,7 +13,7 @@ import { sampleCalcs } from "@/lib/utils"
  * @returns {Promise<NextResponse>} - HTTP response with the samples related to the user.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users/{userId}/samples")
+ * const response = await fetch("{domain}/api/v1/users/{userId}/samples")
  * const data = await response.json()
  * ```
  */
@@ -52,8 +51,6 @@ export const GET = async (request: NextRequest, { params }: Params<"userId">): P
 }
 
 /**
- * TODO: Create the new sample related to the user other than create it by zone.
- *
  * Handle the POST request to create a new sample related to a specific user
  * in the database.
  *

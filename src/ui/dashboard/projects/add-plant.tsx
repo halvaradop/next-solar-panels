@@ -1,6 +1,6 @@
 "use client"
-import { useEffect, useState } from "react"
-import { useFormState } from "react-dom"
+
+import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
 import { User } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
@@ -15,7 +15,7 @@ export const fetchCache = "force-no-store"
 export const AddPlant = () => {
     const { data: session } = useSession()
     const [users, setUsers] = useState<User[]>([])
-    const [state, formAction] = useFormState(addProjectAction, {
+    const [state, formAction] = useActionState(addProjectAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddProjectActionState["schema"],

@@ -1,72 +1,78 @@
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
+import { motion } from "framer-motion"
 import { Button } from "@halvaradop/ui-button"
-import { HeaderMenuProps } from "@/lib/@types/props"
-import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
-import { Loggin } from "./loggin"
 import { MenuRoutes } from "@/ui/common/menu-routes"
+import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
+import { Avatar } from "./avatar"
+import { HeaderMenuProps } from "@/lib/@types/props"
 
-export const HeaderMenu = ({ pathname, menuState, setMenuState }: HeaderMenuProps) => {
+export const HeaderMenu = ({ onCloseMenu }: HeaderMenuProps) => {
     const session = useSession()
-    const isLoggin = new RegExp("^/dashboard.*$").test(pathname) && session
-
-    const handleHashChange = () => {
-        setMenuState((previous) => ({
-            ...previous,
-            isMenuOpen: false,
-        }))
-    }
+    const pathname = usePathname()
+    const withinDashboard = new RegExp("^/dashboard.*$").test(pathname)
+    const isLoggin = withinDashboard && session
 
     return (
-        <motion.div
-            className="w-1/2 h-fit min-w-72 max-w-md absolute inset-y-0 right-0 z-10 bg-black [--nav-menu:100%] base:w-auto base:max-w-none base:relative base:bg-transparent base:[--nav-menu:0%]"
+        <motion.aside
+            className="[--nav-menu:100%] base:w-auto base:min-h-fit base:max-w-none base:relative base:overflow-hidden base:bg-transparent base:[--nav-menu:0%]"
             variants={headerMenuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
         >
-            <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-min base:p-0">
-                <p className="pb-1 border-b border-gray base:hidden">Navigation</p>
-                {isLoggin && menuState.isMatchMedia ? (
-                    <Loggin />
-                ) : (
-                    <ul className="font-medium flex items-start flex-col gap-8 base:items-center base:flex-row base:uppercase">
-                        {isLoggin ? (
-                            <aside className="mt-10 space-y-4">
-                                <MenuRoutes className="text-gray-100" />
-                            </aside>
-                        ) : (
-                            <>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/">Home</Link>
-                                    </motion.div>
-                                </li>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/#corrosion" onClick={() => handleHashChange()}>
-                                            Corrosion
-                                        </Link>
-                                    </motion.div>
-                                </li>
-                                <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                                    <motion.div variants={headerMenuListVariants}>
-                                        <Link href="/#about-us" onClick={() => handleHashChange()}>
-                                            About us
-                                        </Link>
-                                    </motion.div>
-                                </li>
-                            </>
-                        )}
-                        <li className="[--nav-li:100%] base:[--nav-li:0%]">
-                            <Button className="px-8" asChild>
-                                <Link href={isLoggin ? "/" : "/dashboard"}>{isLoggin ? "Log out" : "Login"}</Link>
-                            </Button>
-                        </li>
-                    </ul>
-                )}
+            <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-fit base:p-0" id="aside-menu">
+                <p className="pt-12 pb-1 text-2xl border-b border-gray base:hidden">Navigation</p>
+                <ul className="mt-12 mb-16 font-medium flex items-start flex-col gap-y-6 base:m-0 base:items-center base:flex-row base:gap-x-8 base:uppercase">
+                    {isLoggin && (
+                        <>
+                            <Link className="text-xl base:hidden" href="/dashboard">
+                                Dashboard
+                            </Link>
+                            <MenuRoutes className="ml-2 space-y-1 base:hidden" />
+                            <Avatar />
+                        </>
+                    )}
+                    <motion.li
+                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        variants={headerMenuListVariants}
+                        onClick={onCloseMenu}
+                    >
+                        <Link href="/">Home</Link>
+                    </motion.li>
+                    <motion.li
+                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        variants={headerMenuListVariants}
+                        onClick={onCloseMenu}
+                    >
+                        <Link href="/#corrosion">Corrosion</Link>
+                    </motion.li>
+                    <motion.li
+                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        variants={headerMenuListVariants}
+                        onClick={onCloseMenu}
+                    >
+                        <Link href="/#about-us">About us</Link>
+                    </motion.li>
+                    <motion.li
+                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        variants={headerMenuListVariants}
+                        onClick={onCloseMenu}
+                    >
+                        <Link href="/imprint">Imprint</Link>
+                    </motion.li>
+                    <motion.li
+                        className="w-full home-link my-2 [--nav-li:100%] base:[--nav-li:0%]"
+                        variants={headerMenuListVariants}
+                        onClick={onCloseMenu}
+                    >
+                        <Button className="w-full border-white base:px-4 base:text-lg base:border-transparent" asChild>
+                            <Link href="/dashboard">Login</Link>
+                        </Button>
+                    </motion.li>
+                </ul>
             </div>
-        </motion.div>
+        </motion.aside>
     )
 }

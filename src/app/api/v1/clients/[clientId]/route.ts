@@ -4,15 +4,18 @@ import { Project, ProjectsOnUsers, User } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
 
 /**
- * TODO: add documentation ???
+ * TODO: move this logic to the right place - in this route should get data relationed with the client
+ * with the specific id
  *
  * Handles the GET request to retrieve all users associated with projects for a specific client.
  *
- * @param {NextRequest} request - The HTTP request data containing the request data.
- * @param {Params<"clientId">} param1 -
- * @returns {Promise<NextResponse>} -
+ * @param {NextRequest} request - The HTTP request object.
+ * @param {Params<"clientId">} param1 - The route parameters containing the clientId.
+ * @returns {Promise<NextResponse>} - The response containing the users and projects data.
+ *
+ * @example
  * ```ts
- * const response = await fetch("/api/v1/clients/{clientId}")
+ * const response = await fetch("{domain}/api/v1/clients/{clientId}")
  * const data = await response.json()
  * ```
  */

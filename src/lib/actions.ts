@@ -50,7 +50,6 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
         }
     }
     const schema = mapErrors<Sample>(validate as SafeParseError<Sample>)
-    console.log("schema", schema)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -77,8 +76,6 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 }
 
 /**
- * TODO: fix types
- *
  * Adds a client to the database and checks if the action was successful
  *
  * @param {AddClientActionState} previous - The previous state of the client to be added
@@ -112,7 +109,6 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
 }
 
 /**
- *  TODO: fix types
  * Adds a zone to the database and checks if the action was successful
  *
  * @param {AddZonesActionState} previous - The previous state of the zone to be added

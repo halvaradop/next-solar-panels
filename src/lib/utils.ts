@@ -1,10 +1,9 @@
-import { twMerge } from "tw-merge"
-import clsx, { ClassValue } from "clsx"
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
 import { SafeParseError } from "zod"
 import { Sample } from "@prisma/client"
+import { merge as mergeClasses } from "@halvaradop/ui-core"
 
 /**
  * Merges the classes and returns a string
@@ -12,9 +11,7 @@ import { Sample } from "@prisma/client"
  * @param classes classes to be merged
  * @returns a string with the merged classes
  */
-export const merge = (...classes: ClassValue[]): string => {
-    return twMerge(clsx(classes.filter(Boolean)))
-}
+export const merge = mergeClasses
 
 /**
  * Maps the fields of an object to a number
@@ -68,7 +65,9 @@ export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Pro
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`
     const { headers: headersInit, ...spread } = init
     try {
+        const signal = new AbortController().signal
         const response = await fetch(URL, {
+            signal,
             headers: {
                 "Content-Type": "application/json",
                 ...headersInit,

@@ -240,5 +240,37 @@
       "name": "longitude",
       "type": "number"
     }
+  ],
+  "addressInputs": [
+    {
+      "label": "Country",
+      "name": "country",
+      "type": "text"
+    },
+    {
+      "label": "State",
+      "name": "state",
+      "type": "text"
+    },
+    {
+      "label": "City",
+      "name": "city",
+      "type": "text"
+    },
+    {
+      "label": "Postbox",
+      "name": "postbox",
+      "type": "text"
+    },
+    {
+      "label": "Street",
+      "name": "street",
+      "type": "text"
+    },
+    {
+      "label": "Number",
+      "name": "number",
+      "type": "number"
+    }
   ]
 }
