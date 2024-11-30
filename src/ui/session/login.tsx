@@ -1,9 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useActionState } from "react"
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
-import { Button } from "@halvaradop/ui-button"
+import { Form, Input, Label, Submit } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import { loginAction } from "@/lib/actions"
 
@@ -14,7 +12,7 @@ export const Login = () => {
     })
 
     return (
-        <form className="flex flex-col gap-y-4" action={formAction}>
+        <Form className="w-full !p-0 flex flex-col gap-y-4" action={formAction}>
             <Label className="w-full text-neutral-700 text-left" size="sm">
                 Email address or user name
                 <Input
@@ -44,8 +42,8 @@ export const Login = () => {
                 </Link>
                 <span>.</span>
             </p>
-            <Button fullWidth>Log In</Button>
-            {state && state.message && (
+            <Submit fullWidth>Log In</Submit>
+            {state.message && (
                 <p
                     className={merge("p-2 text-sm text-green-400 rounded-md bg-green-100", {
                         "text-red-500 bg-red-100": !state.isSuccess,
@@ -54,6 +52,6 @@ export const Login = () => {
                     {state.message}
                 </p>
             )}
-        </form>
+        </Form>
     )
 }

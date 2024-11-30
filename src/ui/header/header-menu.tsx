@@ -30,7 +30,7 @@ export const HeaderMenu = ({ onCloseMenu }: HeaderMenuProps) => {
                             <Link className="text-xl base:hidden" href="/dashboard">
                                 Dashboard
                             </Link>
-                            <MenuRoutes className="ml-2 space-y-1 base:hidden" />
+                            <MenuRoutes className="ml-2 space-y-1 base:hidden" session={session.data} />
                             <Avatar />
                         </>
                     )}
