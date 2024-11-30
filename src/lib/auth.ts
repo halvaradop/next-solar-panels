@@ -1,15 +1,13 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
-import { Roles } from "./@types/types"
+import { Roles } from "@/lib/@types/types"
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                email: {
-                    type: "text",
-                },
+                email: {},
                 password: {},
             },
             async authorize(credentials) {

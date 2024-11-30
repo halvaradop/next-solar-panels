@@ -217,3 +217,16 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
 export const camelCaseToHyphenCamel = (str: string): string => {
     return str.replace(/([A-Z])/g, "-$1").toLowerCase()
 }
+
+/**
+ * TODO: implement
+ *
+ * Generate a gradient avatar based in the name
+ *
+ * @param name of the avatar
+ * @param size of the svg returned
+ * @returns {Image}
+ */
+export const getAvatar = async (name: string, size: number = 48) => {
+    return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
+}

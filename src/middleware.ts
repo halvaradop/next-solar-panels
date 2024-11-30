@@ -16,10 +16,11 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "projects/add",
         "users-on-projects",
         "users-on-projects/add",
+        "users on projects",
     ],
-    "internal-employee": ["samples", "zones", "users", "clients", "projects", "users-on-projects"],
-    user: ["samples", "zones", "projects"],
-    "user-employee": ["samples"],
+    "internal-employee": ["samples", "zones", "users", "clients", "projects", "users-on-projects", "users on projects"],
+    user: ["samples", "samples/add", "zones", "zones/add", "projects", "projects/add"],
+    "user-employee": ["samples", "samples/add"],
 }
 
 /**

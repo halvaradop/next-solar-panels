@@ -11,6 +11,7 @@ import {
     getProjects,
     getUserOnProjects,
 } from "@/lib/services"
+import { roleBasedAccessControl } from "@/middleware"
 import samplesIcon from "@/public/samples.svg"
 import zonesIcon from "@/public/zone.svg"
 import clientsIcon from "@/public/clients.svg"
@@ -56,7 +57,7 @@ const getPanels = async () => {
             },
             {
                 icon: clientsIcon,
-                title: "Users on Projects",
+                title: "Users On Projects",
                 count: usersOnProjects.length,
             },
             {
@@ -75,6 +76,8 @@ const getPanels = async () => {
 
 const DashboardPage = async () => {
     const { session, panels } = await getPanels()
+    if (!session) return null
+
     return (
         <section className="mt-4 self-start">
             <h1 className="text-2xl font-bold text-center">Dashboard</h1>
@@ -103,18 +106,22 @@ const DashboardPage = async () => {
                 </div>
             )}
             <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(100px,200px))] gap-4">
-                {panels.map(({ icon, title, count }) => (
-                    <figure
-                        className="p-3 flex items-center justify-evenly gap-x-4 border border-gray-1000 rounded-lg bg-white hover:cursor-pointer"
-                        key={title}
-                    >
-                        <Image src={icon} alt="Samples icon" />
-                        <figcaption className="flex flex-col">
-                            <h2>{title}</h2>
-                            <p>{count}</p>
-                        </figcaption>
-                    </figure>
-                ))}
+                {panels.map(({ icon, title, count }) => {
+                    const rbca = roleBasedAccessControl["client-admin"]
+                    if (!rbca.includes(title.toLowerCase())) return null
+                    return (
+                        <figure
+                            className="p-3 flex items-center justify-evenly gap-x-4 border border-gray-1000 rounded-lg bg-white hover:cursor-pointer"
+                            key={title}
+                        >
+                            <Image src={icon} alt="Samples icon" />
+                            <figcaption className="flex flex-col">
+                                <h2>{title}</h2>
+                                <p>{count}</p>
+                            </figcaption>
+                        </figure>
+                    )
+                })}
             </div>
         </section>
     )

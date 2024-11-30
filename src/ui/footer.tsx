@@ -14,7 +14,7 @@ export const Footer = () => {
                             <Link href="/#corrosion">CORROSION</Link>
                         </li>
                         <li>
-                            <Link href="/">ABOUT US</Link>
+                            <Link href="/#about-us">ABOUT US</Link>
                         </li>
                         <li>
                             <Link href="/imprint">IMPRINT</Link>
