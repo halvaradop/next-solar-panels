@@ -1,5 +1,4 @@
 "use client"
-
 import { Page, Text, View, Document, StyleSheet, Font, Image } from "@react-pdf/renderer"
 import logoAche from "@/public/logoAche.png"
 
@@ -89,7 +88,7 @@ export const MyDocument = ({ sampleId, B0, B1, zone, userId }: MyDocumentProps) 
                     <Text
                         style={{ fontSize: 10 }}
                         render={({ pageNumber, totalPages }) => `
-          Page: ${pageNumber} of ${totalPages}`}
+                           Page: ${pageNumber} of ${totalPages}`}
                     />
                 </View>
             </View>
