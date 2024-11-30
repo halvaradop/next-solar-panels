@@ -5,6 +5,7 @@ import { getSampleById } from "@/lib/services/samples"
 import { camelCaseToWords } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
+import DowloandBotton from "@/ui/dashboard/pdf/page"
 
 export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<Metadata> => {
     const slug = (await params).sampleId
@@ -58,6 +59,7 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
                     </tbody>
                 </table>
             </article>
+            <DowloandBotton order={getSample} />
         </section>
     )
 }
