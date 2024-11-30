@@ -1,14 +1,13 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"
+import { Roles } from "@/lib/@types/types"
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     providers: [
         Credentials({
             credentials: {
-                email: {
-                    type: "text",
-                },
+                email: {},
                 password: {},
             },
             async authorize(credentials) {
@@ -36,7 +35,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                             email: authorized.email,
                             name: authorized.firstName,
                             id: authorized.userId.toString(),
-                            role: authorized.role?.roleName,
+                            role: authorized.role?.roleName as Roles,
                         }
                     }
                 }

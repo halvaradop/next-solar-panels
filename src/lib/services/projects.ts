@@ -11,3 +11,8 @@ export const getUserProjectsByClients = async <T extends unknown[] = (User & Pro
     const { data } = await getFetch<T>(`clients/${clientId}`)
     return data
 }
+
+export const getProjects = async <T extends unknown[] = Project[]>(): Promise<T> => {
+    const { data } = await getFetch<T>("projects")
+    return data
+}
