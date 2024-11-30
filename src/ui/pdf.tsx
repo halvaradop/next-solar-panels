@@ -1,6 +1,7 @@
 "use client"
 import { Page, Text, View, Document, StyleSheet, Font, Image } from "@react-pdf/renderer"
 import logoAche from "@/public/logoAche.png"
+import { MyDocumentProps } from "@/lib/@types/props"
 
 Font.register({
     family: "Arial",
@@ -10,7 +11,6 @@ Font.register({
 const styles = StyleSheet.create({
     page: {
         padding: 30,
-
         fontSize: 10,
     },
     header: {
@@ -65,13 +65,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 })
-interface MyDocumentProps {
-    sampleId: string
-    B0: number
-    B1: number
-    zone: string
-    userId: string
-}
 
 export const MyDocument = ({ sampleId, B0, B1, zone, userId }: MyDocumentProps) => (
     <Document>

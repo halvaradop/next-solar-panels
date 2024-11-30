@@ -103,3 +103,11 @@ export type SubmitProps = ButtonProps<typeof buttonVariants> & {
 export type FormProps = FormVariantProps<typeof formVariants> & {
     action: NonNullable<HTMLProps<HTMLFormElement>["action"]>
 }
+
+export interface MyDocumentProps {
+    sampleId: string
+    B0: number
+    B1: number
+    zone: string
+    userId: string
+}
