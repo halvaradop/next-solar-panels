@@ -4,8 +4,9 @@ import { PDFDownloadLink } from "@react-pdf/renderer"
 import { MyDocument } from "@/ui/pdf"
 import { Button } from "@halvaradop/ui-button"
 import { useEffect, useState } from "react"
+import { Order } from "@/lib/@types/types"
 
-const DowloandBotton = ({ order }: any) => {
+const DowloandBotton = ({ order }: { order: Order }) => {
     const [isClient, setIsClient] = useState(false)
     useEffect(() => {
         setIsClient(true)

@@ -85,12 +85,9 @@ export const MyDocument = ({ sampleId, B0, B1, zone, userId }: MyDocumentProps) 
                     />
                 </View>
             </View>
-
             <Text style={styles.title}>Resul corrocion</Text>
             <Text style={styles.text}>Validation</Text>
-
             <Text style={styles.text}>Text okd description</Text>
-
             <View style={styles.table}>
                 <View style={styles.tableRow}>
                     <Text style={[styles.tableCell, { flex: 1 }]}>B0</Text>

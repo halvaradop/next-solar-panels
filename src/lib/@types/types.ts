@@ -40,6 +40,14 @@ export interface Params<T extends string> {
     searchParams: Promise<ReadonlyURLSearchParams>
 }
 
+export type Order = {
+    sampleId: string
+    B0: number
+    B1: number
+    name: string
+    userId: string
+}
+
 export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
