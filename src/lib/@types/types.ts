@@ -42,10 +42,18 @@ export interface Params<T extends string> {
 
 export type Order = {
     sampleId: string
-    B0: number
-    B1: number
-    name: string
     userId: string
+    date: Date
+    soilType: number
+    soilResistivity: number
+    moistureContent: number
+    pHValue: number
+    bufferCapacityPH4_3: number
+    bufferCapacityPH7_0: number
+    sulfurReducingBacteria: number
+    zoneId: string
+    B0?: number
+    B1?: number
 }
 
 export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>

@@ -15,7 +15,19 @@ const DowloandBotton = ({ order }: { order: Order }) => {
     return isClient ? (
         <PDFDownloadLink
             document={
-                <MyDocument sampleId={order.sampleId} B0={order.B0} B1={order.B1} zone={order.name} userId={order.userId} />
+                <MyDocument
+                    sampleId={order.sampleId}
+                    userId={order.userId}
+                    date={order.date}
+                    soilType={order.soilType}
+                    soilResistivity={order.soilResistivity}
+                    moistureContent={order.moistureContent}
+                    pHValue={order.pHValue}
+                    bufferCapacityPH4_3={order.bufferCapacityPH4_3}
+                    bufferCapacityPH7_0={order.bufferCapacityPH7_0}
+                    sulfurReducingBacteria={order.sulfurReducingBacteria}
+                    zoneId={order.zoneId}
+                />
             }
             fileName="mi_archivo.pdf"
         >

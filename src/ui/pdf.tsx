@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export const MyDocument = ({ sampleId, B0, B1, zone, userId }: MyDocumentProps) => (
+export const MyDocument = ({ sampleId, userId }: MyDocumentProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.header}>
@@ -91,15 +91,15 @@ export const MyDocument = ({ sampleId, B0, B1, zone, userId }: MyDocumentProps) 
             <View style={styles.table}>
                 <View style={styles.tableRow}>
                     <Text style={[styles.tableCell, { flex: 1 }]}>B0</Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>{B0}</Text>
+                    <Text style={[styles.tableCell, { flex: 1 }]}>{}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>B1</Text>
-                    <Text style={styles.tableCell}>{B1}</Text>
+                    <Text style={styles.tableCell}>{}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}>Zone</Text>
-                    <Text style={styles.tableCell}>{zone}</Text>
+                    <Text style={styles.tableCell}>{}</Text>
                 </View>
                 <View style={styles.tableRow}>
                     <Text style={styles.tableCell}></Text>
