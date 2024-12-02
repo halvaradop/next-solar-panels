@@ -4,10 +4,17 @@ import { ProjectsOnUsers } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the POST request to assign a plant to a user
+ * Handles the POST request to assign a plant to a user.
  *
- * @param {NextRequest} request - The HTTP request data containing the user and plant id
- * @returns {Promise<NextResponse>} - HTTP response containing the created userPlant
+ * @param {NextRequest} request - The HTTP request containing the user and plant IDs.
+ * @returns {Promise<NextResponse>} - HTTP response containing the created ProjectsOnUsers record or an error message.
+ * @example
+ * ```ts
+ * const response = await fetch("{domain}/api/v1/user-project", {
+ *   method: "POST",
+ *   body: JSON.stringify({ user: 1, plant: 1 }),
+ * })
+ * ```
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
@@ -46,6 +53,28 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             data: {},
             ok: false,
             message: "Failed to create the plant to user",
+        })
+    }
+}
+
+/**
+ * Handles the GET request to fetch all the ProjectsOnUsers records.
+ *
+ * @returns {Promise<NextResponse>} - HTTP response containing the fetched ProjectsOnUsers records or an error message.
+ */
+export const GET = async (): Promise<NextResponse> => {
+    try {
+        const data = await prisma.projectsOnUsers.findMany()
+        return NextResponse.json<ResponseAPI<ProjectsOnUsers[]>>({
+            data,
+            ok: true,
+            message: "The resource was fetched successfully",
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<{}>>({
+            data: {},
+            ok: false,
+            message: "Failed to fetch the resource",
         })
     }
 }

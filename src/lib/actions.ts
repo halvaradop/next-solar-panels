@@ -2,8 +2,8 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Client, Project, Sample, ProjectsOnUsers, User, Zone } from "@prisma/client"
-import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema } from "./schemas"
+import { Client, Project, Sample, ProjectsOnUsers, User, Zone, Address } from "@prisma/client"
+import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema, AddressSchema } from "./schemas"
 import {
     AddProjectActionState,
     AddClientActionState,
@@ -12,6 +12,7 @@ import {
     AddZonesActionState,
     LoginActionState,
     AddProjectOnUserActionState,
+    AddAddressActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -26,19 +27,24 @@ import { SafeParseError } from "zod"
 export const addSampleAction = async (previous: AddSampleActionState, formData: FormData): Promise<AddSampleActionState> => {
     const session = await auth()
     formData.set("userId", session?.user?.id as string)
+    /**
+     * TODO: fix the zoneId
+     */
+    formData.set("zoneId", "9d0d8e89-81f3-41c9-b3c0-7766b26f93f1")
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["undergroundWaterPresence", "soilTypeHomogeneity"], false)
+    mapToNumber(entries, ["zoneId", "userId"], false)
     const validate = SampleSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users/${session?.user?.id}/samples`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        if (request.ok) {
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the sample",
+            message,
             isSuccess: false,
             schema: {} as Sample,
         }
@@ -70,13 +76,11 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 }
 
 /**
- * TODO: fix types
+ * Adds a client to the database and checks if the action was successful
  *
- * Adds a company to the database and checks if the action was successful
- *
- * @param {AddClientActionState} previous - The previous state of the company to be added
+ * @param {AddClientActionState} previous - The previous state of the client to be added
  * @param {FormData} formData - The form data sent by the user
- * @returns {Promise<AddClientActionState>} - The state of the company and the result of the action, redirecting to the dashboard if successful
+ * @returns {Promise<AddClientActionState>} - The state of the client and the result of the action, redirecting to the dashboard if successful
  */
 export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
     const entries = Object.fromEntries(formData)
@@ -86,20 +90,12 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as Client,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
-
         return {
-            message: "Failed to add the company",
+            message,
             isSuccess: false,
             schema: {} as Client,
         }
@@ -121,18 +117,19 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
  */
 export const addZonesAction = async (previous: AddZonesActionState, formData: FormData): Promise<AddZonesActionState> => {
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["name"], false)
+    mapToNumber(entries, ["longitude", "latitude"])
     const validate = ZoneSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/zones`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        if (request.ok) {
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Check the invalid fields",
+            message,
             isSuccess: false,
             schema: {} as Zone,
         }
@@ -155,26 +152,17 @@ export const addZonesAction = async (previous: AddZonesActionState, formData: Fo
 export const addUserAction = async (previous: AddUserActionState, formData: FormData): Promise<AddUserActionState> => {
     const entries = Object.fromEntries(formData)
     const validate = UserSchema.safeParse(entries)
-
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/users`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as User,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
-
         return {
-            message: "Failed to add the sample",
+            message,
             isSuccess: false,
             schema: {} as User,
         }
@@ -206,19 +194,12 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
                 ...validate.data,
             }),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as Project,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the sample",
+            message,
             isSuccess: false,
             schema: {} as Project,
         }
@@ -242,24 +223,44 @@ export const addProjectOnUserAction = async (
             method: "POST",
             body: JSON.stringify(validate.data),
         })
-        const result = await request.json()
-        if (request.ok) {
-            if (!result.ok) {
-                return {
-                    message: result.message,
-                    isSuccess: result.ok,
-                    schema: {} as ProjectsOnUsers,
-                }
-            }
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
             redirect("/dashboard")
         }
         return {
-            message: "Failed to add the Uset to plant",
+            message,
             isSuccess: false,
             schema: {} as ProjectsOnUsers,
         }
     }
     const schema = mapErrors(validate as SafeParseError<ProjectsOnUsers>)
+    return {
+        message: "Check the invalid fields",
+        isSuccess: false,
+        schema,
+    }
+}
+
+export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
+    const entries = Object.fromEntries(formData)
+    const validate = AddressSchema.safeParse(entries)
+
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/address`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message,
+            isSuccess: false,
+            schema: {} as Address,
+        }
+    }
+    const schema = mapErrors(validate as SafeParseError<Address>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,

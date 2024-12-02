@@ -8,19 +8,26 @@ import { NextRequest, NextResponse } from "next/server"
  *
  * @param {NextRequest} request - The HTTP request containing the request data.
  * @param {Params<"sampleId">} params - The dynamic parameter to extract the `sampleId`.
- * @returns {Promise<NextResponse>} - The HTTP response with the sample fetched
+ * @returns {Promise<NextResponse>} - The HTTP response with the sample fetched.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/samples/{sampleId}")
- * const data = await response.json()
+ * const response = await fetch("/api/v1/samples/{sampleId}");
+ * const data = await response.json();
  * ```
  */
 export const GET = async (request: NextRequest, { params }: Params<"sampleId">): Promise<NextResponse> => {
     try {
-        const sampleId = parseInt(params.sampleId)
+        const sampleId = (await params).sampleId
         const sample = await prisma.sample.findUnique({
             where: {
                 sampleId,
+            },
+            include: {
+                zone: {
+                    select: {
+                        name: true,
+                    },
+                },
             },
         })
         if (!sample) {

@@ -9,7 +9,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  * @returns {Promise<NextResponse>} - HTTP response with all samples.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/samples")
+ * const response = await fetch("{domain}/api/v1/samples")
  * const data = await response.json()
  * ```
  */

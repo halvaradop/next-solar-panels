@@ -1,12 +1,11 @@
 "use client"
-import { useEffect, useState } from "react"
-import { useFormState } from "react-dom"
+import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
 import { Project, Role } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
 import { AddUserActionState } from "@/lib/@types/types"
 import { getProjectsByClientId, getRoles, getUserById } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 
 const { userInputs } = dataJson
@@ -15,7 +14,7 @@ export const AddUser = () => {
     const { data: session } = useSession()
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
-    const [state, formAction] = useFormState(addUserAction, {
+    const [state, formAction] = useActionState(addUserAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddUserActionState["schema"],
@@ -24,7 +23,9 @@ export const AddUser = () => {
     useEffect(() => {
         const fetchPlants = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const { clientId } = await getUserById(userId)
+            const {
+                clients: [{ clientId } = { clientId: "" }],
+            } = await getUserById(userId)
             const response = await getProjectsByClientId(clientId)
             setProjects(response)
         }
@@ -44,10 +45,10 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <SelectGeneric values={roles} id="roleName" value="roleId" name="role" />
+                <SelectGeneric values={roles} id="roleName" value="roleId" name="roleId" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
-                Plant
+                Project
                 <SelectGeneric values={projects} id="name" value="projectId" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>

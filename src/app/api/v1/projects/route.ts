@@ -4,13 +4,13 @@ import { Project } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handles the GET request to retrieve all plants from the database.
+ * Handles the GET request to retrieve all projects from the database.
  *
- * @returns {Promise<NextResponse>} - The HTTP response containing the plants
+ * @returns {Promise<NextResponse>} - The HTTP response containing the projects
  * retrieved from the database.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/plants")
+ * const response = await fetch("{domain}/api/v1/projects")
  * const data = await response.json()
  * ```
  */
@@ -55,15 +55,15 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { name, latitude, longitude, id } = response
-        if (!id) {
+        const { name, latitude, longitude, user } = response
+        if (!user) {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
                 message: "user id was not sent",
             })
         }
-        const userId = id
+        const userId = user
 
         const existcoordinates = await prisma.project.findFirst({
             where: {
@@ -76,7 +76,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             return NextResponse.json<ResponseAPI<{}>>({
                 data: {},
                 ok: false,
-                message: "A plant with the specified coordinates already exists.",
+                message: "A project with the specified coordinates already exists.",
             })
         }
         const client = await prisma.client.findFirst({

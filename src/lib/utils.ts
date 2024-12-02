@@ -1,9 +1,9 @@
-import { twMerge } from "tw-merge"
-import clsx, { ClassValue } from "clsx"
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
 import { SafeParseError } from "zod"
+import { Sample } from "@prisma/client"
+import { merge as mergeClasses } from "@halvaradop/ui-core"
 
 /**
  * Merges the classes and returns a string
@@ -11,9 +11,7 @@ import { SafeParseError } from "zod"
  * @param classes classes to be merged
  * @returns a string with the merged classes
  */
-export const merge = (...classes: ClassValue[]): string => {
-    return twMerge(clsx(classes.filter(Boolean)))
-}
+export const merge = mergeClasses
 
 /**
  * Maps the fields of an object to a number
@@ -67,7 +65,9 @@ export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Pro
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`
     const { headers: headersInit, ...spread } = init
     try {
+        const signal = new AbortController().signal
         const response = await fetch(URL, {
+            signal,
             headers: {
                 "Content-Type": "application/json",
                 ...headersInit,
@@ -94,4 +94,139 @@ export const mapErrors = <T>(validate: SafeParseError<T>): T => {
         .filter((key) => errors[key as keyof typeof errors])
         .reduce((prev, now) => ({ ...prev, [now]: errors[now as keyof typeof errors]?.at(0) }), {})
     return schema as T
+}
+
+/**
+ * Adds the calculated values for b0 and b1 to the sample data.
+ *
+ * @param {Sample} json - The sample data to be calculated.
+ * @returns {{ b0: number, b1: number }} - The calculated values for b0 and b1.
+ */
+export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
+    const soilType = () => {
+        const value = json.soilType
+        if (value > 80) return -4
+        if (value >= 50) return -2
+        if (value >= 30) return 0
+        if (value >= 10) return 2
+        return 4
+    }
+
+    const soilResistivity = () => {
+        const value = json.soilResistivity
+        if (value > 500) return 4
+        if (value >= 200) return 2
+        if (value >= 50) return 0
+        if (value >= 20) return -2
+        if (value >= 10) return -4
+        return -6
+    }
+
+    const moistureContent = () => {
+        if (json.moistureContent < 20) return 0
+        return -1
+    }
+
+    const pHValue = () => {
+        const value = json.pHValue
+        if (value > 9) return 2
+        if (value >= 6) return 0
+        if (value >= 4) return -1
+        return -3
+    }
+
+    const bufferCapacityPH4_3 = () => {
+        if (json.bufferCapacityPH4_3 > 1000) return 3
+        if (json.bufferCapacityPH4_3 >= 200) return 1
+        return 0
+    }
+
+    const bufferCapacityPH7_0 = () => {
+        const value = json.bufferCapacityPH7_0
+        if (value > 30) return -10
+        if (value >= 20) return -8
+        if (value >= 10) return -6
+        if (value >= 5) return -4
+        if (value >= 2.5) return -2
+        return 0
+    }
+
+    const sulfurReducingBacteria = () => {
+        if (json.sulfurReducingBacteria > 10) return -6
+        if (json.sulfurReducingBacteria >= 5) return -3
+        return 0
+    }
+
+    const sulfateContent = () => {
+        if (json.sulfateContent > 10) return -3
+        if (json.sulfateContent >= 5) return -2
+        if (json.sulfateContent >= 2) return -1
+        return 0
+    }
+
+    const neutralSalts = () => {
+        const value = json.neutralSalts
+        if (value > 100) return -4
+        if (value >= 30) return -3
+        if (value >= 10) return -2
+        if (value >= 3) return -1
+        return 0
+    }
+
+    const externalCathodes = () => {
+        const value = json.externalCathodes
+        if (value > -0.3) return -10
+        if (value >= -0.4) return -8
+        if (value >= -0.5) return -6
+        return 0
+    }
+
+    const b0 = [
+        soilType(),
+        soilResistivity(),
+        moistureContent(),
+        pHValue(),
+        bufferCapacityPH4_3(),
+        bufferCapacityPH7_0(),
+        sulfurReducingBacteria(),
+        sulfateContent(),
+        neutralSalts(),
+        json.undergroundWaterPresence,
+    ].reduce((prev, now) => prev + now, 0)
+
+    const b1 = [
+        json.horizontalSoilHomogeneity,
+        json.verticalSoilHomogeneity,
+        json.soilTypeHomogeneity,
+        json.pHSoilHomogeneity,
+        externalCathodes(),
+    ].reduce((prev, now) => prev + now, 0)
+
+    return {
+        b0,
+        b1,
+    }
+}
+
+/**
+ * Converts a camelCase string to a slashCamel string
+ *
+ * @param str the camelCase string
+ * @returns a string with slashes separating the words
+ */
+export const camelCaseToHyphenCamel = (str: string): string => {
+    return str.replace(/([A-Z])/g, "-$1").toLowerCase()
+}
+
+/**
+ * TODO: implement
+ *
+ * Generate a gradient avatar based in the name
+ *
+ * @param name of the avatar
+ * @param size of the svg returned
+ * @returns {Image}
+ */
+export const getAvatar = async (name: string, size: number = 48) => {
+    return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
 }

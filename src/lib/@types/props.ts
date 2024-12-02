@@ -1,7 +1,14 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
-import { ActionState, Entry, MenuState } from "./types"
+import { ActionState, Entry } from "./types"
+import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
+import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
+import { Session } from "next-auth"
+
+export interface HeaderMenuProps {
+    onCloseMenu: () => void
+}
 
 export interface ProductProps {
     className?: string
@@ -21,12 +28,6 @@ export interface ProjectProps {
     year: string
 }
 
-export interface HeaderMenuProps {
-    pathname: string
-    menuState: MenuState
-    setMenuState: Dispatch<SetStateAction<MenuState>>
-}
-
 export interface FilterByProps {
     className?: string
     title: string
@@ -34,31 +35,26 @@ export interface FilterByProps {
 }
 
 export interface SampleListProps {
-    samples: Sample[]
+    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface TableCompaniesProps {
-    companies: (Omit<Client, "state"> & { phoneCompanies?: Pick<Phone, "number">[] })[]
+export interface TableClientsProps {
+    clients: (Omit<Client, "state"> & { phone?: Pick<Phone, "number">[] } & { user?: Pick<User, "firstName" | "lastName"> })[]
 }
 
-export interface TableUserPlantsProps {
-    userPlants: {
-        userId: number
-        plantId: number
-        plant?: Project
-        user?: Pick<User, "firstName" | "lastName">
-    }[]
+export interface TableProjectOnUserProps {
+    projectsOnUsers: (User & Project)[]
 }
 
 export interface TableUsersProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phoneUsers?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
 }
 
 export interface TablePlantsProps {
@@ -82,7 +78,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zone & { plant?: Pick<Project, "name"> })[]
+    zones: (Zone & { project?: Pick<Project, "name"> })[]
 }
 
 export interface InputListProps<T> {
@@ -92,4 +88,20 @@ export interface InputListProps<T> {
         name: string
         type: string
     }[]
+}
+
+export interface MenuRoutesProps {
+    className?: string
+    classTitle?: string
+    classOption?: string
+    session: Session | null
+}
+
+export type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
+}
+
+export type FormProps = FormVariantProps<typeof formVariants> & {
+    action: NonNullable<HTMLProps<HTMLFormElement>["action"]>
 }

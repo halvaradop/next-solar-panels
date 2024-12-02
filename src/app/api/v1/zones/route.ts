@@ -6,10 +6,10 @@ import { ResponseAPI } from "@/lib/@types/types"
 /**
  * Handle the GET request to retrieve all zones from the database.
  *
- * @returns {Promise<NextResponse>} - HTTP response with all zones.
+ * @returns {Promise<NextResponse>} - HTTP response containing all zones.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/zones")
+ * const response = await fetch("{domain}/api/v1/zones")
  * const data = await response.json()
  * ```
  */
@@ -34,19 +34,19 @@ export const GET = async (): Promise<NextResponse> => {
 }
 
 /**
- * Handle the POST request to create a new zone associated with a specific plant in the database.
+ * Handle the POST request to create a new zone in the database.
  *
  * @param {NextRequest} request - The HTTP request containing the information of the new zone.
  * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/zones", {
+ * const response = await fetch("{domain}/api/v1/zones", {
  *   method: "POST",
  *   body: JSON.stringify({
  *     latitude: 40.7128,
  *     longitude: -74.0060,
  *     name: "New Zone",
- *     plant: "1"
+ *     project: "1"
  *   })
  * })
  * const data = await response.json()
@@ -56,6 +56,21 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
         const { latitude, longitude, name, project } = response
+
+        const existcoordinates = await prisma.zone.findFirst({
+            where: {
+                latitude,
+                longitude,
+            },
+        })
+
+        if (existcoordinates) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "A zone with the specified coordinates already exists.",
+            })
+        }
         const newZone = await prisma.zone.create({
             data: {
                 latitude,

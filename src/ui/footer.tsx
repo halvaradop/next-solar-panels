@@ -4,9 +4,9 @@ export const Footer = () => {
     return (
         <footer className="py-20 base:py-24">
             <section className="w-11/12 mx-auto flex flex-col gap-y-10 font-medium text-center base:text-start lg:w-10/12 xl:max-w-screen-xl">
-                <h3 className="fluency-4xl">© 2024 - ACHE ENGINEERING</h3>
-                <div className="space-y-8 base:mt-10 base:flex base:items-start base:justify-between base:space-y-0">
-                    <ul className="flex justify-evenly items-center flex-wrap gap-x-5 base:flex-row base:gap-x-8">
+                <h3 className="fluency-4xl">© 2024 - ACHE ENGINEERING GmbH</h3>
+                <div className="space-y-8 base:mt-10 base:flex base:items-start base:justify-between base:space-y-0 base:space-x-10">
+                    <ul className="flex justify-evenly items-center flex-wrap gap-x-5 base:flex-row base:gap-x-10">
                         <li>
                             <Link href="/">HOME</Link>
                         </li>
@@ -14,10 +14,10 @@ export const Footer = () => {
                             <Link href="/#corrosion">CORROSION</Link>
                         </li>
                         <li>
-                            <Link href="/#solar-panels">SOLAR PANELS</Link>
+                            <Link href="/#about-us">ABOUT US</Link>
                         </li>
                         <li>
-                            <Link href="/">ABOUT US</Link>
+                            <Link href="/imprint">IMPRINT</Link>
                         </li>
                         <li>
                             <Link href="/dashboard">LOGIN</Link>
