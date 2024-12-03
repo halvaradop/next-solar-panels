@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { Params } from "@/lib/@types/types"
 import { getSampleById } from "@/lib/services/samples"
-import { camelCaseToWords } from "@/lib/utils"
+import { camelCaseToWords, evalutionGrosor, sampleCalcs } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
 
@@ -15,7 +15,12 @@ export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const slug = (await params).sampleId
+    console.log(slug)
     const getSample = await getSampleById(slug)
+    console.log(getSample)
+    const pdfGnerate = evalutionGrosor(getSample)
+    console.log(pdfGnerate)
+
     const {
         zoneId,
         sampleId,

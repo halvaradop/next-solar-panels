@@ -30,7 +30,7 @@ export const addSampleAction = async (previous: AddSampleActionState, formData: 
     /**
      * TODO: fix the zoneId
      */
-    formData.set("zoneId", "9d0d8e89-81f3-41c9-b3c0-7766b26f93f1")
+    //formData.set("zoneId", "9d0d8e89-81f3-41c9-b3c0-7766b26f93f1")
     const entries = Object.fromEntries(formData)
     mapToNumber(entries, ["zoneId", "userId"], false)
     const validate = SampleSchema.safeParse(entries)
