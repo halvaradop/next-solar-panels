@@ -304,6 +304,8 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
         galvanising = ""
         message += "\nAlerta: Presencia de agua subterránea detectada. Considere materiales alternativos."
     }
+        steel = " "
+        galvanising = ""
 
     return { b0, b1 }
 }
