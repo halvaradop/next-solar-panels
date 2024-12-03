@@ -15,11 +15,8 @@ export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<
 
 const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const slug = (await params).sampleId
-    console.log(slug)
     const getSample = await getSampleById(slug)
-    console.log(getSample)
-    const pdfGnerate = evalutionGrosor(getSample)
-    console.log(pdfGnerate)
+    ///const pdfGnerate = evalutionGrosor(getSample)
 
     const {
         zoneId,

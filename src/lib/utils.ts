@@ -238,7 +238,7 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
     const soilResistivity = json.soilResistivity
     const ph = json.pHValue
     const sulfateContent = json.sulfateContent * 96.06
-    const chlorideContent = json.chlorideContent * 35.45
+    //const chlorideContent = json.chlorideContent * 35.45;
 
     const b0: string = (() => {
         const value = json.b0
@@ -282,21 +282,26 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
             galvanising = valueGalvanised(ph, soilResistivity).Galvanised
         }
     } else if (soilResistivity <= 5) {
+        steel = " "
+        galvanising = ""
         message =
             "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
     }
-    console.log(steel)
-    console.log(galvanising)
+    ///console.log(steel)
+    /// console.log(galvanising)
     /* const reespuest = valueSteel(ph , soilResistivity)
-    console.log(reespuest)
+    ///console.log(reespuest)
      if (chlorideContent <= 200 && sulfateContent <= 1000) {
-         message += "\nProcedimiento: No agresivo, usar tabla 4.";
+         steel
+         galvanising
      } else if (chlorideContent > 200 || sulfateContent > 1000) {
         steel = valueSteel(ph , soilResistivity).steel
         galvanising = valueGalvanised(ph, soilResistivity).Galvanised
      }*/
 
     if (json.undergroundWaterPresence) {
+        steel = " "
+        galvanising = ""
         message += "\nAlerta: Presencia de agua subterránea detectada. Considere materiales alternativos."
     }
 
