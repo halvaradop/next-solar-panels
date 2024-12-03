@@ -260,7 +260,7 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
     if (soilResistivity >= 100) {
         if (ph >= 5.2 && ph <= 11.8) {
             steel = "15 for the first two years, 4 for subsequent years µm/y "
-            galvanising = valueGalvanised(ph, soilResistivity).Galvanised
+            galvanising = "12 µm/y"
         } else {
             steel = valueSteel(ph, soilResistivity).steel
             galvanising = valueGalvanised(ph, soilResistivity).Galvanised
@@ -282,8 +282,6 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
             galvanising = valueGalvanised(ph, soilResistivity).Galvanised
         }
     } else if (soilResistivity <= 5) {
-        steel = " "
-        galvanising = ""
         message =
             "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
     }
@@ -300,13 +298,8 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
      }*/
 
     if (json.undergroundWaterPresence) {
-        steel = " "
-        galvanising = ""
         message += "\nAlerta: Presencia de agua subterránea detectada. Considere materiales alternativos."
     }
-        steel = " "
-        galvanising = ""
-
     return { b0, b1 }
 }
 
@@ -339,7 +332,7 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueDrained = Math.max(valueDrained, 40)
         valueNotDrained = Math.max(valueNotDrained, 300)
     }
-    let steel =
+    const steel =
         "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
     return {
         steel,
@@ -382,7 +375,7 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueDrained = Math.max(valueDrained, 1)
         valueNotDrained = valueDrained
     }
-    let Galvanised =
+    const Galvanised =
         "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
     return {
         Galvanised,
