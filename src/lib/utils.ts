@@ -230,3 +230,154 @@ export const camelCaseToHyphenCamel = (str: string): string => {
 export const getAvatar = async (name: string, size: number = 48) => {
     return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
 }
+
+export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, string>> => {
+    let message = ""
+    let steel = ""
+    let galvanising = ""
+    const soilResistivity = json.soilResistivity
+    const ph = json.pHValue
+    const sulfateContent = json.sulfateContent * 96.06
+    //const chlorideContent = json.chlorideContent * 35.45;
+
+    const b0: string = (() => {
+        const value = json.b0
+        if (value >= 0) return "very low|la"
+        if (value < -1 && value > -4) return "low|lb"
+        if (value <= -5 && value > -10) return "II|Medium"
+        if (value <= -10) return "III|High"
+        return "nothihg"
+    })()
+    const b1: string = (() => {
+        const value = json.b1
+        if (value >= 0) return "very low|very low"
+        if (value < -1 && value >= -4) return "low|very low"
+        if (value <= -5 && value >= -10) return "low|Medium"
+        if (value < -10) return "High | Medium"
+        return "nothihg"
+    })()
+
+    if (soilResistivity >= 100) {
+        if (ph >= 5.2 && ph <= 11.8) {
+            steel = "15 for the first two years, 4 for subsequent years µm/y "
+            galvanising = "12 µm/y"
+        } else {
+            steel = valueSteel(ph, soilResistivity).steel
+            galvanising = valueGalvanised(ph, soilResistivity).Galvanised
+        }
+    } else if (soilResistivity > 20 && soilResistivity < 100) {
+        if (ph >= 6.2 && ph <= 9.8) {
+            steel = "15 for the first two years, 4 for subsequent years µm/y "
+            galvanising = "12 µm/y"
+        } else {
+            steel = valueSteel(ph, soilResistivity).steel
+            galvanising = valueGalvanised(ph, soilResistivity).Galvanised
+        }
+    } else if (soilResistivity > 5 && soilResistivity <= 20) {
+        if (ph >= 5.2 && ph <= 9.8) {
+            steel = " "
+            galvanising = ""
+        } else {
+            steel = valueSteel(ph, soilResistivity).steel
+            galvanising = valueGalvanised(ph, soilResistivity).Galvanised
+        }
+    } else if (soilResistivity <= 5) {
+        message =
+            "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
+    }
+    ///console.log(steel)
+    /// console.log(galvanising)
+    /* const reespuest = valueSteel(ph , soilResistivity)
+    ///console.log(reespuest)
+     if (chlorideContent <= 200 && sulfateContent <= 1000) {
+         steel
+         galvanising
+     } else if (chlorideContent > 200 || sulfateContent > 1000) {
+        steel = valueSteel(ph , soilResistivity).steel
+        galvanising = valueGalvanised(ph, soilResistivity).Galvanised
+     }*/
+
+    if (json.undergroundWaterPresence) {
+        message += "\nAlerta: Presencia de agua subterránea detectada. Considere materiales alternativos."
+    }
+    return { b0, b1 }
+}
+
+export const valueSteel = (ph: number, soilResistivity: number): { steel: string } => {
+    let valueDrained = 0
+    let valueNotDrained = 0
+    if (ph > 5) {
+        valueDrained = 10
+        valueNotDrained = 10
+    } else if (ph >= 4 && ph <= 5) {
+        valueDrained = 10
+        valueNotDrained = 20
+    } else if (ph >= 3 && ph <= 3.9) {
+        valueDrained = 20
+        valueNotDrained = 40
+    } else {
+        valueDrained = 40
+        valueNotDrained = 300
+    }
+    if (soilResistivity > 50) {
+        valueDrained = Math.max(valueDrained, 10)
+        valueNotDrained = Math.max(valueNotDrained, 10)
+    } else if (soilResistivity >= 20 && soilResistivity <= 50) {
+        valueDrained = Math.max(valueDrained, 10)
+        valueNotDrained = Math.max(valueNotDrained, 20)
+    } else if (soilResistivity >= 10 && soilResistivity <= 20) {
+        valueDrained = Math.max(valueDrained, 20)
+        valueNotDrained = Math.max(valueNotDrained, 40)
+    } else {
+        valueDrained = Math.max(valueDrained, 40)
+        valueNotDrained = Math.max(valueNotDrained, 300)
+    }
+    const steel =
+        "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
+    return {
+        steel,
+    }
+}
+
+export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanised: string } => {
+    let valueDrained = 0
+    let valueNotDrained = 0
+    if (ph > 4) {
+        valueDrained = 6.5
+        valueNotDrained = 20
+    } else if (ph >= 4 && ph <= 4.9) {
+        valueDrained = 5.2
+        valueNotDrained = 13.3
+    } else if (ph >= 5 && ph <= 7.9) {
+        valueDrained = 4.3
+        valueNotDrained = 11
+    } else if (ph >= 8 && ph <= 9) {
+        valueDrained = 6.5
+        valueNotDrained = 12.1
+    } else {
+        valueDrained = 8.6
+        valueNotDrained = 17.2
+    }
+
+    if (soilResistivity > 5) {
+        valueDrained = Math.max(valueDrained, 3.5)
+        valueNotDrained = valueDrained
+    } else if (soilResistivity >= 5 && soilResistivity <= 10) {
+        valueDrained = Math.max(valueDrained, 3.5)
+        valueNotDrained = valueDrained
+    } else if (soilResistivity >= 10 && soilResistivity <= 20) {
+        valueDrained = Math.max(valueDrained, 1.5)
+        valueNotDrained = valueDrained
+    } else if (soilResistivity >= 20 && soilResistivity <= 50) {
+        valueDrained = Math.max(valueDrained, 1.5)
+        valueNotDrained = valueDrained
+    } else {
+        valueDrained = Math.max(valueDrained, 1)
+        valueNotDrained = valueDrained
+    }
+    const Galvanised =
+        "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
+    return {
+        Galvanised,
+    }
+}

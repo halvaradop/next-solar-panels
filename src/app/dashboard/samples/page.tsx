@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/common/filter"
 import { getSamplesByUser, getUserById, getZonesByClientId } from "@/lib/services"
+import { evalutionGrosor } from "@/lib/utils"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -22,7 +23,12 @@ const getInformation = async () => {
 
 const DashboardSamplesPage = async () => {
     const { zones, samples } = await getInformation()
+    ///const pdfGnerate = evalutionGrosor(samples[5])
 
+    ///const [part1, parte] = pdfGnerate.b0?.split("|") || ""
+    ///console.log(part1)
+    ///console.log(parte)
+    /// console.log(pdfGnerate)
     return (
         <section className="min-h-main py-4 space-y-4">
             <Filter
