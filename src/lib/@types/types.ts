@@ -1,5 +1,6 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address, Role } from "@prisma/client"
+import { string } from "zod"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -40,6 +41,15 @@ export interface Params<T extends string> {
     searchParams: Promise<ReadonlyURLSearchParams>
 }
 
+export type Order = Sample & {
+    zone?: { name: string; latitude: string; longitude: string }
+    user?: Pick<User, "firstName" | "lastName">
+    valueb0?: string
+    valueb1?: string
+    steel?: string
+    galvanising?: string
+    message?: string
+}
 export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
