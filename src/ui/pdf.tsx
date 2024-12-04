@@ -3,110 +3,197 @@ import { Page, Text, View, Document, StyleSheet, Font, Image } from "@react-pdf/
 import logoAche from "@/public/logoAche.png"
 import { MyDocumentProps } from "@/lib/@types/props"
 
-Font.register({
-    family: "Arial",
-    src: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/fonts/Roboto-Regular.ttf",
-})
-
 const styles = StyleSheet.create({
     page: {
         padding: 30,
         fontSize: 10,
+        fontFamily: "Helvetica",
+        lineHeight: 1.5,
+        backgroundColor: "#f0f2f5",
     },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        borderBottom: "3px solid #0056b3",
+        paddingBottom: 10,
         marginBottom: 20,
     },
     logo: {
-        width: 100,
-        height: 50,
-    },
-    title: {
-        textAlign: "center",
-        fontWeight: "bold",
-        fontSize: 12,
-        marginBottom: 10,
-    },
-    log: {
-        width: 80,
+        width: 90,
         height: "auto",
     },
+    headerInfo: {
+        flex: 1,
+        marginLeft: 15,
+    },
+    headerText: {
+        fontSize: 10,
+        marginBottom: 5,
+        color: "#333",
+    },
+    boldText: {
+        fontWeight: "bold",
+        fontSize: 12,
+        color: "#0056b3",
+    },
+    sectionTitle: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginBottom: 10,
+        textAlign: "center",
+        textTransform: "uppercase",
+        color: "#333",
+        borderBottom: "2px solid #0056b3",
+        paddingBottom: 5,
+    },
     table: {
-        display: "flex",
-        width: "auto",
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "#000",
+        width: "100%",
         marginTop: 20,
     },
     tableRow: {
         flexDirection: "row",
+        borderBottomWidth: 1,
+        borderBottomColor: "#d6d6d6",
+        borderStyle: "solid",
+    },
+    tableHeader: {
+        backgroundColor: "#0056b3",
+        color: "#fff",
+        fontWeight: "bold",
+        textAlign: "center",
+        padding: 10,
+        flex: 1,
+    },
+    tableCell: {
+        borderWidth: 1,
+        borderColor: "#d6d6d6",
+        padding: 10,
+        textAlign: "left",
+        fontSize: 10,
+        flex: 1,
+    },
+    tableRowInformation: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginVertical: 4,
+    },
+    tableCellInformation: {
+        padding: 8,
+        fontSize: 10,
+        flex: 1,
+        color: "#555",
+    },
+    boldCell: {
+        fontWeight: "bold",
+        fontSize: 10,
+        color: "#0056b3",
     },
     footer: {
         position: "absolute",
         bottom: 30,
-        left: 30,
-        right: 30,
         textAlign: "center",
         fontSize: 8,
-        color: "#666",
+        color: "#777",
     },
-    tableCell: {
-        flex: 1,
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "#000",
-        padding: 5,
-        textAlign: "center",
+    suggestionBox: {
+        marginTop: 30,
+        padding: 10,
+        backgroundColor: "#fff3cd",
+        borderRadius: 5,
+        border: "1px solid #ffeeba",
     },
-    text: {
-        marginBottom: 10,
+    suggestionTitle: {
+        fontWeight: "bold",
+        fontSize: 12,
+        color: "#856404",
+        marginBottom: 5,
+    },
+    suggestionText: {
+        fontSize: 10,
+        color: "#856404",
     },
 })
 
-export const MyDocument = ({ sampleId, userId }: MyDocumentProps) => (
+const splitValue = (value: string | undefined): string[] => {
+    const safeValue = value ?? ""
+    return safeValue.split("|")
+}
+
+export const MyDocument = ({ samples }: MyDocumentProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.header}>
-                <View>
-                    <Image src={logoAche.src} style={styles.log}></Image>
+                <Image src={logoAche.src} style={styles.logo} />
+                <View style={styles.headerInfo}>
+                    <Text style={[styles.headerText, styles.boldText]}>ACHE ENGINEERING GmbH</Text>
+                    <Text style={styles.headerText}>Renewable energy - Corrosion protection</Text>
+                    <Text style={styles.headerText}>Röntgenweg 9, D-35638 Leun</Text>
+                    <Text style={styles.headerText}>Phone: +49 (0) 6473-92254-0</Text>
+                    <Text style={styles.headerText}>Fax: +49 (0) 6473-92254-29</Text>
                 </View>
                 <View>
-                    <Text style={styles.text}>ID: {sampleId}</Text>
-                </View>
-                <Text>Results {userId}</Text>
-                <View>
-                    <Text
-                        style={{ fontSize: 10 }}
-                        render={({ pageNumber, totalPages }) => `
-                           Page: ${pageNumber} of ${totalPages}`}
-                    />
+                    <Text style={styles.headerText}>Fecha: {new Date().toLocaleDateString()}</Text>
                 </View>
             </View>
-            <Text style={styles.title}>Resul corrocion</Text>
-            <Text style={styles.text}>Validation</Text>
-            <Text style={styles.text}>Text okd description</Text>
+
+            <Text style={styles.sectionTitle}>Result Of Sample</Text>
+
+            <View style={styles.table}>
+                <View style={styles.tableRowInformation}>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>User</Text>
+                    <Text style={styles.tableCellInformation}>
+                        {samples.user?.firstName} {samples.user?.lastName}
+                    </Text>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Zone</Text>
+                    <Text style={styles.tableCellInformation}>{samples.zone?.name}</Text>
+                </View>
+                <View style={styles.tableRowInformation}>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Coordinates</Text>
+                    <Text style={styles.tableCellInformation}>
+                        {samples.zone?.latitude} , {samples.zone?.longitude}
+                    </Text>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Fecha</Text>
+                    <Text style={styles.tableCellInformation}>{samples.date.toString()}</Text>
+                </View>
+            </View>
+
+            <Text style={styles.sectionTitle}>Results</Text>
             <View style={styles.table}>
                 <View style={styles.tableRow}>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>B0</Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>{}</Text>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Steel Loss Rates</Text>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Galvanising Loss Rates</Text>
                 </View>
                 <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>B1</Text>
-                    <Text style={styles.tableCell}>{}</Text>
-                </View>
-                <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>Zone</Text>
-                    <Text style={styles.tableCell}>{}</Text>
-                </View>
-                <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}></Text>
-                    <Text style={styles.tableCell}></Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.steel)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.steel)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.galvanising)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.galvanising)[1]}</Text>
                 </View>
             </View>
-            <Text style={styles.footer}>Ache Enngenirei</Text>
+
+            <Text style={styles.sectionTitle}>Soil Class and Corrosion Analysis</Text>
+            <View style={styles.table}>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Soil Class</Text>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Corrosion Stress</Text>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Pitting Corrosion Probability</Text>
+                    <Text style={[styles.tableCell, styles.tableHeader]}>Surface Corrosion Probability</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>{splitValue(samples.valueb0)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.valueb0)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.valueb1)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(samples.valueb1)[1]}</Text>
+                </View>
+            </View>
+
+            <View style={styles.suggestionBox}>
+                <Text style={styles.suggestionTitle}>Tip/Warning</Text>
+                <Text style={styles.suggestionText}>{samples.message}</Text>
+            </View>
+
+            <Text style={styles.footer}>Responsable del análisis: Nombre del responsable</Text>
         </Page>
     </Document>
 )

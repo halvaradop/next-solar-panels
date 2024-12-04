@@ -1,7 +1,7 @@
 import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
-import { ActionState, Entry } from "./types"
+import { ActionState, Entry, Order } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
@@ -107,17 +107,5 @@ export type FormProps = FormVariantProps<typeof formVariants> & {
 }
 
 export interface MyDocumentProps {
-    sampleId: string
-    userId: string
-    date: Date
-    soilType: number
-    soilResistivity: number
-    moistureContent: number
-    pHValue: number
-    bufferCapacityPH4_3: number
-    bufferCapacityPH7_0: number
-    sulfurReducingBacteria: number
-    zoneId: string
-    B0?: number
-    B1?: number
+    samples: Order
 }

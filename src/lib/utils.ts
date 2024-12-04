@@ -231,7 +231,9 @@ export const getAvatar = async (name: string, size: number = 48) => {
     return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
 }
 
-export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, string>> => {
+export const evalutionGrosor = (
+    json: Sample
+): { valueb0: string; valueb1: string; steel: string; galvanising: string; message: string } => {
     let message = ""
     let steel = ""
     let galvanising = ""
@@ -240,7 +242,7 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
     const sulfateContent = json.sulfateContent * 96.06
     //const chlorideContent = json.chlorideContent * 35.45;
 
-    const b0: string = (() => {
+    const valueb0: string = (() => {
         const value = json.b0
         if (value >= 0) return "very low|la"
         if (value < -1 && value > -4) return "low|lb"
@@ -248,7 +250,7 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
         if (value <= -10) return "III|High"
         return "nothihg"
     })()
-    const b1: string = (() => {
+    const valueb1: string = (() => {
         const value = json.b1
         if (value >= 0) return "very low|very low"
         if (value < -1 && value >= -4) return "low|very low"
@@ -275,8 +277,8 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
         }
     } else if (soilResistivity > 5 && soilResistivity <= 20) {
         if (ph >= 5.2 && ph <= 9.8) {
-            steel = " "
-            galvanising = ""
+            steel = "15 for the first two years, 4 for subsequent years µm/y"
+            galvanising = "15 for the first two years, 4 for subsequent years µm/y"
         } else {
             steel = valueSteel(ph, soilResistivity).steel
             galvanising = valueGalvanised(ph, soilResistivity).Galvanised
@@ -285,8 +287,7 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
         message =
             "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
     }
-    ///console.log(steel)
-    /// console.log(galvanising)
+
     /* const reespuest = valueSteel(ph , soilResistivity)
     ///console.log(reespuest)
      if (chlorideContent <= 200 && sulfateContent <= 1000) {
@@ -298,9 +299,9 @@ export const evalutionGrosor = (json: Sample): Partial<Record<keyof Sample, stri
      }*/
 
     if (json.undergroundWaterPresence) {
-        message += "\nAlerta: Presencia de agua subterránea detectada. Considere materiales alternativos."
+        message += "\nAlert: Presence of groundwater detected. Consider alternative materials."
     }
-    return { b0, b1 }
+    return { valueb0, valueb1, steel, galvanising, message }
 }
 
 export const valueSteel = (ph: number, soilResistivity: number): { steel: string } => {
@@ -333,7 +334,11 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueNotDrained = Math.max(valueNotDrained, 300)
     }
     const steel =
-        "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
+        "corrosion loss on dreanable soils is " +
+        valueDrained +
+        "µm/y|corrosion loss in non-drainable soils is " +
+        valueNotDrained +
+        "µm/y"
     return {
         steel,
     }
@@ -376,7 +381,11 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueNotDrained = valueDrained
     }
     const Galvanised =
-        "corrosion loss on dreanable soils is " + valueDrained + "|corrosion loss in non-drainable soils is " + valueNotDrained
+        "corrosion loss on dreanable soils is " +
+        valueDrained +
+        "µm/y|corrosion loss in non-drainable soils is " +
+        valueNotDrained +
+        "µm/y"
     return {
         Galvanised,
     }

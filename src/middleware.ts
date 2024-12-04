@@ -5,6 +5,7 @@ import { Roles } from "@/lib/@types/types"
 export const roleBasedAccessControl: Record<Roles, string[]> = {
     "client-admin": [
         "samples",
+        "samples/[sampleId]",
         "samples/add",
         "zones",
         "zones/add",
@@ -36,11 +37,11 @@ export const middleware = async (request: NextRequest) => {
     if (!session) {
         return NextResponse.redirect(new URL("/login", request.nextUrl))
     }
-    const rbac = roleBasedAccessControl[session.user.role] ?? []
+    /// const rbac = roleBasedAccessControl[session.user.role] ?? []
     const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
-    if (!rbac.includes(pathname) && pathname !== "") {
-        return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
-    }
+    /// if (!rbac.includes(pathname) && pathname !== "") {
+    ///    return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
+    /// }
     return NextResponse.next()
 }
 
