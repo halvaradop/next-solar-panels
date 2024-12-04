@@ -288,15 +288,18 @@ export const evalutionGrosor = (
             "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
     }
 
-    /* const reespuest = valueSteel(ph , soilResistivity)
-    ///console.log(reespuest)
-     if (chlorideContent <= 200 && sulfateContent <= 1000) {
-         steel
-         galvanising
-     } else if (chlorideContent > 200 || sulfateContent > 1000) {
+    /* 
+    TODO: implement
+
+    const reespuest = valueSteel(ph , soilResistivity)
+    if (chlorideContent <= 200 && sulfateContent <= 1000) {
+        steel
+        galvanising
+    } else if (chlorideContent > 200 || sulfateContent > 1000) {
         steel = valueSteel(ph , soilResistivity).steel
         galvanising = valueGalvanised(ph, soilResistivity).Galvanised
-     }*/
+    }
+    */
 
     if (json.undergroundWaterPresence) {
         message += "\nAlert: Presence of groundwater detected. Consider alternative materials."

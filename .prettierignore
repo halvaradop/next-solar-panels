@@ -1,7 +1,9 @@
-# build
+# Artifacts
 node_modules
 dist
 .next
+playwright-report
+test-results
 
 # files
 .gitignore

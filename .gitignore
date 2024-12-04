@@ -38,3 +38,7 @@ next-env.d.ts
 
 # files
 package-lock.json
+
+# artifacts
+playwright-report
+test-results

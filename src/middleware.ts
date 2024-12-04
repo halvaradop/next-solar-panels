@@ -20,8 +20,8 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "users on projects",
     ],
     "internal-employee": ["samples", "zones", "users", "clients", "projects", "users-on-projects", "users on projects"],
-    user: ["samples", "samples/add", "zones", "zones/add", "projects", "projects/add"],
-    "user-employee": ["samples", "samples/add"],
+    user: ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
+    "user-employee": ["samples", "samples/add", "samples/[sampleId]"],
 }
 
 /**
@@ -37,11 +37,14 @@ export const middleware = async (request: NextRequest) => {
     if (!session) {
         return NextResponse.redirect(new URL("/login", request.nextUrl))
     }
-    /// const rbac = roleBasedAccessControl[session.user.role] ?? []
+    const rbac = roleBasedAccessControl[session.user.role] ?? []
     const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
-    /// if (!rbac.includes(pathname) && pathname !== "") {
-    ///    return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
-    /// }
+    if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
+        return NextResponse.next()
+    }
+    if (!rbac.includes(pathname) && pathname !== "") {
+        return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
+    }
     return NextResponse.next()
 }
 
