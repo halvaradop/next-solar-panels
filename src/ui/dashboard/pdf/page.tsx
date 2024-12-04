@@ -6,7 +6,7 @@ import { Button } from "@halvaradop/ui-button"
 import { useEffect, useState } from "react"
 import { Order } from "@/lib/@types/types"
 
-const DowloandBotton = ({ samples }: { samples: Order }) => {
+const DowloandButton = ({ samples }: { samples: Order }) => {
     const [isClient, setIsClient] = useState(false)
     useEffect(() => {
         setIsClient(true)
@@ -23,4 +23,4 @@ const DowloandBotton = ({ samples }: { samples: Order }) => {
     )
 }
 
-export default DowloandBotton
+export default DowloandButton

@@ -5,7 +5,7 @@ import { getSampleById } from "@/lib/services/samples"
 import { camelCaseToWords, evalutionGrosor, sampleCalcs } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
-import DowloandBotton from "@/ui/dashboard/pdf/page"
+import DowloandButton from "@/ui/dashboard/pdf/page"
 
 export const generateMetadata = async ({ params }: Params<"sampleId">): Promise<Metadata> => {
     const slug = (await params).sampleId
@@ -19,7 +19,6 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
     const getSample = await getSampleById(slug)
     const pdfGnerate = evalutionGrosor(getSample)
 
-    const [part1, parte] = pdfGnerate.valueb0?.split("|") || ""
     const valueb0 = pdfGnerate.valueb0
     const valueb1 = pdfGnerate.valueb1
     const steel = pdfGnerate.steel
@@ -32,7 +31,7 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
         userId,
         date: dateTime,
         zone: { name },
-        user: { firstName, lastName },
+        user,
         ...spread
     } = getSample
     const date = new Date(dateTime).toLocaleString()
@@ -69,7 +68,7 @@ const SampleByIdPage = async ({ params }: Params<"sampleId">) => {
                     </tbody>
                 </table>
             </article>
-            <DowloandBotton samples={extendedSample} />
+            <DowloandButton samples={extendedSample} />
         </section>
     )
 }

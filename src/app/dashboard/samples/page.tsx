@@ -4,8 +4,6 @@ import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/common/filter"
 import { getSamplesByUser, getUserById, getZonesByClientId } from "@/lib/services"
-import { evalutionGrosor } from "@/lib/utils"
-import DowloandBotton from "@/ui/dashboard/pdf/page"
 
 export const metadata: Metadata = {
     title: "List of samples",
