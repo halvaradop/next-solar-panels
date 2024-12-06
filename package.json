@@ -28,6 +28,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv-cli": "^7.4.4",
     "framer-motion": "^11.11.17",
+    "motion": "12.0.0-alpha.2",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
     "react": "19.0.0-rc.1",

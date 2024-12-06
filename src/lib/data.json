@@ -140,12 +140,12 @@
   ],
   "userInputs": [
     {
-      "label": "First name",
+      "label": "First Name",
       "name": "firstName",
       "type": "text"
     },
     {
-      "label": "Last name",
+      "label": "Last Name",
       "name": "lastName",
       "type": "text"
     },
@@ -160,12 +160,12 @@
       "type": "password"
     },
     {
-      "label": "FAX",
+      "label": "Fax",
       "name": "fax",
       "type": "text"
     },
     {
-      "label": "Web Sitie",
+      "label": "Website",
       "name": "website",
       "type": "text"
     },
@@ -214,7 +214,7 @@
       "type": "text"
     },
     {
-      "label": "Web Sitie",
+      "label": "Website",
       "name": "website",
       "type": "text"
     },
@@ -226,7 +226,7 @@
   ],
   "projectInputs": [
     {
-      "label": "Project name",
+      "label": "Project Name",
       "name": "name",
       "type": "text"
     },

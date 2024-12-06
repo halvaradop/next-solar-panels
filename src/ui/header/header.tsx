@@ -2,9 +2,11 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { AnimatePresence } from "framer-motion"
 import { HeaderMenu } from "./header-menu"
 
+/**
+ * TODO: re-implement animations from frame-motion
+ */
 export const Header = () => {
     const pathname = usePathname()
     const [menuState, setMenuState] = useState({
@@ -44,7 +46,7 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded bg-white" />
                     <span className="w-8 h-0.5 block rounded bg-white" />
                 </div>
-                <AnimatePresence mode="wait">{isOpenMenu && <HeaderMenu onCloseMenu={handleCloseMenu} />}</AnimatePresence>
+                {isOpenMenu && <HeaderMenu onCloseMenu={handleCloseMenu} />}
             </nav>
         </header>
     )
