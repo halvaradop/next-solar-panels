@@ -63,4 +63,4 @@ export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "
     clients: { clientId: string }[]
 }
 
-export type Roles = "client-admin" | "internal-employee" | "user" | "user-employee"
+export type Roles = "client-admin" | "client-user" | "admin"

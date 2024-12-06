@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 import { Roles } from "@/lib/@types/types"
 
 export const roleBasedAccessControl: Record<Roles, string[]> = {
-    "client-admin": [
+    admin: [
         "samples",
         "samples/[sampleId]",
         "samples/add",
@@ -19,18 +19,16 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "users-on-projects/add",
         "users on projects",
     ],
-    "internal-employee": ["samples", "zones", "users", "clients", "projects", "users-on-projects", "users on projects"],
-    user: ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
-    "user-employee": ["samples", "samples/add", "samples/[sampleId]"],
+    "client-admin": ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
+    "client-user": ["samples", "samples/add", "samples/[sampleId]"],
 }
 
 /**
  * Middleware to check if the user is authenticated. If not, redirect to the login page.
  * There are four roles:
+ * - `admin`
  * - `client-admin`
- * - `internal-employee`
- * - `user`
- * - `user-employee`
+ * - `client-user`
  */
 export const middleware = async (request: NextRequest) => {
     const session = await auth()
