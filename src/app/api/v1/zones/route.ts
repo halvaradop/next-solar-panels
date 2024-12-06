@@ -59,7 +59,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
         const existName = await prisma.zone.findFirst({
             where: {
-               name
+                name,
             },
         })
 

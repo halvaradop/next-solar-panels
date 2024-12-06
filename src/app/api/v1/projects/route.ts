@@ -64,10 +64,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             })
         }
         const userId = user
-          
+
         const existName = await prisma.project.findFirst({
             where: {
-               name
+                name,
             },
         })
 
