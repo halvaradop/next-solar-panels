@@ -47,11 +47,11 @@ export const Login = () => {
             </Label>
             <p className="text-xs text-neutral-600 mb-3">
                 <span>By continuing, you agree to the </span>
-                <Link className="text-neutral-800 underline" href="/">
+                <Link className="text-neutral-800 underline" href="/terms-of-use">
                     Terms of Use
                 </Link>
                 <span> and </span>
-                <Link className="text-neutral-800 underline" href="/">
+                <Link className="text-neutral-800 underline" href="/privacy-policy">
                     Privacy Policy
                 </Link>
                 <span>.</span>
