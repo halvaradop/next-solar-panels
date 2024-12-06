@@ -1,15 +1,21 @@
 "use client"
+import Image from "next/image"
 import Link from "next/link"
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import { Form, Input, Label, Submit } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import { loginAction } from "@/lib/actions"
+import visibility from "@/public/visibility.svg"
+import visibilityOff from "@/public/visibility-off.svg"
 
 export const Login = () => {
+    const [isVisible, setIsVisible] = useState(false)
     const [state, formAction] = useActionState(loginAction, {
         message: "",
         isSuccess: false,
     })
+
+    const handleVisibility = () => setIsVisible(!isVisible)
 
     return (
         <Form className="w-full !p-0 flex flex-col gap-y-4" action={formAction}>
@@ -22,13 +28,21 @@ export const Login = () => {
                     name="email"
                 />
             </Label>
-            <Label className="w-full text-neutral-700 text-left" size="sm">
-                Password
+            <Label className="w-full mt-6 flex items-center text-left" size="sm">
+                <Label className="absolute -top-6 text-neutral-700" size="sm">
+                    Password
+                </Label>
                 <Input
-                    className="mt-1 focus-within:border-black focus-within:ring-black"
-                    type="password"
+                    className="focus-within:border-black focus-within:ring-black"
+                    type={isVisible ? "text" : "password"}
                     variant="outline"
                     name="password"
+                />
+                <Image
+                    className="absolute right-2 hover:cursor-pointer"
+                    src={isVisible ? visibility : visibilityOff}
+                    alt={isVisible ? "Hide password" : "Show password"}
+                    onClick={handleVisibility}
                 />
             </Label>
             <p className="text-xs text-neutral-600 mb-3">

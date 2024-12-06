@@ -20,6 +20,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                         userId: true,
                         email: true,
                         firstName: true,
+                        lastName: true,
                         password: true,
                         role: {
                             select: {
@@ -30,12 +31,19 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
                 })
                 if (authorized) {
                     const isEquals = password === authorized.password
+                    const {
+                        email,
+                        firstName,
+                        lastName,
+                        role: { roleName: role },
+                    } = authorized
                     if (isEquals) {
                         return {
-                            email: authorized.email,
-                            name: authorized.firstName,
+                            email,
+                            firstName,
+                            lastName,
                             id: authorized.userId.toString(),
-                            role: authorized.role?.roleName as Roles,
+                            role: role as Roles,
                         }
                     }
                 }
