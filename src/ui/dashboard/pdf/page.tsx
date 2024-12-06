@@ -11,9 +11,15 @@ const DowloandButton = ({ samples }: { samples: Order }) => {
     useEffect(() => {
         setIsClient(true)
     }, [])
-
+    const generateFileName = () => {
+        const currentDate = new Date().toLocaleDateString().replace(/\//g, "-")
+        const customerName = samples.zone?.project?.name.replace(/\s+/g, "_")
+        const clientName = samples.zone?.project?.clients?.name.replace(/\s+/g, "_")
+        // const orderId = samples.orderId;
+        return `${customerName}_${currentDate}.pdf`
+    }
     return isClient ? (
-        <PDFDownloadLink document={<MyDocument samples={samples} />} fileName="mi_archivo.pdf">
+        <PDFDownloadLink document={<MyDocument samples={samples} />} fileName={generateFileName()}>
             <Button variant={"ghost"} className="flex gap-2">
                 <p>Invoice</p>
             </Button>

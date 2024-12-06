@@ -8,7 +8,19 @@ import { getFetch } from "@/lib/utils"
  * @returns {Promise<Sample>} - A sample by its id
  */
 export const getSampleById = async <
-    T extends object = Sample & { zone: { name: string; latitude: string; longitude: string } } & {
+    T extends object = Sample & {
+        zone: {
+            name: string
+            latitude: string
+            longitude: string
+            project: {
+                name: string
+                clients: {
+                    name: string
+                }
+            }
+        }
+    } & {
         user: { firstName: string; lastName: string }
     },
 >(

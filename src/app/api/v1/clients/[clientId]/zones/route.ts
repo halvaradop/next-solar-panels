@@ -27,6 +27,7 @@ export const GET = async (request: NextRequest, { params }: Params<"clientId">):
             },
             include: {
                 project: true,
+                samples: true,
             },
         })
         return NextResponse.json<ResponseAPI<Zone[]>>({

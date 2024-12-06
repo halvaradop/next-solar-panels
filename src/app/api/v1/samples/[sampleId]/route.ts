@@ -28,7 +28,16 @@ export const GET = async (request: NextRequest, { params }: Params<"sampleId">):
                         name: true,
                         latitude: true,
                         longitude: true,
-                        project: true,
+                        project: {
+                            select: {
+                                name: true,
+                                clients: {
+                                    select: {
+                                        name: true,
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
                 user: {
