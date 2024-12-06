@@ -4,13 +4,13 @@ import { MenuRoutesProps } from "@/lib/@types/props"
 import { roleBasedAccessControl } from "@/middleware"
 
 const links = {
-    clients: [
-        { href: "/dashboard/clients", label: "List" },
-        { href: "/dashboard/clients/add", label: "Add" },
-    ],
     projects: [
         { href: "/dashboard/projects", label: "List" },
         { href: "/dashboard/projects/add", label: "Add" },
+    ],
+    clients: [
+        { href: "/dashboard/clients", label: "List" },
+        { href: "/dashboard/clients/add", label: "Add" },
     ],
     users: [
         { href: "/dashboard/users", label: "List" },
