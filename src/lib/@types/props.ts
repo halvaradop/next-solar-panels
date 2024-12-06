@@ -1,7 +1,7 @@
 import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
 import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
-import { ActionState, Entry } from "./types"
+import { ActionState, Entry, Order } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
@@ -104,4 +104,8 @@ export type SubmitProps = ButtonProps<typeof buttonVariants> & {
 
 export type FormProps = FormVariantProps<typeof formVariants> & {
     action: NonNullable<HTMLProps<HTMLFormElement>["action"]>
+}
+
+export interface MyDocumentProps {
+    samples: Order
 }

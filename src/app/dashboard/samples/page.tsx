@@ -22,7 +22,6 @@ const getInformation = async () => {
 
 const DashboardSamplesPage = async () => {
     const { zones, samples } = await getInformation()
-
     return (
         <section className="min-h-main py-4 space-y-4">
             <Filter

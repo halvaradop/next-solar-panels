@@ -26,6 +26,15 @@ export const GET = async (request: NextRequest, { params }: Params<"sampleId">):
                 zone: {
                     select: {
                         name: true,
+                        latitude: true,
+                        longitude: true,
+                        project: true,
+                    },
+                },
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
                     },
                 },
             },
