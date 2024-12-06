@@ -1,5 +1,5 @@
 "use client"
-import { Page, Text, View, Document, StyleSheet, Font, Image } from "@react-pdf/renderer"
+import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer"
 import logoAche from "@/public/logoAche.png"
 import { MyDocumentProps } from "@/lib/@types/props"
 
@@ -124,7 +124,7 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.header}>
-                <Image src={logoAche.src} style={styles.logo} />
+                {/* <Image src={logoAche.src} style={styles.logo} />                 */}
                 <View style={styles.headerInfo}>
                     <Text style={[styles.headerText, styles.boldText]}>ACHE ENGINEERING GmbH</Text>
                     <Text style={styles.headerText}>Renewable energy - Corrosion protection</Text>
