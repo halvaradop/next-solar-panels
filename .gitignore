@@ -38,6 +38,11 @@ next-env.d.ts
 
 # files
 package-lock.json
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # artifacts
 playwright-report
