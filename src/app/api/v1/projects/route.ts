@@ -65,6 +65,19 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         }
         const userId = user
 
+        const existName = await prisma.project.findFirst({
+            where: {
+                name,
+            },
+        })
+
+        if (existName) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "This name is assigned to another project",
+            })
+        }
         const existcoordinates = await prisma.project.findFirst({
             where: {
                 latitude,

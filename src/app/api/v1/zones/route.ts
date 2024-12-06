@@ -57,6 +57,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { latitude, longitude, name, project } = response
 
+        const existName = await prisma.zone.findFirst({
+            where: {
+                name,
+            },
+        })
+
+        if (existName) {
+            return NextResponse.json<ResponseAPI<{}>>({
+                data: {},
+                ok: false,
+                message: "This name is assigned to another zone",
+            })
+        }
+
         const existcoordinates = await prisma.zone.findFirst({
             where: {
                 latitude,
