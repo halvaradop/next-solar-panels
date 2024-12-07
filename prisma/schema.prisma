@@ -7,160 +7,196 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Role {
-  roleId           Int               @id @default(autoincrement())
-  roleName         String            @db.VarChar(50)
-  state            State             @default(ACTIVE)
-  users            User[]
-  rolesPermissions RolesPermission[]
-}
-
-model Permission {
-  permissionId     Int               @id @default(autoincrement())
-  permissionName   String            @db.VarChar(100)
-  state            State             @default(ACTIVE)
-  rolesPermissions RolesPermission[]
-}
-
-model RolesPermission {
-  roleId       Int
-  role         Role       @relation(fields: [roleId], references: [roleId])
-  permissionId Int
-  permission   Permission @relation(fields: [permissionId], references: [permissionId])
-
-  @@id([roleId, permissionId])
-}
-
-model User {
-  userId          String            @id @default(uuid())
-  firstName       String            @db.VarChar(50)
-  lastName        String            @db.VarChar(50)
-  email           String            @db.VarChar(100)
-  password        String            @db.VarChar(50)
-  state           State             @default(ACTIVE)
-  fax             String
-  website         String
-  roleId          Int
-  role            Role              @relation(fields: [roleId], references: [roleId])
-  phones          Phone[]
-  samples         Sample[]
-  auditLogs       AuditLog[]
-  clients         Client[]
-  projectsOnUsers ProjectsOnUsers[]
-}
-
-model AuditLog {
-  auditId    Int        @id @default(autoincrement())
-  tableName  String     @db.VarChar(100)
-  actionType ActionType
-  date       DateTime   @default(now())
-  state      State      @default(ACTIVE)
-  userId     String
-  user       User       @relation(fields: [userId], references: [userId])
+model Picture {
+  idPicture     Int           @id @default(autoincrement())
+  idStakeholder String
+  designation   String
+  date          DateTime      @default(now())
+  updateAt      DateTime      @updatedAt
+  pictureFile   String
+  stakeHolder   StakeHolder[]
 }
 
 model Address {
-  addressId Int       @id @default(autoincrement())
-  country   String
-  state     String
-  city      String
-  postbox   String
-  street    String
-  number    String
-  isActive  Boolean
-  clients   Client[]
-  projects  Project[]
+  idAddress   Int           @id @default(autoincrement())
+  country     String
+  state       String
+  city        String
+  postbox     String
+  street      String
+  number      String
+  isActive    State         @default(ACTIVE)
+  StakeHolder StakeHolder[]
+  field       Field[]
+  Linkage     Linkage[]
 }
 
-model Client {
-  clientId  String    @id @default(uuid())
-  name      String    @db.VarChar(100)
-  email     String    @db.VarChar(100)
-  password  String    @db.VarChar(50)
-  state     State     @default(ACTIVE)
-  fax       String
-  website   String
-  phones    Phone[]
-  projects  Project[]
-  addressId Int?
-  address   Address?  @relation(fields: [addressId], references: [addressId])
-  userId    String?
-  user      User?     @relation(fields: [userId], references: [userId])
-}
-
-model Phone {
-  phoneId  Int     @id @default(autoincrement())
-  number   String
-  userId   String?
-  users    User?   @relation(fields: [userId], references: [userId])
-  clientId String?
-  clients  Client? @relation(fields: [clientId], references: [clientId])
+model StakeHolder {
+  idStakeHolder   String        @id @default(uuid())
+  name            String        @db.VarChar(100)
+  industry        String        @db.VarChar(100)
+  email           String        @db.VarChar(100)
+  password        String        @db.VarChar(50)
+  fax             String
+  www             String
+  state           State         @default(ACTIVE)
+  idAddress       Int
+  address         Address       @relation(fields: [idAddress], references: [idAddress])
+  idContactPerson String
+  contactPerson   ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
+  idPicture       Int
+  picture         Picture       @relation(fields: [idPicture], references: [idPicture])
+  project         Project[]
 }
 
 model Project {
-  projectId       String            @id @default(uuid())
-  name            String            @db.VarChar(100)
-  state           State             @default(ACTIVE)
-  latitude        Decimal           @db.Decimal(10, 8)
-  longitude       Decimal           @db.Decimal(11, 8)
-  clientsId       String?
-  clients         Client?           @relation(fields: [clientsId], references: [clientId])
-  addressId       Int?
-  address         Address?          @relation(fields: [addressId], references: [addressId])
-  projectsOnUsers ProjectsOnUsers[]
-  zones           Zone[]
+  idProject       String        @id @default(uuid())
+  idContactPerson String
+  contactPerson   ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
+  idStakeholder   String
+  stakeholder     StakeHolder   @relation(fields: [idStakeholder], references: [idStakeHolder])
+  designation     String
+  linkage         Linkage[]
 }
 
-model ProjectsOnUsers {
-  projectId String
-  project   Project @relation(fields: [projectId], references: [projectId])
-  userId    String
-  user      User    @relation(fields: [userId], references: [userId])
-
-  @@id([projectId, userId])
+model Role {
+  idRole        Int             @id @default(autoincrement())
+  roleName      String          @db.VarChar(50)
+  state         State           @default(ACTIVE)
+  contactPerson ContactPerson[]
 }
 
-model Zone {
-  zoneId    String   @id @default(uuid())
-  name      String   @db.VarChar(50)
-  latitude  Decimal  @db.Decimal(10, 8)
-  longitude Decimal  @db.Decimal(11, 8)
-  state     State    @default(ACTIVE)
-  projectId String
-  project   Project  @relation(fields: [projectId], references: [projectId])
-  samples   Sample[]
+model PhoneContactPerson {
+  phoneId                      Int            @id @default(autoincrement())
+  number                       String
+  ContactPerson                ContactPerson? @relation(fields: [contactPersonIdContactPerson], references: [idContactPerson])
+  contactPersonIdContactPerson String?
 }
 
-model Sample {
-  sampleId                  String   @id @default(uuid())
-  date                      DateTime @default(now()) @updatedAt
-  soilType                  Int
-  soilResistivity           Int
-  moistureContent           Int
-  pHValue                   Int
-  bufferCapacityPH4_3       Int
-  bufferCapacityPH7_0       Int
-  sulfurReducingBacteria    Int
-  sulfateContent            Int
-  neutralSalts              Int
-  undergroundWaterPresence  Int
-  horizontalSoilHomogeneity Int
-  verticalSoilHomogeneity   Int
-  soilTypeHomogeneity       Int
-  pHSoilHomogeneity         Int
-  externalCathodes          Int
-  b0                        Int
-  b1                        Int
-  userId                    String
-  user                      User     @relation(fields: [userId], references: [userId])
-  zoneId                    String
-  zone                      Zone     @relation(fields: [zoneId], references: [zoneId])
+model ContactPerson {
+  idContactPerson     String                @id @default(uuid())
+  firstName           String                @db.VarChar(50)
+  lastName            String                @db.VarChar(50)
+  fax                 String
+  www                 String
+  email               String                @db.VarChar(100)
+  password            String                @db.VarChar(50)
+  state               State                 @default(ACTIVE)
+  phones              PhoneContactPerson[]
+  idRole              Int
+  role                Role                  @relation(fields: [idRole], references: [idRole])
+  auditLog            AuditLog[]
+  positionSoilData    PositionSoilData[]
+  positionMeasurement PositionMeasurement[]
+  stakeHolder         StakeHolder[]
+  positionResistivity PositionResistivity[]
+  project             Project[]
+}
+
+model Field {
+  fieldId                  String    @id @default(uuid())
+  fence                    Boolean
+  connectionEarthingFence  Boolean
+  externalCurrentInfluence Boolean
+  idAddress                Int
+  address                  Address   @relation(fields: [idAddress], references: [idAddress])
+  Linkage                  Linkage[]
+}
+
+model PositionData {
+  idPositionData   String @id @default(uuid())
+  pointType        String
+  latitude         Float
+  longitude        Float
+  pileDesignation  String
+  pointDesignation String
+  grounding        String
+}
+
+model PositionMeasurement {
+  idPositionMeasurement String        @id @default(uuid())
+  designation           String
+  date                  DateTime      @default(now())
+  updateAt              DateTime      @updatedAt
+  potentialVr           Float
+  potentialVOn          Float
+  potentialVOff         Float
+  galvanicCurrent       Float
+  coatingThickness      Float
+  materialTrickness     Float
+  linkage               Linkage[]
+  idContactPerson       String
+  contactPerson         ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
+}
+
+model PositionResistivity {
+  idPositionResistivity String        @id @default(uuid())
+  designation           String
+  date                  DateTime      @default(now())
+  updateAt              DateTime      @updatedAt
+  depth                 Float
+  orientation           Float
+  value                 Float
+  measurementInstrument String
+  idContactPerson       String
+  contactPerson         ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
+  Linkage               Linkage[]
+}
+
+model PositionSoilData {
+  positionSoilDataId String        @id @default(uuid())
+  date               DateTime      @default(now()) @updatedAt
+  Z1                 Int
+  Z2                 Int
+  Z3                 Int
+  Z4                 Int
+  Z5                 Int
+  Z6                 Int
+  Z7                 Int
+  Z8                 Int
+  Z9                 Int
+  Z10                Int
+  Z11                Int
+  Z12                Int
+  Z13                Int
+  Z14                Int
+  Z15                Int
+  b0                 Int
+  b1                 Int
+  idContactPerson    String
+  contactPerson      ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
+  linkage            Linkage[]
+}
+
+model Linkage {
+  idLinkage                          String              @id @default(uuid())
+  idProject                          String
+  project                            Project             @relation(fields: [idProject], references: [idProject])
+  idPositionMeasurement              String
+  positionMeasurement                PositionMeasurement @relation(fields: [idPositionMeasurement], references: [idPositionMeasurement])
+  idPositionResistivity              String
+  positionResistivity                PositionResistivity @relation(fields: [idPositionResistivity], references: [idPositionResistivity])
+  idField                            String
+  field                              Field               @relation(fields: [idField], references: [fieldId])
+  idAddress                          Int
+  address                            Address             @relation(fields: [idAddress], references: [idAddress])
+  positionSoilData                   PositionSoilData?   @relation(fields: [positionSoilDataPositionSoilDataId], references: [positionSoilDataId])
+  positionSoilDataPositionSoilDataId String?
+}
+
+model AuditLog {
+  idAudit         Int           @id @default(autoincrement())
+  tableName       String        @db.VarChar(100)
+  actionType      ActionType
+  date            DateTime      @default(now())
+  state           State         @default(ACTIVE)
+  idContactPerson String
+  contactPerson   ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
 }
 
 enum State {
   ACTIVE
   INACTIVE
-  DELETED
 }
 
 enum ActionType {
