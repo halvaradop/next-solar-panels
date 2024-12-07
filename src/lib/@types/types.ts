@@ -42,7 +42,17 @@ export interface Params<T extends string> {
 }
 
 export type Order = Sample & {
-    zone?: { name: string; latitude: string; longitude: string }
+    zone?: {
+        name: string
+        latitude: string
+        longitude: string
+        project?: {
+            name: string
+            clients?: {
+                name: string
+            }
+        }
+    }
     user?: Pick<User, "firstName" | "lastName">
     valueb0?: string
     valueb1?: string

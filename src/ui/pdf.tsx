@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#d6d6d6",
         padding: 10,
-        textAlign: "left",
+        textAlign: "center",
         fontSize: 10,
         flex: 1,
     },
@@ -133,7 +133,7 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                     <Text style={styles.headerText}>Fax: +49 (0) 6473-92254-29</Text>
                 </View>
                 <View>
-                    <Text style={styles.headerText}>Fecha: {new Date().toLocaleDateString()}</Text>
+                    <Text style={styles.headerText}>Date: {new Date().toLocaleDateString()}</Text>
                 </View>
             </View>
 
@@ -141,7 +141,7 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
 
             <View style={styles.table}>
                 <View style={styles.tableRowInformation}>
-                    <Text style={[styles.tableCellInformation, styles.boldCell]}>User</Text>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Project manager</Text>
                     <Text style={styles.tableCellInformation}>
                         {samples.user?.firstName} {samples.user?.lastName}
                     </Text>
@@ -153,8 +153,12 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                     <Text style={styles.tableCellInformation}>
                         {samples.zone?.latitude} , {samples.zone?.longitude}
                     </Text>
-                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Fecha</Text>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Date Sample</Text>
                     <Text style={styles.tableCellInformation}>{samples.date.toString()}</Text>
+                </View>
+                <View style={styles.tableRowInformation}>
+                    <Text style={[styles.tableCellInformation, styles.boldCell]}>Project</Text>
+                    <Text style={styles.tableCellInformation}>{samples.zone?.project?.clients?.name}</Text>
                 </View>
             </View>
 
@@ -193,7 +197,7 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                 <Text style={styles.suggestionText}>{samples.message}</Text>
             </View>
 
-            <Text style={styles.footer}>Responsable del análisis: Nombre del responsable</Text>
+            <Text style={styles.footer}>Responsible for the analysis: Ache</Text>
         </Page>
     </Document>
 )
