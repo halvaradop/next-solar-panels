@@ -28,14 +28,14 @@ model Address {
   isActive    State         @default(ACTIVE)
   StakeHolder StakeHolder[]
   field       Field[]
-  Linkage     Linkage[]
+  linkage     Linkage[]
 }
 
 model StakeHolder {
   idStakeHolder   String        @id @default(uuid())
   name            String        @db.VarChar(100)
   industry        String        @db.VarChar(100)
-  email           String        @db.VarChar(100)
+  email           String        @unique @db.VarChar(100)
   password        String        @db.VarChar(50)
   fax             String
   www             String
@@ -62,7 +62,7 @@ model Project {
 
 model Role {
   idRole        Int             @id @default(autoincrement())
-  roleName      String          @db.VarChar(50)
+  name          String          @db.VarChar(50)
   state         State           @default(ACTIVE)
   contactPerson ContactPerson[]
 }
@@ -80,12 +80,12 @@ model ContactPerson {
   lastName            String                @db.VarChar(50)
   fax                 String
   www                 String
-  email               String                @db.VarChar(100)
+  email               String                @unique @db.VarChar(100)
   password            String                @db.VarChar(50)
   state               State                 @default(ACTIVE)
-  phones              PhoneContactPerson[]
   idRole              Int
   role                Role                  @relation(fields: [idRole], references: [idRole])
+  phones              PhoneContactPerson[]
   auditLog            AuditLog[]
   positionSoilData    PositionSoilData[]
   positionMeasurement PositionMeasurement[]
@@ -150,23 +150,24 @@ model PositionSoilData {
   positionSoilDataId String        @id @default(uuid())
   date               DateTime      @default(now())
   updateAt           DateTime      @updatedAt
-  z1                 Int
-  z2                 Int
-  z3                 Int
-  z4                 Int
-  z5                 Int
-  z6                 Int
-  z7                 Int
-  z8                 Int
-  z9                 Int
-  z10                Int
-  z11                Int
-  z12                Int
-  z13                Int
-  z14                Int
-  z15                Int
-  b0                 Int
-  b1                 Int
+  z1                 Float
+  z2                 Float
+  z3                 Float
+  z4                 Float
+  z5                 Float
+  z6                 Float
+  z7                 Float
+  z8                 Float
+  z9                 Float
+  z10                Float
+  z11                Float
+  z12                Float
+  z13                Float
+  z14                Float
+  z15                Float
+  b0                 Float
+  b1                 Float
+  chlorides          Float
   idContactPerson    String
   contactPerson      ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
   linkage            Linkage[]
