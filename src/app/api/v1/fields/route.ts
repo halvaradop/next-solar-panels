@@ -1,52 +1,51 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Zone } from "@prisma/client"
+import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all zones from the database.
+ * Handle the GET request to retrieve all fields from the database.
  *
- * @returns {Promise<NextResponse>} - HTTP response containing all zones.
+ * @returns {Promise<NextResponse>} - HTTP response containing all fields.
  * @example
  * ```ts
- * const response = await fetch("{domain}/api/v1/zones")
+ * const response = await fetch("{domain}/api/v1/fields")
  * const data = await response.json()
  * ```
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const data = await prisma.zone.findMany()
-        return NextResponse.json<ResponseAPI<Zone[]>>({
+        const data = await prisma.field.findMany()
+        return NextResponse.json<ResponseAPI<Field[]>>({
             data,
             ok: true,
-            message: "The resource was retrieved successfuly",
+            message: "The resource was retrieved successfully",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<Zone[]>>(
+        return NextResponse.json<ResponseAPI<Field[]>>(
             {
                 data: [],
                 ok: false,
-                message: "Failed to retrieve zones",
+                message: "Failed to retrieve fields",
             },
-            { status: 404 }
+            { status: 400 }
         )
     }
 }
-
 /**
- * Handle the POST request to create a new zone in the database.
+ * Handle the POST request to create a new field in the database.
  *
- * @param {NextRequest} request - The HTTP request containing the information of the new zone.
- * @returns {Promise<NextResponse>} - HTTP response with the newly created zone.
+ * @param {NextRequest} request - The HTTP request containing the information of the new field.
+ * @returns {Promise<NextResponse>} - HTTP response with the newly created field.
  * @example
  * ```ts
- * const response = await fetch("{domain}/api/v1/zones", {
+ * const response = await fetch("{domain}/api/v1/fields", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     latitude: 40.7128,
- *     longitude: -74.0060,
- *     name: "New Zone",
- *     project: "1"
+ *     idAddress: 0,
+ *     fence: false,
+ *     connectionEarthingFence: false,
+ *     externalCurrentInfluence: false,
  *   })
  * })
  * const data = await response.json()
@@ -54,55 +53,21 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const response = await request.json()
-        const { latitude, longitude, name, project } = response
+        const requestData = await request.json()
 
-        const existName = await prisma.zone.findFirst({
-            where: {
-                name,
-            },
+        const newField = await prisma.field.create({
+            data: requestData,
         })
-
-        if (existName) {
-            return NextResponse.json<ResponseAPI<{}>>({
-                data: {},
-                ok: false,
-                message: "This name is assigned to another zone",
-            })
-        }
-
-        const existcoordinates = await prisma.zone.findFirst({
-            where: {
-                latitude,
-                longitude,
-            },
-        })
-
-        if (existcoordinates) {
-            return NextResponse.json<ResponseAPI<{}>>({
-                data: {},
-                ok: false,
-                message: "A zone with the specified coordinates already exists.",
-            })
-        }
-        const newZone = await prisma.zone.create({
-            data: {
-                latitude,
-                longitude,
-                name,
-                projectId: project,
-            },
-        })
-        return NextResponse.json<ResponseAPI<Zone>>({
-            data: newZone as Zone,
+        return NextResponse.json<ResponseAPI<Field>>({
+            data: newField,
             ok: true,
-            message: "The zone was created successfuly",
+            message: "The field was created successfully",
         })
     } catch (error) {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
-            message: "Failed to create new zone",
+            message: "Failed to create new field",
         })
     }
 }
