@@ -41,12 +41,12 @@ export const GET = async (): Promise<NextResponse> => {
  * @returns {Promise<NextResponse>} - HTTP response with the new plant created.
  * @example
  * ```ts
- * const response = await fetch("/api/v1/users/{userId}/plants", {
+ * const response = await fetch("{domain}/api/v1/projects", {
  *   method: "POST",
  *   body: JSON.stringify({
- *     plantName: "Plant Name",
- *     latitude: 1,
- *     longitude: 1,
+ *     idContactPerson: 1,
+ *     idStakeholder: 1,
+ *     designation: "Allianz Arena",
  *   }),
  * })
  * const data = await response.json()
@@ -55,67 +55,13 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { name, latitude, longitude, user } = response
-        if (!user) {
-            return NextResponse.json<ResponseAPI<{}>>({
-                data: {},
-                ok: false,
-                message: "user id was not sent",
-            })
-        }
-        const userId = user
+        const { designation, idContactPerson, idStakeholder } = response
 
-        const existName = await prisma.project.findFirst({
-            where: {
-                name,
-            },
-        })
-
-        if (existName) {
-            return NextResponse.json<ResponseAPI<{}>>({
-                data: {},
-                ok: false,
-                message: "This name is assigned to another project",
-            })
-        }
-        const existcoordinates = await prisma.project.findFirst({
-            where: {
-                latitude,
-                longitude,
-            },
-        })
-
-        if (existcoordinates) {
-            return NextResponse.json<ResponseAPI<{}>>({
-                data: {},
-                ok: false,
-                message: "A project with the specified coordinates already exists.",
-            })
-        }
-        const client = await prisma.client.findFirst({
-            where: {
-                projects: {
-                    some: {
-                        projectsOnUsers: {
-                            some: {
-                                userId,
-                            },
-                        },
-                    },
-                },
-            },
-        })
         const data = await prisma.project.create({
             data: {
-                name,
-                clientsId: client?.clientId ?? "",
-                latitude,
-                longitude,
-                projectsOnUsers: {
-                    create: {
-                        userId,
-                    },
-                },
+                designation,
+                idContactPerson,
+                idStakeholder,
             },
         })
 
@@ -131,7 +77,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 ok: false,
                 message: "Failed to create the project",
             },
-            { status: 500 }
+            { status: 400 }
         )
     }
 }
