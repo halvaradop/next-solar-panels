@@ -51,6 +51,7 @@ model StakeHolder {
 
 model Project {
   idProject       String        @id @default(uuid())
+  state           State         @default(ACTIVE)
   idContactPerson String
   contactPerson   ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
   idStakeholder   String
@@ -67,10 +68,10 @@ model Role {
 }
 
 model PhoneContactPerson {
-  phoneId                      Int            @id @default(autoincrement())
+  phoneId                      Int           @id @default(autoincrement())
   number                       String
-  ContactPerson                ContactPerson? @relation(fields: [contactPersonIdContactPerson], references: [idContactPerson])
-  contactPersonIdContactPerson String?
+  contactPersonIdContactPerson String
+  contactPerson                ContactPerson @relation(fields: [contactPersonIdContactPerson], references: [idContactPerson])
 }
 
 model ContactPerson {
@@ -98,19 +99,21 @@ model Field {
   fence                    Boolean
   connectionEarthingFence  Boolean
   externalCurrentInfluence Boolean
+  state                    State     @default(ACTIVE)
   idAddress                Int
   address                  Address   @relation(fields: [idAddress], references: [idAddress])
-  Linkage                  Linkage[]
+  linkage                  Linkage[]
 }
 
 model PositionData {
-  idPositionData   String @id @default(uuid())
+  idPositionData   String    @id @default(uuid())
   pointType        String
   latitude         Float
   longitude        Float
   pileDesignation  String
   pointDesignation String
   grounding        String
+  linkage          Linkage[]
 }
 
 model PositionMeasurement {
@@ -140,12 +143,13 @@ model PositionResistivity {
   measurementInstrument String
   idContactPerson       String
   contactPerson         ContactPerson @relation(fields: [idContactPerson], references: [idContactPerson])
-  Linkage               Linkage[]
+  linkage               Linkage[]
 }
 
 model PositionSoilData {
   positionSoilDataId String        @id @default(uuid())
-  date               DateTime      @default(now()) @updatedAt
+  date               DateTime      @default(now())
+  updateAt           DateTime      @updatedAt
   Z1                 Int
   Z2                 Int
   Z3                 Int
@@ -180,8 +184,10 @@ model Linkage {
   field                              Field               @relation(fields: [idField], references: [fieldId])
   idAddress                          Int
   address                            Address             @relation(fields: [idAddress], references: [idAddress])
-  positionSoilData                   PositionSoilData?   @relation(fields: [positionSoilDataPositionSoilDataId], references: [positionSoilDataId])
-  positionSoilDataPositionSoilDataId String?
+  positionSoilData                   PositionSoilData    @relation(fields: [positionSoilDataPositionSoilDataId], references: [positionSoilDataId])
+  positionSoilDataPositionSoilDataId String
+  PositionData                       PositionData?       @relation(fields: [positionDataIdPositionData], references: [idPositionData])
+  positionDataIdPositionData         String?
 }
 
 model AuditLog {
