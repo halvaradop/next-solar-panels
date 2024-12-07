@@ -185,10 +185,10 @@ model Linkage {
   field                              Field               @relation(fields: [idField], references: [fieldId])
   idAddress                          Int
   address                            Address             @relation(fields: [idAddress], references: [idAddress])
-  positionSoilData                   PositionSoilData    @relation(fields: [positionSoilDataPositionSoilDataId], references: [positionSoilDataId])
   positionSoilDataPositionSoilDataId String
-  PositionData                       PositionData?       @relation(fields: [positionDataIdPositionData], references: [idPositionData])
-  positionDataIdPositionData         String?
+  positionSoilData                   PositionSoilData    @relation(fields: [positionSoilDataPositionSoilDataId], references: [positionSoilDataId])
+  positionDataIdPositionData         String
+  positionData                       PositionData        @relation(fields: [positionDataIdPositionData], references: [idPositionData])
 }
 
 model AuditLog {
