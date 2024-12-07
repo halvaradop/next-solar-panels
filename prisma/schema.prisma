@@ -150,21 +150,21 @@ model PositionSoilData {
   positionSoilDataId String        @id @default(uuid())
   date               DateTime      @default(now())
   updateAt           DateTime      @updatedAt
-  Z1                 Int
-  Z2                 Int
-  Z3                 Int
-  Z4                 Int
-  Z5                 Int
-  Z6                 Int
-  Z7                 Int
-  Z8                 Int
-  Z9                 Int
-  Z10                Int
-  Z11                Int
-  Z12                Int
-  Z13                Int
-  Z14                Int
-  Z15                Int
+  z1                 Int
+  z2                 Int
+  z3                 Int
+  z4                 Int
+  z5                 Int
+  z6                 Int
+  z7                 Int
+  z8                 Int
+  z9                 Int
+  z10                Int
+  z11                Int
+  z12                Int
+  z13                Int
+  z14                Int
+  z15                Int
   b0                 Int
   b1                 Int
   idContactPerson    String
