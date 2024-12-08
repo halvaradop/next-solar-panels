@@ -8,10 +8,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
 
         const data = await prisma.address.create({
-            data: {
-                ...response,
-                isActive: true,
-            },
+            data: response,
         })
 
         return NextResponse.json<ResponseAPI<Address>>({
@@ -20,10 +17,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             message: "The resource was created successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<{}>>({
-            data: {},
-            ok: false,
-            message: "Failed to create the client",
-        })
+        return NextResponse.json<ResponseAPI<{}>>(
+            {
+                data: {},
+                ok: false,
+                message: "Failed to create the client",
+            },
+            { status: 400 }
+        )
     }
 }

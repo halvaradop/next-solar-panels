@@ -16,10 +16,10 @@ import { Params } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"projectId">): Promise<NextResponse> => {
     try {
-        const projectId = (await params).projectId
+        const idProject = (await params).projectId
         const data = await prisma.project.findUnique({
             where: {
-                projectId,
+                idProject,
             },
         })
         return NextResponse.json({
