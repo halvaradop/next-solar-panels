@@ -10,7 +10,7 @@ import { getFetch } from "@/lib/utils"
 export const getContacPersonProjectsByStakeHolder = async <T extends unknown[] = (ContactPerson & Project)[]>(
     stakeHolderId: string
 ): Promise<T> => {
-    const { data } = await getFetch<T>(`stakeholders/${stakeHolderId}`)
+    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}`)
     return data
 }
 

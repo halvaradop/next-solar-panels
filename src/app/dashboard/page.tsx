@@ -4,12 +4,12 @@ import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import {
     getStakeHolder,
-    getSamplesByUser,
-    getUserById,
+    getPositionSoilDataByContactPerson,
+    getContactPersonById,
     getFieldsByStakeHolderId,
-    getUsers,
+    getContactaPeople,
     getProjects,
-    getUserOnProjects,
+    getContactPersonOnProjects,
 } from "@/lib/services"
 import { roleBasedAccessControl } from "@/middleware"
 import samplesIcon from "@/public/samples.svg"
@@ -28,14 +28,14 @@ const getPanels = async () => {
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
         clients: [{ clientId } = { clientId: "" }],
-    } = await getUserById(userId)
-    const [zones, samples, clients, users, projects, usersOnProjects] = await Promise.all([
+    } = await getContactPersonById(userId)
+    const [field, positionSoilDatas, stakeHolders, contactPeople, projects, usersOnProjects] = await Promise.all([
         getFieldsByStakeHolderId(clientId),
-        getSamplesByUser(userId),
+        getPositionSoilDataByContactPerson(userId),
         getStakeHolder(),
-        getUsers(),
+        getContactaPeople(),
         getProjects(),
-        getUserOnProjects(),
+        getContactPersonOnProjects(),
     ])
     return {
         session,
@@ -43,7 +43,7 @@ const getPanels = async () => {
             {
                 icon: clientsIcon,
                 title: "Clients",
-                count: clients.length,
+                count: stakeHolders.length,
             },
             {
                 icon: samplesIcon,
@@ -53,7 +53,7 @@ const getPanels = async () => {
             {
                 icon: clientsIcon,
                 title: "Users",
-                count: users.length,
+                count: contactPeople.length,
             },
             {
                 icon: clientsIcon,
@@ -63,12 +63,12 @@ const getPanels = async () => {
             {
                 icon: samplesIcon,
                 title: "Samples",
-                count: samples.length,
+                count: positionSoilDatas.length,
             },
             {
                 icon: zonesIcon,
                 title: "Zones",
-                count: zones.length,
+                count: field.length,
             },
         ],
     }

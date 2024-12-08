@@ -1,6 +1,6 @@
 import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zone, Sample, User, Project, Phone, StakeHolder, ContactPerson } from "@prisma/client"
+import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData } from "@prisma/client"
 import { ActionState, Entry, Order } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
@@ -34,8 +34,10 @@ export interface FilterByProps {
     options: Entry[]
 }
 
-export interface SampleListProps {
-    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
+export interface PositionSoilDatasProps {
+    positionSoilDatas: (PositionSoilData & { field?: { name: string } } & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
+    })[]
 }
 
 export interface FilterProps {
@@ -44,23 +46,25 @@ export interface FilterProps {
 
 export interface TableStakeHoldersProps {
     stakeHolders: (Omit<StakeHolder, "state"> & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
-        phone?: Pick<Phone, "number">[]
+        phone?: Pick<PhoneContactPerson, "number">[]
     })[]
 }
 
-export interface TableProjectOnUserProps {
+export interface TableProjectOnContactPersonProps {
     projectsOnUsers: (ContactPerson & Project)[]
 }
 
-export interface TableUsersProps {
+export interface TableContactPeopleProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[] } & {
+        role?: { roleName: string }
+    })[]
 }
 
-export interface TablePlantsProps {
-    plants: Project[]
+export interface TableProjectsProps {
+    projects: Project[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
@@ -79,8 +83,8 @@ export interface SelectProps {
     values: Entry[]
 }
 
-export interface TableZonesProps {
-    zones: (Zone & { project?: Pick<Project, "designation"> })[]
+export interface TableFieldsProps {
+    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> })[]
 }
 
 export interface InputListProps<T> {
@@ -109,5 +113,5 @@ export type FormProps = FormVariantProps<typeof formVariants> & {
 }
 
 export interface MyDocumentProps {
-    samples: Order
+    positionSoilData: Order
 }

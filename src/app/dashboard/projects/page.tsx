@@ -1,8 +1,8 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getProjectsByStakeHolderId, getUserById } from "@/lib/services"
-import { TablePlants } from "@/ui/dashboard/projects/table"
+import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
+import { TableProjects } from "@/ui/dashboard/projects/table"
 
 export const metadata: Metadata = {
     title: "Projects",
@@ -12,10 +12,11 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    /*TODO : fix stakeholderid
     const {
         stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-    } = await getUserById(userId)
-    const projects = await getProjectsByStakeHolderId(stakeHolderId)
+    } = await getContactPersonById(userId)*/
+    const projects = await getProjectsByStakeHolderId("stakeHolderId")
     return { projects }
 }
 
@@ -25,7 +26,7 @@ const DashboardPlantsPage = async () => {
     return (
         <section className="min-h-main py-4 space-y-4">
             <Suspense fallback={<p>Table...</p>}>
-                <TablePlants plants={projects} />
+                <TableProjects projects={projects} />
             </Suspense>
         </section>
     )

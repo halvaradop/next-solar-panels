@@ -1,30 +1,26 @@
 "use client"
-
-import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
-import { ContactPerson } from "@prisma/client"
-import { addProjectAction } from "@/lib/actions"
-import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
+import { useActionState } from "react"
+import { addStakeHolderAction } from "@/lib/actions"
+import { AddStakeHolderActionState } from "@/lib/@types/types"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
+import { useEffect, useState } from "react"
+import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
+import { useSession } from "next-auth/react"
+import { ContactPerson } from "@prisma/client"
 
-const { projectInputs } = dataJson
-export const fetchCache = "force-no-store"
+const { stakeHolderInputs } = dataJson
 
-export const AddProject = () => {
+export const AddStakeHolder = () => {
     const { data: session } = useSession()
-    const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
-    const [state, formAction] = useActionState(addProjectAction, {
+    const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
+    const [state, formAction] = useActionState(addStakeHolderAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddProjectActionState["schema"],
+        schema: {} as AddStakeHolderActionState["schema"],
     })
 
     useEffect(() => {
-        /**
-         * TODO: fix bug
-         */
         const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             /*TODO : fix stakeholderid
@@ -32,17 +28,17 @@ export const AddProject = () => {
                 stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
             } = await getContactPersonById(userId)*/
             const response = await getContactPersonByStakeHolderId("stakeHolderId")
-            setcontactPerson(response)
+            setContacPerson(response)
         }
         fetchContactPerson()
     }, [])
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <InputList inputs={projectInputs} state={state} />
+            <InputList inputs={stakeHolderInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
-                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="user" />
+                <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

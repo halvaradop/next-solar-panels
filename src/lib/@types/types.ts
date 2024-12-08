@@ -1,6 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Sample, ProjectsOnUsers, User, Zone, Address, Role, StakeHolder } from "@prisma/client"
-import { string } from "zod"
+import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, Linkage } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -12,11 +11,14 @@ export interface ActionState<T> {
     schema: T
 }
 
-export type AddSampleActionState = ActionState<SamplesWithoutIds>
+export type AddPositionSoilDatasPageActionState = ActionState<PositionSoilDatasWithoutIds>
 
 export type AddStakeHolderActionState = ActionState<Omit<StakeHolder, "idStakeHolder">>
 
-export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & { project?: string; phone?: string }
+export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "userId" | "state">> & {
+    project?: string
+    phone?: string
+}
 
 export type AddAddressActionState = ActionState<Omit<Address, "isActive" | "addressId">>
 
@@ -41,24 +43,24 @@ export interface Params<T extends string> {
     searchParams: Promise<ReadonlyURLSearchParams>
 }
 
-export type Order = Sample & {
-    zone?: { name: string; latitude: string; longitude: string }
-    user?: Pick<User, "firstName" | "lastName">
+export type Order = PositionSoilData & {
+    field?: { name: string; latitude: string; longitude: string }
+    contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     valueb0?: string
     valueb1?: string
     steel?: string
     galvanising?: string
     message?: string
 }
-export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
+export type AddFieldsActionState = ActionState<Omit<Field, "fieldId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
 
-export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
+export type AddProjectOnUserActionState = ActionState<Linkage>
 
-export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "date" | "sampleId" | "b0" | "b1">
+export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
-export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "website"> & {
+export type UserSession = Omit<ContactPerson, "state" | "roleId" | "password" | "fax" | "wwww"> & {
     role: Omit<Role, "users" | "rolesPermissions">
     clients: { clientId: string }[]
 }
