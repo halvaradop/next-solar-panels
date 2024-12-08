@@ -1,6 +1,6 @@
-import { TableClientsProps } from "@/lib/@types/props"
+import { TableStakeHoldersProps } from "@/lib/@types/props"
 
-export const TableClients = async ({ clients }: TableClientsProps) => {
+export const TableStakeHolder = async ({ stakeHolders }: TableStakeHoldersProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
@@ -9,22 +9,22 @@ export const TableClients = async ({ clients }: TableClientsProps) => {
                     <th>Email</th>
                     <th>Web Site</th>
                     <th className="hidden md:table-cell">Phone</th>
-                    <th>User</th>
+                    <th>Contact Person</th>
                 </tr>
             </thead>
             <tbody>
-                {clients.map(({ clientId, name, email, website, phone = [], user }) => (
-                    <tr className="text-sm" key={clientId}>
+                {stakeHolders.map(({ name, email, www, contactPerson, idContactPerson, phone = [] }) => (
+                    <tr className="text-sm" key={idContactPerson}>
                         <td>{name}</td>
                         <td>{email}</td>
-                        <td>{website}</td>
+                        <td>{www}</td>
                         <td className="hidden md:table-cell">
                             {phone.length > 0
                                 ? phone.map(({ number }, index) => <div key={index}>{number}</div>)
                                 : "No phone number"}
                         </td>
                         <td className="p-3 border-t">
-                            {user?.firstName} {user?.lastName}
+                            {contactPerson?.firstName} {contactPerson?.lastName}
                         </td>
                     </tr>
                 ))}

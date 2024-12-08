@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { SampleList } from "@/ui/dashboard/samples/sample-list"
 import { Filter } from "@/ui/common/filter"
-import { getSamplesByUser, getUserById, getZonesByClientId } from "@/lib/services"
+import { getSamplesByUser, getUserById, getFieldsByStakeHolderId } from "@/lib/services"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -14,21 +14,21 @@ const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId } = { clientId: "" }],
+        stakeHolderId: [{ stakeHolderId } = { stakeHolderId: "" }],
     } = await getUserById(userId)
-    const [zones, samples] = await Promise.all([getZonesByClientId(clientId), getSamplesByUser(userId.toString())])
-    return { zones, samples }
+    const [fields, samples] = await Promise.all([getFieldsByStakeHolderId(stakeHolderId), getSamplesByUser(userId.toString())])
+    return { fields, samples }
 }
 
 const DashboardSamplesPage = async () => {
-    const { zones, samples } = await getInformation()
+    const { fields, samples } = await getInformation()
     return (
         <section className="min-h-main py-4 space-y-4">
             <Filter
                 filters={[
                     {
                         title: "Zone",
-                        options: zones.map(({ zoneId, name }) => ({ key: name, value: zoneId.toString() })),
+                        options: fields.map(({ fieldId, state }) => ({ key: state, value: fieldId.toString() })),
                     },
                 ]}
             />

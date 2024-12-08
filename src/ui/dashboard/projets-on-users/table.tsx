@@ -1,9 +1,9 @@
-import { TableProjectOnUserProps } from "@/lib/@types/props"
+import { TableProjectOnContactPersonProps } from "@/lib/@types/props"
 
 /**
  * TODO: fix
  */
-export const TableProjectsOnUsers = ({ projectsOnUsers }: TableProjectOnUserProps) => {
+export const TableProjectsOnUsers = ({ projectsOnUsers }: TableProjectOnContactPersonProps) => {
     return (
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
@@ -13,10 +13,10 @@ export const TableProjectsOnUsers = ({ projectsOnUsers }: TableProjectOnUserProp
                 </tr>
             </thead>
             <tbody>
-                {projectsOnUsers.map(({ userId, projectId, name }) => (
-                    <tr className="text-sm" key={`${userId}-${projectId}`}>
-                        <td className="pr-0">{projectId}</td>
-                        <td className="hidden xs:table-cell">{name}</td>
+                {projectsOnUsers.map(({ idProject, idContactPerson, designation }) => (
+                    <tr className="text-sm" key={`${idContactPerson}-${idProject}`}>
+                        <td className="pr-0">{idProject}</td>
+                        <td className="hidden xs:table-cell">{idContactPerson}</td>
                     </tr>
                 ))}
             </tbody>

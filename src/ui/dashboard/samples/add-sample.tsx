@@ -1,10 +1,10 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
-import { Zone } from "@prisma/client"
+import { Field } from "@prisma/client"
 import { addSampleAction } from "@/lib/actions"
 import { AddSampleActionState, SamplesWithoutIds } from "@/lib/@types/types"
-import { getZonesByClientId, getUserById } from "@/lib/services"
+import { getFieldsByStakeHolderId, getContactPersonById } from "@/lib/services"
 import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
@@ -13,7 +13,7 @@ const { sampleInputs } = dataJson
 
 export const AddSample = () => {
     const { data: session } = useSession()
-    const [zones, setZones] = useState<Zone[]>([])
+    const [fields, setfields] = useState<Field[]>([])
     const [state, formAction] = useActionState(addSampleAction, {
         message: "",
         isSuccess: false,
@@ -21,15 +21,15 @@ export const AddSample = () => {
     })
 
     useEffect(() => {
-        const fetchZones = async () => {
+        const fetchFields = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
             const {
-                clients: [{ clientId } = { clientId: "" }],
-            } = await getUserById(userId)
-            const response = await getZonesByClientId(clientId)
-            setZones(response)
+                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getFieldsByStakeHolderId(stakeHolderId)
+            setfields(response)
         }
-        fetchZones()
+        fetchFields()
     }, [])
 
     return (
@@ -55,8 +55,9 @@ export const AddSample = () => {
                 </Label>
             ))}
             <Label>
-                Zone
-                <SelectGeneric values={zones} id="name" value="zoneId" name="zoneId" />
+                Field
+                {/*todo fix*/}
+                <SelectGeneric values={fields} id="fieldId" value="fieldId" name="zoneId" />
             </Label>
             <Submit className="mt-6" fullWidth>
                 Add

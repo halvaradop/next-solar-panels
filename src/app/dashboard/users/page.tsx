@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
-import { getUserById, getUsersByClientId } from "@/lib/services"
+import { getUserById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { TableUsers } from "@/ui/dashboard/users/table"
 
 export const metadata: Metadata = {
@@ -13,9 +13,9 @@ const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId } = { clientId: "" }],
+        stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
     } = await getUserById(userId)
-    const users = await getUsersByClientId(clientId)
+    const users = await getContactPersonByStakeHolderId(stakeHolderId)
     return { users }
 }
 

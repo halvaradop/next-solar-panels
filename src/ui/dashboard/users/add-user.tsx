@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import { Project, Role } from "@prisma/client"
 import { addUserAction } from "@/lib/actions"
 import { AddUserActionState } from "@/lib/@types/types"
-import { getProjectsByClientId, getRoles, getUserById } from "@/lib/services"
+import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 
@@ -21,15 +21,15 @@ export const AddUser = () => {
     })
 
     useEffect(() => {
-        const fetchPlants = async () => {
+        const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const {
-                clients: [{ clientId } = { clientId: "" }],
-            } = await getUserById(userId)
-            const response = await getProjectsByClientId(clientId)
+                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getProjectsByStakeHolderId(stakeHolderId)
             setProjects(response)
         }
-        fetchPlants()
+        fetchProjects()
     }, [])
 
     useEffect(() => {
@@ -45,11 +45,11 @@ export const AddUser = () => {
             <InputList inputs={userInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <SelectGeneric values={roles} id="roleName" value="roleId" name="roleId" />
+                <SelectGeneric values={roles} id="name" value="idRole" name="idRole" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project
-                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
+                <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

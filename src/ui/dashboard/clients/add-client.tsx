@@ -1,43 +1,43 @@
 "use client"
 import { useActionState } from "react"
-import { addClientAction } from "@/lib/actions"
-import { AddClientActionState } from "@/lib/@types/types"
+import { addStakeHolderAction } from "@/lib/actions"
+import { AddStakeHolderActionState } from "@/lib/@types/types"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 import { useEffect, useState } from "react"
-import { getUserById, getUsersByClientId } from "@/lib/services"
+import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { useSession } from "next-auth/react"
-import { User } from "@prisma/client"
+import { ContactPerson } from "@prisma/client"
 
-const { clientInputs } = dataJson
+const { stakeHolderInputs } = dataJson
 
-export const AddClient = () => {
+export const AddStakeHolder = () => {
     const { data: session } = useSession()
-    const [users, setUsers] = useState<User[]>([])
-    const [state, formAction] = useActionState(addClientAction, {
+    const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
+    const [state, formAction] = useActionState(addStakeHolderAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddClientActionState["schema"],
+        schema: {} as AddStakeHolderActionState["schema"],
     })
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const {
-                clients: [{ clientId } = { clientId: "" }],
-            } = await getUserById(userId)
-            const response = await getUsersByClientId(clientId)
-            setUsers(response)
+                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getContactPersonByStakeHolderId(stakeHolderId)
+            setContacPerson(response)
         }
-        fetchUsers()
+        fetchContactPerson()
     }, [])
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <InputList inputs={clientInputs} state={state} />
+            <InputList inputs={stakeHolderInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                User
-                <SelectGeneric values={users} id="lastName" value="userId" name="user" />
+                Contact Person
+                <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

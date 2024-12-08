@@ -1,5 +1,5 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address, Role } from "@prisma/client"
+import { Project, Sample, ProjectsOnUsers, User, Zone, Address, Role, StakeHolder } from "@prisma/client"
 import { string } from "zod"
 
 export interface LayoutProps {
@@ -14,7 +14,7 @@ export interface ActionState<T> {
 
 export type AddSampleActionState = ActionState<SamplesWithoutIds>
 
-export type AddClientActionState = ActionState<Omit<Client, "clientId">>
+export type AddStakeHolderActionState = ActionState<Omit<StakeHolder, "idStakeHolder">>
 
 export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & { project?: string; phone?: string }
 

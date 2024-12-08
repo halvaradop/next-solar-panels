@@ -59,7 +59,7 @@ export const SampleSchema = object({
     userId: string().optional().default(""),
 })
 
-export const ClientSchema = object({
+export const StakeHolderSchema = object({
     name: string().regex(/^[A-Za-z]+$/, {
         message: "Only letters",
     }),
@@ -75,7 +75,7 @@ export const ClientSchema = object({
     website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
-    user: string(),
+    contactPerson: string(),
 })
 
 export const UserSchema = object({

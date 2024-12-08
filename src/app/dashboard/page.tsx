@@ -3,10 +3,10 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import {
-    getClients,
+    getStakeHolder,
     getSamplesByUser,
     getUserById,
-    getZonesByClientId,
+    getFieldsByStakeHolderId,
     getUsers,
     getProjects,
     getUserOnProjects,
@@ -30,9 +30,9 @@ const getPanels = async () => {
         clients: [{ clientId } = { clientId: "" }],
     } = await getUserById(userId)
     const [zones, samples, clients, users, projects, usersOnProjects] = await Promise.all([
-        getZonesByClientId(clientId),
+        getFieldsByStakeHolderId(clientId),
         getSamplesByUser(userId),
-        getClients(),
+        getStakeHolder(),
         getUsers(),
         getProjects(),
         getUserOnProjects(),

@@ -1,45 +1,47 @@
-import { Client, Project, User, Zone } from "@prisma/client"
+import { ContactPerson, Field, Project, StakeHolder } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
- * Fetches all clients from the database
+ * Fetches all stake Holders from the database
  *
- * @returns {Promise<Client[]>} - A promise that resolves to a list of clients
+ * @returns {Promise<StakeHolder[]>} - A promise that resolves to a list of  stake Holders
  */
-export const getClients = async <T extends unknown[] = Client[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("clients")
+export const getStakeHolder = async <T extends unknown[] = StakeHolder[]>(): Promise<T> => {
+    const { data } = await getFetch<T>("stakeHolders")
     return data
 }
 
 /**
- * Fetches all plants from the database by the client
+ * Fetches all plants from the database by the  stake Holder
  *
- * @param {string} clientId - The ID of the client to fetch plants for
+ * @param {string} stakeHolderId - The ID of the  stake Holder to fetch plants for
  * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
  */
-export const getProjectsByClientId = async <T extends unknown[] = Project[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`clients/${clientId}/projects`)
+export const getProjectsByStakeHolderId = async <T extends unknown[] = Project[]>(stakeHolderId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`stakeHolders/${stakeHolderId}/projects`)
     return data
 }
 
 /**
- * Fetches all zones from the database by the client
+ * Fetches all zones from the database by the  stake Holder
  *
- * @param {string} clientId - The ID of the client to fetch zones for
- * @returns {Promise<Zones[]>} - A promise that resolves to a list of zones
+ * @param {string} stakeHolderId - The ID of the  stake Holder to fetch zones for
+ * @returns {Promise<Field[]>} - A promise that resolves to a list of zones
  */
-export const getZonesByClientId = async <T extends unknown[] = Zone[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`clients/${clientId}/zones`)
+export const getFieldsByStakeHolderId = async <T extends unknown[] = Field[]>(stakeHolderId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`stakeHolders/${stakeHolderId}/fields`)
     return data
 }
 
 /**
- * Fetches all users associated with a specific client from the database
+ * Fetches all users associated with a specific  stake Holder from the database
  *
- * @param {string} clientId - The ID of the client to fetch users for
+ * @param {string} stakeHolderId - The ID of the  stake Holder to fetch users for
  * @returns {Promise<User[]>} - A promise that resolves to a list of users
  */
-export const getUsersByClientId = async <T extends unknown[] = User[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`clients/${clientId}/users`)
+export const getContactPersonByStakeHolderId = async <T extends unknown[] = ContactPerson[]>(
+    stakeHolderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stakeHolders/${stakeHolderId}/contactPerson`)
     return data
 }

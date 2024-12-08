@@ -1,19 +1,19 @@
-import { Project, Sample } from "@prisma/client"
+import { PositionSoilData } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
- * Fetches a sample by its id from the database.
+ * Fetches a PositionSoilData by its id from the database.
  *
  * @param sampleId - The id of the sample to fetch
- * @returns {Promise<Sample>} - A sample by its id
+ * @returns {Promise<PositionSoilData>} - A sample by its id
  */
-export const getSampleById = async <
-    T extends object = Sample & { zone: { name: string; latitude: string; longitude: string } } & {
+export const getPositionSoilDataById = async <
+    T extends object = PositionSoilData & { field: { name: string; latitude: string; longitude: string } } & {
         user: { firstName: string; lastName: string }
     },
 >(
-    sampleId: string
+    positionSoilDataId: string
 ): Promise<T> => {
-    const { data } = await getFetch<T>(`samples/${sampleId}`)
+    const { data } = await getFetch<T>(`positionSoilDatas/${positionSoilDataId}`)
     return data
 }

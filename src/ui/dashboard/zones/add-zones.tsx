@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import { Project } from "@prisma/client"
 import { addZonesAction } from "@/lib/actions"
 import { AddZonesActionState } from "@/lib/@types/types"
-import { getProjectsByClientId, getUserById } from "@/lib/services"
+import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
@@ -23,9 +23,9 @@ export const AddZone = () => {
         const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
             const {
-                clients: [{ clientId } = { clientId: "" }],
-            } = await getUserById(userId)
-            const response = await getProjectsByClientId(clientId)
+                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getProjectsByStakeHolderId(stakeHolderId)
             setProjects(response)
         }
         fetchProjects()
@@ -35,7 +35,7 @@ export const AddZone = () => {
             <InputList inputs={zoneInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Plant
-                <SelectGeneric values={projects} id="name" value="projectId" name="project" />
+                <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

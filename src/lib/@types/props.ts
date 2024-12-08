@@ -1,6 +1,6 @@
 import { Dispatch, HTMLProps, SetStateAction } from "react"
 import { StaticImageData } from "next/image"
-import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
+import { Zone, Sample, User, Project, Phone, StakeHolder, ContactPerson } from "@prisma/client"
 import { ActionState, Entry, Order } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
@@ -42,12 +42,14 @@ export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface TableClientsProps {
-    clients: (Omit<Client, "state"> & { phone?: Pick<Phone, "number">[] } & { user?: Pick<User, "firstName" | "lastName"> })[]
+export interface TableStakeHoldersProps {
+    stakeHolders: (Omit<StakeHolder, "state"> & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
+        phone?: Pick<Phone, "number">[]
+    })[]
 }
 
 export interface TableProjectOnUserProps {
-    projectsOnUsers: (User & Project)[]
+    projectsOnUsers: (ContactPerson & Project)[]
 }
 
 export interface TableUsersProps {
@@ -78,7 +80,7 @@ export interface SelectProps {
 }
 
 export interface TableZonesProps {
-    zones: (Zone & { project?: Pick<Project, "name"> })[]
+    zones: (Zone & { project?: Pick<Project, "designation"> })[]
 }
 
 export interface InputListProps<T> {

@@ -2,11 +2,19 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Client, Project, Sample, ProjectsOnUsers, User, Zone, Address } from "@prisma/client"
-import { ClientSchema, SampleSchema, UserSchema, ZoneSchema, ProjectSchema, ProjectOnUserSchema, AddressSchema } from "./schemas"
+import { Project, Sample, ProjectsOnUsers, User, Zone, Address, StakeHolder } from "@prisma/client"
+import {
+    StakeHolderSchema,
+    SampleSchema,
+    UserSchema,
+    ZoneSchema,
+    ProjectSchema,
+    ProjectOnUserSchema,
+    AddressSchema,
+} from "./schemas"
 import {
     AddProjectActionState,
-    AddClientActionState,
+    AddStakeHolderActionState,
     AddSampleActionState,
     AddUserActionState,
     AddZonesActionState,
@@ -74,15 +82,18 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
 /**
  * Adds a client to the database and checks if the action was successful
  *
- * @param {AddClientActionState} previous - The previous state of the client to be added
+ * @param {AddContacPersonActionState} previous - The previous state of the client to be added
  * @param {FormData} formData - The form data sent by the user
- * @returns {Promise<AddClientActionState>} - The state of the client and the result of the action, redirecting to the dashboard if successful
+ * @returns {Promise<AddContacPersonActionState>} - The state of the client and the result of the action, redirecting to the dashboard if successful
  */
-export const addClientAction = async (previous: AddClientActionState, formData: FormData): Promise<AddClientActionState> => {
+export const addStakeHolderAction = async (
+    previous: AddStakeHolderActionState,
+    formData: FormData
+): Promise<AddStakeHolderActionState> => {
     const entries = Object.fromEntries(formData)
-    const validate = ClientSchema.safeParse(entries)
+    const validate = StakeHolderSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/clients`, {
+        const request = await fetch(`http://localhost:3000/api/v1/stakeHolders`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -93,10 +104,10 @@ export const addClientAction = async (previous: AddClientActionState, formData: 
         return {
             message,
             isSuccess: false,
-            schema: {} as Client,
+            schema: {} as StakeHolder,
         }
     }
-    const schema = mapErrors<Client>(validate as SafeParseError<Client>)
+    const schema = mapErrors<StakeHolder>(validate as SafeParseError<StakeHolder>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,

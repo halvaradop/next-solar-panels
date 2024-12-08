@@ -192,7 +192,7 @@
       "type": "number"
     }
   ],
-  "clientInputs": [
+  "stakeHolderInputs": [
     {
       "label": "Name",
       "name": "name",
