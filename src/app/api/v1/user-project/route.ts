@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { ProjectsOnUsers } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -16,6 +15,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  * })
  * ```
  */
+/*
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
@@ -56,12 +56,14 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         })
     }
 }
+*/
 
 /**
  * Handles the GET request to fetch all the ProjectsOnUsers records.
  *
  * @returns {Promise<NextResponse>} - HTTP response containing the fetched ProjectsOnUsers records or an error message.
  */
+/*
 export const GET = async (): Promise<NextResponse> => {
     try {
         const data = await prisma.projectsOnUsers.findMany()
@@ -78,3 +80,4 @@ export const GET = async (): Promise<NextResponse> => {
         })
     }
 }
+*/

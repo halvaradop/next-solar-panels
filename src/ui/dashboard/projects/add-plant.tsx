@@ -2,19 +2,19 @@
 
 import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
-import { User } from "@prisma/client"
+import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getUserById, getUsersByClientId } from "@/lib/services"
+import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 
 const { projectInputs } = dataJson
 export const fetchCache = "force-no-store"
 
-export const AddPlant = () => {
+export const AddProject = () => {
     const { data: session } = useSession()
-    const [users, setUsers] = useState<User[]>([])
+    const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
         isSuccess: false,
@@ -25,23 +25,24 @@ export const AddPlant = () => {
         /**
          * TODO: fix bug
          */
-        const fetchUsers = async () => {
+        const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+            /*TODO : fix stakeholderid
             const {
-                clients: [{ clientId } = { clientId: "" }],
-            } = await getUserById(userId)
-            const response = await getUsersByClientId(clientId)
-            setUsers(response)
+                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
+            } = await getContactPersonById(userId)*/
+            const response = await getContactPersonByStakeHolderId("stakeHolderId")
+            setcontactPerson(response)
         }
-        fetchUsers()
+        fetchContactPerson()
     }, [])
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
             <InputList inputs={projectInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                User
-                <SelectGeneric values={users} id="lastName" value="userId" name="user" />
+                Contact Person
+                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

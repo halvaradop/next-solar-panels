@@ -3,8 +3,8 @@
  * @module services
  */
 export * from "./projects"
-export * from "./samples"
-export * from "./zones"
-export * from "./clients"
+export * from "./position-soil-data"
+export * from "./fields"
+export * from "./stakeHolders"
 export * from "./roles"
-export * from "./users"
+export * from "./contactPeople"

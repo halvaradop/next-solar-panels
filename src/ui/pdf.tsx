@@ -120,7 +120,7 @@ const splitValue = (value: string | undefined): string[] => {
     return safeValue.split("|")
 }
 
-export const MyDocument = ({ samples }: MyDocumentProps) => (
+export const MyDocument = ({ positionSoilData }: MyDocumentProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.header}>
@@ -143,18 +143,18 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                 <View style={styles.tableRowInformation}>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>User</Text>
                     <Text style={styles.tableCellInformation}>
-                        {samples.user?.firstName} {samples.user?.lastName}
+                        {positionSoilData.contactPerson?.firstName} {positionSoilData.contactPerson?.lastName}
                     </Text>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Zone</Text>
-                    <Text style={styles.tableCellInformation}>{samples.zone?.name}</Text>
+                    <Text style={styles.tableCellInformation}>{positionSoilData.field?.name}</Text>
                 </View>
                 <View style={styles.tableRowInformation}>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Coordinates</Text>
                     <Text style={styles.tableCellInformation}>
-                        {samples.zone?.latitude} , {samples.zone?.longitude}
+                        {positionSoilData.field?.latitude} , {positionSoilData.field?.longitude}
                     </Text>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Fecha</Text>
-                    <Text style={styles.tableCellInformation}>{samples.date.toString()}</Text>
+                    <Text style={styles.tableCellInformation}>{positionSoilData.date.toString()}</Text>
                 </View>
             </View>
 
@@ -165,10 +165,10 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                     <Text style={[styles.tableCell, styles.tableHeader]}>Galvanising Loss Rates</Text>
                 </View>
                 <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>{splitValue(samples.steel)[0]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.steel)[1]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.galvanising)[0]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.galvanising)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.steel)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.steel)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.galvanising)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.galvanising)[1]}</Text>
                 </View>
             </View>
 
@@ -181,16 +181,16 @@ export const MyDocument = ({ samples }: MyDocumentProps) => (
                     <Text style={[styles.tableCell, styles.tableHeader]}>Surface Corrosion Probability</Text>
                 </View>
                 <View style={styles.tableRow}>
-                    <Text style={styles.tableCell}>{splitValue(samples.valueb0)[0]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.valueb0)[1]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.valueb1)[0]}</Text>
-                    <Text style={styles.tableCell}>{splitValue(samples.valueb1)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.valueb0)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.valueb0)[1]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.valueb1)[0]}</Text>
+                    <Text style={styles.tableCell}>{splitValue(positionSoilData.valueb1)[1]}</Text>
                 </View>
             </View>
 
             <View style={styles.suggestionBox}>
                 <Text style={styles.suggestionTitle}>Tip/Warning</Text>
-                <Text style={styles.suggestionText}>{samples.message}</Text>
+                <Text style={styles.suggestionText}>{positionSoilData.message}</Text>
             </View>
 
             <Text style={styles.footer}>Responsable del análisis: Nombre del responsable</Text>

@@ -138,7 +138,7 @@
       "unit": ""
     }
   ],
-  "userInputs": [
+  "contactPersonInputs": [
     {
       "label": "First Name",
       "name": "firstName",
@@ -175,7 +175,7 @@
       "type": "string"
     }
   ],
-  "zoneInputs": [
+  "fieldInputs": [
     {
       "label": "Name",
       "name": "name",
@@ -192,7 +192,7 @@
       "type": "number"
     }
   ],
-  "clientInputs": [
+  "stakeHolderInputs": [
     {
       "label": "Name",
       "name": "name",
