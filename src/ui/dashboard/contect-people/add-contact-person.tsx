@@ -1,44 +1,52 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
-import { ContactPerson, Project } from "@prisma/client"
-import { addProjectOnUserAction } from "@/lib/actions"
-import { AddProjectOnUserActionState } from "@/lib/@types/types"
-import { getContactPersonById, getContactPersonByStakeHolderId, getProjectsByStakeHolderId } from "@/lib/services"
-import { Button, Form, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Project, Role } from "@prisma/client"
+import { addContactPersonAction } from "@/lib/actions"
+import { AddContactPersonActionState } from "@/lib/@types/types"
+import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
+import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import dataJson from "@/lib/data.json"
 
-export const AddProjectOnUser = () => {
+const { contactPersonInputs } = dataJson
+
+export const AddContactPerson = () => {
     const { data: session } = useSession()
-    const [contactPersons, setcontactPersons] = useState<ContactPerson[]>([])
+    const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
-    const [state, formAction] = useActionState(addProjectOnUserAction, {
+    const [state, formAction] = useActionState(addContactPersonAction, {
         message: "",
         isSuccess: false,
-        schema: {} as AddProjectOnUserActionState["schema"],
+        schema: {} as AddContactPersonActionState["schema"],
     })
 
     useEffect(() => {
-        const getData = async () => {
+        const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /*  TODO : fix stakeholderid
-          const {
+            /* TODO : fix stakeholderid
+           const {
                 stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
             } = await getContactPersonById(userId)*/
-            const [conctacPerson, projects] = await Promise.all([
-                getContactPersonByStakeHolderId(""),
-                getProjectsByStakeHolderId(""),
-            ])
-            setcontactPersons(conctacPerson)
-            setProjects(projects)
+            const response = await getProjectsByStakeHolderId("stakeHolderId")
+            setProjects(response)
         }
-        getData()
+        fetchProjects()
+    }, [])
+
+    useEffect(() => {
+        const fetchRoles = async () => {
+            const response = await getRoles()
+            setRoles(response)
+        }
+        fetchRoles()
     }, [])
 
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
+            <InputList inputs={contactPersonInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                User
-                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="user" />
+                Role
+                <SelectGeneric values={roles} id="name" value="idRole" name="idRole" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project

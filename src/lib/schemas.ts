@@ -4,7 +4,7 @@ const range = (min: number, minMessage: string, max: number, maxMessage: string)
     return number({ message: "Please fill in the field" }).min(min, { message: minMessage }).max(max, { message: maxMessage })
 }
 
-export const SampleSchema = object({
+export const PositionSoilDataSchema = object({
     soilType: range(0, "Soil time must be a positive number", 100, "Soil time must be less than 100"),
     soilResistivity: range(0, "Soil resistivity must be a positive number", 10000, "Soil resistivity must be less than 1000"),
     moistureContent: range(0, "Moisture content must be a positive number", 100, "Moisture content must be less than 100"),
@@ -55,11 +55,11 @@ export const SampleSchema = object({
         "pH soil homogeneity must be less than 100"
     ),
     externalCathodes: range(-1, "Foreign cathodes must be greater than -1", 0, "Foreign cathodes must be less than 1"),
-    zoneId: string().optional().default(""),
-    userId: string().optional().default(""),
+
+    idContacPerson: string().optional().default(""),
 })
 
-export const ClientSchema = object({
+export const StakeHolderSchema = object({
     name: string().regex(/^[A-Za-z]+$/, {
         message: "Only letters",
     }),
@@ -75,10 +75,10 @@ export const ClientSchema = object({
     website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
-    user: string(),
+    contactPerson: string(),
 })
 
-export const UserSchema = object({
+export const ContactPersonSchema = object({
     firstName: string(),
     lastName: string(),
     email: string(),
@@ -88,12 +88,11 @@ export const UserSchema = object({
     }),
     number: string(),
     roleId: string(),
-    project: string(),
 
     fax: string().regex(/^\+?[0-9]{1,4}[-.\s]?(\(?[0-9]+\)?[-.\s]?)+[0-9]+$/, {
         message: "The fax number you entered is incorrect. Please try again with the correct format (e.g., +1-800-123-4567).",
     }),
-    website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
+    www: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
 })
@@ -105,15 +104,16 @@ export const ProjectSchema = object({
     user: string(),
 })
 
-export const ZoneSchema = object({
-    latitude: number()
+export const FiledSchema = object({
+    fence: number()
         .nonnegative()
         .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
-    longitude: number()
+    connectionEarthingFence: number()
         .nonnegative()
         .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
-    name: string().regex(/^[a-zA-Z\s]*$/, "Please enter only letters"),
-    project: string(),
+    externalCurrentInfluence: number()
+        .nonnegative()
+        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
 })
 
 export const ProjectOnUserSchema = object({

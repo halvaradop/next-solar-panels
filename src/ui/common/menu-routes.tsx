@@ -8,13 +8,13 @@ const links = {
         { href: "/dashboard/projects", label: "List" },
         { href: "/dashboard/projects/add", label: "Add" },
     ],
-    clients: [
-        { href: "/dashboard/clients", label: "List" },
-        { href: "/dashboard/clients/add", label: "Add" },
+    stakeHolder: [
+        { href: "/dashboard/stakeHolders", label: "List" },
+        { href: "/dashboard/stakeHolders/add", label: "Add" },
     ],
-    users: [
-        { href: "/dashboard/users", label: "List" },
-        { href: "/dashboard/users/add", label: "Add" },
+    contactPerson: [
+        { href: "/dashboard/contactPersons", label: "List" },
+        { href: "/dashboard/contactPersons/add", label: "Add" },
     ],
     usersOnProjects: [
         { href: "/dashboard/users-on-projects", label: "List" },
@@ -24,9 +24,9 @@ const links = {
         { href: "/dashboard/samples", label: "List" },
         { href: "/dashboard/samples/add", label: "Add" },
     ],
-    zones: [
-        { href: "/dashboard/zones", label: "List" },
-        { href: "/dashboard/zones/add", label: "Add" },
+    fields: [
+        { href: "/dashboard/fields", label: "List" },
+        { href: "/dashboard/fields/add", label: "Add" },
     ],
 }
 

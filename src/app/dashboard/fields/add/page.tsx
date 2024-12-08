@@ -1,20 +1,20 @@
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
+import { AddField } from "@/ui/dashboard/fields/add-fields"
 import { SessionProvider } from "next-auth/react"
-import { AddProject } from "@/ui/dashboard/projects/add-plant"
 
 export const metadata: Metadata = {
-    title: "Add Plant",
-    description: "Add a new plant",
+    title: "Add Zone",
+    description: "Add a new zone",
 }
 
-const AddProjectPage = async () => {
+const AddFieldPage = async () => {
     const session = await auth()
     return (
         <SessionProvider session={session}>
-            <AddProject />
+            <AddField />
         </SessionProvider>
     )
 }
 
-export default AddProjectPage
+export default AddFieldPage
