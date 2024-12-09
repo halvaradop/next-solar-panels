@@ -1,7 +1,7 @@
-import { Dispatch, HTMLProps, SetStateAction } from "react"
+import { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
 import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData } from "@prisma/client"
-import { ActionState, Entry, Order } from "./types"
+import { ActionState, Entry, Order, Roles } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
@@ -114,4 +114,17 @@ export type FormProps = FormVariantProps<typeof formVariants> & {
 
 export interface MyDocumentProps {
     positionSoilData: Order
+}
+
+export interface CardDashboardProps {
+    src: string | StaticImageData
+    alt?: string
+    title: string
+    count: number
+}
+
+export interface RenderByRoleProps {
+    role: Roles
+    match: Roles[]
+    children?: React.ReactNode
 }

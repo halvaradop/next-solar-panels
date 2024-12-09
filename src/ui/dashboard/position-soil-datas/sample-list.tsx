@@ -16,11 +16,11 @@ export const PositionSoilDatasList = ({ positionSoilDatas }: PositionSoilDatasPr
     return (
         <section>
             <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-                {filteredPositionSoilData.map(({ positionSoilDataId, contactPerson, field, date, b0, b1 }) => (
-                    <article className="max-w-md" key={positionSoilDataId}>
+                {filteredPositionSoilData.map(({ idPositionSoilData, contactPerson, field, date, b0, b1 }) => (
+                    <article className="max-w-md" key={idPositionSoilData}>
                         <Link
                             className="p-4 flex items-center justify-between font-normal border rounded-lg shadow hover:cursor-pointer"
-                            href={`/dashboard/samples/${positionSoilDataId}`}
+                            href={`/dashboard/samples/${idPositionSoilData}`}
                         >
                             <div>
                                 <div className="flex items-center justify-between gap-x-5 mb-2">
