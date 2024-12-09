@@ -5,9 +5,9 @@ import { TableFieldsProps } from "@/lib/@types/props"
 export const TableFields = ({ fields }: TableFieldsProps) => {
     const params = useSearchParams()
 
-    const filteredFields = fields.filter(({ fieldId }) => {
+    const filteredFields = fields.filter(({ idField }) => {
         const project = params.get("plant")
-        return project ? project === fieldId.toString() : true
+        return project ? project === idField.toString() : true
     })
 
     return (
@@ -21,8 +21,8 @@ export const TableFields = ({ fields }: TableFieldsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {filteredFields.map(({ fieldId, idAddress, project, fence }) => (
-                    <tr className="text-sm" key={fieldId}>
+                {filteredFields.map(({ idField, idAddress, project, fence }) => (
+                    <tr className="text-sm" key={idField}>
                         <td className="xs:table-cell">{fence}</td>
                         <td>{idAddress}</td>
                         <td>{idAddress}</td>

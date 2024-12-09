@@ -46,6 +46,7 @@ export const GET = async (): Promise<NextResponse> => {
  *   body: JSON.stringify({
  *     idContactPerson: 1,
  *     idStakeholder: 1,
+ *     idAddress: 1,
  *     designation: "Allianz Arena",
  *   }),
  * })
@@ -55,14 +56,9 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { designation, idContactPerson, idStakeholder } = response
 
         const data = await prisma.project.create({
-            data: {
-                designation,
-                idContactPerson,
-                idStakeholder,
-            },
+            data: response,
         })
 
         return NextResponse.json<ResponseAPI<Project>>({

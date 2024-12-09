@@ -1,5 +1,15 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, Linkage } from "@prisma/client"
+import {
+    Project,
+    Address,
+    Role,
+    StakeHolder,
+    PositionSoilData,
+    ContactPerson,
+    Field,
+    Linkage,
+    PhoneContactPerson,
+} from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -60,9 +70,10 @@ export type AddProjectOnUserActionState = ActionState<Linkage>
 
 export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
-export type UserSession = Omit<ContactPerson, "state" | "roleId" | "password" | "fax" | "wwww"> & {
-    role: Omit<Role, "users" | "rolesPermissions">
-    clients: { clientId: string }[]
+export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password"> & {
+    role: Pick<Role, "name">
+    phones: Pick<PhoneContactPerson, "number">
+    projects: Project[]
 }
 
 export type Roles = "client-admin" | "client-user" | "admin"

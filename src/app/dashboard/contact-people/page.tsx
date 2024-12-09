@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
-import { TableContactPeople } from "@/ui/dashboard/contect-people/table"
+import { TableContactPeople } from "@/ui/dashboard/contact-people/table"
 
 export const metadata: Metadata = {
     title: "List of users",

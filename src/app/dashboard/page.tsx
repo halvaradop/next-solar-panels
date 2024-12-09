@@ -27,10 +27,10 @@ const getPanels = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId } = { clientId: "" }],
+        projects: [{ idStakeholder }],
     } = await getContactPersonById(userId)
     const [field, positionSoilDatas, stakeHolders, contactPeople, projects, usersOnProjects] = await Promise.all([
-        getFieldsByStakeHolderId(clientId),
+        getFieldsByStakeHolderId(idStakeholder),
         getPositionSoilDataByContactPerson(userId),
         getStakeHolder(),
         getContactaPeople(),
