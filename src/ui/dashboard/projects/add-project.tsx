@@ -2,10 +2,10 @@
 
 import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
-import { ContactPerson } from "@prisma/client"
+import { ContactPerson, StakeHolder } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPersonById, getContactPersonByStakeHolderId, getStakeHolder } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 
@@ -15,6 +15,7 @@ export const fetchCache = "force-no-store"
 export const AddProject = () => {
     const { data: session } = useSession()
     const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
+    const [stakeHolders, setstakeHolders] = useState<StakeHolder[]>([])
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
         isSuccess: false,
@@ -27,12 +28,16 @@ export const AddProject = () => {
          */
         const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /*TODO : fix stakeholderid
+
             const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getContactPersonByStakeHolderId("stakeHolderId")
-            setcontactPerson(response)
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const [conctacPersons, stakeHolders] = await Promise.all([
+                getContactPersonByStakeHolderId(idStakeHolder),
+                getStakeHolder(),
+            ])
+            setcontactPerson(conctacPersons)
+            setstakeHolders(stakeHolders)
         }
         fetchContactPerson()
     }, [])
@@ -43,6 +48,10 @@ export const AddProject = () => {
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
                 <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="user" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Contact Person
+                <SelectGeneric values={stakeHolders} id="name" value="idStakeHolder" name="user" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

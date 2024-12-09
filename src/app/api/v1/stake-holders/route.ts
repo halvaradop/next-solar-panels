@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { StakeHolder } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
+import { data } from "framer-motion/client"
 
 /**
  * Handles the GET request to retrieve all stakeholders from the database.
@@ -67,8 +68,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
          * TODO: add phones and type missing fields
          */
         const response = await request.json()
-        const { email } = response
-
+        const { email, number, password, fax, website, contactPerson, name } = response
         const existEmail = await prisma.stakeHolder.findFirst({
             where: { email },
         })
@@ -80,10 +80,22 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-        const data = await prisma.stakeHolder.create({
-            data: response,
-        })
 
+        const data = await prisma.stakeHolder.create({
+            data: {
+                email,
+                industry: "nose",
+                fax,
+                name,
+                www: website,
+                password,
+                idContactPerson: contactPerson,
+                idAddress: 1,
+                idPicture: 1,
+            },
+        })
+        console.log("data")
+        console.log(data)
         return NextResponse.json<ResponseAPI<StakeHolder>>({
             data,
             ok: true,

@@ -17,14 +17,18 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (request: NextRequest, { params }: Params<"stakeholderId">): Promise<NextResponse> => {
     try {
-        const idStakeHolder = (await params).stakeholderId
+        const idStakeholder = (await params).stakeholderId
         const data = await prisma.contactPerson.findMany({
             where: {
-                stakeHolder: {
+                project: {
                     some: {
-                        idStakeHolder,
+                        idStakeholder,
                     },
                 },
+            },
+            include: {
+                role: true,
+                phones: true,
             },
         })
 

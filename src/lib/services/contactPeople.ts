@@ -41,7 +41,7 @@ export const getPositionSoilDataByContactPerson = async <T extends unknown[] = P
  *Todo fix
  * @returns {Promise<Linkage[]>} - A list of projects related to the user
  */
-export const getContactPersonOnProjects = async <T extends unknown[] = Linkage[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("linkage")
-    return data
-}
+//export const getContactPersonOnProjects = async <T extends unknown[] = Linkage[]>(): Promise<T> => {
+//const { data } = await getFetch<T>("")
+//  return
+//}
