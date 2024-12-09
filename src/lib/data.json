@@ -219,6 +219,11 @@
       "type": "text"
     },
     {
+      "label": "Industry",
+      "name": "industry",
+      "type": "text"
+    },
+    {
       "label": "Phone",
       "name": "number",
       "type": "number"

@@ -26,16 +26,16 @@ export const metadata: Metadata = {
 const getPanels = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const {
-        projects: [{ idStakeholder }],
+  const {
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
     } = await getContactPersonById(userId)
-    const [field, positionSoilDatas, stakeHolders, contactPeople, projects, usersOnProjects] = await Promise.all([
-        getFieldsByStakeHolderId(idStakeholder),
+    const [field, positionSoilDatas, stakeHolders, contactPeople, projects] = await Promise.all([
+        getFieldsByStakeHolderId(idStakeHolder),
         getPositionSoilDataByContactPerson(userId),
         getStakeHolder(),
         getContactaPeople(),
         getProjects(),
-        getContactPersonOnProjects(),
+       // getContactPersonOnProjects(),
     ])
     return {
         session,
@@ -58,7 +58,7 @@ const getPanels = async () => {
             {
                 icon: clientsIcon,
                 title: "Users On Projects",
-                count: usersOnProjects.length,
+               // count: usersOnProjects.length,
             },
             {
                 icon: samplesIcon,

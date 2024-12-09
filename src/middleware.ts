@@ -36,13 +36,13 @@ export const middleware = async (request: NextRequest) => {
         return NextResponse.redirect(new URL("/login", request.nextUrl))
     }
     const rbac = roleBasedAccessControl[session.user.role] ?? []
-    const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
-    if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
+    //const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
+    //if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
         return NextResponse.next()
-    }
-    if (!rbac.includes(pathname) && pathname !== "") {
-        return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
-    }
+    //}
+    //if (!rbac.includes(pathname) && pathname !== "") {
+      //  return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
+    //}
     return NextResponse.next()
 }
 

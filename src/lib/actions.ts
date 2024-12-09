@@ -96,7 +96,7 @@ export const addStakeHolderAction = async (
     const entries = Object.fromEntries(formData)
     const validate = StakeHolderSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stakeHolders`, {
+        const request = await fetch(`http://localhost:3000/api/v1/stake-holders`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -164,7 +164,9 @@ export const addContactPersonAction = async (
     formData: FormData
 ): Promise<AddContactPersonActionState> => {
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     const validate = ContactPersonSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/contact-people`, {
             method: "POST",

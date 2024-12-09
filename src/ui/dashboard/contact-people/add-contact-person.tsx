@@ -23,11 +23,11 @@ export const AddContactPerson = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /* TODO : fix stakeholderid
+            
            const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getProjectsByStakeHolderId("stakeHolderId")
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getProjectsByStakeHolderId(idStakeHolder)
             setProjects(response)
         }
         fetchProjects()

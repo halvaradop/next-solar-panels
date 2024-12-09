@@ -67,7 +67,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
          * TODO: add phones and type missing fields
          */
         const response = await request.json()
-        const { email } = response
+        const { email, password, fax, website, contactPerson, name , industry } = response
 
         const existEmail = await prisma.stakeHolder.findFirst({
             where: { email },
@@ -81,9 +81,19 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             })
         }
         const data = await prisma.stakeHolder.create({
-            data: response,
+            data: {
+                email,
+                industry,
+                fax,
+                name,
+                www: website,
+                password,
+                idContactPerson: contactPerson,
+                idAddress: 1,
+                idPicture: 1,
+            },
         })
-
+        console.log(data)
         return NextResponse.json<ResponseAPI<StakeHolder>>({
             data,
             ok: true,

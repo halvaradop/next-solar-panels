@@ -56,12 +56,10 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { email, roleId, ...rest } = await request.json()
-
+        const { email, idRole, firstName, lastName, password, number, fax, website, project } = await request.json()
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
-
         if (existingContactPerson) {
             return NextResponse.json<ResponseAPI<null>>({
                 data: null,
@@ -69,12 +67,16 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-
+{/*todo fix : change databse varchar to char*/}
         const newContactPerson = await prisma.contactPerson.create({
             data: {
-                ...rest,
                 email,
-                roleId: parseInt(roleId),
+                fax,
+                firstName,
+                lastName,
+                password,
+                www: website,
+                idRole: parseInt(idRole),
             },
         })
 
