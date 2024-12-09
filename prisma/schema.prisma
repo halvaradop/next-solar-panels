@@ -131,6 +131,7 @@ model PositionData {
   grounding        Boolean
   idField          String
   field            Field        @relation(fields: [idField], references: [idField])
+  linkage          Linkage[]
 }
 
 model PositionMeasurement {
@@ -219,6 +220,10 @@ model PositionSoilDataOnLinkage {
 
 model Linkage {
   idLinkage                    String                         @id @default(uuid())
+  date                         DateTime                       @default(now())
+  updateAt                     DateTime                       @updatedAt
+  idPositionData               String
+  positionData                 PositionData                   @relation(fields: [idPositionData], references: [idPositionData])
   positionMeasurementOnLinkage PositionMeasurementOnLinkage[]
   positionResistivityOnLinkage PositionResistivityOnLinkage[]
   positionSoilDataOnLinkage    PositionSoilDataOnLinkage[]
