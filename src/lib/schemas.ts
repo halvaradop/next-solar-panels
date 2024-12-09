@@ -87,12 +87,12 @@ export const ContactPersonSchema = object({
             "Your password must contain at least one lowercase letter, one uppercase letter, one number, one special character (e.g., @, $, !, %, *, ?, &), and be at least 8 characters long.",
     }),
     number: string(),
-    roleId: string(),
+    idRole: string(),
 
     fax: string().regex(/^\+?[0-9]{1,4}[-.\s]?(\(?[0-9]+\)?[-.\s]?)+[0-9]+$/, {
         message: "The fax number you entered is incorrect. Please try again with the correct format (e.g., +1-800-123-4567).",
     }),
-    www: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
+    website: string().regex(/^^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/[^\s]*)?$/, {
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
 })

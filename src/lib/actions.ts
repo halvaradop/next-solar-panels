@@ -94,9 +94,11 @@ export const addStakeHolderAction = async (
     formData: FormData
 ): Promise<AddStakeHolderActionState> => {
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     const validate = StakeHolderSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stakeHolders`, {
+        const request = await fetch(`http://localhost:3000/api/v1/stake-holders`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })

@@ -9,7 +9,7 @@ import {
     getFieldsByStakeHolderId,
     getContactaPeople,
     getProjects,
-    getContactPersonOnProjects,
+    // getContactPersonOnProjects,
 } from "@/lib/services"
 import { roleBasedAccessControl } from "@/middleware"
 import samplesIcon from "@/public/samples.svg"
@@ -27,15 +27,15 @@ const getPanels = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId } = { clientId: "" }],
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
     } = await getContactPersonById(userId)
-    const [field, positionSoilDatas, stakeHolders, contactPeople, projects, usersOnProjects] = await Promise.all([
-        getFieldsByStakeHolderId(clientId),
+    const [field, positionSoilDatas, stakeHolders, contactPeople, projects] = await Promise.all([
+        getFieldsByStakeHolderId(idStakeHolder),
         getPositionSoilDataByContactPerson(userId),
         getStakeHolder(),
         getContactaPeople(),
         getProjects(),
-        getContactPersonOnProjects(),
+        //getContactPersonOnProjects(),
     ])
     return {
         session,
@@ -43,7 +43,7 @@ const getPanels = async () => {
             {
                 icon: clientsIcon,
                 title: "Clients",
-                count: stakeHolders.length,
+                //  count: stakeHolders.length,
             },
             {
                 icon: samplesIcon,
@@ -58,7 +58,7 @@ const getPanels = async () => {
             {
                 icon: clientsIcon,
                 title: "Users On Projects",
-                count: usersOnProjects.length,
+                // count: usersOnProjects.length,
             },
             {
                 icon: samplesIcon,

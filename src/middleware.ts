@@ -11,8 +11,8 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "zones/add",
         "users",
         "users/add",
-        "clients",
-        "clients/add",
+        "stake-holders",
+        "stake-holders/add",
         "projects",
         "projects/add",
         "users-on-projects",
@@ -36,13 +36,13 @@ export const middleware = async (request: NextRequest) => {
         return NextResponse.redirect(new URL("/login", request.nextUrl))
     }
     const rbac = roleBasedAccessControl[session.user.role] ?? []
-    const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
-    if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
-        return NextResponse.next()
-    }
-    if (!rbac.includes(pathname) && pathname !== "") {
-        return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
-    }
+    //const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
+    //if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
+    //    return NextResponse.next()
+    // }
+    // if (!rbac.includes(pathname) && pathname !== "") {
+    //   return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
+    //}
     return NextResponse.next()
 }
 

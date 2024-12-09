@@ -40,8 +40,8 @@ export const getFieldsByStakeHolderId = async <T extends unknown[] = Field[]>(st
  * @returns {Promise<User[]>} - A promise that resolves to a list of users
  */
 export const getContactPersonByStakeHolderId = async <T extends unknown[] = ContactPerson[]>(
-    stakeHolderId: string
+    stakeholderId: string
 ): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/contact-people`)
+    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/contact-people`)
     return data
 }

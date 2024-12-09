@@ -56,8 +56,8 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { email, roleId, ...rest } = await request.json()
-
+        const { email, idRole, firstName, lastName, password, number, fax, website, project } = await request.json()
+        const role = parseInt(idRole)
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
@@ -72,9 +72,18 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
         const newContactPerson = await prisma.contactPerson.create({
             data: {
-                ...rest,
                 email,
-                roleId: parseInt(roleId),
+                fax,
+                firstName,
+                lastName,
+                password,
+                www: website,
+                idRole: parseInt(idRole),
+                phones: {
+                    create: {
+                        number,
+                    },
+                },
             },
         })
 

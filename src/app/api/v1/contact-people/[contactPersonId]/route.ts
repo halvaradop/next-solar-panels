@@ -27,9 +27,9 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 firstName: true,
                 lastName: true,
                 role: true,
+                stakeHolder: true,
             },
         })
-
         if (!data) {
             return NextResponse.json<ResponseAPI<UserSession>>(
                 {
@@ -42,7 +42,7 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
         }
 
         return NextResponse.json<ResponseAPI<UserSession>>({
-            data: {} as UserSession,
+            data: data as UserSession,
             ok: true,
             message: "The resource was retrieved successfuly",
         })

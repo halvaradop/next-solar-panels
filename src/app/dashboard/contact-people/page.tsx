@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    /*  TODO : fix stakeholderid
-  const {
-        stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-    } = await getContactPersonById(userId)*/
-    const contactPeople = await getContactPersonByStakeHolderId("stakeHolderId")
+
+    const {
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+    } = await getContactPersonById(userId)
+    const contactPeople = await getContactPersonByStakeHolderId(idStakeHolder)
     return { contactPeople }
 }
 

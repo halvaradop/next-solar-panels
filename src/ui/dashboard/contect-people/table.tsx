@@ -23,7 +23,7 @@ export const TableContactPeople = async ({ contactPeople }: TableContactPeoplePr
                                 ? phones.map(({ number }, index) => <div key={index}>{number}</div>)
                                 : "No phone number"}
                         </td>
-                        <td>{role?.roleName}</td>
+                        <td>{role?.name}</td>
                     </tr>
                 ))}
             </tbody>
