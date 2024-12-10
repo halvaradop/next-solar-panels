@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
-import { Console } from "console"
-import { Stream } from "stream"
-import { Spectral_SC } from "next/font/google"
 import { data } from "framer-motion/client"
 
 /**

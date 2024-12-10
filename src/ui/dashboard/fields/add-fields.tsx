@@ -22,7 +22,6 @@ export const AddField = () => {
         isSuccess: false,
     } as AddFieldsActionState)
 
-    // Use a single state object for checkboxes to simplify management
     const [checkboxes, setCheckboxes] = useState({
         fence: false,
         connectionEarthingFence: false,
@@ -42,7 +41,6 @@ export const AddField = () => {
         fetchProjects()
     }, [])
 
-    // Generic handler for all checkboxes
     const handleCheckboxChange = (name: keyof typeof checkboxes) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setCheckboxes((prev) => ({
             ...prev,
@@ -50,11 +48,9 @@ export const AddField = () => {
         }))
     }
 
-    // Create a form data object that always includes checkbox values
     const formDataWithCheckboxes = () => {
         const formData = new FormData()
 
-        // Add checkbox values to formData
         Object.entries(checkboxes).forEach(([key, value]) => {
             formData.append(key, value ? "1" : "0")
         })
@@ -66,7 +62,6 @@ export const AddField = () => {
         <Form
             className="w-full min-h-main pt-4"
             action={(formData) => {
-                // Merge the checkbox formData with any existing formData
                 const combinedFormData = new FormData()
                 for (const [key, value] of formData.entries()) {
                     combinedFormData.append(key, value)
@@ -80,7 +75,6 @@ export const AddField = () => {
             <h1 className="text-2xl font-bold text-center">Add Fields</h1>
             <InputList inputs={fieldInputs} state={state} />
 
-            {/* Checkboxes now use a generic handler and the checkboxes state */}
             <Label className="w-full text-neutral-700" size="sm">
                 Fence
                 <input
