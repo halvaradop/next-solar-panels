@@ -94,7 +94,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 type: "CLIENT",
             },
         })
-        console.log(data)
+
         return NextResponse.json<ResponseAPI<StakeHolder>>({
             data,
             ok: true,

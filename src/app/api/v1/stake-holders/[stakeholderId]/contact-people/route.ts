@@ -18,7 +18,6 @@ import { Params, ResponseAPI } from "@/lib/@types/types"
 export const GET = async (request: NextRequest, { params }: Params<"stakeholderId">): Promise<NextResponse> => {
     try {
         const idStakeHolder = (await params).stakeholderId
-        console.log(idStakeHolder)
         const data = await prisma.contactPerson.findMany({
             where: {
                 stakeHolder: {

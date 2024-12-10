@@ -76,13 +76,3 @@ export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" 
 }
 
 export type Roles = "client-admin" | "client-user" | "admin"
-export type AddressI = {
-    country: string
-    state: string
-    city: string
-    postbox: string
-    street: string
-    number: string
-    latitude: string
-    longitude: string
-}

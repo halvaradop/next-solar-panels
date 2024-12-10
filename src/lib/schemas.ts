@@ -21,7 +21,7 @@ export const PositionSoilDataSchema = object({
     z14: range(0, "pH soil homogeneity must be a positive number", 100, "pH soil homogeneity must be less than 100"),
     z15: range(-1, "Foreign cathodes must be greater than -1", 0, "Foreign cathodes must be less than 1"),
     chlorides: range(0, "Sulphate content must be a positive number", 50, "Sulphate content must be less than 50"),
-    idContacPerson: string().optional().default(""),
+    idContactPerson: string().optional().default(""),
 })
 
 export const StakeHolderSchema = object({
