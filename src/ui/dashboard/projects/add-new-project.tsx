@@ -1,7 +1,7 @@
 "use client"
 import { useRef } from "react"
 import { Button } from "@halvaradop/ui-button"
-import { Modal, innerDialogVariants } from "@HALVARADOP/ui-dialog"
+import { Modal, innerDialogVariants } from "@halvaradop/ui-dialog"
 import { AddProject } from "./add-plant"
 
 export const AddNewProject = () => {
