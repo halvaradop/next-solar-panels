@@ -8,10 +8,12 @@ import { getFieldsByStakeHolderId, getContactPersonById } from "@/lib/services"
 import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
+import { AddPositionSoilDataProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
 const { PositionSoilDataInputs } = dataJson
 
-export const AddPositionSoilDatas = () => {
+export const AddPositionSoilDatas = ({ className }: AddPositionSoilDataProps) => {
     const { data: session } = useSession()
     const [fields, setfields] = useState<Field[]>([])
     const [state, formAction] = useActionState(addPositionSoilDatasPageAction, {
@@ -34,7 +36,10 @@ export const AddPositionSoilDatas = () => {
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4 pb-12 space-y-2 label:w-full label:text-neutral-700" action={formAction}>
+        <Form
+            className={merge("w-full min-h-main pt-4 pb-12 space-y-2 label:w-full label:text-neutral-700", className)}
+            action={formAction}
+        >
             {PositionSoilDataInputs.map(({ label, name, unit, values }, key) => (
                 <Label size="sm" key={key}>
                     {label}

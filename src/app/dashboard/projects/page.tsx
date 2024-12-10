@@ -3,6 +3,8 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
 import { TableProjects } from "@/ui/dashboard/projects/table"
+import { AddNewProject } from "@/ui/dashboard/projects/add-new-project"
+import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {
     title: "Projects",
@@ -25,6 +27,9 @@ const DashboardPlantsPage = async () => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
+            <SessionProvider>
+                <AddNewProject />
+            </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
                 <TableProjects projects={projects} />
             </Suspense>

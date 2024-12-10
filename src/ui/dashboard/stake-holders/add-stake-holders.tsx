@@ -8,10 +8,12 @@ import { useEffect, useState } from "react"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { useSession } from "next-auth/react"
 import { ContactPerson } from "@prisma/client"
+import { AddStakeHoldersProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
 const { stakeHolderInputs } = dataJson
 
-export const AddStakeHolder = () => {
+export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
     const { data: session } = useSession()
     const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addStakeHolderAction, {
@@ -33,7 +35,7 @@ export const AddStakeHolder = () => {
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={stakeHolderInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person

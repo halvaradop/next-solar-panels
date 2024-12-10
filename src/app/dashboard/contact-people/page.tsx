@@ -3,6 +3,8 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { TableContactPeople } from "@/ui/dashboard/contact-people/table"
+import { SessionProvider } from "next-auth/react"
+import { AddNewContactPerson } from "@/ui/dashboard/contact-people/add-new-contact-person"
 
 export const metadata: Metadata = {
     title: "List of users",
@@ -25,6 +27,9 @@ const DashboardContactPeoplePage = async () => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
+            <SessionProvider>
+                <AddNewContactPerson />
+            </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
                 <TableContactPeople contactPeople={contactPeople} />
             </Suspense>

@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth"
 import { PositionSoilDatasList } from "@/ui/dashboard/position-soil-datas/sample-list"
 import { Filter } from "@/ui/common/filter"
 import { getPositionSoilDataByContactPerson, getContactPersonById, getFieldsByStakeHolderId } from "@/lib/services"
+import { SessionProvider } from "next-auth/react"
+import { AddNewPositionSoilData } from "@/ui/dashboard/position-soil-datas/add-new-position-soil-datas"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -36,6 +38,9 @@ const DashboardSamplesPage = async () => {
                     },
                 ]}
             />
+            <SessionProvider>
+                <AddNewPositionSoilData />
+            </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
                 <PositionSoilDatasList positionSoilDatas={positionSoilDatas} />
             </Suspense>

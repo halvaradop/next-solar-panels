@@ -8,10 +8,11 @@ import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
+import { AddFieldsProps } from "@/lib/@types/props"
 
 const { fieldInputs } = dataJson
 
-export const AddField = () => {
+export const AddField = ({ className }: AddFieldsProps) => {
     const { data: session } = useSession()
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addFieldsAction, {
@@ -32,7 +33,7 @@ export const AddField = () => {
         fetchProjects()
     }, [])
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={fieldInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Plant

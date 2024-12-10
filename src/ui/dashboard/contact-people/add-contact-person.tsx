@@ -7,10 +7,12 @@ import { AddContactPersonActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
+import { AddContactPersonProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
 const { contactPersonInputs } = dataJson
 
-export const AddContactPerson = () => {
+export const AddContactPerson = ({ className }: AddContactPersonProps) => {
     const { data: session } = useSession()
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
@@ -42,7 +44,7 @@ export const AddContactPerson = () => {
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={contactPersonInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
