@@ -135,3 +135,7 @@ export interface PickYourProjectProps {
     idProject: string
     designation: string
 }
+
+export interface AddProjectProps {
+    className?: string
+}
