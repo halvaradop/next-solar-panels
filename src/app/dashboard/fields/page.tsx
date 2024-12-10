@@ -13,13 +13,12 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    /*TODO : fix stakeholderid
     const {
-        stakeHolders: [{ stakeHolders } = { stakeHolders: "" }],
-    } = await getContactPersonById(userId)*/
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+    } = await getContactPersonById(userId)
     const [fields, projects] = await Promise.all([
-        getFieldsByStakeHolderId("stakeHolders"),
-        getProjectsByStakeHolderId("stakeHolders"),
+        getFieldsByStakeHolderId(idStakeHolder),
+        getProjectsByStakeHolderId(idStakeHolder),
     ])
     return { fields, projects }
 }

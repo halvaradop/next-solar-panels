@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
+import { Console } from "console"
+import { Stream } from "stream"
+import { Spectral_SC } from "next/font/google"
+import { data } from "framer-motion/client"
 
 /**
  * Handle the GET request to retrieve all fields from the database.
@@ -53,11 +57,35 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const requestData = await request.json()
+        const { designation, fence, connectionEarthingFence, externalCurrentInfluence, project, longitude, latitude, ...rest } =
+            await request.json()
+        const fenceBoolean = Boolean(Number(fence))
+        const connectionEarthingFenceBoolean = Boolean(Number(connectionEarthingFence))
+        const externalCurrentInfluenceBoolean = Boolean(Number(externalCurrentInfluence))
+        console.log("fence: " + fence)
+        console.log(designation)
 
         const newField = await prisma.field.create({
-            data: requestData,
+            data: {
+                designation,
+                fence: fenceBoolean,
+                connectionEarthingFence: connectionEarthingFenceBoolean,
+                externalCurrentInfluence: externalCurrentInfluenceBoolean,
+                project: {
+                    connect: {
+                        idProject: project,
+                    },
+                },
+                address: {
+                    create: {
+                        latitude: parseFloat(latitude),
+                        longitude: parseFloat(longitude),
+                        ...rest,
+                    },
+                },
+            },
         })
+        console.log(data)
         return NextResponse.json<ResponseAPI<Field>>({
             data: newField,
             ok: true,

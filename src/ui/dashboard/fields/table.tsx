@@ -21,9 +21,9 @@ export const TableFields = ({ fields }: TableFieldsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {filteredFields.map(({ idField, idAddress, project, fence }) => (
+                {filteredFields.map(({ idField, designation, idAddress, project }) => (
                     <tr className="text-sm" key={idField}>
-                        <td className="xs:table-cell">{fence}</td>
+                        <td className="xs:table-cell">{designation}</td>
                         <td>{idAddress}</td>
                         <td>{idAddress}</td>
                         <td className="hidden sm:table-cell">{project?.designation}</td>
