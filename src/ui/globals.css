@@ -35,7 +35,7 @@
         }
     }
 
-    body:has(header:is([data-pathname*="/dashboard"], [data-pathname="/login"])) footer {
+    body:has(header:is([data-pathname*="/dashboard"], [data-pathname="/login"], [data-pathname="/pick-your-project"])) footer {
         display: none;
     }
 

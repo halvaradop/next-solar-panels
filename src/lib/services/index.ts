@@ -5,6 +5,6 @@
 export * from "./projects"
 export * from "./position-soil-data"
 export * from "./fields"
-export * from "./stakeHolders"
+export * from "./stakeholders"
 export * from "./roles"
 export * from "./contact-people"

@@ -4,7 +4,7 @@ import { ResponseAPI } from "@/lib/@types/types"
 import { SafeParseError } from "zod"
 import { PositionSoilData } from "@prisma/client"
 import { merge as mergeClasses } from "@halvaradop/ui-core"
-import { StaticImageData } from "next/image"
+import { JwtPayload, sign, verify } from "jsonwebtoken"
 
 /**
  * Merges the classes and returns a string
@@ -390,5 +390,32 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         "µm/y"
     return {
         Galvanised,
+    }
+}
+
+/**
+ * Create a new access token with the given payload
+ *
+ * @param {JwtPayload} payload - The payload to be signed
+ * @returns {string} - The signed token
+ */
+export const generateAccessToken = (payload: JwtPayload): string => {
+    return sign(payload, process.env.SECRET_JWT_TOKEN!, {
+        algorithm: "HS256",
+        expiresIn: "5m",
+    })
+}
+
+/**
+ * Get the payload of the token that was created from the `generateAccessToken` function
+ *
+ * @param {string} token - The token to be verified
+ * @returns {JwtPayload | null} - The payload of the token
+ */
+export const getAccessToken = (token: string) => {
+    try {
+        return verify(token, process.env.SECRET_JWT_TOKEN!) as JwtPayload
+    } catch (error) {
+        return null
     }
 }

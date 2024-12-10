@@ -8,11 +8,12 @@ import { AddProjectActionState } from "@/lib/@types/types"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
+import { AddProjectProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
 const { projectInputs } = dataJson
-export const fetchCache = "force-no-store"
 
-export const AddProject = () => {
+export const AddProject = ({ className }: AddProjectProps) => {
     const { data: session } = useSession()
     const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addProjectAction, {
@@ -38,7 +39,7 @@ export const AddProject = () => {
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={projectInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person

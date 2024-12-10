@@ -121,10 +121,21 @@ export interface CardDashboardProps {
     alt?: string
     title: string
     count: number
+    isHover?: boolean
 }
 
 export interface RenderByRoleProps {
     role: Roles
     match: Roles[]
     children?: React.ReactNode
+}
+
+export interface PickYourProjectProps {
+    contactPersonId: string
+    idProject: string
+    designation: string
+}
+
+export interface AddProjectProps {
+    className?: string
 }
