@@ -9,7 +9,7 @@ import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elem
 import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
 
-const { sampleInputs } = dataJson
+const { PositionSoilDataInputs } = dataJson
 
 export const AddPositionSoilDatas = () => {
     const { data: session } = useSession()
@@ -23,11 +23,11 @@ export const AddPositionSoilDatas = () => {
     useEffect(() => {
         const fetchFields = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-            /* TODO : fix stakeholderid
-           const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getFieldsByStakeHolderId("stakeHolderId")
+
+            const {
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getFieldsByStakeHolderId(idStakeHolder)
             setfields(response)
         }
         fetchFields()
@@ -35,7 +35,7 @@ export const AddPositionSoilDatas = () => {
 
     return (
         <Form className="w-full min-h-main pt-4 pb-12 space-y-2 label:w-full label:text-neutral-700" action={formAction}>
-            {sampleInputs.map(({ label, name, unit, values }, key) => (
+            {PositionSoilDataInputs.map(({ label, name, unit, values }, key) => (
                 <Label size="sm" key={key}>
                     {label}
                     {unit && ` (${unit})`}
@@ -60,7 +60,7 @@ export const AddPositionSoilDatas = () => {
             <Label>
                 Field
                 {/*todo fix*/}
-                <SelectGeneric values={fields} id="idField" value="idField" name="zoneId" />
+                <SelectGeneric values={fields} id="idField" value="idField" name="idField" />
             </Label>
             <Submit className="mt-6" fullWidth>
                 Add

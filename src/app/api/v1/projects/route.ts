@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Project } from "@prisma/client"
+import { Address, Project } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
+import { create } from "domain"
 
 /**
  * Handles the GET request to retrieve all projects from the database.
@@ -55,12 +56,36 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const response = await request.json()
+        const { name, latitude, longitude, contactPerson, country, state, city, postbox, street, number, idStakeholder } =
+            await request.json()
 
         const data = await prisma.project.create({
-            data: response,
+            data: {
+                designation: name,
+                contactPerson: {
+                    connect: { idContactPerson: contactPerson },
+                },
+                stakeholder: {
+                    connect: { idStakeHolder: idStakeholder },
+                },
+                address: {
+                    create: {
+                        country: country,
+                        state: state,
+                        city: city,
+                        postbox: postbox,
+                        street: street,
+                        number: number,
+                        latitude: parseFloat(latitude),
+                        longitude: parseFloat(longitude),
+                    },
+                },
+            },
+            include: {
+                address: true,
+            },
         })
-
+        console.log(data)
         return NextResponse.json<ResponseAPI<Project>>({
             data,
             ok: true,

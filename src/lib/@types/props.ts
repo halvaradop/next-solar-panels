@@ -59,7 +59,7 @@ export interface TableContactPeopleProps {
      * TODO: fix
      */
     contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[] } & {
-        role?: { roleName: string }
+        role?: { name: string }
     })[]
 }
 
