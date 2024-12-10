@@ -32,19 +32,14 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 },
                 fax: true,
                 www: true,
-                phones: {
-                    select: {
-                        number: true,
-                    },
-                },
-                project: true,
+                stakeHolder: true,
             },
         })
 
         if (!data) {
-            return NextResponse.json<ResponseAPI<null>>(
+            return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
                 {
-                    data: null,
+                    data: {} as ContactPersonAPI,
                     ok: false,
                     message: "Failed to retrieve the contact person information",
                 },

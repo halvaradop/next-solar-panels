@@ -55,12 +55,35 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const response = await request.json()
+        const { name, latitude, longitude, contactPerson, country, state, city, postbox, street, number, idStakeholder } =
+            await request.json()
 
         const data = await prisma.project.create({
-            data: response,
+            data: {
+                designation: name,
+                contactPerson: {
+                    connect: { idContactPerson: contactPerson },
+                },
+                stakeholder: {
+                    connect: { idStakeHolder: idStakeholder },
+                },
+                address: {
+                    create: {
+                        country: country,
+                        state: state,
+                        city: city,
+                        postbox: postbox,
+                        street: street,
+                        number: number,
+                        latitude: parseFloat(latitude),
+                        longitude: parseFloat(longitude),
+                    },
+                },
+            },
+            include: {
+                address: true,
+            },
         })
-
         return NextResponse.json<ResponseAPI<Project>>({
             data,
             ok: true,

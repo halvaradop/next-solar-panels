@@ -2,9 +2,9 @@
 import { useRef } from "react"
 import { Button } from "@halvaradop/ui-button"
 import { Modal, innerDialogVariants } from "@halvaradop/ui-dialog"
-import { AddProject } from "./add-project"
+import { AddContactPerson } from "./add-contact-person"
 
-export const AddNewProject = () => {
+export const AddNewContactPerson = () => {
     const ref = useRef<HTMLDialogElement>(null)
 
     const handleToggleModal = (isOpen: boolean): void => {
@@ -31,7 +31,7 @@ export const AddNewProject = () => {
                         x
                     </Button>
                     <h2 className="mt-12 mb-4 text-xl font-bold">Adds New Project</h2>
-                    <AddProject className="min-h-min" />
+                    <AddContactPerson className="min-h-min" />
                 </div>
             </Modal>
         </>

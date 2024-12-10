@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth"
 import { PositionSoilDatasList } from "@/ui/dashboard/position-soil-datas/sample-list"
 import { Filter } from "@/ui/common/filter"
 import { getPositionSoilDataByContactPerson, getContactPersonById, getFieldsByStakeHolderId } from "@/lib/services"
+import { SessionProvider } from "next-auth/react"
+import { AddNewPositionSoilData } from "@/ui/dashboard/position-soil-datas/add-new-position-soil-datas"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -13,12 +15,12 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    /*TODO : fix stakeholderid
+
     const {
-        stakeHolderId: [{ stakeHolderId } = { stakeHolderId: "" }],
-    } = await getContactPersonById(userId)*/
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+    } = await getContactPersonById(userId)
     const [fields, positionSoilDatas] = await Promise.all([
-        getFieldsByStakeHolderId("stakeHolderId"),
+        getFieldsByStakeHolderId(idStakeHolder),
         getPositionSoilDataByContactPerson(userId.toString()),
     ])
     return { fields, positionSoilDatas }
@@ -36,6 +38,9 @@ const DashboardSamplesPage = async () => {
                     },
                 ]}
             />
+            <SessionProvider>
+                <AddNewPositionSoilData />
+            </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
                 <PositionSoilDatasList positionSoilDatas={positionSoilDatas} />
             </Suspense>

@@ -8,10 +8,12 @@ import { getFieldsByStakeHolderId, getContactPersonById } from "@/lib/services"
 import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
 import dataJson from "@/lib/data.json"
+import { AddPositionSoilDataProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
-const { sampleInputs } = dataJson
+const { PositionSoilDataInputs } = dataJson
 
-export const AddPositionSoilDatas = () => {
+export const AddPositionSoilDatas = ({ className }: AddPositionSoilDataProps) => {
     const { data: session } = useSession()
     const [fields, setfields] = useState<Field[]>([])
     const [state, formAction] = useActionState(addPositionSoilDatasPageAction, {
@@ -23,19 +25,22 @@ export const AddPositionSoilDatas = () => {
     useEffect(() => {
         const fetchFields = async () => {
             const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-            /* TODO : fix stakeholderid
-           const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getFieldsByStakeHolderId("stakeHolderId")
+
+            const {
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getFieldsByStakeHolderId(idStakeHolder)
             setfields(response)
         }
         fetchFields()
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4 pb-12 space-y-2 label:w-full label:text-neutral-700" action={formAction}>
-            {sampleInputs.map(({ label, name, unit, values }, key) => (
+        <Form
+            className={merge("w-full min-h-main pt-4 pb-12 space-y-2 label:w-full label:text-neutral-700", className)}
+            action={formAction}
+        >
+            {PositionSoilDataInputs.map(({ label, name, unit, values }, key) => (
                 <Label size="sm" key={key}>
                     {label}
                     {unit && ` (${unit})`}
@@ -57,11 +62,6 @@ export const AddPositionSoilDatas = () => {
                     )}
                 </Label>
             ))}
-            <Label>
-                Field
-                {/*todo fix*/}
-                <SelectGeneric values={fields} id="idField" value="idField" name="zoneId" />
-            </Label>
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>

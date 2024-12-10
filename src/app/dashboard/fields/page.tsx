@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
 import { getContactPersonById, getProjectsByStakeHolderId, getFieldsByStakeHolderId } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
+import { SessionProvider } from "next-auth/react"
+import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -40,6 +42,9 @@ const DashboardFieldsPage = async () => {
                     },
                 ]}
             />
+            <SessionProvider>
+                <AddNewField />
+            </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
             </Suspense>

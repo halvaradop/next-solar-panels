@@ -22,6 +22,11 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
             where: {
                 idStakeholder,
             },
+            include: {
+                address: true,
+                contactPerson: true,
+                stakeholder: true,
+            },
         })
         return NextResponse.json<ResponseAPI<unknown>>({
             data,
