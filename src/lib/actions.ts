@@ -37,10 +37,12 @@ export const addPositionSoilDatasPageAction = async (
     formData: FormData
 ): Promise<AddPositionSoilDatasPageActionState> => {
     const session = await auth()
-    formData.set("userId", session?.user?.id as string)
+    formData.set("idContacPerson", session?.user?.id as string)
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     mapToNumber(entries, ["idContacPerson"], false)
     const validate = PositionSoilDataSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/stake-holders/${session?.user?.id}/position-soil-data`, {
             method: "POST",
@@ -200,7 +202,9 @@ export const addContactPersonAction = async (
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["longitude", "latitude"])
     const validate = ProjectSchema.safeParse(entries)
+    console.log(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",

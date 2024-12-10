@@ -1,10 +1,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
-// import { motion } from "framer-motion"
 import { Button } from "@halvaradop/ui-button"
 import { MenuRoutes } from "@/ui/common/menu-routes"
-// import { headerMenuListVariants, headerMenuVariants } from "@/ui/motion/header-menu.motion"
 import { Avatar } from "./avatar"
 import { HeaderMenuProps } from "@/lib/@types/props"
 
@@ -15,7 +13,7 @@ export const HeaderMenu = ({ onCloseMenu }: HeaderMenuProps) => {
     const isLoggin = withinDashboard && session
 
     return (
-        <aside className="[--nav-menu:100%] base:w-auto base:min-h-fit base:max-w-none base:relative base:overflow-hidden base:bg-transparent base:[--nav-menu:0%]">
+        <aside className="[--nav-menu:100%] base:w-min base:min-w-max base:min-h-fit base:max-w-none base:relative base:overflow-hidden base:bg-transparent base:[--nav-menu:0%]">
             <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-fit base:p-0" id="aside-menu">
                 <p className="pt-12 pb-1 text-2xl border-b border-gray base:hidden">Navigation</p>
                 <ul className="mt-12 mb-16 font-medium flex items-start flex-col gap-y-6 base:m-0 base:items-center base:flex-row base:gap-x-8 base:uppercase">

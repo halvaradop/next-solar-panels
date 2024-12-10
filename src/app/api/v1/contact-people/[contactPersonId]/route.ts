@@ -32,11 +32,10 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 },
                 fax: true,
                 www: true,
-                 stakeHolder:true,
-    
+                stakeHolder: true,
             },
         })
-  
+
         if (!data) {
             return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
                 {
@@ -47,14 +46,13 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 { status: 404 }
             )
         }
-  
+
         return NextResponse.json<ResponseAPI<ContactPersonAPI>>({
             data: data as unknown as ContactPersonAPI,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-    
         return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
             {
                 data: {} as ContactPersonAPI,

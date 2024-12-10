@@ -10,11 +10,13 @@ import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-
 import dataJson from "@/lib/data.json"
 
 const { projectInputs } = dataJson
+const { addressInputs } = dataJson
 export const fetchCache = "force-no-store"
 
 export const AddProject = () => {
     const { data: session } = useSession()
     const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
+    const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
         isSuccess: false,
@@ -27,12 +29,13 @@ export const AddProject = () => {
          */
         const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /*TODO : fix stakeholderid
+
             const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getContactPersonByStakeHolderId("stakeHolderId")
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getContactPersonByStakeHolderId(idStakeHolder)
             setcontactPerson(response)
+            setIdStakeHolder(idStakeHolder)
         }
         fetchContactPerson()
     }, [])
@@ -42,8 +45,11 @@ export const AddProject = () => {
             <InputList inputs={projectInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
-                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="user" />
+                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="contactPerson" />
             </Label>
+
+            <InputList inputs={addressInputs} state={state} />
+            <input type="hidden" name="idStakeholder" value={idStakeHolder} />
             <Button className="mt-6" fullWidth>
                 Add
             </Button>

@@ -23,8 +23,8 @@ export const AddContactPerson = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            
-           const {
+
+            const {
                 stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
             } = await getContactPersonById(userId)
             const response = await getProjectsByStakeHolderId(idStakeHolder)

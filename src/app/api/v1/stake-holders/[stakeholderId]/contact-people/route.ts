@@ -31,7 +31,7 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
                 role: true,
             },
         })
-     
+
         return NextResponse.json<ResponseAPI<ContactPerson[]>>({
             data,
             ok: true,

@@ -4,6 +4,7 @@ import { ResponseAPI } from "@/lib/@types/types"
 import { SafeParseError } from "zod"
 import { PositionSoilData } from "@prisma/client"
 import { merge as mergeClasses } from "@halvaradop/ui-core"
+import { StaticImageData } from "next/image"
 
 /**
  * Merges the classes and returns a string
@@ -219,10 +220,14 @@ export const camelCaseToHyphenCamel = (str: string): string => {
  *
  * @param name of the avatar
  * @param size of the svg returned
- * @returns {Image}
  */
 export const getAvatar = async (name: string, size: number = 48) => {
-    return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
+    return fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "image/svg+xml",
+        },
+    })
 }
 
 export const evalutionGrosor = (

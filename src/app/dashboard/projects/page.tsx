@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-   
+
     const {
         stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
     } = await getContactPersonById(userId)

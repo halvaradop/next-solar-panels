@@ -67,7 +67,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-{/*todo fix : change databse varchar to char*/}
+        {
+            /*todo fix : change databse varchar to char*/
+        }
         const newContactPerson = await prisma.contactPerson.create({
             data: {
                 email,
