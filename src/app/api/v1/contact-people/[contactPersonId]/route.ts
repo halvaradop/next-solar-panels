@@ -25,22 +25,11 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 email: true,
                 firstName: true,
                 lastName: true,
-                role: {
-                    select: {
-                        name: true,
-                    },
-                },
                 fax: true,
                 www: true,
-                phones: {
-                    select: {
-                        number: true,
-                    },
-                },
-                project: true,
+                stakeHolder: true,
             },
         })
-
         if (!data) {
             return NextResponse.json<ResponseAPI<null>>(
                 {

@@ -25,6 +25,9 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
                     idStakeholder,
                 },
             },
+            include: {
+                project: true,
+            },
         })
 
         return NextResponse.json<ResponseAPI<Field[]>>({

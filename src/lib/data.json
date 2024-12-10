@@ -177,19 +177,9 @@
   ],
   "fieldInputs": [
     {
-      "label": "Name",
-      "name": "name",
+      "label": "Designation",
+      "name": "designation",
       "type": "text"
-    },
-    {
-      "label": "Latitude",
-      "name": "latitude",
-      "type": "number"
-    },
-    {
-      "label": "Longitude",
-      "name": "longitude",
-      "type": "number"
     }
   ],
   "stakeHolderInputs": [
@@ -270,6 +260,16 @@
     {
       "label": "Number",
       "name": "number",
+      "type": "number"
+    },
+    {
+      "label": "Longitude",
+      "name": "longitude",
+      "type": "number"
+    },
+    {
+      "label": "Latitude",
+      "name": "latitude",
       "type": "number"
     }
   ]
