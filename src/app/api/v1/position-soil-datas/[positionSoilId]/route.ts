@@ -17,10 +17,10 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export const GET = async (request: NextRequest, { params }: Params<"positionSoilId">): Promise<NextResponse> => {
     try {
-        const positionSoilDataId = (await params).positionSoilId
+        const idPositionSoilData = (await params).positionSoilId
         const sample = await prisma.positionSoilData.findUnique({
             where: {
-                positionSoilDataId: positionSoilDataId,
+                idPositionSoilData,
             },
             include: {
                 contactPerson: {

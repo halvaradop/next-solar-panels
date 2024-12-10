@@ -32,7 +32,7 @@ const DashboardSamplesPage = async () => {
                 filters={[
                     {
                         title: "Zone",
-                        options: fields.map(({ fieldId, state }) => ({ key: state, value: fieldId.toString() })),
+                        options: fields.map(({ idField, state }) => ({ key: state, value: idField.toString() })),
                     },
                 ]}
             />

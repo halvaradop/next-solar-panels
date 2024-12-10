@@ -13,7 +13,7 @@ export const generateMetadata = async ({ params }: Params<"positionsoildataId">)
         description: `Position soil data ${slug} information`,
     }
 }
-/*todo fix*/
+
 const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     const slug = (await params).positionsoildataId
     const getPositionSoilData = await getPositionSoilDataById(slug)
@@ -27,7 +27,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     const extendedPositionSoilD = { ...getPositionSoilData, valueb0, valueb1, steel, galvanising, message }
     const {
         idContactPerson,
-        positionSoilDataId,
+        idPositionSoilData,
         date: dateTime,
         field: { name },
         user,

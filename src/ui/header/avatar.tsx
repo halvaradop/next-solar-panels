@@ -9,7 +9,7 @@ export const Avatar = () => {
     } = session
 
     return (
-        <div className="w-full flex items-center justify-end gap-x-5">
+        <div className="w-max flex items-center justify-end gap-x-5">
             <div className="w-max hidden items-center gap-x-5 base:flex">
                 <div className="size-10 rounded-full bg-slate-100"></div>
                 <div className="text-end">
@@ -18,7 +18,7 @@ export const Avatar = () => {
                     </p>
                 </div>
             </div>
-            <Button className="w-full mt-4 border-white base:m-0" onClick={() => signOut({ redirectTo: "/" })}>
+            <Button className="w-auto mt-4 border-white base:m-0" onClick={() => signOut({ redirectTo: "/" })}>
                 Log out
             </Button>
         </div>

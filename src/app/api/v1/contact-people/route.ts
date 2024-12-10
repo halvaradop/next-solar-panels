@@ -15,9 +15,9 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
-        const users = await prisma.contactPerson.findMany()
+        const data = await prisma.contactPerson.findMany()
         return NextResponse.json<ResponseAPI<ContactPerson[]>>({
-            data: users,
+            data,
             ok: true,
             message: "Contact people retrieved successfully",
         })
@@ -28,7 +28,7 @@ export const GET = async (): Promise<NextResponse> => {
                 ok: false,
                 message: "Failed to retrieve contact people",
             },
-            { status: 500 }
+            { status: 400 }
         )
     }
 }

@@ -17,3 +17,8 @@ export const getPositionSoilDataById = async <
     const { data } = await getFetch<T>(`position-soil-datas/${positionSoilDataId}`)
     return data
 }
+
+export const getPositionSoilDatas = async <T extends object = PositionSoilData[]>() => {
+    const { data } = await getFetch<T>(`position-soil-datas`)
+    return data
+}

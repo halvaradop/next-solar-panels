@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
-import { AddContactPerson } from "@/ui/dashboard/contect-people/add-contact-person"
+import { AddContactPerson } from "@/ui/dashboard/contact-people/add-contact-person"
 import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {

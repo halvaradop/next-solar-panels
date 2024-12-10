@@ -60,7 +60,7 @@ export const AddPositionSoilDatas = () => {
             <Label>
                 Field
                 {/*todo fix*/}
-                <SelectGeneric values={fields} id="fieldId" value="fieldId" name="zoneId" />
+                <SelectGeneric values={fields} id="idField" value="idField" name="zoneId" />
             </Label>
             <Submit className="mt-6" fullWidth>
                 Add

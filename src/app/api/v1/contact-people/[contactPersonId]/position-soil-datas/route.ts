@@ -24,16 +24,9 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             where: {
                 idContactPerson,
             },
-            select: {
-                linkage: {
-                    select: {
-                        field: true,
-                    },
-                },
-            },
         })
         return NextResponse.json<ResponseAPI<PositionSoilData[]>>({
-            data: data as unknown as PositionSoilData[],
+            data,
             ok: true,
         })
     } catch (error) {

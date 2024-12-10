@@ -11,7 +11,6 @@ export const TableProjects = async ({ projects }: TableProjectsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {/*todo fix*/}
                 {projects.map(({ idProject, designation, idContactPerson, idStakeholder }) => (
                     <tr className="text-sm" key={idProject}>
                         <td>{designation}</td>
