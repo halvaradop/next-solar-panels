@@ -18,6 +18,8 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "users-on-projects",
         "users-on-projects/add",
         "users on projects",
+        "fields",
+        "fields/add",
     ],
     "client-admin": ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
     "client-user": ["samples", "samples/add", "samples/[sampleId]"],

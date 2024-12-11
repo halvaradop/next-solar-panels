@@ -15,6 +15,7 @@ import {
 } from "@/ui/dashboard/index"
 import screenshotWeb from "@/public/screenshot-web.png"
 import screenshotRepo from "@/public/screenshot-repo.png"
+import { Button } from "@halvaradop/ui-button"
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -64,6 +65,9 @@ const DashboardPage = async () => {
                     </figure>
                 </div>
             )}
+            <Button className="mt-6" asChild>
+                <Link href="/pick-your-project">Pick the project</Link>
+            </Button>
             <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(100px,200px))] gap-4">
                 <RenderByRole match={["admin"]} role={session.user.role}>
                     <Stakeholders />

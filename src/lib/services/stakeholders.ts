@@ -69,3 +69,16 @@ export const getPositionDataByStakeholderId = async <T extends unknown[] = Posit
     const { data } = await getFetch<T>(`stakeholders/${stakeholderId}/position-datas`)
     return data
 }
+
+/**
+ * Fetches the user plants related to the given user id.
+ *
+ * @param {string} stakeHolderId - The user id.
+ * @returns {Promise<ProjectsOnUsers[]>} - A promise that resolves to an array of ProjectsOnUsers.
+ */
+export const getContacPersonProjectsByStakeHolder = async <T extends unknown[] = (ContactPerson & Project)[]>(
+    stakeHolderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}`)
+    return data
+}
