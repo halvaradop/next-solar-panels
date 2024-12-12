@@ -106,24 +106,6 @@ export const ProjectSchema = object({
 
 export const FiledSchema = object({
     designation: string(),
-    fence: string()
-        .optional()
-        .transform((val) => {
-            const num = Number(val)
-            return num === 1 || num === 0 ? num : 0
-        }),
-    connectionEarthingFence: string()
-        .optional()
-        .transform((val) => {
-            const num = Number(val)
-            return num === 1 || num === 0 ? num : 0
-        }),
-    externalCurrentInfluence: string()
-        .optional()
-        .transform((val) => {
-            const num = Number(val)
-            return num === 1 || num === 0 ? num : 0
-        }),
     project: string(),
     country: string(),
     state: string(),
@@ -131,8 +113,8 @@ export const FiledSchema = object({
     postbox: string(),
     street: string(),
     number: string(),
-    longitude: string(),
-    latitude: string(),
+    longitude: number(),
+    latitude: number(),
 })
 
 export const ProjectOnUserSchema = object({

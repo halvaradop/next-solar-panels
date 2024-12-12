@@ -4,14 +4,11 @@ import { useSession } from "next-auth/react"
 import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
-import { addAddressAction } from "@/lib/actions"
-import { AddAddressActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
-const { fieldInputs } = dataJson
 const { addressInputs } = dataJson
 
 export const AddField = () => {
@@ -21,12 +18,6 @@ export const AddField = () => {
         message: "",
         isSuccess: false,
     } as AddFieldsActionState)
-
-    const [checkboxes, setCheckboxes] = useState({
-        fence: false,
-        connectionEarthingFence: false,
-        externalCurrentInfluence: false,
-    })
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -41,72 +32,24 @@ export const AddField = () => {
         fetchProjects()
     }, [])
 
-    const handleCheckboxChange = (name: keyof typeof checkboxes) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCheckboxes((prev) => ({
-            ...prev,
-            [name]: e.target.checked,
-        }))
-    }
-
-    const formDataWithCheckboxes = () => {
-        const formData = new FormData()
-
-        Object.entries(checkboxes).forEach(([key, value]) => {
-            formData.append(key, value ? "1" : "0")
-        })
-
-        return formData
-    }
-
     return (
-        <Form
-            className="w-full min-h-main pt-4"
-            action={(formData) => {
-                const combinedFormData = new FormData()
-                for (const [key, value] of formData.entries()) {
-                    combinedFormData.append(key, value)
-                }
-                for (const [key, value] of formDataWithCheckboxes().entries()) {
-                    combinedFormData.append(key, value)
-                }
-                return formAction(combinedFormData)
-            }}
-        >
+        <Form className="w-full min-h-main pt-4" action={formAction}>
             <h1 className="text-2xl font-bold text-center">Add Fields</h1>
-            <InputList inputs={fieldInputs} state={state} />
-
+            <Label className="w-full text-neutral-700" size="sm">
+                Designation
+                <Input className="mt-1 focus-within:border-black focus-within:ring-black" name="designation" variant="outline" />
+            </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Fence
-                <input
-                    type="checkbox"
-                    checked={checkboxes.fence}
-                    onChange={handleCheckboxChange("fence")}
-                    name="fence"
-                    value={checkboxes.fence ? "1" : "0"}
-                    className="ml-2"
-                />
+                <Input className="size-4" type="checkbox" name="fence" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Connection Earthing Fence
-                <input
-                    type="checkbox"
-                    checked={checkboxes.connectionEarthingFence}
-                    onChange={handleCheckboxChange("connectionEarthingFence")}
-                    name="connectionEarthingFence"
-                    value={checkboxes.connectionEarthingFence ? "1" : "0"}
-                    className="ml-2"
-                />
+                <Input className="size-4" type="checkbox" name="connectionEarthingFence" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 External Current Influence
-                <input
-                    type="checkbox"
-                    checked={checkboxes.externalCurrentInfluence}
-                    onChange={handleCheckboxChange("externalCurrentInfluence")}
-                    name="externalCurrentInfluence"
-                    value={checkboxes.externalCurrentInfluence ? "1" : "0"}
-                    className="ml-2"
-                />
+                <Input className="size-4" type="checkbox" name="externalCurrentInfluence" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project
