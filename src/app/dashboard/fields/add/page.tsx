@@ -1,7 +1,5 @@
 import { Metadata } from "next"
-import { auth } from "@/lib/auth"
 import { AddField } from "@/ui/dashboard/fields/add-fields"
-import { SessionProvider } from "next-auth/react"
 
 export const metadata: Metadata = {
     title: "Add Zone",
@@ -9,12 +7,7 @@ export const metadata: Metadata = {
 }
 
 const AddFieldPage = async () => {
-    const session = await auth()
-    return (
-        <SessionProvider session={session}>
-            <AddField />
-        </SessionProvider>
-    )
+    return <AddField />
 }
 
 export default AddFieldPage

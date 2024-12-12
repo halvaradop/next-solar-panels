@@ -1,20 +1,19 @@
 "use client"
 import { useActionState } from "react"
+import { useEffect, useState } from "react"
 import { addStakeHolderAction } from "@/lib/actions"
 import { AddStakeHolderActionState } from "@/lib/@types/types"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import dataJson from "@/lib/data.json"
-import { useEffect, useState } from "react"
-import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
-import { useSession } from "next-auth/react"
+import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
 import { AddStakeHoldersProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import { getCookieToken } from "@/lib/services/cookies"
+import dataJson from "@/lib/data.json"
 
 const { stakeHolderInputs } = dataJson
 
 export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
-    const { data: session } = useSession()
     const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addStakeHolderAction, {
         message: "",
@@ -24,11 +23,8 @@ export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getContactPersonByStakeHolderId(idStakeHolder)
+            const { idStakeholder } = await getCookieToken()
+            const response = await getContactPersonByStakeHolderId(idStakeholder)
             setContacPerson(response)
         }
         fetchContactPerson()

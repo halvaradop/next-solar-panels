@@ -1,19 +1,18 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
 import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
-import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
+import { getProjectsByStakeHolderId } from "@/lib/services"
 import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import { AddFieldsProps } from "@/lib/@types/props"
+import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { addressInputs } = dataJson
 
 export const AddField = ({ className }: AddFieldsProps) => {
-    const { data: session } = useSession()
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addFieldsAction, {
         message: "",
@@ -22,12 +21,8 @@ export const AddField = ({ className }: AddFieldsProps) => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
-            const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getProjectsByStakeHolderId(idStakeHolder)
+            const { idStakeholder } = await getCookieToken()
+            const response = await getProjectsByStakeHolderId(idStakeholder)
             setProjects(response)
         }
         fetchProjects()

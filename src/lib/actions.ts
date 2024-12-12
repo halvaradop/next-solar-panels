@@ -2,14 +2,13 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, Linkage } from "@prisma/client"
+import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson } from "@prisma/client"
 import {
     StakeHolderSchema,
     PositionSoilDataSchema,
     ContactPersonSchema,
     FiledSchema,
     ProjectSchema,
-    ProjectOnUserSchema,
     AddressSchema,
 } from "./schemas"
 import {
@@ -219,39 +218,6 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
         }
     }
     const schema = mapErrors(validate as SafeParseError<Project>)
-    return {
-        message: "Check the invalid fields",
-        isSuccess: false,
-        schema,
-    }
-}
-
-/**
- *
- * @deprecated
- */
-export const addProjectOnUserAction = async (
-    previous: AddProjectOnUserActionState,
-    formData: FormData
-): Promise<AddProjectOnUserActionState> => {
-    const entries = Object.fromEntries(formData)
-    const validate = ProjectOnUserSchema.safeParse(entries)
-    if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/user-project`, {
-            method: "POST",
-            body: JSON.stringify(validate.data),
-        })
-        const { message, ok } = await request.json()
-        if (request.ok && ok) {
-            redirect("/dashboard")
-        }
-        return {
-            message,
-            isSuccess: false,
-            schema: {} as Linkage,
-        }
-    }
-    const schema = mapErrors(validate as SafeParseError<Linkage>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
