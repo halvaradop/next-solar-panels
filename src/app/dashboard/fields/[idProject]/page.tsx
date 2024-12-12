@@ -7,6 +7,7 @@ import { Filter } from "@/ui/common/filter"
 import { SessionProvider } from "next-auth/react"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
 import { FieldsPageProps } from "@/lib/@types/props"
+import { Params, ResponseAPI } from "@/lib/@types/types"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -24,8 +25,8 @@ const getInformation = async (idProject: string) => {
     return { fields, projects }
 }
 
-const DashboardFieldsPage = async ({ params }: FieldsPageProps) => {
-    const { idProject } = params
+const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
+    const idProject = (await params).idProject
     const { fields, projects } = await getInformation(idProject)
 
     return (
