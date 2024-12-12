@@ -72,8 +72,7 @@ export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerso
 
 export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password"> & {
     role: Pick<Role, "name">
-    phones: Pick<PhoneContactPerson, "number">
-    projects: Project[]
+    stakeHolder: StakeHolder[]
 }
 
 export type Roles = "client-admin" | "client-user" | "admin"

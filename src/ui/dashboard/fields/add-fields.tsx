@@ -5,11 +5,11 @@ import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
-const { fieldInputs } = dataJson
+const { addressInputs } = dataJson
 
 export const AddField = () => {
     const { data: session } = useSession()
@@ -22,22 +22,40 @@ export const AddField = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /*TODO : fix stakeholderid
+
             const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getProjectsByStakeHolderId("stakeHolderId")
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getProjectsByStakeHolderId(idStakeHolder)
             setProjects(response)
         }
         fetchProjects()
     }, [])
+
     return (
         <Form className="w-full min-h-main pt-4" action={formAction}>
-            <InputList inputs={fieldInputs} state={state} />
+            <h1 className="text-2xl font-bold text-center">Add Fields</h1>
             <Label className="w-full text-neutral-700" size="sm">
-                Plant
+                Designation
+                <Input className="mt-1 focus-within:border-black focus-within:ring-black" name="designation" variant="outline" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Fence
+                <Input className="size-4" type="checkbox" name="fence" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Connection Earthing Fence
+                <Input className="size-4" type="checkbox" name="connectionEarthingFence" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                External Current Influence
+                <Input className="size-4" type="checkbox" name="externalCurrentInfluence" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Project
                 <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
             </Label>
+            <InputList inputs={addressInputs} state={state} />
             <Button className="mt-6" fullWidth>
                 Add
             </Button>
