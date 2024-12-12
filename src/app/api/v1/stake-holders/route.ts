@@ -15,11 +15,13 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
+        console.log("ccasdsdas")
         const data = await prisma.stakeHolder.findMany({
             include: {
                 contactPerson: true,
             },
         })
+        console.log(data)
 
         return NextResponse.json<ResponseAPI<StakeHolder[]>>({
             data,

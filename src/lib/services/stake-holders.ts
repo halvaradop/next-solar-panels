@@ -8,7 +8,7 @@ import { getFetch } from "@/lib/utils"
  */
 export const getStakeholder = async <T extends unknown[] = StakeHolder[]>(): Promise<T> => {
     const { data } = await getFetch<T>("stake-holders")
-    return data
+    return data || []
 }
 
 /**
