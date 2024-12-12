@@ -27,6 +27,7 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
             },
             include: {
                 project: true,
+                address: true,
             },
         })
 

@@ -37,12 +37,12 @@ export const addPositionSoilDatasPageAction = async (
     formData: FormData
 ): Promise<AddPositionSoilDatasPageActionState> => {
     const session = await auth()
-    formData.set("userId", session?.user?.id as string)
+    formData.set("idContactPerson", session?.user?.id as string)
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["idContacPerson"], false)
+    mapToNumber(entries, ["idContactPerson"], false)
     const validate = PositionSoilDataSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stake-holders/${session?.user?.id}/position-soil-data`, {
+        const request = await fetch(`http://localhost:3000/api/v1/contact-people/${session?.user?.id}/position-soil-datas`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -96,7 +96,7 @@ export const addStakeHolderAction = async (
     const entries = Object.fromEntries(formData)
     const validate = StakeHolderSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stakeHolders`, {
+        const request = await fetch(`http://localhost:3000/api/v1/stake-holders`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -198,6 +198,7 @@ export const addContactPersonAction = async (
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["longitude", "latitude"])
     const validate = ProjectSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {

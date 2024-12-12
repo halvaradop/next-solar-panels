@@ -31,9 +31,9 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             },
         })
         if (!data) {
-            return NextResponse.json<ResponseAPI<null>>(
+            return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
                 {
-                    data: null,
+                    data: {} as ContactPersonAPI,
                     ok: false,
                     message: "Failed to retrieve the contact person information",
                 },

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 import { parse } from "path"
+import { data } from "framer-motion/client"
 
 /**
  * Handle the GET request to retrieve all fields from the database.
@@ -55,17 +56,8 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const json = await request.json()
-        const {
-            designation,
-            fence,
-            connectionEarthingFence,
-            externalCurrentInfluence,
-            project,
-            longitude,
-            latitude,
-            number: phone,
-            ...rest
-        } = json
+        const { designation, fence, connectionEarthingFence, externalCurrentInfluence, project, longitude, latitude, ...rest } =
+            json
 
         const fenceBoolean = !!fence
         const connectionEarthingFenceBoolean = !!connectionEarthingFence
@@ -91,6 +83,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 },
             },
         })
+
         return NextResponse.json<ResponseAPI<Field>>({
             data: newField,
             ok: true,

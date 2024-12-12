@@ -25,7 +25,7 @@ export type AddPositionSoilDatasPageActionState = ActionState<PositionSoilDatasW
 
 export type AddStakeHolderActionState = ActionState<Omit<StakeHolder, "idStakeHolder">>
 
-export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "userId" | "state">> & {
+export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "idContacPerson" | "state">> & {
     project?: string
     phone?: string
 }
@@ -70,7 +70,7 @@ export type AddProjectOnUserActionState = ActionState<Linkage>
 
 export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
-export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password"> & {
+export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password" | "state"> & {
     role: Pick<Role, "name">
     stakeHolder: StakeHolder[]
 }

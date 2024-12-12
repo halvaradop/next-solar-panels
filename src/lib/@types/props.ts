@@ -1,6 +1,6 @@
 import { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
-import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData } from "@prisma/client"
+import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData, Address } from "@prisma/client"
 import { ActionState, Entry, Order, Roles } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
@@ -35,7 +35,7 @@ export interface FilterByProps {
 }
 
 export interface PositionSoilDatasProps {
-    positionSoilDatas: (PositionSoilData & { field?: { name: string } } & {
+    positionSoilDatas: (PositionSoilData & {
         contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     })[]
 }
@@ -59,12 +59,14 @@ export interface TableContactPeopleProps {
      * TODO: fix
      */
     contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[] } & {
-        role?: { roleName: string }
+        role?: { name: string }
     })[]
 }
 
 export interface TableProjectsProps {
-    projects: Project[]
+    projects: (Project & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
+        stakeholder?: Pick<StakeHolder, "name">
+    } & { address?: Pick<Address, "country" | "city" | "latitude" | "longitude"> })[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
@@ -84,7 +86,9 @@ export interface SelectProps {
 }
 
 export interface TableFieldsProps {
-    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> })[]
+    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> } & {
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
 }
 
 export interface InputListProps<T> {
@@ -138,4 +142,24 @@ export interface PickYourProjectProps {
 
 export interface AddProjectProps {
     className?: string
+}
+
+export interface AddPositionSoilDataProps {
+    className?: string
+}
+
+export interface AddContactPersonProps {
+    className?: string
+}
+
+export interface AddFieldsProps {
+    className?: string
+}
+
+export interface AddStakeHoldersProps {
+    className?: string
+}
+
+export type FieldsPageProps = {
+    params: { idProject: string }
 }

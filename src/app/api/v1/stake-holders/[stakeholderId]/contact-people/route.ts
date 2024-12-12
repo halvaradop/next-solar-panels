@@ -26,6 +26,9 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
                     },
                 },
             },
+            include: {
+                role: true,
+            },
         })
 
         return NextResponse.json<ResponseAPI<ContactPerson[]>>({

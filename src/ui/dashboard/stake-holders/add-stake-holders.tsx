@@ -8,10 +8,12 @@ import { useEffect, useState } from "react"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
 import { useSession } from "next-auth/react"
 import { ContactPerson } from "@prisma/client"
+import { AddStakeHoldersProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
 
 const { stakeHolderInputs } = dataJson
 
-export const AddStakeHolder = () => {
+export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
     const { data: session } = useSession()
     const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addStakeHolderAction, {
@@ -23,22 +25,21 @@ export const AddStakeHolder = () => {
     useEffect(() => {
         const fetchContactPerson = async () => {
             const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /*TODO : fix stakeholderid
             const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getContactPersonByStakeHolderId("stakeHolderId")
+                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+            } = await getContactPersonById(userId)
+            const response = await getContactPersonByStakeHolderId(idStakeHolder)
             setContacPerson(response)
         }
         fetchContactPerson()
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={stakeHolderInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
-                <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="user" />
+                <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="contactPerson" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add
