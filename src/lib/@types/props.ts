@@ -161,5 +161,5 @@ export interface AddStakeHoldersProps {
 }
 
 export type FieldsPageProps = {
-    idProject: string
+    params: { idProject: string }
 }

@@ -24,7 +24,7 @@ const getInformation = async (idProject: string) => {
     return { fields, projects }
 }
 
-const DashboardFieldsPage = async ({ params }: { params: { idProject: string } }) => {
+const DashboardFieldsPage = async ({ params }: FieldsPageProps) => {
     const { idProject } = params
     const { fields, projects } = await getInformation(idProject)
 
