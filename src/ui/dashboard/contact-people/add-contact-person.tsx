@@ -1,19 +1,19 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 import { Project, Role } from "@prisma/client"
 import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState } from "@/lib/@types/types"
-import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
+import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import dataJson from "@/lib/data.json"
 import { AddContactPersonProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import { getCookieToken } from "@/lib/services/cookies"
+import dataJson from "@/lib/data.json"
 
 const { contactPersonInputs } = dataJson
 
 export const AddContactPerson = ({ className }: AddContactPersonProps) => {
-    const { data: session } = useSession()
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addContactPersonAction, {
@@ -24,12 +24,14 @@ export const AddContactPerson = ({ className }: AddContactPersonProps) => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
             const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getProjectsByStakeHolderId(idStakeHolder)
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
+            const response = await getProjectsByStakeHolderId(idStakeholder)
             setProjects(response)
         }
         fetchProjects()

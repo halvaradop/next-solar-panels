@@ -1,20 +1,23 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 import { Field } from "@prisma/client"
 import { addPositionSoilDatasPageAction } from "@/lib/actions"
 import { AddPositionSoilDatasPageActionState, PositionSoilDatasWithoutIds } from "@/lib/@types/types"
-import { getFieldsByStakeHolderId, getContactPersonById } from "@/lib/services"
-import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
+import { getFieldsByStakeHolderId } from "@/lib/services"
+import { Form, Input, Label, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
-import dataJson from "@/lib/data.json"
 import { AddPositionSoilDataProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import dataJson from "@/lib/data.json"
+import { getCookieToken } from "@/lib/services/cookies"
 
 const { PositionSoilDataInputs } = dataJson
 
+/**
+ * ¿ [fields, setFields] hook is used ?
+ */
 export const AddPositionSoilDatas = ({ className }: AddPositionSoilDataProps) => {
-    const { data: session } = useSession()
     const [fields, setfields] = useState<Field[]>([])
     const [state, formAction] = useActionState(addPositionSoilDatasPageAction, {
         message: "",
@@ -24,12 +27,14 @@ export const AddPositionSoilDatas = ({ className }: AddPositionSoilDataProps) =>
 
     useEffect(() => {
         const fetchFields = async () => {
-            const userId = session?.user?.id || Number.MAX_SAFE_INTEGER.toString()
-
             const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getFieldsByStakeHolderId(idStakeHolder)
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
+            const response = await getFieldsByStakeHolderId(idStakeholder)
             setfields(response)
         }
         fetchFields()

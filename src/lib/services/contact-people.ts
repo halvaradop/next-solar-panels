@@ -1,7 +1,6 @@
 import { ContactPerson, PositionMeasurement, PositionResistivity, PositionSoilData, Project } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 import { ContactPersonAPI } from "@/lib/@types/types"
-import { cookies } from "next/headers"
 
 /**
  * Fetches all users from the database
@@ -72,13 +71,5 @@ export const getPositionResistiviesByContactPerson = async <T extends unknown[] 
  */
 export const getProjectsByContactPersonId = async <T extends unknown[] = Project[]>(contactPersonId: string): Promise<T> => {
     const { data } = await getFetch<T>(`contact-people/${contactPersonId}/projects`)
-    return data
-}
-
-export const setProjectToken = async (contactPersonId: string, projectId: string) => {
-    const { data } = await getFetch(`contact-people/${contactPersonId}/cookies`, {
-        method: "POST",
-        body: JSON.stringify({ idProject: projectId }),
-    })
     return data
 }

@@ -1,4 +1,4 @@
-import { HTMLProps } from "react"
+import React, { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
 import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData, Address } from "@prisma/client"
 import { ActionState, Entry, Order, Roles } from "./types"
@@ -134,7 +134,7 @@ export interface RenderByRoleProps {
     children?: React.ReactNode
 }
 
-export interface PickYourProjectProps {
+export interface ProjectOnPickProps {
     contactPersonId: string
     idProject: string
     designation: string
@@ -160,6 +160,11 @@ export interface AddStakeHoldersProps {
     className?: string
 }
 
-export type FieldsPageProps = {
-    params: { idProject: string }
+export interface ModalWrapperProps {
+    children: React.ReactNode
+    className?: string
+    innerClassName?: string
+    button?: React.ReactNode
+    close?: React.ReactNode
+    mandatory?: boolean
 }
