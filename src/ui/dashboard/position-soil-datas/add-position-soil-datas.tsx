@@ -5,11 +5,11 @@ import { Field } from "@prisma/client"
 import { addPositionSoilDatasPageAction } from "@/lib/actions"
 import { AddPositionSoilDatasPageActionState, PositionSoilDatasWithoutIds } from "@/lib/@types/types"
 import { getFieldsByStakeHolderId, getContactPersonById } from "@/lib/services"
-import { Form, Input, Label, SelectGeneric, Select } from "@/ui/common/form-elements"
+import { Form, Input, Label, Select } from "@/ui/common/form-elements"
 import { Submit } from "@/ui/common/submit"
-import dataJson from "@/lib/data.json"
 import { AddPositionSoilDataProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import dataJson from "@/lib/data.json"
 
 const { PositionSoilDataInputs } = dataJson
 

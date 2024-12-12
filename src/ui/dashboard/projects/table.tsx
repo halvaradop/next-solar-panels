@@ -1,5 +1,5 @@
-import { TableProjectsProps } from "@/lib/@types/props"
 import Link from "next/link"
+import { TableProjectsProps } from "@/lib/@types/props"
 
 export const TableProjects = async ({ projects }: TableProjectsProps) => {
     return (
@@ -14,7 +14,6 @@ export const TableProjects = async ({ projects }: TableProjectsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {/*todo fix*/}
                 {projects.map(({ idProject, designation, contactPerson, address }) => (
                     <tr className="text-sm" key={idProject}>
                         <td>

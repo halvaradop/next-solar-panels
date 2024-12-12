@@ -6,9 +6,9 @@ import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import dataJson from "@/lib/data.json"
 import { AddContactPersonProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import dataJson from "@/lib/data.json"
 
 const { contactPersonInputs } = dataJson
 
