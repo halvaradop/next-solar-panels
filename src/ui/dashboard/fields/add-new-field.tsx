@@ -15,18 +15,11 @@ export const AddNewField = () => {
         }
     }
 
-    /**
-     * variant: "base" | "fixed"
-     * className: "relative" | ""
-     *
-     * Small Modal = variant="fixed" className=""
-     * Large Modal = variant="base" className="relative"
-     */
     return (
         <>
             <Button onClick={() => handleToggleModal(true)}>Add New Field</Button>
-            <Modal ref={ref}>
-                <div className={innerDialogVariants({ className: "mb-10 relative", size: "sm", variant: "base" })}>
+            <Modal className="w-2/3 min-w-80 max-w-screen-sm" ref={ref}>
+                <div className={innerDialogVariants({ className: "w-full mb-10 relative", size: "sm", variant: "base" })}>
                     <Button className="size-8 absolute top-3 right-3" onClick={() => handleToggleModal(false)}>
                         x
                     </Button>

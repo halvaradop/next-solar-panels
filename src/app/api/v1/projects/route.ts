@@ -55,8 +55,7 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { name, latitude, longitude, contactPerson, country, state, city, postbox, street, number, idStakeholder } =
-            await request.json()
+        const { name, latitude, longitude, contactPerson, idStakeholder, ...spread } = await request.json()
 
         const data = await prisma.project.create({
             data: {
@@ -69,12 +68,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 },
                 address: {
                     create: {
-                        country: country,
-                        state: state,
-                        city: city,
-                        postbox: postbox,
-                        street: street,
-                        number: number,
+                        ...spread,
                         latitude: parseFloat(latitude),
                         longitude: parseFloat(longitude),
                     },

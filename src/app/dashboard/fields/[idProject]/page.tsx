@@ -2,12 +2,8 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getContactPersonById, getFieldsByProjectsId, getFieldsByStakeHolderId, getProjectsById } from "@/lib/services"
-import { Filter } from "@/ui/common/filter"
-import { SessionProvider } from "next-auth/react"
-import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
-import { FieldsPageProps } from "@/lib/@types/props"
-import { Params, ResponseAPI } from "@/lib/@types/types"
+import { getContactPersonById, getFieldsByProjectsId, getProjectsById } from "@/lib/services"
+import { Params } from "@/lib/@types/types"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -31,7 +27,7 @@ const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
-            {/*     <Filter
+            {/* <Filter
                 filters={[
                     {
                         title: "Projects",
@@ -41,11 +37,7 @@ const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
                         })),
                     },
                 ]}
-            />
-            <SessionProvider>
-                <AddNewField />
-            </SessionProvider>*/}
-
+            /> */}
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
             </Suspense>

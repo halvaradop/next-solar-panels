@@ -15,13 +15,6 @@ export const AddNewPositionSoilData = () => {
         }
     }
 
-    /**
-     * variant: "base" | "fixed"
-     * className: "relative" | ""
-     *
-     * Small Modal = variant="fixed" className=""
-     * Large Modal = variant="base" className="relative"
-     */
     return (
         <>
             <Button onClick={() => handleToggleModal(true)}>Add New Sample</Button>

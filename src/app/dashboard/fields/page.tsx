@@ -41,11 +41,9 @@ const DashboardFieldsPage = async () => {
                     },
                 ]}
             />
-
             <SessionProvider>
                 <AddNewField />
             </SessionProvider>
-
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
             </Suspense>

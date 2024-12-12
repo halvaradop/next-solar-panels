@@ -21,10 +21,9 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
         const idStakeholder = (await params).stakeholderId
         const data = await prisma.field.findMany({
             where: {
-                idProject: "a755a58e-47b3-4bd6-a1fc-c22cf5227823",
-                /* project: {
+                project: {
                     idStakeholder,
-                },*/
+                },
             },
             include: {
                 project: true,
