@@ -166,4 +166,5 @@ export interface ModalWrapperProps {
     innerClassName?: string
     button?: React.ReactNode
     close?: React.ReactNode
+    mandatory?: boolean
 }

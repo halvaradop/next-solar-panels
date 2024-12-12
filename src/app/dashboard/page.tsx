@@ -14,13 +14,14 @@ import {
 } from "@/ui/dashboard/index"
 import { ModalWrapper } from "@/ui/common/modal-wrapper"
 import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
+import { Params } from "@/lib/@types/types"
 
 export const metadata: Metadata = {
     title: "Dashboard",
     description: "Dashboard page",
 }
 
-const DashboardPage = async () => {
+const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     const session = await auth()
     if (!session) return null
 
@@ -28,7 +29,7 @@ const DashboardPage = async () => {
         <section className="mt-4 self-start">
             <h1 className="text-2xl font-bold text-center uppercase">Dashboard</h1>
             <ModalWrapper button="Pick the project">
-                <PickProjectModal />
+                <PickProjectModal params={params} searchParams={searchParams} />
             </ModalWrapper>
             <RenderByRole match={["admin"]} role={session.user.role}>
                 <Links />

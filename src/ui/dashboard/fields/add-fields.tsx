@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
+import { redirect } from "next/navigation"
 import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
@@ -21,7 +22,13 @@ export const AddField = ({ className }: AddFieldsProps) => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const { idStakeholder } = await getCookieToken()
+            const {
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
             const response = await getProjectsByStakeHolderId(idStakeholder)
             setProjects(response)
         }

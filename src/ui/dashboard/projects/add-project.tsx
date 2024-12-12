@@ -1,6 +1,6 @@
 "use client"
-
 import { useEffect, useState, useActionState } from "react"
+import { redirect } from "next/navigation"
 import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
@@ -14,7 +14,7 @@ import dataJson from "@/lib/data.json"
 const { projectInputs, addressInputs } = dataJson
 
 export const AddProject = ({ className }: AddProjectProps) => {
-    const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
+    const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
@@ -23,13 +23,19 @@ export const AddProject = ({ className }: AddProjectProps) => {
     })
 
     useEffect(() => {
-        const fetchContactPerson = async () => {
-            const { idStakeholder } = await getCookieToken()
+        const fetchProjects = async () => {
+            const {
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
             const response = await getContactPersonByStakeHolderId(idStakeholder)
-            setcontactPerson(response)
+            setContactPerson(response)
             setIdStakeHolder(idStakeHolder)
         }
-        fetchContactPerson()
+        fetchProjects()
     }, [])
 
     return (

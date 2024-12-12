@@ -41,7 +41,7 @@ export const Header = () => {
         <header data-open={isOpenMenu} data-pathname={pathname}>
             <nav className="w-11/12 h-20 mx-auto flex items-center justify-between text-white lg:w-10/12 xl:max-w-screen-xl">
                 <Link href="/">
-                    <Image width={110} src={logoIcon} alt="logo icon" />
+                    <Image width={110} src={logoIcon} alt="logo icon" priority />
                 </Link>
                 <div className="space-y-1.5 z-20 hover:cursor-pointer base:hidden" id="menu-icon" onClick={handleMenu}>
                     <span className="w-8 h-0.5 block rounded bg-white" />

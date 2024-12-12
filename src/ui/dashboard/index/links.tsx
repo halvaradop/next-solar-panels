@@ -16,6 +16,7 @@ export const Links = () => {
                         className="w-full h-full aspect-video opacity-70 transition-transform group-hover:scale-[1.1]"
                         src={screenshotRepo}
                         alt="screenshot of the github repository"
+                        priority
                     />
                     <figcaption className="text-white text-lg font-bold text-center absolute bottom-5">
                         GitHub Repository
@@ -32,6 +33,7 @@ export const Links = () => {
                         className="w-full h-full aspect-video opacity-70 transition-transform group-hover:scale-[1.1]"
                         src={screenshotWeb}
                         alt="screenshot of the website"
+                        priority
                     />
                     <figcaption className="text-white text-lg font-bold text-center absolute bottom-5">Website</figcaption>
                 </Link>

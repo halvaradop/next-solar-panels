@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
-    "@halvaradop/ts-utility-types": "^0.13.0",
+    "@halvaradop/ts-utility-types": "^0.15.0",
     "@halvaradop/ui-button": "^0.3.2",
     "@halvaradop/ui-dialog": "^0.1.2",
     "@halvaradop/ui-form": "^0.1.2",

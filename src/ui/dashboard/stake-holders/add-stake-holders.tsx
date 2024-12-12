@@ -10,6 +10,7 @@ import { AddStakeHoldersProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
+import { redirect } from "next/navigation"
 
 const { stakeHolderInputs } = dataJson
 
@@ -23,7 +24,13 @@ export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const { idStakeholder } = await getCookieToken()
+            const {
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
             const response = await getContactPersonByStakeHolderId(idStakeholder)
             setContacPerson(response)
         }

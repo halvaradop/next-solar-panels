@@ -1,4 +1,5 @@
 import { getFetch } from "@/lib/utils"
+import { CookieToken, ResponseAPI } from "../@types/types"
 
 /**
  * Retrieves the project token from cookies.
@@ -10,6 +11,7 @@ export const setCookieToken = async (projectId: string): Promise<{}> => {
     const { data } = await getFetch<{}>(`cookies`, {
         method: "POST",
         body: JSON.stringify({ idProject: projectId }),
+        cache: "no-cache",
     })
     return data
 }
@@ -17,9 +19,11 @@ export const setCookieToken = async (projectId: string): Promise<{}> => {
 /**
  * Retrieves the project token from cookies.
  *
- * @returns {Promise<{ idProject: string; idStakeholder: string }>} A promise that resolves to the project token.
+ * @returns {Promise<CookieToken>} A promise that resolves to the project token.
  */
-export const getCookieToken = async (): Promise<{ idProject: string; idStakeholder: string }> => {
-    const { data } = await getFetch<{ idProject: string; idStakeholder: string }>(`cookies`)
-    return data
+export const getCookieToken = async (): Promise<ResponseAPI<CookieToken>> => {
+    const response = await getFetch<CookieToken>(`cookies`, {
+        cache: "no-cache",
+    })
+    return response
 }
