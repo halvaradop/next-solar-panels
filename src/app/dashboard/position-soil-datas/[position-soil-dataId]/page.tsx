@@ -29,7 +29,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
         idContactPerson,
         idPositionSoilData,
         date: dateTime,
-        field: { name },
+        field: { designation },
         user,
         ...spread
     } = getPositionSoilData
@@ -43,7 +43,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
             <article className="w-full">
                 <div className="flex items-center justify-between">
                     <h1 className="text-neutral-700 text-lg font-medium">Sample information</h1>
-                    <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500">{name}</span>
+                    <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500">{designation}</span>
                 </div>
                 <time className="text-neutral-600" dateTime={date}>
                     Date: {0}

@@ -9,6 +9,7 @@ import {
     Field,
     Linkage,
     PhoneContactPerson,
+    PositionData,
 } from "@prisma/client"
 
 export interface LayoutProps {
@@ -54,7 +55,7 @@ export interface Params<T extends string> {
 }
 
 export type Order = PositionSoilData & {
-    field?: { name: string; latitude: string; longitude: string }
+    field?: { designation: string; latitude: string; longitude: string }
     contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     valueb0?: string
     valueb1?: string
@@ -65,6 +66,8 @@ export type Order = PositionSoilData & {
 export type AddFieldsActionState = ActionState<Omit<Field, "fieldId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
+
+export type AddPositionDataActionState = ActionState<Omit<PositionData, "idPositionData">>
 
 export type AddProjectOnUserActionState = ActionState<Linkage>
 

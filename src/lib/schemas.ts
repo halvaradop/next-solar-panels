@@ -110,6 +110,17 @@ export const FiledSchema = object({
     latitude: number(),
 })
 
+export const PositionDataSchema = object({
+    pointType: string(),
+    // designation: string(),
+    pileDesignation: string(),
+    pointDesignation: string(),
+    longitude: number(),
+    field: string(),
+    latitude: number(),
+    grounding: string().nullable(),
+})
+
 export const ProjectOnUserSchema = object({
     plant: string(),
     user: string(),

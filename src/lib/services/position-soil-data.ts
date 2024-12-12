@@ -8,7 +8,7 @@ import { getFetch } from "@/lib/utils"
  * @returns {Promise<PositionSoilData>} - A sample by its id
  */
 export const getPositionSoilDataById = async <
-    T extends object = PositionSoilData & { field: { name: string; latitude: string; longitude: string } } & {
+    T extends object = PositionSoilData & { field: { designation: string; latitude: string; longitude: string } } & {
         user: { firstName: string; lastName: string }
     },
 >(

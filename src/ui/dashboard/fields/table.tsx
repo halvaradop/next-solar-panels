@@ -27,7 +27,7 @@ export const TableFields = ({ fields }: TableFieldsProps) => {
                     <tr className="text-sm" key={idField}>
                         <td className="xs:table-cell">
                             {" "}
-                            <Link href={`/dashboard/position-soil-datas/${idField}`} className="text-blue-600 hover:underline">
+                            <Link href={`/dashboard/position-datas/${idField}`} className="text-blue-600 hover:underline">
                                 {designation}{" "}
                             </Link>
                         </td>

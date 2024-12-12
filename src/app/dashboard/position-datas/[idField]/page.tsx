@@ -2,30 +2,32 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getContactPersonById, getFieldsByProjectsId, getProjectsById } from "@/lib/services"
+import { getContactPersonById, getPositionDatasFieldById, getProjectsById } from "@/lib/services"
 import { Params } from "@/lib/@types/types"
+import { TablePositionDatas } from "@/ui/dashboard/postion-datas/table-position-datas"
 import { SessionProvider } from "next-auth/react"
-import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
+import { AddNewPositionData } from "@/ui/dashboard/postion-datas/add-new-position-datas"
 
 export const metadata: Metadata = {
-    title: "Fields",
-    description: "List of Fields",
+    title: "Position Datas",
+    description: "List of Position Datas",
 }
 
-const getInformation = async (idProject: string) => {
+const getInformation = async (idField: string) => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
-    /** const {
+    console.log("idField")
+    console.log(idField)
+    const {
         stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-    } = await getContactPersonById(userId)*/
-    const [fields, projects] = await Promise.all([getFieldsByProjectsId(idProject), getProjectsById(idProject)])
-    return { fields, projects }
+    } = await getContactPersonById(userId)
+    const [positionDatas, projects] = await Promise.all([getPositionDatasFieldById(idField), getProjectsById(idField)])
+    return { positionDatas, projects }
 }
 
-const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
-    const idProject = (await params).idProject
-    const { fields, projects } = await getInformation(idProject)
+const DashboardPostionDatasPage = async ({ params }: Params<"idField">) => {
+    const idField = (await params).idField
+    const { positionDatas, projects } = await getInformation(idField)
 
     return (
         <section className="min-h-main py-4 space-y-4">
@@ -41,13 +43,13 @@ const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
                 ]}
             /> */}
             <SessionProvider>
-                <AddNewField />
+                <AddNewPositionData />
             </SessionProvider>
             <Suspense fallback={<p>Table...</p>}>
-                <TableFields fields={fields} />
+                <TablePositionDatas postionDatas={positionDatas} />
             </Suspense>
         </section>
     )
 }
 
-export default DashboardFieldsPage
+export default DashboardPostionDatasPage
