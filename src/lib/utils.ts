@@ -17,9 +17,9 @@ export const merge = mergeClasses
 /**
  * Maps the fields of an object to a number
  *
- * @param entries object to be mapped
- * @param fields the name of the fields to be mapped or to be excluded
- * @param include true if the fields are to be mapped, false if the fields are to be excluded
+ * @param {Record<string, unknown>} entries - object to be mapped
+ * @param {string[]} fields - the name of the fields to be mapped or to be excluded
+ * @param {boolean} include - true if the fields are to be mapped, false if the fields are to be excluded
  */
 export const mapToNumber = (entries: Record<string, unknown>, fields: string[], include: boolean = true): void => {
     if (include) {

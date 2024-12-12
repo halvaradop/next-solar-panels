@@ -24,13 +24,13 @@ export const AddNewField = () => {
      */
     return (
         <>
-            <Button onClick={() => handleToggleModal(true)}>Add New Project</Button>
+            <Button onClick={() => handleToggleModal(true)}>Add New Field</Button>
             <Modal ref={ref}>
                 <div className={innerDialogVariants({ className: "mb-10 relative", size: "sm", variant: "base" })}>
                     <Button className="size-8 absolute top-3 right-3" onClick={() => handleToggleModal(false)}>
                         x
                     </Button>
-                    <h2 className="mt-12 mb-4 text-xl font-bold">Adds New Project</h2>
+                    <h2 className="mt-12 mb-4 text-xl font-bold">Adds New Field</h2>
                     <AddField className="min-h-min" />
                 </div>
             </Modal>

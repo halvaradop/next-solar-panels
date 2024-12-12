@@ -86,7 +86,9 @@ export interface SelectProps {
 }
 
 export interface TableFieldsProps {
-    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> })[]
+    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> } & {
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
 }
 
 export interface InputListProps<T> {
@@ -156,4 +158,8 @@ export interface AddFieldsProps {
 
 export interface AddStakeHoldersProps {
     className?: string
+}
+
+export type FieldsPageProps = {
+    idProject: string
 }

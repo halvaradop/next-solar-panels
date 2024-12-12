@@ -24,7 +24,7 @@ export const AddNewStakeHolder = () => {
      */
     return (
         <>
-            <Button onClick={() => handleToggleModal(true)}>Add New Project</Button>
+            <Button onClick={() => handleToggleModal(true)}>Add New StakeHolder</Button>
             <Modal ref={ref}>
                 <div className={innerDialogVariants({ className: "mb-10 relative", size: "sm", variant: "base" })}>
                     <Button className="size-8 absolute top-3 right-3" onClick={() => handleToggleModal(false)}>

@@ -19,7 +19,7 @@ export const TableProjects = async ({ projects }: TableProjectsProps) => {
                     <tr className="text-sm" key={idProject}>
                         <td>
                             {" "}
-                            <Link href="/dashboard/fields" className="text-blue-600 hover:underline">
+                            <Link href={`/dashboard/fields/${idProject}`} className="text-blue-600 hover:underline">
                                 {designation}
                             </Link>{" "}
                         </td>

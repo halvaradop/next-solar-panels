@@ -127,12 +127,12 @@ export const addStakeHolderAction = async (
  */
 export const addFieldsAction = async (previous: AddFieldsActionState, formData: FormData): Promise<AddFieldsActionState> => {
     const entries = Object.fromEntries(formData)
-    //mapToNumber(entries, ["longitude", "latitude"])
+    mapToNumber(entries, ["longitude", "latitude"], true)
     const validate = FiledSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/fields`, {
             method: "POST",
-            body: JSON.stringify(validate.data),
+            body: JSON.stringify(entries),
         })
         const { message, ok } = await request.json()
         if (request.ok && ok) {
@@ -226,6 +226,10 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
     }
 }
 
+/**
+ *
+ * @deprecated
+ */
 export const addProjectOnUserAction = async (
     previous: AddProjectOnUserActionState,
     formData: FormData

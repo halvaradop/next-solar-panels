@@ -98,15 +98,16 @@ export const ProjectSchema = object({
 })
 
 export const FiledSchema = object({
-    fence: number()
-        .nonnegative()
-        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
-    connectionEarthingFence: number()
-        .nonnegative()
-        .refine((value) => value !== 0, { message: "Longitude must be different than zero" }),
-    externalCurrentInfluence: number()
-        .nonnegative()
-        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
+    designation: string(),
+    project: string(),
+    country: string(),
+    state: string(),
+    city: string(),
+    postbox: string(),
+    street: string(),
+    number: string(),
+    longitude: number(),
+    latitude: number(),
 })
 
 export const ProjectOnUserSchema = object({
