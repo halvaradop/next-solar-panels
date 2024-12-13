@@ -2,7 +2,8 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
-import { TableContactPeople } from "@/ui/dashboard/contect-people/table"
+import { TableContactPeople } from "@/ui/dashboard/contact-people/table"
+import { AddNewContactPerson } from "@/ui/dashboard/contact-people/add-new-contact-person"
 
 export const metadata: Metadata = {
     title: "List of users",
@@ -12,11 +13,11 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    /*  TODO : fix stakeholderid
-  const {
-        stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-    } = await getContactPersonById(userId)*/
-    const contactPeople = await getContactPersonByStakeHolderId("stakeHolderId")
+
+    const {
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+    } = await getContactPersonById(userId)
+    const contactPeople = await getContactPersonByStakeHolderId(idStakeHolder)
     return { contactPeople }
 }
 
@@ -25,6 +26,7 @@ const DashboardContactPeoplePage = async () => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
+            <AddNewContactPerson />
             <Suspense fallback={<p>Table...</p>}>
                 <TableContactPeople contactPeople={contactPeople} />
             </Suspense>

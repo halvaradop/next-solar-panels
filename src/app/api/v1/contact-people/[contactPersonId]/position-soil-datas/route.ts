@@ -24,16 +24,12 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             where: {
                 idContactPerson,
             },
-            select: {
-                linkage: {
-                    select: {
-                        field: true,
-                    },
-                },
+            include: {
+                contactPerson: true,
             },
         })
         return NextResponse.json<ResponseAPI<PositionSoilData[]>>({
-            data: data as unknown as PositionSoilData[],
+            data,
             ok: true,
         })
     } catch (error) {
@@ -67,13 +63,15 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const response = await request.json()
-        const json = response
-        const { b0, b1 } = sampleCalcs(json)
+        const { idContactPerson, ...rest } = await request.json()
+
+        const { b0, b1 } = sampleCalcs(rest)
         const data = await prisma.positionSoilData.create({
             data: {
-                ...json,
+                idContactPerson: idContactPerson,
+                ...rest,
                 date: new Date(),
+                updateAt: new Date(),
                 b0,
                 b1,
             },

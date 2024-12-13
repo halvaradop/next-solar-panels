@@ -21,15 +21,16 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
         const idStakeholder = (await params).stakeholderId
         const data = await prisma.field.findMany({
             where: {
-                linkage: {
-                    some: {
-                        project: {
-                            idStakeholder,
-                        },
-                    },
+                project: {
+                    idStakeholder,
                 },
             },
+            include: {
+                project: true,
+                address: true,
+            },
         })
+
         return NextResponse.json<ResponseAPI<Field[]>>({
             data,
             ok: true,

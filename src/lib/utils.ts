@@ -1,7 +1,7 @@
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
-import { SafeParseError } from "zod"
+import { number, SafeParseError } from "zod"
 import { PositionSoilData } from "@prisma/client"
 import { merge as mergeClasses } from "@halvaradop/ui-core"
 
@@ -16,9 +16,9 @@ export const merge = mergeClasses
 /**
  * Maps the fields of an object to a number
  *
- * @param entries object to be mapped
- * @param fields the name of the fields to be mapped or to be excluded
- * @param include true if the fields are to be mapped, false if the fields are to be excluded
+ * @param {Record<string, unknown>} entries - object to be mapped
+ * @param {string[]} fields - the name of the fields to be mapped or to be excluded
+ * @param {boolean} include - true if the fields are to be mapped, false if the fields are to be excluded
  */
 export const mapToNumber = (entries: Record<string, unknown>, fields: string[], include: boolean = true): void => {
     if (include) {
@@ -219,10 +219,14 @@ export const camelCaseToHyphenCamel = (str: string): string => {
  *
  * @param name of the avatar
  * @param size of the svg returned
- * @returns {Image}
  */
-export const getAvatar = async (name: string, size: number = 48) => {
-    return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
+export const getAvatar = async () => {
+    return await fetch(`https://avatar.iran.liara.run/public/boy`, {
+        cache: "force-cache",
+        next: {
+            revalidate: 60 * 60 * 24 * 7 * 4 * 12,
+        },
+    })
 }
 
 export const evalutionGrosor = (
@@ -231,8 +235,8 @@ export const evalutionGrosor = (
     let message = ""
     let steel = ""
     let galvanising = ""
-    const soilResistivity = json.z1
-    const ph = json.z1
+    const soilResistivity = json.z2
+    const ph = json.z4
     const sulfateContent = json.z8 * 96.06
     //const chlorideContent = json.chlorideContent * 35.45;
 
@@ -301,7 +305,58 @@ export const evalutionGrosor = (
     return { valueb0, valueb1, steel, galvanising, message }
 }
 
-export const valueSteel = (ph: number, soilResistivity: number): { steel: string } => {
+export const compiledSample = (
+    json: PositionSoilData[]
+): {
+    valueb0Min: number
+    valueb0Max: number
+    valueb1Max: number
+    valueb1Min: number
+    valueMaxSteel: number
+    valueMinSteel: number
+    valueMaxGalvanising: number
+    valueMinGalvanising: number
+} => {
+    let valueb0Min = 0
+    let valueb0Max = 0
+    let valueb1Max = 0
+    let valueb1Min = 0
+    let valueMaxSteel = 0
+    let valueMinSteel = 0
+    let valueMaxGalvanising = 0
+    let valueMinGalvanising = 0
+
+    json.forEach((data) => {
+        if (data.b0 !== undefined) {
+            valueb0Max = Math.max(valueb0Max, data.b0)
+            valueb0Min = Math.min(valueb0Min, data.b0)
+        }
+
+        if (data.b1 !== undefined) {
+            valueb1Max = Math.max(valueMaxGalvanising, data.b1)
+            valueb1Min = Math.min(valueMinGalvanising, data.b1)
+        }
+
+        valueMaxSteel = Math.max(valueSteel(data.z4, data.z2).valueMax, valueMaxSteel)
+        valueMinSteel = Math.min(valueSteel(data.z4, data.z2).valueMin, valueMinSteel)
+
+        valueMaxGalvanising = Math.max(valueGalvanised(data.z4, data.z2).valueMax, valueMaxGalvanising)
+        valueMinGalvanising = Math.min(valueGalvanised(data.z4, data.z2).valueMin, valueMinGalvanising)
+    })
+
+    return {
+        valueb1Max,
+        valueb1Min,
+        valueb0Max,
+        valueb0Min,
+        valueMaxSteel,
+        valueMinSteel,
+        valueMaxGalvanising,
+        valueMinGalvanising,
+    }
+}
+
+export const valueSteel = (ph: number, soilResistivity: number): { steel: string; valueMax: number; valueMin: number } => {
     let valueDrained = 0
     let valueNotDrained = 0
     if (ph > 5) {
@@ -330,6 +385,9 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueDrained = Math.max(valueDrained, 40)
         valueNotDrained = Math.max(valueNotDrained, 300)
     }
+
+    const valueMax = Math.max(valueDrained, valueNotDrained)
+    const valueMin = Math.max(valueDrained, valueNotDrained)
     const steel =
         "corrosion loss on dreanable soils is " +
         valueDrained +
@@ -337,11 +395,16 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueNotDrained +
         "µm/y"
     return {
+        valueMin,
+        valueMax,
         steel,
     }
 }
 
-export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanised: string } => {
+export const valueGalvanised = (
+    ph: number,
+    soilResistivity: number
+): { Galvanised: string; valueMax: number; valueMin: number } => {
     let valueDrained = 0
     let valueNotDrained = 0
     if (ph > 4) {
@@ -377,6 +440,8 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueDrained = Math.max(valueDrained, 1)
         valueNotDrained = valueDrained
     }
+    const valueMax = Math.max(valueDrained, valueNotDrained)
+    const valueMin = Math.max(valueDrained, valueNotDrained)
     const Galvanised =
         "corrosion loss on dreanable soils is " +
         valueDrained +
@@ -384,6 +449,8 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueNotDrained +
         "µm/y"
     return {
+        valueMin,
+        valueMax,
         Galvanised,
     }
 }

@@ -1,5 +1,16 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, Linkage } from "@prisma/client"
+import {
+    Project,
+    Address,
+    Role,
+    StakeHolder,
+    PositionSoilData,
+    ContactPerson,
+    Field,
+    Linkage,
+    PhoneContactPerson,
+    PositionData,
+} from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -15,7 +26,7 @@ export type AddPositionSoilDatasPageActionState = ActionState<PositionSoilDatasW
 
 export type AddStakeHolderActionState = ActionState<Omit<StakeHolder, "idStakeHolder">>
 
-export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "userId" | "state">> & {
+export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "idContacPerson" | "state">> & {
     project?: string
     phone?: string
 }
@@ -40,11 +51,11 @@ export interface ResponseAPI<T> {
 
 export interface Params<T extends string> {
     params: Promise<Record<T, string>>
-    searchParams: Promise<ReadonlyURLSearchParams>
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export type Order = PositionSoilData & {
-    field?: { name: string; latitude: string; longitude: string }
+    field?: { designation: string; latitude: string; longitude: string }
     contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     valueb0?: string
     valueb1?: string
@@ -56,13 +67,18 @@ export type AddFieldsActionState = ActionState<Omit<Field, "fieldId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
 
-export type AddProjectOnUserActionState = ActionState<Linkage>
+export type AddPositionDataActionState = ActionState<Omit<PositionData, "idPositionData">>
 
 export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
-export type UserSession = Omit<ContactPerson, "state" | "roleId" | "password" | "fax" | "wwww"> & {
-    role: Omit<Role, "users" | "rolesPermissions">
-    clients: { clientId: string }[]
+export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password" | "state"> & {
+    role: Pick<Role, "name">
+    stakeHolder: StakeHolder[]
 }
 
-export type Roles = "client-admin" | "client-user" | "admin"
+export type Roles = "client-admin" | "client-user" | "admin" | "project-manager"
+
+export interface CookieToken {
+    idProject: string
+    idStakeholder: string
+}

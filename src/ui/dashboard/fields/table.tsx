@@ -1,13 +1,14 @@
 "use client"
 import { useSearchParams } from "next/navigation"
 import { TableFieldsProps } from "@/lib/@types/props"
+import Link from "next/link"
 
 export const TableFields = ({ fields }: TableFieldsProps) => {
     const params = useSearchParams()
 
-    const filteredFields = fields.filter(({ fieldId }) => {
+    const filteredFields = fields.filter(({ idField }) => {
         const project = params.get("plant")
-        return project ? project === fieldId.toString() : true
+        return project ? project === idField.toString() : true
     })
 
     return (
@@ -15,17 +16,26 @@ export const TableFields = ({ fields }: TableFieldsProps) => {
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th className="max-w-0">Longitude</th>
-                    <th className="max-w-0">Latitude</th>
+                    <th className="max-w-0">Coordinates</th>
+                    <th className="max-w-0">City</th>
+                    <th className="max-w-0">Country</th>
                     <th className="hidden sm:table-cell">Project</th>
                 </tr>
             </thead>
             <tbody>
-                {filteredFields.map(({ fieldId, idAddress, project, fence }) => (
-                    <tr className="text-sm" key={fieldId}>
-                        <td className="xs:table-cell">{fence}</td>
-                        <td>{idAddress}</td>
-                        <td>{idAddress}</td>
+                {filteredFields.map(({ idField, designation, idAddress, project, address }) => (
+                    <tr className="text-sm" key={idField}>
+                        <td className="xs:table-cell">
+                            {" "}
+                            <Link href={`/dashboard/position-datas/${idField}`} className="text-blue-600 hover:underline">
+                                {designation}{" "}
+                            </Link>
+                        </td>
+                        <td>
+                            {address?.latitude} <br /> {address?.longitude}
+                        </td>
+                        <td>{address?.city}</td>
+                        <td>{address?.country}</td>
                         <td className="hidden sm:table-cell">{project?.designation}</td>
                     </tr>
                 ))}

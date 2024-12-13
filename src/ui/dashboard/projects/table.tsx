@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { TableProjectsProps } from "@/lib/@types/props"
 
 export const TableProjects = async ({ projects }: TableProjectsProps) => {
@@ -5,18 +6,30 @@ export const TableProjects = async ({ projects }: TableProjectsProps) => {
         <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
                 <tr>
-                    <th>Plant Name</th>
-                    <th className="hidden xs:table-cell">Latitude</th>
-                    <th>Longitude</th>
+                    <th>Project Name</th>
+                    <th>Coordinates </th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th> Contact Person</th>
                 </tr>
             </thead>
             <tbody>
-                {/*todo fix*/}
-                {projects.map(({ idProject, designation, idContactPerson, idStakeholder }) => (
+                {projects.map(({ idProject, designation, contactPerson, address }) => (
                     <tr className="text-sm" key={idProject}>
-                        <td>{designation}</td>
-                        <td>{idContactPerson}</td>
-                        <td className="hidden xs:table-cell">{idStakeholder}</td>
+                        <td>
+                            {" "}
+                            <Link href={`/dashboard/fields/${idProject}`} className="text-blue-600 hover:underline">
+                                {designation}
+                            </Link>{" "}
+                        </td>
+                        <td>
+                            {address?.latitude} <br /> {address?.longitude}
+                        </td>
+                        <td>{address?.country}</td>
+                        <td>{address?.city}</td>
+                        <td>
+                            {contactPerson?.firstName} {contactPerson?.firstName}
+                        </td>
                     </tr>
                 ))}
             </tbody>

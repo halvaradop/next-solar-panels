@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { Params, ResponseAPI, UserSession } from "@/lib/@types/types"
+import { Params, ResponseAPI, ContactPersonAPI } from "@/lib/@types/types"
 
 /**
  * Handles the GET request to retrieve specific contact person information.
@@ -22,18 +22,18 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
                 idContactPerson,
             },
             select: {
-                idContactPerson: true,
                 email: true,
                 firstName: true,
                 lastName: true,
-                role: true,
+                fax: true,
+                www: true,
+                stakeHolder: true,
             },
         })
-
         if (!data) {
-            return NextResponse.json<ResponseAPI<UserSession>>(
+            return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
                 {
-                    data: {} as UserSession,
+                    data: {} as ContactPersonAPI,
                     ok: false,
                     message: "Failed to retrieve the contact person information",
                 },
@@ -41,15 +41,15 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             )
         }
 
-        return NextResponse.json<ResponseAPI<UserSession>>({
-            data: {} as UserSession,
+        return NextResponse.json<ResponseAPI<ContactPersonAPI>>({
+            data: data as unknown as ContactPersonAPI,
             ok: true,
             message: "The resource was retrieved successfuly",
         })
     } catch (error) {
-        return NextResponse.json<ResponseAPI<UserSession>>(
+        return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
             {
-                data: {} as UserSession,
+                data: {} as ContactPersonAPI,
                 ok: false,
                 message: "Failed to retrieve the contact person information",
             },

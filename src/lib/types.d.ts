@@ -21,10 +21,3 @@ declare module "next-auth/jwt" {
         user: User
     }
 }
-
-declare module "framer-motion" {
-    interface MotionProps {
-        className?: string
-        onClick?: () => void
-    }
-}

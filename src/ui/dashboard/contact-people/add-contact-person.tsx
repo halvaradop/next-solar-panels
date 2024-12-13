@@ -1,17 +1,19 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 import { Project, Role } from "@prisma/client"
 import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState } from "@/lib/@types/types"
-import { getProjectsByStakeHolderId, getRoles, getContactPersonById } from "@/lib/services"
+import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { AddContactPersonProps } from "@/lib/@types/props"
+import { merge } from "@halvaradop/ui-core"
+import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { contactPersonInputs } = dataJson
 
-export const AddContactPerson = () => {
-    const { data: session } = useSession()
+export const AddContactPerson = ({ className }: AddContactPersonProps) => {
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addContactPersonAction, {
@@ -22,12 +24,11 @@ export const AddContactPerson = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-            /* TODO : fix stakeholderid
-           const {
-                stakeHolders: [{ stakeHolderId } = { stakeHolderId: "" }],
-            } = await getContactPersonById(userId)*/
-            const response = await getProjectsByStakeHolderId("stakeHolderId")
+            const { ok, data } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
+            const response = await getProjectsByStakeHolderId(data.idStakeholder)
             setProjects(response)
         }
         fetchProjects()
@@ -42,7 +43,7 @@ export const AddContactPerson = () => {
     }, [])
 
     return (
-        <Form className="w-full min-h-main pt-4" action={formAction}>
+        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={contactPersonInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role

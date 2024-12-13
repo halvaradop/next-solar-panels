@@ -1,12 +1,22 @@
-import { Dispatch, HTMLProps, SetStateAction } from "react"
+import React, { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
-import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData } from "@prisma/client"
-import { ActionState, Entry, Order } from "./types"
+import {
+    Project,
+    StakeHolder,
+    ContactPerson,
+    PhoneContactPerson,
+    Field,
+    PositionSoilData,
+    Address,
+    PositionData,
+} from "@prisma/client"
+import { ActionState, Entry, Order, Roles } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
 export interface HeaderMenuProps {
+    className?: string
     onCloseMenu: () => void
 }
 
@@ -35,7 +45,7 @@ export interface FilterByProps {
 }
 
 export interface PositionSoilDatasProps {
-    positionSoilDatas: (PositionSoilData & { field?: { name: string } } & {
+    positionSoilDatas: (PositionSoilData & {
         contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     })[]
 }
@@ -59,12 +69,14 @@ export interface TableContactPeopleProps {
      * TODO: fix
      */
     contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[] } & {
-        role?: { roleName: string }
+        role?: { name: string }
     })[]
 }
 
 export interface TableProjectsProps {
-    projects: Project[]
+    projects: (Project & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
+        stakeholder?: Pick<StakeHolder, "name">
+    } & { address?: Pick<Address, "country" | "city" | "latitude" | "longitude"> })[]
 }
 
 export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
@@ -84,7 +96,13 @@ export interface SelectProps {
 }
 
 export interface TableFieldsProps {
-    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> })[]
+    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> } & {
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
+}
+
+export interface TablePositionDatasProps {
+    postionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
 }
 
 export interface InputListProps<T> {
@@ -114,4 +132,69 @@ export type FormProps = FormVariantProps<typeof formVariants> & {
 
 export interface MyDocumentProps {
     positionSoilData: Order
+}
+
+export interface compiledSampleProps {
+    data: {
+        valueb0Max: number
+        valueb1Max: number
+        valueb0Min: number
+        valueb1Min: number
+        valueMaxSteel: number
+        valueMinSteel: number
+        valueMaxGalvanising: number
+        valueMinGalvanising: number
+    }
+}
+export interface CardDashboardProps {
+    src: string | StaticImageData
+    alt?: string
+    title: string
+    count: number
+    isHover?: boolean
+}
+
+export interface RenderByRoleProps {
+    role: Roles
+    match: Roles[]
+    children?: React.ReactNode
+}
+
+export interface ProjectOnPickProps {
+    contactPersonId: string
+    idProject: string
+    designation: string
+}
+
+export interface AddProjectProps {
+    className?: string
+}
+
+export interface AddPositionSoilDataProps {
+    className?: string
+}
+
+export interface AddContactPersonProps {
+    className?: string
+}
+
+export interface AddFieldsProps {
+    className?: string
+}
+
+export interface AddStakeHoldersProps {
+    className?: string
+}
+
+export interface AddPositionDataProps {
+    className?: string
+}
+
+export interface ModalWrapperProps {
+    children: React.ReactNode
+    className?: string
+    innerClassName?: string
+    button?: React.ReactNode
+    close?: React.ReactNode
+    mandatory?: boolean
 }

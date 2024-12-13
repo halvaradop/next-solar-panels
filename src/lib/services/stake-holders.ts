@@ -1,4 +1,4 @@
-import { ContactPerson, Field, Project, StakeHolder } from "@prisma/client"
+import { ContactPerson, Field, PositionData, Project, StakeHolder } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
@@ -6,9 +6,9 @@ import { getFetch } from "@/lib/utils"
  *
  * @returns {Promise<StakeHolder[]>} - A promise that resolves to a list of  stake Holders
  */
-export const getStakeHolder = async <T extends unknown[] = StakeHolder[]>(): Promise<T> => {
+export const getStakeholder = async <T extends unknown[] = StakeHolder[]>(): Promise<T> => {
     const { data } = await getFetch<T>("stake-holders")
-    return data
+    return data || []
 }
 
 /**
@@ -43,5 +43,42 @@ export const getContactPersonByStakeHolderId = async <T extends unknown[] = Cont
     stakeHolderId: string
 ): Promise<T> => {
     const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/contact-people`)
+    return data
+}
+
+/**
+ * Fetches all plants from the database by the  stake Holder and field
+ *
+ * @param {string} stakeHolderId - The ID of the  stake Holder to fetch plants for
+ * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
+ */
+export const getProjectsByStakeHolderIdAndFieldId = async <T extends unknown[] = Project[]>(
+    stakeHolderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/projects`)
+    return data
+}
+
+/**
+ * Fetches all PositionData from the database.
+ *
+ * @param {string} stakeholderId - The id of the stakeholder
+ * @returns {Promise<T>} - A list of zones from the database
+ */
+export const getPositionDataByStakeholderId = async <T extends unknown[] = PositionData[]>(stakeholderId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`stakeholders/${stakeholderId}/position-datas`)
+    return data
+}
+
+/**
+ * Fetches the user plants related to the given user id.
+ *
+ * @param {string} stakeHolderId - The user id.
+ * @returns {Promise<ProjectsOnUsers[]>} - A promise that resolves to an array of ProjectsOnUsers.
+ */
+export const getContacPersonProjectsByStakeHolder = async <T extends unknown[] = (ContactPerson & Project)[]>(
+    stakeHolderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}`)
     return data
 }

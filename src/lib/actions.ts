@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, Linkage } from "@prisma/client"
+import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, Linkage, PositionData } from "@prisma/client"
 import {
     StakeHolderSchema,
     PositionSoilDataSchema,
@@ -11,6 +11,7 @@ import {
     ProjectSchema,
     ProjectOnUserSchema,
     AddressSchema,
+    PositionDataSchema,
 } from "./schemas"
 import {
     AddProjectActionState,
@@ -19,8 +20,8 @@ import {
     AddContactPersonActionState,
     AddFieldsActionState,
     LoginActionState,
-    AddProjectOnUserActionState,
     AddAddressActionState,
+    AddPositionDataActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -37,12 +38,12 @@ export const addPositionSoilDatasPageAction = async (
     formData: FormData
 ): Promise<AddPositionSoilDatasPageActionState> => {
     const session = await auth()
-    formData.set("userId", session?.user?.id as string)
+    formData.set("idContactPerson", session?.user?.id as string)
     const entries = Object.fromEntries(formData)
-    mapToNumber(entries, ["idContacPerson"], false)
+    mapToNumber(entries, ["idContactPerson"], false)
     const validate = PositionSoilDataSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stake-holders/${session?.user?.id}/position-soil-data`, {
+        const request = await fetch(`http://localhost:3000/api/v1/contact-people/${session?.user?.id}/position-soil-datas`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -96,7 +97,7 @@ export const addStakeHolderAction = async (
     const entries = Object.fromEntries(formData)
     const validate = StakeHolderSchema.safeParse(entries)
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/stakeHolders`, {
+        const request = await fetch(`http://localhost:3000/api/v1/stake-holders`, {
             method: "POST",
             body: JSON.stringify(validate.data),
         })
@@ -127,12 +128,12 @@ export const addStakeHolderAction = async (
  */
 export const addFieldsAction = async (previous: AddFieldsActionState, formData: FormData): Promise<AddFieldsActionState> => {
     const entries = Object.fromEntries(formData)
-    //mapToNumber(entries, ["longitude", "latitude"])
+    mapToNumber(entries, ["longitude", "latitude"], true)
     const validate = FiledSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/fields`, {
             method: "POST",
-            body: JSON.stringify(validate.data),
+            body: JSON.stringify(entries),
         })
         const { message, ok } = await request.json()
         if (request.ok && ok) {
@@ -198,6 +199,7 @@ export const addContactPersonAction = async (
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["longitude", "latitude"])
     const validate = ProjectSchema.safeParse(entries)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
@@ -218,35 +220,6 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
         }
     }
     const schema = mapErrors(validate as SafeParseError<Project>)
-    return {
-        message: "Check the invalid fields",
-        isSuccess: false,
-        schema,
-    }
-}
-
-export const addProjectOnUserAction = async (
-    previous: AddProjectOnUserActionState,
-    formData: FormData
-): Promise<AddProjectOnUserActionState> => {
-    const entries = Object.fromEntries(formData)
-    const validate = ProjectOnUserSchema.safeParse(entries)
-    if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/user-project`, {
-            method: "POST",
-            body: JSON.stringify(validate.data),
-        })
-        const { message, ok } = await request.json()
-        if (request.ok && ok) {
-            redirect("/dashboard")
-        }
-        return {
-            message,
-            isSuccess: false,
-            schema: {} as Linkage,
-        }
-    }
-    const schema = mapErrors(validate as SafeParseError<Linkage>)
     return {
         message: "Check the invalid fields",
         isSuccess: false,
@@ -276,6 +249,38 @@ export const addAddressAction = async (previous: AddAddressActionState, formData
     const schema = mapErrors(validate as SafeParseError<Address>)
     return {
         message: "Check the invalid fields",
+        isSuccess: false,
+        schema,
+    }
+}
+
+export const addPositionDataAction = async (
+    previous: AddPositionDataActionState,
+    formData: FormData
+): Promise<AddPositionDataActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["longitude", "latitude"])
+    entries.grounding = entries.grounding ?? null
+    const validate = PositionDataSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/position-datas`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message,
+            isSuccess: false,
+            schema: {} as PositionData,
+        }
+    }
+    const schema = mapErrors(validate as SafeParseError<PositionData>)
+    return {
+        message: "Check the invalid position data",
         isSuccess: false,
         schema,
     }

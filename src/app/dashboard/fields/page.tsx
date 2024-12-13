@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
 import { getContactPersonById, getProjectsByStakeHolderId, getFieldsByStakeHolderId } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
+import { SessionProvider } from "next-auth/react"
+import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -13,13 +15,12 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    /*TODO : fix stakeholderid
     const {
-        stakeHolders: [{ stakeHolders } = { stakeHolders: "" }],
-    } = await getContactPersonById(userId)*/
+        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
+    } = await getContactPersonById(userId)
     const [fields, projects] = await Promise.all([
-        getFieldsByStakeHolderId("stakeHolders"),
-        getProjectsByStakeHolderId("stakeHolders"),
+        getFieldsByStakeHolderId(idStakeHolder),
+        getProjectsByStakeHolderId(idStakeHolder),
     ])
     return { fields, projects }
 }
@@ -40,6 +41,7 @@ const DashboardFieldsPage = async () => {
                     },
                 ]}
             />
+            <AddNewField />
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
             </Suspense>

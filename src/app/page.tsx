@@ -10,7 +10,7 @@ const Index = () => {
     return (
         <section className="w-11/12 mx-auto lg:w-10/12 xl:max-w-screen-xl">
             <figure className="w-full h-screen absolute top-0 left-0 -z-10 bg-black ">
-                <Image className="w-full h-screen object-cover opacity-70" src={clouds} alt="clouds" />
+                <Image className="w-full h-screen object-cover opacity-70" src={clouds} alt="clouds" priority />
             </figure>
             <div className="min-h-main pb-20 flex flex-col justify-end gap-y-4 text-white text-center base:justify-between base:items-end base:flex-row base:gap-x-10 base:text-start">
                 <div>
@@ -26,7 +26,7 @@ const Index = () => {
                 >
                     <Link href="/#about-us">
                         <span className="break-words">Explore more</span>
-                        <Image className="group-hover:invert" src={arrowIcon} alt="arrow icon" />
+                        <Image className="group-hover:invert" src={arrowIcon} alt="arrow icon" priority />
                     </Link>
                 </Button>
             </div>

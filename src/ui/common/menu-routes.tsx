@@ -2,31 +2,37 @@ import Link from "next/link"
 import { camelCaseToHyphenCamel, camelCaseToWords, merge } from "@/lib/utils"
 import { MenuRoutesProps } from "@/lib/@types/props"
 import { roleBasedAccessControl } from "@/middleware"
+import { headerMenuListVariants } from "@/ui/motion/header-menu.motion"
+import * as motion from "framer-motion/client"
 
 const links = {
     projects: [
         { href: "/dashboard/projects", label: "List" },
         { href: "/dashboard/projects/add", label: "Add" },
     ],
-    stakeHolder: [
-        { href: "/dashboard/stakeHolders", label: "List" },
-        { href: "/dashboard/stakeHolders/add", label: "Add" },
+    stakeHolders: [
+        { href: "/dashboard/stake-holders", label: "List" },
+        { href: "/dashboard/stake-holders/add", label: "Add" },
     ],
-    contactPerson: [
-        { href: "/dashboard/contactPersons", label: "List" },
-        { href: "/dashboard/contactPersons/add", label: "Add" },
-    ],
-    usersOnProjects: [
-        { href: "/dashboard/users-on-projects", label: "List" },
-        { href: "/dashboard/users-on-projects/add", label: "Add" },
-    ],
-    samples: [
-        { href: "/dashboard/samples", label: "List" },
-        { href: "/dashboard/samples/add", label: "Add" },
+    contactPeople: [
+        { href: "/dashboard/contactPeople", label: "List" },
+        { href: "/dashboard/contactPeople/add", label: "Add" },
     ],
     fields: [
         { href: "/dashboard/fields", label: "List" },
         { href: "/dashboard/fields/add", label: "Add" },
+    ],
+    addresses: [
+        { href: "/dashboard/addresses", label: "List" },
+        { href: "/dashboard/addresses/add", label: "Add" },
+    ],
+    positionDatas: [
+        { href: "/dashboard/position-datas", label: "List" },
+        { href: "/dashboard/position-datas/add", label: "Add" },
+    ],
+    positionSoilDatas: [
+        { href: "/dashboard/position-soil-datas", label: "List" },
+        { href: "/dashboard/position-soil-datas/add", label: "Add" },
     ],
 }
 
@@ -35,13 +41,13 @@ export const MenuRoutes = ({ className, classTitle, classOption, session }: Menu
     const {
         user: { role },
     } = session
-    const rbac = roleBasedAccessControl[role] ?? []
+    const rbac = roleBasedAccessControl["project-manager"] ?? []
 
     return Object.entries(links).map(([key, links]) => {
         if (!rbac.includes(camelCaseToHyphenCamel(key))) return null
 
         return (
-            <ul className={merge("space-y-1", className)} key={key}>
+            <motion.ul className={merge("space-y-1", className)} variants={headerMenuListVariants} key={key}>
                 <li className={merge("font-medium capitalize", classTitle)}>{camelCaseToWords(key)}</li>
                 {links.map(({ href, label }, key) => {
                     const pathname = href.replace(/^\/dashboard\/?/, "")
@@ -52,7 +58,7 @@ export const MenuRoutes = ({ className, classTitle, classOption, session }: Menu
                         </li>
                     )
                 })}
-            </ul>
+            </motion.ul>
         )
     })
 }

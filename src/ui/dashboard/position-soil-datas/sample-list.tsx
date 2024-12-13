@@ -16,18 +16,18 @@ export const PositionSoilDatasList = ({ positionSoilDatas }: PositionSoilDatasPr
     return (
         <section>
             <section className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-                {filteredPositionSoilData.map(({ positionSoilDataId, contactPerson, field, date, b0, b1 }) => (
-                    <article className="max-w-md" key={positionSoilDataId}>
+                {filteredPositionSoilData.map(({ idPositionSoilData, contactPerson, date, b0, b1 }) => (
+                    <article className="max-w-md" key={idPositionSoilData}>
                         <Link
                             className="p-4 flex items-center justify-between font-normal border rounded-lg shadow hover:cursor-pointer"
-                            href={`/dashboard/samples/${positionSoilDataId}`}
+                            href={`/dashboard/samples/${idPositionSoilData}`}
                         >
                             <div>
                                 <div className="flex items-center justify-between gap-x-5 mb-2">
                                     <p className="text-neutral-800 font-medium">
                                         Contact Person: {contactPerson?.firstName} {contactPerson?.lastName}
                                     </p>
-                                    <p className="px-4 py-1 text-white text-xs rounded-full bg-green-500">Zone: {field?.name}</p>
+                                    <p className="px-4 py-1 text-white text-xs rounded-full bg-green-500"></p>
                                 </div>
                                 <div className="mb-2 text-neutral-700">
                                     <p>B0: {b0}</p>

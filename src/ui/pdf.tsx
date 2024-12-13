@@ -1,6 +1,5 @@
 "use client"
 import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer"
-import logoAche from "@/public/logoAche.png"
 import { MyDocumentProps } from "@/lib/@types/props"
 
 const styles = StyleSheet.create({
@@ -124,7 +123,6 @@ export const MyDocument = ({ positionSoilData }: MyDocumentProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.header}>
-                {/* <Image src={logoAche.src} style={styles.logo} />                 */}
                 <View style={styles.headerInfo}>
                     <Text style={[styles.headerText, styles.boldText]}>ACHE ENGINEERING GmbH</Text>
                     <Text style={styles.headerText}>Renewable energy - Corrosion protection</Text>
@@ -146,7 +144,7 @@ export const MyDocument = ({ positionSoilData }: MyDocumentProps) => (
                         {positionSoilData.contactPerson?.firstName} {positionSoilData.contactPerson?.lastName}
                     </Text>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Zone</Text>
-                    <Text style={styles.tableCellInformation}>{positionSoilData.field?.name}</Text>
+                    <Text style={styles.tableCellInformation}>{positionSoilData.field?.designation}</Text>
                 </View>
                 <View style={styles.tableRowInformation}>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Coordinates</Text>
