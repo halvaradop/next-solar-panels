@@ -2,6 +2,8 @@ import Link from "next/link"
 import { camelCaseToHyphenCamel, camelCaseToWords, merge } from "@/lib/utils"
 import { MenuRoutesProps } from "@/lib/@types/props"
 import { roleBasedAccessControl } from "@/middleware"
+import { headerMenuListVariants } from "@/ui/motion/header-menu.motion"
+import * as motion from "framer-motion/client"
 
 const links = {
     projects: [
@@ -41,7 +43,7 @@ export const MenuRoutes = ({ className, classTitle, classOption, session }: Menu
         if (!rbac.includes(camelCaseToHyphenCamel(key))) return null
 
         return (
-            <ul className={merge("space-y-1", className)} key={key}>
+            <motion.ul className={merge("space-y-1", className)} variants={headerMenuListVariants} key={key}>
                 <li className={merge("font-medium capitalize", classTitle)}>{camelCaseToWords(key)}</li>
                 {links.map(({ href, label }, key) => {
                     const pathname = href.replace(/^\/dashboard\/?/, "")
@@ -52,7 +54,7 @@ export const MenuRoutes = ({ className, classTitle, classOption, session }: Menu
                         </li>
                     )
                 })}
-            </ul>
+            </motion.ul>
         )
     })
 }

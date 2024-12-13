@@ -16,6 +16,7 @@ import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form
 import { Session } from "next-auth"
 
 export interface HeaderMenuProps {
+    className?: string
     onCloseMenu: () => void
 }
 

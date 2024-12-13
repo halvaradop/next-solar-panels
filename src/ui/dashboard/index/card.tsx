@@ -9,7 +9,7 @@ export const CardDashboard = ({ src, alt, title, count, isHover = false }: CardD
                 "hover:cursor-pointer": isHover,
             })}
         >
-            <Image width={48} height={48} src={src} alt={`${alt} icon`} />
+            <Image width={48} height={48} src={src} alt={`${alt} icon`} priority />
             <figcaption className="flex flex-col">
                 <h2>{title}</h2>
                 <p>{count}</p>
