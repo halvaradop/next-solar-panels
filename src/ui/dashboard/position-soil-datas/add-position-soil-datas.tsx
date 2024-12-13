@@ -27,14 +27,11 @@ export const AddPositionSoilDatas = ({ className }: AddPositionSoilDataProps) =>
 
     useEffect(() => {
         const fetchFields = async () => {
-            const {
-                ok,
-                data: { idStakeholder },
-            } = await getCookieToken()
+            const { ok, data } = await getCookieToken()
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getFieldsByStakeHolderId(idStakeholder)
+            const response = await getFieldsByStakeHolderId(data.idStakeholder)
             setfields(response)
         }
         fetchFields()

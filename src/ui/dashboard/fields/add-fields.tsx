@@ -22,14 +22,11 @@ export const AddField = ({ className }: AddFieldsProps) => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const {
-                ok,
-                data: { idStakeholder },
-            } = await getCookieToken()
+            const { ok, data } = await getCookieToken()
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getProjectsByStakeHolderId(idStakeholder)
+            const response = await getProjectsByStakeHolderId(data.idStakeholder)
             setProjects(response)
         }
         fetchProjects()
@@ -64,7 +61,7 @@ export const AddField = ({ className }: AddFieldsProps) => {
             </Button>
             {state.message && (
                 <div
-                    className={merge("mt-4 p-2 text-green-700 rounded bg-green-100 ", {
+                    className={merge("mt-4 p-2 text-green-700 rounded", {
                         "text-red-700 bg-red-100": !state.isSuccess,
                     })}
                 >

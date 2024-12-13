@@ -31,15 +31,12 @@ export const AddPositionData = ({ className }: AddPositionDataProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const {
-                ok,
-                data: { idStakeholder },
-            } = await getCookieToken()
+            const { ok, data } = await getCookieToken()
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getFieldsByStakeHolderId(idStakeholder)
-            setIdStakeHolder(idStakeholder)
+            const response = await getFieldsByStakeHolderId(data.idStakeholder)
+            setIdStakeHolder(data.idStakeholder)
             setFields(response)
         }
         fetchContactPerson()

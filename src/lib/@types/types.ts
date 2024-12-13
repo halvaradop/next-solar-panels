@@ -76,7 +76,7 @@ export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" 
     stakeHolder: StakeHolder[]
 }
 
-export type Roles = "client-admin" | "client-user" | "admin"
+export type Roles = "client-admin" | "client-user" | "admin" | "project-manager"
 
 export interface CookieToken {
     idProject: string

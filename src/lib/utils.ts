@@ -220,11 +220,11 @@ export const camelCaseToHyphenCamel = (str: string): string => {
  * @param name of the avatar
  * @param size of the svg returned
  */
-export const getAvatar = async (name: string, size: number = 48) => {
-    return fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "image/svg+xml",
+export const getAvatar = async () => {
+    return await fetch(`https://avatar.iran.liara.run/public/boy`, {
+        cache: "force-cache",
+        next: {
+            revalidate: 60 * 60 * 24 * 7 * 4 * 12,
         },
     })
 }

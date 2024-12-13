@@ -6,7 +6,7 @@ export const Menu = async () => {
     const session = await auth()
 
     return (
-        <aside className="hidden base:self-start base:w-[20vw] base:h-min base:my-4 base:max-w-52 base:block base:py-6 base:px-4 base:space-y-2 base:border base:border-gray-1000 base:rounded-lg base:bg-white">
+        <aside className="hidden self-start w-full min-w-60 max-w-sm h-min max-h-[calc(100dvh-5rem-24px)] my-4 py-6 px-4 space-y-2 border border-gray-1000 rounded-lg overflow-y-auto bg-white scroll:w-2 track:my-2 thumb:rounded thumb:bg-black base:block">
             <h2 className="text-lg text-neutral-800 font-medium">
                 <Link href="/dashboard">Dashboard</Link>
             </h2>
