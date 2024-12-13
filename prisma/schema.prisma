@@ -7,6 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model CookieToken {
+  id              String  @id @default(uuid())
+  idContactPerson String?
+  idStakeHolder   String?
+  idProject       String?
+}
+
 model Picture {
   idPicture     Int           @id @default(autoincrement())
   idStakeholder String
