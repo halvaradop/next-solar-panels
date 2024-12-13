@@ -46,7 +46,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const onlyCookies = await cookies()
         const { idProject } = response
 
         const stakeholder = await prisma.project.findFirst({
@@ -55,14 +54,17 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             },
             select: {
                 idStakeholder: true,
+                idContactPerson: true,
             },
         })
 
-        onlyCookies.set("token", JSON.stringify({ idProject, idStakeholder: stakeholder?.idStakeholder }), {
-            httpOnly: true,
-            secure: true,
+        await prisma.cookieToken.create({
+            data: {
+                idProject,
+                idStakeHolder: stakeholder?.idStakeholder || null,
+                idContactPerson: stakeholder?.idContactPerson,
+            },
         })
-
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             message: "Project token set",
