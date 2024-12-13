@@ -16,15 +16,12 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const {
-        ok,
-        data: { idStakeholder },
-    } = await getCookieToken()
+    const { ok, data } = await getCookieToken()
     if (!ok) {
         return redirect("/dashboard?error=You need to select a stakeholder first")
     }
     const [fields, positionSoilDatas] = await Promise.all([
-        getFieldsByStakeHolderId(idStakeholder),
+        getFieldsByStakeHolderId(data.idStakeholder),
         getPositionSoilDataByContactPerson(userId.toString()),
     ])
     return { fields, positionSoilDatas }
