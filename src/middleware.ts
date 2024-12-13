@@ -4,25 +4,46 @@ import { Roles } from "@/lib/@types/types"
 
 export const roleBasedAccessControl: Record<Roles, string[]> = {
     admin: [
-        "samples",
-        "samples/[sampleId]",
-        "samples/add",
-        "zones",
-        "zones/add",
-        "users",
-        "users/add",
-        "clients",
-        "clients/add",
         "projects",
         "projects/add",
-        "users-on-projects",
-        "users-on-projects/add",
-        "users on projects",
         "fields",
         "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+        "position-soil-datas2",
+        "position-soil-datas2/add",
+        "stake-holders",
+        "stake-holders/add",
+        "contact-people",
+        "contact-people/add",
+        "addresses",
     ],
-    "client-admin": ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
-    "client-user": ["samples", "samples/add", "samples/[sampleId]"],
+    "client-admin": [
+        "projects",
+        "projects/add",
+        "fields",
+        "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+        "contact-people",
+        "contact-people/add",
+        "addresses",
+    ],
+    "project-manager": [
+        "projects",
+        "projects/add",
+        "fields",
+        "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+    ],
+    "client-user": ["projects", "fields", "position-soil-datas", "position-soil-datas/add"],
 }
 
 /**
@@ -31,13 +52,13 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
  * - `admin`
  * - `client-admin`
  * - `client-user`
+ * - `project-manager`
  */
 export const middleware = async (request: NextRequest) => {
     const session = await auth()
     if (!session) {
         return NextResponse.redirect(new URL("/login", request.nextUrl))
     }
-    /*
     const rbac = roleBasedAccessControl[session.user.role] ?? []
     const pathname = request.nextUrl.pathname.replace(/^\/dashboard\/?/, "")
     if (pathname.startsWith("samples/") && pathname.split("/").length === 2 && rbac.includes("samples/[sampleId]")) {
@@ -46,7 +67,6 @@ export const middleware = async (request: NextRequest) => {
     if (!rbac.includes(pathname) && pathname !== "") {
         return NextResponse.redirect(new URL("/dashboard", request.nextUrl))
     }
-    */
     return NextResponse.next()
 }
 

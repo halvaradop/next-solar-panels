@@ -60,6 +60,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 
         onlyCookies.set("token", JSON.stringify({ idProject, idStakeholder: stakeholder?.idStakeholder }), {
             httpOnly: true,
+            secure: true,
         })
 
         return NextResponse.json<ResponseAPI<{}>>({

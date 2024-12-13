@@ -24,16 +24,13 @@ export const AddProject = ({ className }: AddProjectProps) => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const {
-                ok,
-                data: { idStakeholder },
-            } = await getCookieToken()
+            const { ok, data } = await getCookieToken()
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
 
-            const response = await getContactPersonByStakeHolderId(idStakeholder)
-            setIdStakeHolder(idStakeholder)
+            const response = await getContactPersonByStakeHolderId(data.idStakeholder)
+            setIdStakeHolder(data.idStakeholder)
             setContactPerson(response)
         }
         fetchProjects()

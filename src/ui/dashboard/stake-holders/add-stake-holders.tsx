@@ -13,6 +13,7 @@ import dataJson from "@/lib/data.json"
 import { redirect } from "next/navigation"
 
 const { stakeHolderInputs } = dataJson
+
 const type = [
     { id: "CLIENT", name: "CLIENT" },
     { id: "SUPPLIER", name: "SUPPLIER" },
@@ -30,14 +31,11 @@ export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const {
-                ok,
-                data: { idStakeholder },
-            } = await getCookieToken()
+            const { ok, data } = await getCookieToken()
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getContactPersonByStakeHolderId(idStakeholder)
+            const response = await getContactPersonByStakeHolderId(data.idStakeholder)
             setContacPerson(response)
         }
         fetchContactPerson()
