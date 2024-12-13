@@ -17,7 +17,7 @@ export const Avatar = () => {
             getAvatar().then(async (response) => setPicture(response.url))
         }
         fetchAvatar()
-    }, [])
+    }, [firstName, lastName])
 
     return (
         <div className="w-max flex items-center justify-end gap-x-5">
