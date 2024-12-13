@@ -5,7 +5,6 @@ import { getPositionSoilDataById } from "@/lib/services/position-soil-data"
 import { camelCaseToWords, evalutionGrosor } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
-import DowloandButton from "@/ui/dashboard/pdf/page"
 
 export const generateMetadata = async ({ params }: Params<"positionsoildataId">): Promise<Metadata> => {
     const slug = (await params).positionsoildataId
@@ -67,7 +66,6 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
                     </tbody>
                 </table>
             </article>
-            <DowloandButton positionSoilData={extendedPositionSoilD} />
         </section>
     )
 }

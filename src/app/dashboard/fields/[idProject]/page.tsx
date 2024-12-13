@@ -1,10 +1,8 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
-import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getFieldsByProjectsId, getProjectsById } from "@/lib/services"
+import { getFieldsByProjectsId } from "@/lib/services"
 import { Params } from "@/lib/@types/types"
-import { SessionProvider } from "next-auth/react"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
 
 export const metadata: Metadata = {
@@ -13,7 +11,6 @@ export const metadata: Metadata = {
 }
 
 const getInformation = async (idProject: string) => {
-    const session = await auth()
     const [fields] = await Promise.all([getFieldsByProjectsId(idProject)])
     return { fields }
 }
@@ -24,9 +21,7 @@ const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
-            <SessionProvider>
-                <AddNewField />
-            </SessionProvider>
+            <AddNewField />
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
             </Suspense>

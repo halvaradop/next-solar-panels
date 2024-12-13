@@ -227,11 +227,6 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
     }
 }
 
-/**
- *
- * @deprecated
- */
-
 export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
     const entries = Object.fromEntries(formData)
     const validate = AddressSchema.safeParse(entries)

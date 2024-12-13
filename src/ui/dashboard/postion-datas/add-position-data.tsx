@@ -1,18 +1,18 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
 import { Field } from "@prisma/client"
 import { addPositionDataAction } from "@/lib/actions"
 import { AddPositionDataActionState } from "@/lib/@types/types"
 import { getFieldsByStakeHolderId } from "@/lib/services"
 import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import dataJson from "@/lib/data.json"
 import { AddPositionDataProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import { redirect } from "next/navigation"
+import dataJson from "@/lib/data.json"
 
 const { positionDatas } = dataJson
+
 const types = [
     { id: "POI", name: "POI" },
     { id: "FIELD", name: "FIELD" },
@@ -21,7 +21,6 @@ const types = [
 ]
 
 export const AddPositionData = ({ className }: AddPositionDataProps) => {
-    const { data: session } = useSession()
     const [fields, setFields] = useState<Field[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addPositionDataAction, {

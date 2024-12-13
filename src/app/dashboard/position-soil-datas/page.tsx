@@ -3,9 +3,10 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { PositionSoilDatasList } from "@/ui/dashboard/position-soil-datas/sample-list"
 import { Filter } from "@/ui/common/filter"
-import { getPositionSoilDataByContactPerson, getContactPersonById, getFieldsByStakeHolderId } from "@/lib/services"
-import { SessionProvider } from "next-auth/react"
+import { getPositionSoilDataByContactPerson, getFieldsByStakeHolderId } from "@/lib/services"
 import { AddNewPositionSoilData } from "@/ui/dashboard/position-soil-datas/add-new-position-soil-datas"
+import { getCookieToken } from "@/lib/services/cookies"
+import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {
     title: "List of samples",
@@ -15,12 +16,15 @@ export const metadata: Metadata = {
 const getInformation = async () => {
     const session = await auth()
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
     const {
-        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-    } = await getContactPersonById(userId)
+        ok,
+        data: { idStakeholder },
+    } = await getCookieToken()
+    if (!ok) {
+        return redirect("/dashboard?error=You need to select a stakeholder first")
+    }
     const [fields, positionSoilDatas] = await Promise.all([
-        getFieldsByStakeHolderId(idStakeHolder),
+        getFieldsByStakeHolderId(idStakeholder),
         getPositionSoilDataByContactPerson(userId.toString()),
     ])
     return { fields, positionSoilDatas }
@@ -38,9 +42,7 @@ const DashboardSamplesPage = async () => {
                     },
                 ]}
             />
-            <SessionProvider>
-                <AddNewPositionSoilData />
-            </SessionProvider>
+            <AddNewPositionSoilData />
             <Suspense fallback={<p>Table...</p>}>
                 <PositionSoilDatasList positionSoilDatas={positionSoilDatas} />
             </Suspense>
