@@ -8,11 +8,12 @@ datasource db {
 }
 
 model CookieToken {
-  id           String @id @default(uuid())
+  id              String  @id @default(uuid())
   idContactPerson String?
   idStakeHolder   String?
   idProject       String?
 }
+
 model Picture {
   idPicture     Int           @id @default(autoincrement())
   idStakeholder String
