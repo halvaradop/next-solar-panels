@@ -51,7 +51,7 @@ export interface ResponseAPI<T> {
 
 export interface Params<T extends string> {
     params: Promise<Record<T, string>>
-    searchParams: Promise<ReadonlyURLSearchParams>
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 export type Order = PositionSoilData & {
@@ -79,3 +79,8 @@ export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" 
 }
 
 export type Roles = "client-admin" | "client-user" | "admin"
+
+export interface CookieToken {
+    idProject: string
+    idStakeholder: string
+}

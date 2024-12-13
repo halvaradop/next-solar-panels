@@ -8,8 +8,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { field, grounding, ...rest } = response
         const groundingBoolean = !!grounding
-        console.log(grounding)
-        console.log(groundingBoolean)
         const newPositionData = await prisma.positionData.create({
             data: {
                 idField: field,

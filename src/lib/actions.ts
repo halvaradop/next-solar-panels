@@ -200,8 +200,10 @@ export const addContactPersonAction = async (
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     mapToNumber(entries, ["longitude", "latitude"])
     const validate = ProjectSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",
@@ -294,11 +296,9 @@ export const addPositionDataAction = async (
 ): Promise<AddPositionDataActionState> => {
     const session = await auth()
     const entries = Object.fromEntries(formData)
-    console.log(entries)
     mapToNumber(entries, ["longitude", "latitude"])
     entries.grounding = entries.grounding ?? null
     const validate = PositionDataSchema.safeParse(entries)
-    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/position-datas`, {
             method: "POST",

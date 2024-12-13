@@ -1,15 +1,16 @@
 "use client"
-
 import { useEffect, useState, useActionState } from "react"
 import { useSession } from "next-auth/react"
-import { ContactPerson, Field } from "@prisma/client"
-import { addPositionDataAction, addProjectAction } from "@/lib/actions"
-import { AddPositionDataActionState, AddPositionSoilDatasPageActionState, AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonById, getContactPersonByStakeHolderId, getFieldsByStakeHolderId } from "@/lib/services"
+import { Field } from "@prisma/client"
+import { addPositionDataAction } from "@/lib/actions"
+import { AddPositionDataActionState } from "@/lib/@types/types"
+import { getFieldsByStakeHolderId } from "@/lib/services"
 import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import dataJson from "@/lib/data.json"
 import { AddPositionDataProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import { getCookieToken } from "@/lib/services/cookies"
+import { redirect } from "next/navigation"
 
 const { positionDatas } = dataJson
 const types = [
@@ -30,18 +31,17 @@ export const AddPositionData = ({ className }: AddPositionDataProps) => {
     })
 
     useEffect(() => {
-        /**
-         * TODO: fix bug
-         */
         const fetchContactPerson = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
             const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getFieldsByStakeHolderId(idStakeHolder)
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
+            const response = await getFieldsByStakeHolderId(idStakeholder)
+            setIdStakeHolder(idStakeholder)
             setFields(response)
-            setIdStakeHolder(idStakeHolder)
         }
         fetchContactPerson()
     }, [])

@@ -1,23 +1,20 @@
 "use client"
-
 import { useEffect, useState, useActionState } from "react"
-import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import dataJson from "@/lib/data.json"
 import { AddProjectProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
+import { getCookieToken } from "@/lib/services/cookies"
+import dataJson from "@/lib/data.json"
 
-const { projectInputs } = dataJson
-const { addressInputs } = dataJson
-export const fetchCache = "force-no-store"
+const { projectInputs, addressInputs } = dataJson
 
 export const AddProject = ({ className }: AddProjectProps) => {
-    const { data: session } = useSession()
-    const [contactPersons, setcontactPerson] = useState<ContactPerson[]>([])
+    const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
@@ -26,20 +23,20 @@ export const AddProject = ({ className }: AddProjectProps) => {
     })
 
     useEffect(() => {
-        /**
-         * TODO: fix bug
-         */
-        const fetchContactPerson = async () => {
-            const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
+        const fetchProjects = async () => {
             const {
-                stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-            } = await getContactPersonById(userId)
-            const response = await getContactPersonByStakeHolderId(idStakeHolder)
-            setcontactPerson(response)
-            setIdStakeHolder(idStakeHolder)
+                ok,
+                data: { idStakeholder },
+            } = await getCookieToken()
+            if (!ok) {
+                return redirect("/dashboard?error=You need to select a stakeholder first")
+            }
+
+            const response = await getContactPersonByStakeHolderId(idStakeholder)
+            setIdStakeHolder(idStakeholder)
+            setContactPerson(response)
         }
-        fetchContactPerson()
+        fetchProjects()
     }, [])
 
     return (

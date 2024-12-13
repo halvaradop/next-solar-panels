@@ -55,8 +55,10 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { name, latitude, longitude, contactPerson, idStakeholder, ...spread } = await request.json()
-
+        console.log("antes")
+        const { name, latitude, longitude, userId, contactPerson, idStakeholder, ...spread } = await request.json()
+        console.log("spread")
+        console.log(idStakeholder)
         const data = await prisma.project.create({
             data: {
                 designation: name,

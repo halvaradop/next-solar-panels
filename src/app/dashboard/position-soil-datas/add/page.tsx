@@ -1,7 +1,5 @@
 import { Metadata } from "next"
-import { SessionProvider } from "next-auth/react"
 import { AddPositionSoilDatas } from "@/ui/dashboard/position-soil-datas/add-position-soil-datas"
-import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
     title: "Add sample",
@@ -9,12 +7,7 @@ export const metadata: Metadata = {
 }
 
 const AddPositionSoilDatasPage = async () => {
-    const session = await auth()
-    return (
-        <SessionProvider session={session}>
-            <AddPositionSoilDatas />
-        </SessionProvider>
-    )
+    return <AddPositionSoilDatas />
 }
 
 export default AddPositionSoilDatasPage
