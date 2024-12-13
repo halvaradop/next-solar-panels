@@ -14,7 +14,7 @@ export const Select = ({ className, classNameOption, name, values }: SelectProps
                 ))}
             </select>
             <figcaption className="absolute right-2">
-                <Image src={arrowDown} alt="arrow down icon" />
+                <Image src={arrowDown} alt="arrow down icon" priority />
             </figcaption>
         </div>
     )

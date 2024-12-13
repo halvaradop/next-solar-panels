@@ -42,6 +42,7 @@ export const Login = () => {
                     className="absolute right-2 hover:cursor-pointer"
                     src={isVisible ? visibility : visibilityOff}
                     alt={isVisible ? "Hide password" : "Show password"}
+                    priority
                     onClick={handleVisibility}
                 />
             </Label>
