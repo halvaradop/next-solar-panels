@@ -20,7 +20,6 @@ import {
     AddContactPersonActionState,
     AddFieldsActionState,
     LoginActionState,
-    AddProjectOnUserActionState,
     AddAddressActionState,
     AddPositionDataActionState,
 } from "@/lib/@types/types"
@@ -232,34 +231,6 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
  *
  * @deprecated
  */
-export const addProjectOnUserAction = async (
-    previous: AddProjectOnUserActionState,
-    formData: FormData
-): Promise<AddProjectOnUserActionState> => {
-    const entries = Object.fromEntries(formData)
-    const validate = ProjectOnUserSchema.safeParse(entries)
-    if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/user-project`, {
-            method: "POST",
-            body: JSON.stringify(validate.data),
-        })
-        const { message, ok } = await request.json()
-        if (request.ok && ok) {
-            redirect("/dashboard")
-        }
-        return {
-            message,
-            isSuccess: false,
-            schema: {} as Linkage,
-        }
-    }
-    const schema = mapErrors(validate as SafeParseError<Linkage>)
-    return {
-        message: "Check the invalid fields",
-        isSuccess: false,
-        schema,
-    }
-}
 
 export const addAddressAction = async (previous: AddAddressActionState, formData: FormData): Promise<AddAddressActionState> => {
     const entries = Object.fromEntries(formData)

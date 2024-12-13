@@ -113,7 +113,6 @@ export const FiledSchema = object({
 
 export const PositionDataSchema = object({
     pointType: string(),
-    // designation: string(),
     pileDesignation: string(),
     pointDesignation: string(),
     longitude: number(),

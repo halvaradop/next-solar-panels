@@ -21,21 +21,10 @@ const getInformation = async (idField: string) => {
 
 const DashboardPostionDatasPage = async ({ params }: Params<"idField">) => {
     const idField = (await params).idField
-    const { positionDatas, projects } = await getInformation(idField)
+    const { positionDatas } = await getInformation(idField)
 
     return (
         <section className="min-h-main py-4 space-y-4">
-            {/* <Filter
-                filters={[
-                    {
-                        title: "Projects",
-                        options: projects.map(({ idProject, designation }) => ({
-                            key: designation,
-                            value: idProject.toString(),
-                        })),
-                    },
-                ]}
-            /> */}
             <SessionProvider>
                 <AddNewPositionData />
             </SessionProvider>

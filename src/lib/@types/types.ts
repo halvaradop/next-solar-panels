@@ -69,8 +69,6 @@ export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state
 
 export type AddPositionDataActionState = ActionState<Omit<PositionData, "idPositionData">>
 
-export type AddProjectOnUserActionState = ActionState<Linkage>
-
 export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
 export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password" | "state"> & {
