@@ -1,4 +1,4 @@
-import { Field } from "@prisma/client"
+import { Field, PositionData } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
@@ -20,5 +20,10 @@ export const getFields = async <T extends unknown[] = Field[]>(): Promise<T> => 
  */
 export const getFieldById = async (FieldId: string): Promise<Field> => {
     const { data } = await getFetch<Field>(`fields/${FieldId}`)
+    return data
+}
+
+export const getPositionDatasFieldById = async <T extends unknown[] = PositionData[]>(FieldId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`fields/${FieldId}/position-datas`)
     return data
 }

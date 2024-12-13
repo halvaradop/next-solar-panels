@@ -231,6 +231,28 @@
       "type": "text"
     }
   ],
+  "positionDatas": [
+    {
+      "label": "Latitude",
+      "name": "latitude",
+      "type": "number"
+    },
+    {
+      "label": "Longitude",
+      "name": "longitude",
+      "type": "number"
+    },
+    {
+      "label": "Pile Designation",
+      "name": "pileDesignation",
+      "type": "text"
+    },
+    {
+      "label": "Point Designation",
+      "name": "pointDesignation",
+      "type": "text"
+    }
+  ],
   "addressInputs": [
     {
       "label": "Country",

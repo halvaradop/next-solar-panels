@@ -44,6 +44,7 @@ export const StakeHolderSchema = object({
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
     contactPerson: string(),
+    type: string(),
 })
 
 export const ContactPersonSchema = object({
@@ -108,6 +109,16 @@ export const FiledSchema = object({
     number: string(),
     longitude: number(),
     latitude: number(),
+})
+
+export const PositionDataSchema = object({
+    pointType: string(),
+    pileDesignation: string(),
+    pointDesignation: string(),
+    longitude: number(),
+    field: string(),
+    latitude: number(),
+    grounding: string().nullable(),
 })
 
 export const ProjectOnUserSchema = object({

@@ -1,6 +1,15 @@
 import React, { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
-import { Project, StakeHolder, ContactPerson, PhoneContactPerson, Field, PositionSoilData, Address } from "@prisma/client"
+import {
+    Project,
+    StakeHolder,
+    ContactPerson,
+    PhoneContactPerson,
+    Field,
+    PositionSoilData,
+    Address,
+    PositionData,
+} from "@prisma/client"
 import { ActionState, Entry, Order, Roles } from "./types"
 import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
@@ -92,6 +101,10 @@ export interface TableFieldsProps {
     })[]
 }
 
+export interface TablePositionDatasProps {
+    postionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
+}
+
 export interface InputListProps<T> {
     state: ActionState<T>
     inputs: {
@@ -158,6 +171,10 @@ export interface AddFieldsProps {
 }
 
 export interface AddStakeHoldersProps {
+    className?: string
+}
+
+export interface AddPositionDataProps {
     className?: string
 }
 

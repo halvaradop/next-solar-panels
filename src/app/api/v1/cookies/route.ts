@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const onlyCookies = await cookies()
         const cookie = onlyCookies.get("token")
-        const token = JSON.parse(cookie?.value as string)
+        const data = JSON.parse(cookie?.value as string)
 
         if (!cookie) {
             return NextResponse.json<ResponseAPI<null>>({
@@ -24,7 +24,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         }
 
         return NextResponse.json<ResponseAPI<{}>>({
-            data: { token },
+            data,
             message: "Token retrieved",
             ok: true,
         })

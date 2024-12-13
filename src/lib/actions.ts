@@ -2,14 +2,16 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson } from "@prisma/client"
+import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, Linkage, PositionData } from "@prisma/client"
 import {
     StakeHolderSchema,
     PositionSoilDataSchema,
     ContactPersonSchema,
     FiledSchema,
     ProjectSchema,
+    ProjectOnUserSchema,
     AddressSchema,
+    PositionDataSchema,
 } from "./schemas"
 import {
     AddProjectActionState,
@@ -18,8 +20,8 @@ import {
     AddContactPersonActionState,
     AddFieldsActionState,
     LoginActionState,
-    AddProjectOnUserActionState,
     AddAddressActionState,
+    AddPositionDataActionState,
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
@@ -247,6 +249,38 @@ export const addAddressAction = async (previous: AddAddressActionState, formData
     const schema = mapErrors(validate as SafeParseError<Address>)
     return {
         message: "Check the invalid fields",
+        isSuccess: false,
+        schema,
+    }
+}
+
+export const addPositionDataAction = async (
+    previous: AddPositionDataActionState,
+    formData: FormData
+): Promise<AddPositionDataActionState> => {
+    const session = await auth()
+    const entries = Object.fromEntries(formData)
+    mapToNumber(entries, ["longitude", "latitude"])
+    entries.grounding = entries.grounding ?? null
+    const validate = PositionDataSchema.safeParse(entries)
+    if (validate.success) {
+        const request = await fetch(`http://localhost:3000/api/v1/position-datas`, {
+            method: "POST",
+            body: JSON.stringify(validate.data),
+        })
+        const { message, ok } = await request.json()
+        if (request.ok && ok) {
+            redirect("/dashboard")
+        }
+        return {
+            message,
+            isSuccess: false,
+            schema: {} as PositionData,
+        }
+    }
+    const schema = mapErrors(validate as SafeParseError<PositionData>)
+    return {
+        message: "Check the invalid position data",
         isSuccess: false,
         schema,
     }
