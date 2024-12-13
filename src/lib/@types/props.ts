@@ -134,6 +134,18 @@ export interface MyDocumentProps {
     positionSoilData: Order
 }
 
+export interface compiledSampleProps {
+    data: {
+        valueb0Max: number
+        valueb1Max: number
+        valueb0Min: number
+        valueb1Min: number
+        valueMaxSteel: number
+        valueMinSteel: number
+        valueMaxGalvanising: number
+        valueMinGalvanising: number
+    }
+}
 export interface CardDashboardProps {
     src: string | StaticImageData
     alt?: string

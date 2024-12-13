@@ -1,9 +1,12 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getFieldsByProjectsId } from "@/lib/services"
+import { getContactPersonById, getFieldsByProjectsId, getPositionSoilDataByContactPerson } from "@/lib/services"
 import { Params } from "@/lib/@types/types"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
+import { compiledSample } from "@/lib/utils"
+import { TableCompiledSamples } from "@/ui/dashboard/samples/table-compiled"
+import { auth } from "@/lib/auth"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -11,19 +14,26 @@ export const metadata: Metadata = {
 }
 
 const getInformation = async (idProject: string) => {
-    const [fields] = await Promise.all([getFieldsByProjectsId(idProject)])
-    return { fields }
+    const session = await auth()
+    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
+    const [fields, positionSoilDatas] = await Promise.all([
+        getFieldsByProjectsId(idProject),
+        getPositionSoilDataByContactPerson(userId.toString()),
+    ])
+
+    return { fields, positionSoilDatas }
 }
 
 const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
     const idProject = (await params).idProject
-    const { fields } = await getInformation(idProject)
-
+    const { fields, positionSoilDatas } = await getInformation(idProject)
+    const data = compiledSample(positionSoilDatas)
     return (
         <section className="min-h-main py-4 space-y-4">
             <AddNewField />
             <Suspense fallback={<p>Table...</p>}>
                 <TableFields fields={fields} />
+                <TableCompiledSamples data={data} />
             </Suspense>
         </section>
     )
