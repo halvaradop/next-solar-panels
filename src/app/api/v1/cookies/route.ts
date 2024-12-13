@@ -1,6 +1,6 @@
 import { ResponseAPI } from "@/lib/@types/types"
+import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
 /**
@@ -11,9 +11,12 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const onlyCookies = await cookies()
-        const cookie = onlyCookies.get("token")
-        const data = JSON.parse(cookie?.value as string)
+        const session = await auth()
+        const cookie = await prisma.cookieToken.findFirst({
+            where: {
+                idContactPerson: session?.user.id,
+            },
+        })
 
         if (!cookie) {
             return NextResponse.json<ResponseAPI<null>>({
@@ -24,7 +27,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         }
 
         return NextResponse.json<ResponseAPI<{}>>({
-            data,
+            data: cookie,
             message: "Token retrieved",
             ok: true,
         })
@@ -46,7 +49,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { idProject } = response
+        const { idProject, idContactPerson } = response
 
         const stakeholder = await prisma.project.findFirst({
             where: {
@@ -54,15 +57,22 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             },
             select: {
                 idStakeholder: true,
-                idContactPerson: true,
             },
         })
+
+        if (!stakeholder) {
+            return NextResponse.json<ResponseAPI<null>>({
+                data: null,
+                message: "Project token not set",
+                ok: false,
+            })
+        }
 
         await prisma.cookieToken.create({
             data: {
                 idProject,
-                idStakeHolder: stakeholder?.idStakeholder || null,
-                idContactPerson: stakeholder?.idContactPerson,
+                idStakeHolder: stakeholder?.idStakeholder,
+                idContactPerson: idContactPerson,
             },
         })
         return NextResponse.json<ResponseAPI<{}>>({
