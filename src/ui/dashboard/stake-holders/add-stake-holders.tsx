@@ -13,6 +13,12 @@ import dataJson from "@/lib/data.json"
 import { redirect } from "next/navigation"
 
 const { stakeHolderInputs } = dataJson
+const type = [
+    { id: "CLIENT", name: "CLIENT" },
+    { id: "SUPPLIER", name: "SUPPLIER" },
+    { id: "SERVICE_PROVIDER", name: "SERVICE_PROVIDER" },
+    { id: "GOVT_INSTANCE", name: "GOVT_INSTANCE" },
+]
 
 export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
     const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
@@ -43,6 +49,10 @@ export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
                 <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="contactPerson" />
+            </Label>
+            <Label className="w-full text-neutral-700" size="sm">
+                Types
+                <SelectGeneric values={type} id="id" value="name" name="type" />
             </Label>
             <Button className="mt-6" fullWidth>
                 Add

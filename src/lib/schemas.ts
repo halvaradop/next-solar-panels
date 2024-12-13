@@ -44,6 +44,7 @@ export const StakeHolderSchema = object({
         message: "Website address is not valid. Please include a proper domain name (e.g., example.com).",
     }),
     contactPerson: string(),
+    type: string(),
 })
 
 export const ContactPersonSchema = object({

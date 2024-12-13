@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { StakeHolder } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
-import { picture } from "framer-motion/client"
 
 /**
  * Handles the GET request to retrieve all stakeholders from the database.
@@ -78,14 +77,13 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
+        console.log(spread)
         const data = await prisma.stakeHolder.create({
             data: {
                 ...spread,
                 email,
                 www,
                 idContactPerson: contactPerson,
-                type: "CLIENT",
-                idPicture: 1,
                 idAddress: 1,
             },
         })
