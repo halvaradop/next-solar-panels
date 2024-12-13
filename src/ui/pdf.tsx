@@ -146,7 +146,7 @@ export const MyDocument = ({ positionSoilData }: MyDocumentProps) => (
                         {positionSoilData.contactPerson?.firstName} {positionSoilData.contactPerson?.lastName}
                     </Text>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Zone</Text>
-                    <Text style={styles.tableCellInformation}>{positionSoilData.field?.name}</Text>
+                    <Text style={styles.tableCellInformation}>{positionSoilData.field?.designation}</Text>
                 </View>
                 <View style={styles.tableRowInformation}>
                     <Text style={[styles.tableCellInformation, styles.boldCell]}>Coordinates</Text>
