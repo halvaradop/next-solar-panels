@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Metadata } from "next"
 import { Params } from "@/lib/@types/types"
-import { getPositionSoilDataById } from "@/lib/services/position-soil-data"
+import { getPositionSoilDataById } from "@/lib/services/position-soil-datas"
 import { camelCaseToWords, evalutionGrosor } from "@/lib/utils"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"

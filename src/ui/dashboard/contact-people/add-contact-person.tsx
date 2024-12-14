@@ -6,14 +6,14 @@ import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"
 import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
-import { AddContactPersonProps } from "@/lib/@types/props"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { contactPersonInputs } = dataJson
 
-export const AddContactPerson = ({ className }: AddContactPersonProps) => {
+export const AddContactPerson = ({ className }: ClassNameProps) => {
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addContactPersonAction, {

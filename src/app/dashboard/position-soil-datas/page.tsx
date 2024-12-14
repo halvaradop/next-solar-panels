@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { auth } from "@/lib/auth"
 import { PositionSoilDatasList } from "@/ui/dashboard/position-soil-datas/sample-list"
 import { Filter } from "@/ui/common/filter"
-import { getPositionSoilDataByContactPerson, getFieldsByStakeHolderId } from "@/lib/services"
+import { getPositionSoilDatasByContactPerson, getFieldsByStakeHolderId } from "@/lib/services"
 import { AddNewPositionSoilData } from "@/ui/dashboard/position-soil-datas/add-new-position-soil-datas"
 import { getCookieToken } from "@/lib/services/cookies"
 import { redirect } from "next/navigation"
@@ -22,7 +22,7 @@ const getInformation = async () => {
     }
     const [fields, positionSoilDatas] = await Promise.all([
         getFieldsByStakeHolderId(data.idStakeholder),
-        getPositionSoilDataByContactPerson(userId.toString()),
+        getPositionSoilDatasByContactPerson(userId.toString()),
     ])
     return { fields, positionSoilDatas }
 }

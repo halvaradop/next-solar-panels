@@ -6,7 +6,7 @@ import { AddStakeHolderActionState } from "@/lib/@types/types"
 import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
 import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
-import { AddStakeHoldersProps } from "@/lib/@types/props"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
@@ -21,7 +21,7 @@ const type = [
     { id: "GOVT_INSTANCE", name: "GOVT_INSTANCE" },
 ]
 
-export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
+export const AddStakeHolder = ({ className }: ClassNameProps) => {
     const [contactPerson, setContacPerson] = useState<ContactPerson[]>([])
     const [state, formAction] = useActionState(addStakeHolderAction, {
         message: "",

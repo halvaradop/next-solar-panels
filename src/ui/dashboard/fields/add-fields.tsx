@@ -7,13 +7,13 @@ import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId } from "@/lib/services"
 import { Submit, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
-import { AddFieldsProps } from "@/lib/@types/props"
+import { ClassNameProps } from "@/lib/@types/props"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { addressInputs } = dataJson
 
-export const AddField = ({ className }: AddFieldsProps) => {
+export const AddField = ({ className }: ClassNameProps) => {
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addFieldsAction, {
         message: "",

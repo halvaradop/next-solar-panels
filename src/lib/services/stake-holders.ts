@@ -82,3 +82,42 @@ export const getContacPersonProjectsByStakeHolder = async <T extends unknown[] =
     const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}`)
     return data
 }
+
+/**
+ * Fetches all PositionSoilDatas from the database.
+ *
+ * @param {string} stakeholderId - The id of the stakeholder
+ * @returns {Promise<T>} - A list of zones from the database
+ */
+export const getPositionSoilDatasByStakeholderId = async <T extends unknown[] = PositionData[]>(
+    stakeholderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-soil-datas`)
+    return data
+}
+
+/**
+ * Fetches all PositionMeasurements from the database.
+ *
+ * @param {string} stakeholderId - The id of the stakeholder
+ * @returns {Promise<T>} - A list of zones from the database
+ */
+export const getPositionMeasurementsByStakeholderId = async <T extends unknown[] = PositionData[]>(
+    stakeholderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-measurements`)
+    return data
+}
+
+/**
+ * Fetches all PositionResistivities from the database.
+ *
+ * @param {string} stakeholderId - The id of the stakeholder
+ * @returns {Promise<T>} - A list of zones from the database
+ */
+export const getPositionResistivitiesByStakeholderId = async <T extends unknown[] = PositionData[]>(
+    stakeholderId: string
+): Promise<T> => {
+    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-resistivities`)
+    return data
+}

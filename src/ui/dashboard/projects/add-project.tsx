@@ -6,14 +6,14 @@ import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
 import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
-import { AddProjectProps } from "@/lib/@types/props"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { projectInputs, addressInputs } = dataJson
 
-export const AddProject = ({ className }: AddProjectProps) => {
+export const AddProject = ({ className }: ClassNameProps) => {
     const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {

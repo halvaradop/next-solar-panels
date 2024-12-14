@@ -12,8 +12,6 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "position-datas/add",
         "position-soil-datas",
         "position-soil-datas/add",
-        "position-soil-datas2",
-        "position-soil-datas2/add",
         "stake-holders",
         "stake-holders/add",
         "contact-people",

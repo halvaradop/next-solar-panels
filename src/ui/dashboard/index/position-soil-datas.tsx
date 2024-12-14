@@ -1,15 +1,16 @@
 import { CardDashboard } from "./card"
 import { Roles } from "@/lib/@types/types"
-import { getPositionSoilDataByContactPerson, getPositionSoilDatas } from "@/lib/services"
+import { getPositionSoilDatasByContactPerson, getPositionSoilDatas, getPositionSoilDatasByStakeholderId } from "@/lib/services"
+import { isFalsy } from "@halvaradop/ts-utility-types/validate"
 import soilData from "@/public/soil-data.png"
 
-export const PositionSoilDatas = async ({ role, contactPersonId }: { role?: Roles; contactPersonId?: string }) => {
+export const PositionSoilDatas = async ({ role, id }: { role?: Roles; id?: string }) => {
     const soilDatas =
-        role === "admin"
+        role === "admin" || isFalsy(role)
             ? await getPositionSoilDatas()
-            : role === "client-user"
-              ? []
-              : await getPositionSoilDataByContactPerson(contactPersonId!)
+            : role === "client-admin"
+              ? await getPositionSoilDatasByStakeholderId(id!)
+              : await getPositionSoilDatasByContactPerson(id!)
 
-    return <CardDashboard src={soilData} alt="position soil data" title="Soil datas" count={soilDatas.length} />
+    return <CardDashboard src={soilData} alt="position soil data" title="Position soil datas" count={soilDatas.length} />
 }

@@ -41,7 +41,7 @@ export const MenuRoutes = ({ className, classTitle, classOption, session }: Menu
     const {
         user: { role },
     } = session
-    const rbac = roleBasedAccessControl["project-manager"] ?? []
+    const rbac = roleBasedAccessControl[role] ?? []
 
     return Object.entries(links).map(([key, links]) => {
         if (!rbac.includes(camelCaseToHyphenCamel(key))) return null

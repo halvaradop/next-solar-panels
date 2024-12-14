@@ -29,3 +29,31 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         })
     }
 }
+
+/**
+ * Handler for the GET request to fetch position datas.
+ *
+ * @returns {Promise<NextResponse>} A promise that resolves to a NextResponse object containing the fetched position datas.
+ *
+ * @example
+ * ```ts
+ * const response = await fetch("{domain}/api/v1/position-datas")
+ * const data = await response.json()
+ * ```
+ */
+export const GET = async (request: NextRequest): Promise<NextResponse> => {
+    try {
+        const positionDatas = await prisma.positionData.findMany()
+        return NextResponse.json<ResponseAPI<PositionData[]>>({
+            data: positionDatas,
+            ok: true,
+            message: "All position datas",
+        })
+    } catch (error) {
+        return NextResponse.json<ResponseAPI<[]>>({
+            data: [],
+            ok: false,
+            message: "Failed to fetch position datas",
+        })
+    }
+}

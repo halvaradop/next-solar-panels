@@ -1,5 +1,5 @@
 import { Linkage } from "@prisma/client"
-import { getFetch } from "../utils"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Fetches all users and projects from the database

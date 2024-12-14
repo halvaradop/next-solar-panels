@@ -5,7 +5,7 @@ import { addPositionDataAction } from "@/lib/actions"
 import { AddPositionDataActionState } from "@/lib/@types/types"
 import { getFieldsByStakeHolderId } from "@/lib/services"
 import { Form, Input, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
-import { AddPositionDataProps } from "@/lib/@types/props"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import { redirect } from "next/navigation"
@@ -20,7 +20,7 @@ const types = [
     { id: "MEASUREMENT", name: "MEASUREMENT" },
 ]
 
-export const AddPositionData = ({ className }: AddPositionDataProps) => {
+export const AddPositionData = ({ className }: ClassNameProps) => {
     const [fields, setFields] = useState<Field[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addPositionDataAction, {
