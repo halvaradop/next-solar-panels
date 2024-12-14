@@ -9,8 +9,9 @@ import {
     PositionSoilData,
     Address,
     PositionData,
+    CookieToken,
 } from "@prisma/client"
-import { ActionState, Entry, Order, Roles } from "./types"
+import { ActionState, Entry, Order, Params, ResponseAPI, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
@@ -165,4 +166,9 @@ export interface ModalWrapperProps extends ClassNameProps {
     button?: React.ReactNode
     close?: React.ReactNode
     mandatory?: boolean
+    error?: boolean
+}
+
+export interface ErrorPickProjectProps extends Params<""> {
+    ok: boolean
 }

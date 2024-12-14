@@ -14,6 +14,7 @@ export const ModalWrapperRedirect = ({
     button,
     close,
     mandatory = false,
+    error,
 }: ModalWrapperProps) => {
     const router = useRouter()
     const pathname = usePathname()
@@ -31,7 +32,7 @@ export const ModalWrapperRedirect = ({
     }
 
     useEffect(() => {
-        if (params.get("error") == "You need to select a stakeholder first") {
+        if (params.get("error") == "You need to select a stakeholder first" || error) {
             setIsMandatory(true)
             handleToggleModal(true)
         }

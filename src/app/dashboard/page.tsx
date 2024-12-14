@@ -16,6 +16,7 @@ import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
 import { Params } from "@/lib/@types/types"
 import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal"
 import { getCookieToken } from "@/lib/services/cookies"
+import { ErrorPickProject } from "@/ui/dashboard/pick-project/error-pick-project"
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -24,11 +25,14 @@ export const metadata: Metadata = {
 
 const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     const session = await auth()
-    const {
-        data: { idStakeholder },
-    } = await getCookieToken()
+    const { data, ok } = await getCookieToken()
+    if (!ok) {
+        return <ErrorPickProject ok={true} params={params} searchParams={searchParams} />
+    }
+
     if (!session) return null
     const { id, role } = session.user
+    const { idStakeholder } = data
 
     return (
         <section className="mt-4 self-start">
