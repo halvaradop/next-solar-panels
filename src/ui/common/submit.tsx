@@ -1,7 +1,14 @@
 "use client"
 import { useFormStatus } from "react-dom"
-import { SubmitProps } from "@/lib/@types/props"
-import { Button, buttonVariants } from "@halvaradop/ui-button"
+import { Button, buttonVariants, ButtonProps } from "@halvaradop/ui-button"
+
+/**
+ * @internal
+ */
+type SubmitProps = ButtonProps<typeof buttonVariants> & {
+    children: React.ReactNode
+    pending?: string
+}
 
 export const Submit = ({
     className,

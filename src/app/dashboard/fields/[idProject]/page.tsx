@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getContactPersonById, getFieldsByProjectsId, getPositionSoilDataByContactPerson } from "@/lib/services"
+import { getFieldsByProjectsId, getPositionSoilDatasByContactPerson } from "@/lib/services"
 import { Params } from "@/lib/@types/types"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
 import { compiledSample } from "@/lib/utils"
@@ -18,7 +18,7 @@ const getInformation = async (idProject: string) => {
     const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const [fields, positionSoilDatas] = await Promise.all([
         getFieldsByProjectsId(idProject),
-        getPositionSoilDataByContactPerson(userId.toString()),
+        getPositionSoilDatasByContactPerson(userId.toString()),
     ])
 
     return { fields, positionSoilDatas }

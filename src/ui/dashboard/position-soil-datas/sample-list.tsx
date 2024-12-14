@@ -5,9 +5,7 @@ import { PositionSoilDatasProps } from "@/lib/@types/props"
 
 export const PositionSoilDatasList = ({ positionSoilDatas }: PositionSoilDatasProps) => {
     const params = useSearchParams()
-    /*
-    TODO FIX : FILTER IS NOT TO idContactPerson TO FIELDID
-    */
+
     const filteredPositionSoilData = positionSoilDatas.filter(({ idContactPerson }) => {
         const field = params.get("field")
         return field ? field === idContactPerson.toString() : true

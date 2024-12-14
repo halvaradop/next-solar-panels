@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { getProjectsByContactPersonId } from "@/lib/services"
 import { Project } from "@/ui/dashboard/pick-project/project"
 import { Params } from "@/lib/@types/types"
+import { SessionProvider } from "next-auth/react"
 
 export const PickProjectModal = async ({ searchParams }: Params<"">) => {
     const session = await auth()
@@ -23,9 +24,16 @@ export const PickProjectModal = async ({ searchParams }: Params<"">) => {
                 </p>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {projects.map(({ idProject, designation }) => (
-                    <Project key={idProject} contactPersonId={session.user.id!} idProject={idProject} designation={designation} />
-                ))}
+                <SessionProvider>
+                    {projects.map(({ idProject, designation }) => (
+                        <Project
+                            key={idProject}
+                            contactPersonId={session.user.id!}
+                            idProject={idProject}
+                            designation={designation}
+                        />
+                    ))}
+                </SessionProvider>
             </ul>
         </section>
     )

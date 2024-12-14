@@ -1,16 +1,4 @@
-import { ReadonlyURLSearchParams } from "next/navigation"
-import {
-    Project,
-    Address,
-    Role,
-    StakeHolder,
-    PositionSoilData,
-    ContactPerson,
-    Field,
-    Linkage,
-    PhoneContactPerson,
-    PositionData,
-} from "@prisma/client"
+import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, PositionData } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -81,4 +69,9 @@ export type Roles = "client-admin" | "client-user" | "admin" | "project-manager"
 export interface CookieToken {
     idProject: string
     idStakeholder: string
+}
+
+export type PositionSoildDataById = PositionSoilData & {
+    field: Pick<Field, "designation">
+    user: Pick<ContactPerson, "firstName" | "lastName">
 }

@@ -11,17 +11,14 @@ import {
     PositionData,
 } from "@prisma/client"
 import { ActionState, Entry, Order, Roles } from "./types"
-import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
-export interface HeaderMenuProps {
-    className?: string
+export interface HeaderMenuProps extends ClassNameProps {
     onCloseMenu: () => void
 }
 
-export interface ProductProps {
-    className?: string
+export interface ProductProps extends ClassNameProps {
     id: string
     title: string
     subtitle: string
@@ -31,15 +28,13 @@ export interface ProductProps {
     isRight?: boolean
 }
 
-export interface ProjectProps {
-    className?: string
+export interface ProjectProps extends ClassNameProps {
     title: string
     city: string
     year: string
 }
 
-export interface FilterByProps {
-    className?: string
+export interface FilterByProps extends ClassNameProps {
     title: string
     options: Entry[]
 }
@@ -55,7 +50,8 @@ export interface FilterProps {
 }
 
 export interface TableStakeHoldersProps {
-    stakeHolders: (Omit<StakeHolder, "state"> & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
+    stakeHolders: (Omit<StakeHolder, "state"> & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
         phone?: Pick<PhoneContactPerson, "number">[]
     })[]
 }
@@ -68,19 +64,18 @@ export interface TableContactPeopleProps {
     /**
      * TODO: fix
      */
-    contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[] } & {
-        role?: { name: string }
-    })[]
+    contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[]; role?: { name: string } })[]
 }
 
 export interface TableProjectsProps {
-    projects: (Project & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email"> } & {
+    projects: (Project & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
         stakeholder?: Pick<StakeHolder, "name">
-    } & { address?: Pick<Address, "country" | "city" | "latitude" | "longitude"> })[]
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
 }
 
-export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
-    className?: string
+export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> extends ClassNameProps {
     classNameOption?: string
     name: string
     id: K
@@ -88,15 +83,15 @@ export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof
     values: T[]
 }
 
-export interface SelectProps {
-    className?: string
+export interface SelectProps extends ClassNameProps {
     classNameOption?: string
     name: string
     values: Entry[]
 }
 
 export interface TableFieldsProps {
-    fields: (Field & { project?: Pick<Project, "designation" | "idProject"> } & {
+    fields: (Field & {
+        project?: Pick<Project, "designation" | "idProject">
         address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
     })[]
 }
@@ -114,16 +109,10 @@ export interface InputListProps<T> {
     }[]
 }
 
-export interface MenuRoutesProps {
-    className?: string
+export interface MenuRoutesProps extends ClassNameProps {
     classTitle?: string
     classOption?: string
     session: Session | null
-}
-
-export type SubmitProps = ButtonProps<typeof buttonVariants> & {
-    children: React.ReactNode
-    pending?: string
 }
 
 export type FormProps = FormVariantProps<typeof formVariants> & {
@@ -166,33 +155,12 @@ export interface ProjectOnPickProps {
     designation: string
 }
 
-export interface AddProjectProps {
+export interface ClassNameProps {
     className?: string
 }
 
-export interface AddPositionSoilDataProps {
-    className?: string
-}
-
-export interface AddContactPersonProps {
-    className?: string
-}
-
-export interface AddFieldsProps {
-    className?: string
-}
-
-export interface AddStakeHoldersProps {
-    className?: string
-}
-
-export interface AddPositionDataProps {
-    className?: string
-}
-
-export interface ModalWrapperProps {
+export interface ModalWrapperProps extends ClassNameProps {
     children: React.ReactNode
-    className?: string
     innerClassName?: string
     button?: React.ReactNode
     close?: React.ReactNode

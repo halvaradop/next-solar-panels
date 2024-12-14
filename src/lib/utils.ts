@@ -1,7 +1,7 @@
 import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
-import { number, SafeParseError } from "zod"
+import { SafeParseError } from "zod"
 import { PositionSoilData } from "@prisma/client"
 import { merge as mergeClasses } from "@halvaradop/ui-core"
 

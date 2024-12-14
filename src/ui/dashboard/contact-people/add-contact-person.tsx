@@ -5,15 +5,15 @@ import { Project, Role } from "@prisma/client"
 import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import { AddContactPersonProps } from "@/lib/@types/props"
+import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
 
 const { contactPersonInputs } = dataJson
 
-export const AddContactPerson = ({ className }: AddContactPersonProps) => {
+export const AddContactPerson = ({ className }: ClassNameProps) => {
     const [roles, setRoles] = useState<Role[]>([])
     const [projects, setProjects] = useState<Project[]>([])
     const [state, formAction] = useActionState(addContactPersonAction, {
@@ -53,9 +53,9 @@ export const AddContactPerson = ({ className }: AddContactPersonProps) => {
                 Project
                 <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
             </Label>
-            <Button className="mt-6" fullWidth>
+            <Submit className="mt-6" fullWidth>
                 Add
-            </Button>
+            </Submit>
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}

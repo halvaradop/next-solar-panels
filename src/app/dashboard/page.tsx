@@ -12,9 +12,10 @@ import {
     PositionResistivities,
     Links,
 } from "@/ui/dashboard/index"
-import { ModalWrapper } from "@/ui/common/modal-wrapper"
 import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
 import { Params } from "@/lib/@types/types"
+import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal"
+import { getCookieToken } from "@/lib/services/cookies"
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -23,36 +24,46 @@ export const metadata: Metadata = {
 
 const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     const session = await auth()
+    const {
+        data: { idStakeholder },
+    } = await getCookieToken()
     if (!session) return null
+    const { id, role } = session.user
 
     return (
         <section className="mt-4 self-start">
             <h1 className="text-2xl font-bold text-center uppercase">Dashboard</h1>
-            <ModalWrapper button="Pick the project">
+            <ModalWrapperRedirect button="Pick the project">
                 <PickProjectModal params={params} searchParams={searchParams} />
-            </ModalWrapper>
-            <RenderByRole match={["admin"]} role={session.user.role}>
+            </ModalWrapperRedirect>
+            <RenderByRole match={["admin"]} role={role}>
                 <Links />
             </RenderByRole>
             <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(100px,200px))] gap-4">
-                <RenderByRole match={["admin"]} role={session.user.role}>
+                <RenderByRole match={["admin"]} role={role}>
                     <Stakeholders />
                     <Projects />
                     <ContactPerson />
                     <Fields />
-                    <PositionSoilDatas role={session.user.role} />
+                    <PositionData />
+                    <PositionSoilDatas />
+                    <PositionMeasurements />
+                    <PositionResistivities />
                 </RenderByRole>
-                <RenderByRole match={["client-admin"]} role={session.user.role}>
-                    <Projects />
-                    <ContactPerson />
-                    <Fields />
-                    <PositionData stakeholderId="?" />
-                    <PositionSoilDatas role={session.user.role} />
+                <RenderByRole match={["client-admin"]} role={role}>
+                    <Projects id={idStakeholder} />
+                    <ContactPerson stakeholderId={idStakeholder} />
+                    <Fields stakeholderId={idStakeholder} />
+                    <PositionData id={idStakeholder} />
+                    <PositionSoilDatas id={idStakeholder} role={role} />
+                    <PositionMeasurements id={idStakeholder} role={role} />
+                    <PositionResistivities id={idStakeholder} role={role} />
                 </RenderByRole>
-                <RenderByRole match={["client-user"]} role={session.user.role}>
-                    <PositionSoilDatas contactPersonId={session.user.id!} />
-                    <PositionMeasurements contactPersonId="??" />
-                    <PositionResistivities contactPersonId="??" />
+                <RenderByRole match={["client-user"]} role={role}>
+                    <Projects id={id} role={role} />
+                    <PositionSoilDatas id={id} role={role} />
+                    <PositionMeasurements id={id} role={role} />
+                    <PositionResistivities id={id} role={role} />
                 </RenderByRole>
             </div>
         </section>

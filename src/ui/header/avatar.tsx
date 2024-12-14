@@ -23,7 +23,14 @@ export const Avatar = () => {
         <div className="w-max flex items-center justify-end gap-x-5">
             <div className="w-max hidden items-center gap-x-5 base:flex">
                 {picture ? (
-                    <Image width={40} height={30} src={picture} alt="random picture" priority />
+                    <Image
+                        className="size-auto object-contain"
+                        width={40}
+                        height={30}
+                        src={picture}
+                        alt="random picture"
+                        priority
+                    />
                 ) : (
                     <div className="size-10 rounded-full bg-slate-100"></div>
                 )}

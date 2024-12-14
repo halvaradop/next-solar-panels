@@ -4,8 +4,8 @@ import { Field } from "@prisma/client"
 import { addPositionDataAction } from "@/lib/actions"
 import { AddPositionDataActionState } from "@/lib/@types/types"
 import { getFieldsByStakeHolderId } from "@/lib/services"
-import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import { AddPositionDataProps } from "@/lib/@types/props"
+import { Form, Input, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getCookieToken } from "@/lib/services/cookies"
 import { redirect } from "next/navigation"
@@ -20,7 +20,7 @@ const types = [
     { id: "MEASUREMENT", name: "MEASUREMENT" },
 ]
 
-export const AddPositionData = ({ className }: AddPositionDataProps) => {
+export const AddPositionData = ({ className }: ClassNameProps) => {
     const [fields, setFields] = useState<Field[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addPositionDataAction, {
@@ -58,9 +58,9 @@ export const AddPositionData = ({ className }: AddPositionDataProps) => {
                 <Input className="size-4" type="checkbox" name="grounding" />
             </Label>
             <input type="hidden" name="idStakeholder" value={idStakeHolder} />
-            <Button className="mt-6" fullWidth>
+            <Submit className="mt-6" fullWidth>
                 Add
-            </Button>
+            </Submit>
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}

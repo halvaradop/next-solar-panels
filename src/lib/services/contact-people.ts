@@ -29,7 +29,7 @@ export const getContactPersonById = async <T extends object = ContactPersonAPI>(
  * @param {string} contactPersonId - The user id to get the PositionSoilData related to them from the database
  * @returns {Promise<T[]>} - A list of PositionSoilData related to the user
  */
-export const getPositionSoilDataByContactPerson = async <T extends unknown[] = PositionSoilData[]>(
+export const getPositionSoilDatasByContactPerson = async <T extends unknown[] = PositionSoilData[]>(
     contactPersonId: string
 ): Promise<T> => {
     const { data } = await getFetch<T>(`contact-people/${contactPersonId}/position-soil-datas`)
@@ -56,7 +56,7 @@ export const getPositionMeasurementsByContactPerson = async <T extends unknown[]
  * @param {string} idContactPerson - The contact person id to filter the position resistivities.
  * @returns {Promise<T>[]} - A list of zones from the database
  */
-export const getPositionResistiviesByContactPerson = async <T extends unknown[] = PositionResistivity[]>(
+export const getPositionResistivitiesByContactPerson = async <T extends unknown[] = PositionResistivity[]>(
     idContactPerson: string
 ): Promise<T> => {
     const { data } = await getFetch<T>(`contact-people/${idContactPerson}/position-resistivities`)

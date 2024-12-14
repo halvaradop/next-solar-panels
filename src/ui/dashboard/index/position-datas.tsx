@@ -1,8 +1,8 @@
-import positionDataIcon from "@/public/fields.svg"
 import { CardDashboard } from "./card"
-import { getPositionDataByStakeholderId } from "@/lib/services"
+import { getPositionDataByStakeholderId, getPositionDatas } from "@/lib/services"
+import positionDataIcon from "@/public/fields.svg"
 
-export const PositionData = async ({ stakeholderId }: { stakeholderId: string }) => {
-    const positions = await getPositionDataByStakeholderId(stakeholderId)
+export const PositionData = async ({ id }: { id?: string }) => {
+    const positions = id ? await getPositionDataByStakeholderId(id) : await getPositionDatas()
     return <CardDashboard src={positionDataIcon} alt="position data" title="Position data" count={positions.length} />
 }
