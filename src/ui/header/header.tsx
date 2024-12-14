@@ -2,10 +2,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { HeaderMenu } from "./header-menu"
-import logoIcon from "@/public/logoAche.png"
 import { AnimatePresence } from "framer-motion"
+import { SessionProvider } from "next-auth/react"
+import logoIcon from "@/public/logoAche.png"
 
 export const Header = () => {
     const pathname = usePathname()
@@ -36,10 +37,12 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded bg-white" />
                     <span className="w-8 h-0.5 block rounded bg-white" />
                 </div>
-                <AnimatePresence mode="wait">
-                    {isOpenMenu && <HeaderMenu className="base:hidden" onCloseMenu={handleToggleMenu} />}
-                </AnimatePresence>
-                <HeaderMenu className="hidden base:block" onCloseMenu={() => {}} />
+                <SessionProvider>
+                    <AnimatePresence mode="wait">
+                        {isOpenMenu && <HeaderMenu className="base:hidden" onCloseMenu={handleToggleMenu} />}
+                    </AnimatePresence>
+                    <HeaderMenu className="hidden base:block" onCloseMenu={handleToggleMenu} />
+                </SessionProvider>
             </nav>
         </header>
     )

@@ -3,8 +3,6 @@ import { Poppins } from "next/font/google"
 import { LayoutProps } from "@/lib/@types/types"
 import { Footer } from "@/ui/footer"
 import { Header } from "@/ui/header/header"
-import { SessionProvider } from "next-auth/react"
-import { auth } from "@/lib/auth"
 import "@/ui/globals.css"
 
 const poppins = Poppins({
@@ -40,15 +38,12 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: LayoutProps) {
-    const session = await auth()
     return (
         <html className="relative scroll-smooth" lang="en">
             <body
                 className={`${poppins.className} antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
-                <SessionProvider session={session}>
-                    <Header />
-                </SessionProvider>
+                <Header />
                 {children}
                 <Footer />
             </body>
