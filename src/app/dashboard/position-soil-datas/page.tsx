@@ -21,7 +21,7 @@ const getInformation = async () => {
         return redirect("/dashboard?error=You need to select a stakeholder first")
     }
     const [fields, positionSoilDatas] = await Promise.all([
-        getFieldsByStakeHolderId(data.idStakeholder),
+        getFieldsByStakeHolderId(data.idStakeHolder),
         getPositionSoilDatasByContactPerson(userId.toString()),
     ])
     return { fields, positionSoilDatas }

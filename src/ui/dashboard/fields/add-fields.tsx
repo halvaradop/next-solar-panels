@@ -26,7 +26,7 @@ export const AddField = ({ className }: ClassNameProps) => {
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getProjectsByStakeHolderId(data.idStakeholder)
+            const response = await getProjectsByStakeHolderId(data.idStakeHolder)
             setProjects(response)
         }
         fetchProjects()

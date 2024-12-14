@@ -32,7 +32,7 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
 
     if (!session) return null
     const { id, role } = session.user
-    const { idStakeholder } = data
+    const { idStakeHolder } = data
 
     return (
         <section className="mt-4 self-start">
@@ -55,13 +55,13 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
                     <PositionResistivities />
                 </RenderByRole>
                 <RenderByRole match={["client-admin"]} role={role}>
-                    <Projects id={idStakeholder} />
-                    <ContactPerson stakeholderId={idStakeholder} />
-                    <Fields stakeholderId={idStakeholder} />
-                    <PositionData id={idStakeholder} />
-                    <PositionSoilDatas id={idStakeholder} role={role} />
-                    <PositionMeasurements id={idStakeholder} role={role} />
-                    <PositionResistivities id={idStakeholder} role={role} />
+                    <Projects id={idStakeHolder} />
+                    <ContactPerson stakeholderId={idStakeHolder} />
+                    <Fields stakeholderId={idStakeHolder} />
+                    <PositionData id={idStakeHolder} />
+                    <PositionSoilDatas id={idStakeHolder} role={role} />
+                    <PositionMeasurements id={idStakeHolder} role={role} />
+                    <PositionResistivities id={idStakeHolder} role={role} />
                 </RenderByRole>
                 <RenderByRole match={["client-user"]} role={role}>
                     <Projects id={id} role={role} />

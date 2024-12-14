@@ -22,5 +22,7 @@ export const setCookieToken = async (idProject: string, idContactPerson: string)
  * @returns {Promise<CookieToken>} A promise that resolves to the project token.
  */
 export const getCookieToken = async (): Promise<ResponseAPI<CookieToken>> => {
-    return await getFetch<CookieToken>(`cookies`)
+    const response = await getFetch<CookieToken>(`cookies`)
+    console.log("response", response)
+    return response
 }

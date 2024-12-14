@@ -35,7 +35,7 @@ export const AddStakeHolder = ({ className }: ClassNameProps) => {
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getContactPersonByStakeHolderId(data.idStakeholder)
+            const response = await getContactPersonByStakeHolderId(data.idStakeHolder)
             setContacPerson(response)
         }
         fetchContactPerson()

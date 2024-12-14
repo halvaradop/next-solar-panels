@@ -30,7 +30,7 @@ export const AddPositionSoilDatas = ({ className }: ClassNameProps) => {
             if (!ok) {
                 return redirect("/dashboard?error=You need to select a stakeholder first")
             }
-            const response = await getFieldsByStakeHolderId(data.idStakeholder)
+            const response = await getFieldsByStakeHolderId(data.idStakeHolder)
             setfields(response)
         }
         fetchFields()
