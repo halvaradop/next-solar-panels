@@ -63,18 +63,37 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         if (!stakeholder) {
             return NextResponse.json<ResponseAPI<null>>({
                 data: null,
-                message: "Project token not set",
+                message: "Stakeholder not found",
                 ok: false,
             })
         }
-
-        await prisma.cookieToken.create({
-            data: {
-                idProject,
-                idStakeHolder: stakeholder?.idStakeholder,
-                idContactPerson: idContactPerson,
+        const storeToken = await prisma.cookieToken.findFirst({
+            where: {
+                idContactPerson,
+            },
+            select: {
+                id: true,
             },
         })
+        if (storeToken) {
+            await prisma.cookieToken.update({
+                where: {
+                    id: storeToken.id,
+                },
+                data: {
+                    idProject,
+                },
+            })
+        } else {
+            await prisma.cookieToken.create({
+                data: {
+                    idProject,
+                    idStakeHolder: stakeholder?.idStakeholder,
+                    idContactPerson,
+                },
+            })
+        }
+
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             message: "Project token set",

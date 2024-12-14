@@ -3,7 +3,7 @@ import { useActionState } from "react"
 import { useEffect, useState } from "react"
 import { addStakeHolderAction } from "@/lib/actions"
 import { AddStakeHolderActionState } from "@/lib/@types/types"
-import { Button, Form, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
 import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
 import { AddStakeHoldersProps } from "@/lib/@types/props"
@@ -52,9 +52,9 @@ export const AddStakeHolder = ({ className }: AddStakeHoldersProps) => {
                 Types
                 <SelectGeneric values={type} id="id" value="name" name="type" />
             </Label>
-            <Button className="mt-6" fullWidth>
+            <Submit className="mt-6" fullWidth>
                 Add
-            </Button>
+            </Submit>
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}

@@ -5,7 +5,7 @@ import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId } from "@/lib/services"
-import { Button, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Submit, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
 import { merge } from "@/lib/utils"
 import { AddFieldsProps } from "@/lib/@types/props"
 import { getCookieToken } from "@/lib/services/cookies"
@@ -56,9 +56,9 @@ export const AddField = ({ className }: AddFieldsProps) => {
                 <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
             </Label>
             <InputList inputs={addressInputs} state={state} />
-            <Button className="mt-6" fullWidth>
+            <Submit className="mt-6" fullWidth>
                 Add
-            </Button>
+            </Submit>
             {state.message && (
                 <div
                     className={merge("mt-4 p-2 text-green-700 rounded", {

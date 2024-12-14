@@ -121,11 +121,6 @@ export interface MenuRoutesProps {
     session: Session | null
 }
 
-export type SubmitProps = ButtonProps<typeof buttonVariants> & {
-    children: React.ReactNode
-    pending?: string
-}
-
 export type FormProps = FormVariantProps<typeof formVariants> & {
     action: NonNullable<HTMLProps<HTMLFormElement>["action"]>
 }

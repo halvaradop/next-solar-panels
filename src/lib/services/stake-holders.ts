@@ -66,7 +66,7 @@ export const getProjectsByStakeHolderIdAndFieldId = async <T extends unknown[] =
  * @returns {Promise<T>} - A list of zones from the database
  */
 export const getPositionDataByStakeholderId = async <T extends unknown[] = PositionData[]>(stakeholderId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`stakeholders/${stakeholderId}/position-datas`)
+    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-datas`)
     return data
 }
 

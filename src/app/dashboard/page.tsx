@@ -12,9 +12,9 @@ import {
     PositionResistivities,
     Links,
 } from "@/ui/dashboard/index"
-import { ModalWrapper } from "@/ui/common/modal-wrapper"
 import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
 import { Params } from "@/lib/@types/types"
+import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal"
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -28,9 +28,9 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     return (
         <section className="mt-4 self-start">
             <h1 className="text-2xl font-bold text-center uppercase">Dashboard</h1>
-            <ModalWrapper button="Pick the project">
+            <ModalWrapperRedirect button="Pick the project">
                 <PickProjectModal params={params} searchParams={searchParams} />
-            </ModalWrapper>
+            </ModalWrapperRedirect>
             <RenderByRole match={["admin"]} role={session.user.role}>
                 <Links />
             </RenderByRole>
