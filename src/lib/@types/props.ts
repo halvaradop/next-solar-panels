@@ -98,7 +98,7 @@ export interface TableFieldsProps {
 }
 
 export interface TablePositionDatasProps {
-    postionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
+    positionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
 }
 
 export interface InputListProps<T> {

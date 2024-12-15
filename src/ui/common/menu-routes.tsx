@@ -15,8 +15,8 @@ const links = {
         { href: "/dashboard/stake-holders/add", label: "Add" },
     ],
     contactPeople: [
-        { href: "/dashboard/contactPeople", label: "List" },
-        { href: "/dashboard/contactPeople/add", label: "Add" },
+        { href: "/dashboard/contact-people", label: "List" },
+        { href: "/dashboard/contact-people/add", label: "Add" },
     ],
     fields: [
         { href: "/dashboard/fields", label: "List" },

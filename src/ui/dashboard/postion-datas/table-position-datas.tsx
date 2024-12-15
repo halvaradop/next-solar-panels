@@ -3,10 +3,10 @@ import { useSearchParams } from "next/navigation"
 import { TablePositionDatasProps } from "@/lib/@types/props"
 import Link from "next/link"
 
-export const TablePositionDatas = ({ postionDatas }: TablePositionDatasProps) => {
+export const TablePositionDatas = ({ positionDatas }: TablePositionDatasProps) => {
     const params = useSearchParams()
 
-    const filteredFields = postionDatas.filter(({ idPositionData }) => {
+    const filteredFields = positionDatas.filter(({ idPositionData }) => {
         const field = params.get("field")
         return field ? field === idPositionData.toString() : true
     })

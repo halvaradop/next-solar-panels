@@ -1,6 +1,6 @@
+"use client"
 import Image from "next/image"
-import { useEffect, useState } from "react"
-import { getAvatar } from "@/lib/utils"
+import { useState } from "react"
 import { Button } from "@halvaradop/ui-button"
 import { signOut, useSession } from "next-auth/react"
 
@@ -11,13 +11,6 @@ export const Avatar = () => {
     const {
         user: { firstName, lastName },
     } = session
-
-    useEffect(() => {
-        const fetchAvatar = async () => {
-            getAvatar().then(async (response) => setPicture(response.url))
-        }
-        fetchAvatar()
-    }, [firstName, lastName])
 
     return (
         <div className="w-max flex items-center justify-end gap-x-5">
