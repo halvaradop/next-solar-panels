@@ -3,34 +3,54 @@ import { auth } from "@/lib/auth"
 import { Roles } from "@/lib/@types/types"
 
 export const roleBasedAccessControl: Record<Roles, string[]> = {
-    "client-admin": [
-        "samples",
-        "samples/[sampleId]",
-        "samples/add",
-        "zones",
-        "zones/add",
-        "users",
-        "users/add",
-        "clients",
-        "clients/add",
+    admin: [
         "projects",
         "projects/add",
-        "users-on-projects",
-        "users-on-projects/add",
-        "users on projects",
+        "fields",
+        "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+        "stake-holders",
+        "stake-holders/add",
+        "contact-people",
+        "contact-people/add",
+        "addresses",
     ],
-    "internal-employee": ["samples", "zones", "users", "clients", "projects", "users-on-projects", "users on projects"],
-    user: ["samples", "samples/add", "samples/[sampleId]", "zones", "zones/add", "projects", "projects/add"],
-    "user-employee": ["samples", "samples/add", "samples/[sampleId]"],
+    "client-admin": [
+        "projects",
+        "projects/add",
+        "fields",
+        "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+        "contact-people",
+        "contact-people/add",
+        "addresses",
+    ],
+    "project-manager": [
+        "projects",
+        "projects/add",
+        "fields",
+        "fields/add",
+        "position-datas",
+        "position-datas/add",
+        "position-soil-datas",
+        "position-soil-datas/add",
+    ],
+    "client-user": ["projects", "fields", "position-soil-datas", "position-soil-datas/add"],
 }
 
 /**
  * Middleware to check if the user is authenticated. If not, redirect to the login page.
  * There are four roles:
+ * - `admin`
  * - `client-admin`
- * - `internal-employee`
- * - `user`
- * - `user-employee`
+ * - `client-user`
+ * - `project-manager`
  */
 export const middleware = async (request: NextRequest) => {
     const session = await auth()

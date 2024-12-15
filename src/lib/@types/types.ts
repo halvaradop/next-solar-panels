@@ -1,6 +1,4 @@
-import { ReadonlyURLSearchParams } from "next/navigation"
-import { Project, Sample, ProjectsOnUsers, User, Zone, Client, Address, Role } from "@prisma/client"
-import { string } from "zod"
+import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, PositionData } from "@prisma/client"
 
 export interface LayoutProps {
     children: React.ReactNode
@@ -12,11 +10,14 @@ export interface ActionState<T> {
     schema: T
 }
 
-export type AddSampleActionState = ActionState<SamplesWithoutIds>
+export type AddPositionSoilDatasPageActionState = ActionState<PositionSoilDatasWithoutIds>
 
-export type AddClientActionState = ActionState<Omit<Client, "clientId">>
+export type AddStakeHolderActionState = ActionState<Omit<StakeHolder, "idStakeHolder">>
 
-export type AddUserActionState = ActionState<Omit<User, "userId" | "state">> & { project?: string; phone?: string }
+export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "idContacPerson" | "state">> & {
+    project?: string
+    phone?: string
+}
 
 export type AddAddressActionState = ActionState<Omit<Address, "isActive" | "addressId">>
 
@@ -38,29 +39,39 @@ export interface ResponseAPI<T> {
 
 export interface Params<T extends string> {
     params: Promise<Record<T, string>>
-    searchParams: Promise<ReadonlyURLSearchParams>
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export type Order = Sample & {
-    zone?: { name: string; latitude: string; longitude: string }
-    user?: Pick<User, "firstName" | "lastName">
+export type Order = PositionSoilData & {
+    field?: { designation: string; latitude: string; longitude: string }
+    contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
     valueb0?: string
     valueb1?: string
     steel?: string
     galvanising?: string
     message?: string
 }
-export type AddZonesActionState = ActionState<Omit<Zone, "zoneId" | "plantId" | "state">>
+export type AddFieldsActionState = ActionState<Omit<Field, "fieldId" | "state">>
 
 export type AddProjectActionState = ActionState<Omit<Project, "plantId" | "state">>
 
-export type AddProjectOnUserActionState = ActionState<ProjectsOnUsers>
+export type AddPositionDataActionState = ActionState<Omit<PositionData, "idPositionData">>
 
-export type SamplesWithoutIds = Omit<Sample, "zoneId" | "userId" | "date" | "sampleId" | "b0" | "b1">
+export type PositionSoilDatasWithoutIds = Omit<PositionSoilData, "idContectPerson" | "date" | "positionSoildDataId" | "b0" | "b1">
 
-export type UserSession = Omit<User, "state" | "roleId" | "password" | "fax" | "website"> & {
-    role: Omit<Role, "users" | "rolesPermissions">
-    clients: { clientId: string }[]
+export type ContactPersonAPI = Omit<ContactPerson, "idContactPerson" | "idRole" | "password" | "state"> & {
+    role: Pick<Role, "name">
+    stakeHolder: StakeHolder[]
 }
 
-export type Roles = "client-admin" | "internal-employee" | "user" | "user-employee"
+export type Roles = "client-admin" | "client-user" | "admin" | "project-manager"
+
+export interface CookieToken {
+    idProject: string
+    idStakeholder: string
+}
+
+export type PositionSoildDataById = PositionSoilData & {
+    field: Pick<Field, "designation">
+    user: Pick<ContactPerson, "firstName" | "lastName">
+}

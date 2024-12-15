@@ -9,7 +9,7 @@ export const Product = ({ className, id, title, subtitle, description, src, alt,
             <h3 className="text-lg font-medium uppercase base:w-[60%]">{subtitle}</h3>
             <h2 className="text-3xl font-medium uppercase base:w-[60%]">{title}</h2>
             <figure className={`base:grid base:items-center base:gap-x-8 ${figureVariant}`}>
-                <Image className={merge("aspect-video object-cover", { "order-1": isRight })} src={src} alt={alt} />
+                <Image className={merge("aspect-video object-cover", { "order-1": isRight })} src={src} alt={alt} priority />
                 <figcaption className="mt-4">{description}</figcaption>
             </figure>
         </article>

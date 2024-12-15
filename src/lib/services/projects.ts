@@ -1,18 +1,17 @@
-import { Project, User } from "@prisma/client"
+import { Field, Project } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
-
-/**
- * Fetches the user plants related to the given user id.
- *
- * @param {string} clientId - The user id.
- * @returns {Promise<ProjectsOnUsers[]>} - A promise that resolves to an array of ProjectsOnUsers.
- */
-export const getUserProjectsByClients = async <T extends unknown[] = (User & Project)[]>(clientId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`clients/${clientId}`)
-    return data
-}
 
 export const getProjects = async <T extends unknown[] = Project[]>(): Promise<T> => {
     const { data } = await getFetch<T>("projects")
+    return data
+}
+
+export const getProjectsById = async <T extends unknown[] = Project[]>(projectId: string): Promise<T> => {
+    const { data } = await getFetch<T>(`projects/${projectId}`)
+    return data
+}
+
+export const getFieldsByProjectsId = async <T extends unknown[] = Field[]>(idProject: string): Promise<T> => {
+    const { data } = await getFetch<T>(`projects/${idProject}/fields`)
     return data
 }

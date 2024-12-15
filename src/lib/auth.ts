@@ -12,30 +12,38 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             },
             async authorize(credentials) {
                 const { email, password } = credentials as { email: string; password: string }
-                const authorized = await prisma.user.findFirst({
+                const authorized = await prisma.contactPerson.findFirst({
                     where: {
                         email,
                     },
                     select: {
-                        userId: true,
+                        idContactPerson: true,
                         email: true,
                         firstName: true,
+                        lastName: true,
                         password: true,
                         role: {
                             select: {
-                                roleName: true,
+                                name: true,
                             },
                         },
                     },
                 })
                 if (authorized) {
                     const isEquals = password === authorized.password
+                    const {
+                        email,
+                        firstName,
+                        lastName,
+                        role: { name },
+                    } = authorized
                     if (isEquals) {
                         return {
-                            email: authorized.email,
-                            name: authorized.firstName,
-                            id: authorized.userId.toString(),
-                            role: authorized.role?.roleName as Roles,
+                            email,
+                            firstName,
+                            lastName,
+                            id: authorized.idContactPerson.toString(),
+                            role: name as Roles,
                         }
                     }
                 }

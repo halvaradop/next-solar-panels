@@ -1,127 +1,70 @@
-import Image from "next/image"
-import Link from "next/link"
 import { Metadata } from "next"
 import { auth } from "@/lib/auth"
 import {
-    getClients,
-    getSamplesByUser,
-    getUserById,
-    getZonesByClientId,
-    getUsers,
-    getProjects,
-    getUserOnProjects,
-} from "@/lib/services"
-import { roleBasedAccessControl } from "@/middleware"
-import samplesIcon from "@/public/samples.svg"
-import zonesIcon from "@/public/zone.svg"
-import clientsIcon from "@/public/clients.svg"
-import github from "@/public/github.svg"
-import web from "@/public/web.svg"
+    ContactPerson,
+    Fields,
+    PositionData,
+    Projects,
+    PositionSoilDatas,
+    RenderByRole,
+    Stakeholders,
+    PositionMeasurements,
+    PositionResistivities,
+    Links,
+} from "@/ui/dashboard/index"
+import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
+import { Params } from "@/lib/@types/types"
+import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal"
+import { getCookieToken } from "@/lib/services/cookies"
 
 export const metadata: Metadata = {
     title: "Dashboard",
     description: "Dashboard page",
 }
 
-const getPanels = async () => {
+const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     const session = await auth()
-    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
     const {
-        clients: [{ clientId } = { clientId: "" }],
-    } = await getUserById(userId)
-    const [zones, samples, clients, users, projects, usersOnProjects] = await Promise.all([
-        getZonesByClientId(clientId),
-        getSamplesByUser(userId),
-        getClients(),
-        getUsers(),
-        getProjects(),
-        getUserOnProjects(),
-    ])
-    return {
-        session,
-        panels: [
-            {
-                icon: clientsIcon,
-                title: "Clients",
-                count: clients.length,
-            },
-            {
-                icon: samplesIcon,
-                title: "Projects",
-                count: projects.length,
-            },
-            {
-                icon: clientsIcon,
-                title: "Users",
-                count: users.length,
-            },
-            {
-                icon: clientsIcon,
-                title: "Users On Projects",
-                count: usersOnProjects.length,
-            },
-            {
-                icon: samplesIcon,
-                title: "Samples",
-                count: samples.length,
-            },
-            {
-                icon: zonesIcon,
-                title: "Zones",
-                count: zones.length,
-            },
-        ],
-    }
-}
-
-const DashboardPage = async () => {
-    const { session, panels } = await getPanels()
+        data: { idStakeholder },
+    } = await getCookieToken()
     if (!session) return null
+    const { id, role } = session.user
 
     return (
         <section className="mt-4 self-start">
-            <h1 className="text-2xl font-bold text-center">Dashboard</h1>
-            {session?.user.role == "client-admin" && (
-                <div className="mt-4 mb-2 grid grid-cols-2 gap-4">
-                    <figure className="p-3 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow duration-300">
-                        <Link
-                            className="flex items-center justify-center flex-col gap-y-2"
-                            href="https://github.com/halvaradop/next-solar-panels"
-                            target="_blank"
-                        >
-                            <Image width={48} src={github} alt="GitHub icon" />
-                            <figcaption className="text-center text-sm font-medium">GitHub Repository</figcaption>
-                        </Link>
-                    </figure>
-                    <figure className="p-3 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow duration-300">
-                        <Link
-                            className="flex items-center justify-center flex-col gap-y-2"
-                            href="http://87.106.32.7/"
-                            target="_blank"
-                        >
-                            <Image width={48} src={web} alt="Website icon" />
-                            <figcaption className="text-center text-sm font-medium">Website</figcaption>
-                        </Link>
-                    </figure>
-                </div>
-            )}
-            <div className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(100px,200px))] gap-4">
-                {panels.map(({ icon, title, count }) => {
-                    const rbca = roleBasedAccessControl["client-admin"]
-                    if (!rbca.includes(title.toLowerCase())) return null
-                    return (
-                        <figure
-                            className="p-3 flex items-center justify-evenly gap-x-4 border border-gray-1000 rounded-lg bg-white hover:cursor-pointer"
-                            key={title}
-                        >
-                            <Image src={icon} alt="Samples icon" />
-                            <figcaption className="flex flex-col">
-                                <h2>{title}</h2>
-                                <p>{count}</p>
-                            </figcaption>
-                        </figure>
-                    )
-                })}
+            <h1 className="text-2xl font-bold text-center uppercase">Dashboard</h1>
+            <ModalWrapperRedirect button="Pick the project">
+                <PickProjectModal params={params} searchParams={searchParams} />
+            </ModalWrapperRedirect>
+            <RenderByRole match={["admin"]} role={role}>
+                <Links />
+            </RenderByRole>
+            <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(100px,200px))] gap-4">
+                <RenderByRole match={["admin"]} role={role}>
+                    <Stakeholders />
+                    <Projects />
+                    <ContactPerson />
+                    <Fields />
+                    <PositionData />
+                    <PositionSoilDatas />
+                    <PositionMeasurements />
+                    <PositionResistivities />
+                </RenderByRole>
+                <RenderByRole match={["client-admin"]} role={role}>
+                    <Projects id={idStakeholder} />
+                    <ContactPerson stakeholderId={idStakeholder} />
+                    <Fields stakeholderId={idStakeholder} />
+                    <PositionData id={idStakeholder} />
+                    <PositionSoilDatas id={idStakeholder} role={role} />
+                    <PositionMeasurements id={idStakeholder} role={role} />
+                    <PositionResistivities id={idStakeholder} role={role} />
+                </RenderByRole>
+                <RenderByRole match={["client-user"]} role={role}>
+                    <Projects id={id} role={role} />
+                    <PositionSoilDatas id={id} role={role} />
+                    <PositionMeasurements id={id} role={role} />
+                    <PositionResistivities id={id} role={role} />
+                </RenderByRole>
             </div>
         </section>
     )

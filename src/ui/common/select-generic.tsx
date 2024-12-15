@@ -21,7 +21,7 @@ export const SelectGeneric = <T extends Record<string, unknown>>({
                 ))}
             </select>
             <figcaption className="absolute right-2">
-                <Image src={arrowDown} alt="arrow down icon" />
+                <Image src={arrowDown} alt="arrow down icon" priority />
             </figcaption>
         </div>
     )

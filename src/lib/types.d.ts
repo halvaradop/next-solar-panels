@@ -5,8 +5,10 @@ import { AdapterUser } from "next-auth/adapters"
 import { Roles } from "@/lib/@types/types"
 
 declare module "next-auth" {
-    interface User extends DefaultSession["user"] {
+    interface User extends Omit<DefaultSession["user"], "name"> {
         role: Roles
+        firstName?: string
+        lastName?: string
     }
 
     interface Session extends DefaultSession {
@@ -17,12 +19,5 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
     interface JWT extends DefaultJWT {
         user: User
-    }
-}
-
-declare module "framer-motion" {
-    interface MotionProps {
-        className?: string
-        onClick?: () => void
     }
 }

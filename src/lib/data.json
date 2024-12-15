@@ -1,53 +1,53 @@
 {
-  "sampleInputs": [
+  "PositionSoilDataInputs": [
     {
       "label": "Soil type",
-      "name": "soilType",
+      "name": "z1",
       "unit": "%"
     },
     {
       "label": "Specific soild resistivity",
-      "name": "soilResistivity",
+      "name": "z2",
       "unit": "Ω m"
     },
     {
       "label": "Moisture content",
-      "name": "moistureContent",
+      "name": "z3",
       "unit": "%"
     },
     {
       "label": "pH value",
-      "name": "pHValue",
+      "name": "z4",
       "unit": ""
     },
     {
       "label": "Buffer capacity pH 4.3",
-      "name": "bufferCapacityPH4_3",
+      "name": "z5",
       "unit": "mmol/kg"
     },
     {
       "label": "Buffer capacity pH 7.0",
-      "name": "bufferCapacityPH7_0",
+      "name": "z6",
       "unit": "mmol/kg"
     },
     {
       "label": "Sulphate reducing bacteria",
-      "name": "sulfurReducingBacteria",
+      "name": "z7",
       "unit": "mg/kg"
     },
     {
       "label": "Sulphate content",
-      "name": "sulfateContent",
+      "name": "z8",
       "unit": "mmol/kg"
     },
     {
       "label": "Neutral salts",
-      "name": "neutralSalts",
+      "name": "z9",
       "unit": "mmol/kg"
     },
     {
       "label": "Location of the object in relation to the groundwater",
-      "name": "undergroundWaterPresence",
+      "name": "z10",
       "unit": "",
       "values": [
         {
@@ -66,7 +66,7 @@
     },
     {
       "label": "Horizontal soild homogeneity based on soild resistivity",
-      "name": "horizontalSoilHomogeneity",
+      "name": "z11",
       "unit": "",
       "values": [
         {
@@ -85,7 +85,7 @@
     },
     {
       "label": "Vertical soild homogeneity",
-      "name": "verticalSoilHomogeneity",
+      "name": "z12",
       "unit": "",
       "values": [
         {
@@ -104,7 +104,7 @@
     },
     {
       "label": "Soil homogeneity",
-      "name": "soilTypeHomogeneity",
+      "name": "z13",
       "unit": "",
       "values": [
         {
@@ -119,7 +119,7 @@
     },
     {
       "label": "Soil homogeneity / different pH values",
-      "name": "pHSoilHomogeneity",
+      "name": "z14",
       "unit": "",
       "values": [
         {
@@ -134,18 +134,23 @@
     },
     {
       "label": "Presence of foreign cathodes",
-      "name": "externalCathodes",
+      "name": "z15",
+      "unit": ""
+    },
+    {
+      "label": "Clorides",
+      "name": "chlorides",
       "unit": ""
     }
   ],
-  "userInputs": [
+  "contactPersonInputs": [
     {
-      "label": "First name",
+      "label": "First Name",
       "name": "firstName",
       "type": "text"
     },
     {
-      "label": "Last name",
+      "label": "Last Name",
       "name": "lastName",
       "type": "text"
     },
@@ -160,12 +165,12 @@
       "type": "password"
     },
     {
-      "label": "FAX",
+      "label": "Fax",
       "name": "fax",
       "type": "text"
     },
     {
-      "label": "Web Sitie",
+      "label": "Website",
       "name": "website",
       "type": "text"
     },
@@ -175,24 +180,14 @@
       "type": "string"
     }
   ],
-  "zoneInputs": [
+  "fieldInputs": [
     {
-      "label": "Name",
-      "name": "name",
+      "label": "Designation",
+      "name": "designation",
       "type": "text"
-    },
-    {
-      "label": "Latitude",
-      "name": "latitude",
-      "type": "number"
-    },
-    {
-      "label": "Longitude",
-      "name": "longitude",
-      "type": "number"
     }
   ],
-  "clientInputs": [
+  "stakeHolderInputs": [
     {
       "label": "Name",
       "name": "name",
@@ -214,8 +209,13 @@
       "type": "text"
     },
     {
-      "label": "Web Sitie",
+      "label": "Website",
       "name": "website",
+      "type": "text"
+    },
+    {
+      "label": "Industry",
+      "name": "industry",
       "type": "text"
     },
     {
@@ -226,10 +226,12 @@
   ],
   "projectInputs": [
     {
-      "label": "Project name",
+      "label": "Project Name",
       "name": "name",
       "type": "text"
-    },
+    }
+  ],
+  "positionDatas": [
     {
       "label": "Latitude",
       "name": "latitude",
@@ -239,6 +241,16 @@
       "label": "Longitude",
       "name": "longitude",
       "type": "number"
+    },
+    {
+      "label": "Pile Designation",
+      "name": "pileDesignation",
+      "type": "text"
+    },
+    {
+      "label": "Point Designation",
+      "name": "pointDesignation",
+      "type": "text"
     }
   ],
   "addressInputs": [
@@ -270,6 +282,16 @@
     {
       "label": "Number",
       "name": "number",
+      "type": "number"
+    },
+    {
+      "label": "Latitude",
+      "name": "latitude",
+      "type": "number"
+    },
+    {
+      "label": "Longitude",
+      "name": "longitude",
       "type": "number"
     }
   ]

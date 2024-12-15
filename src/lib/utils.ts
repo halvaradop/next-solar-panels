@@ -2,7 +2,7 @@ import { hash, genSalt } from "bcryptjs"
 import { BadRequestError } from "@/lib/errors"
 import { ResponseAPI } from "@/lib/@types/types"
 import { SafeParseError } from "zod"
-import { Sample } from "@prisma/client"
+import { PositionSoilData } from "@prisma/client"
 import { merge as mergeClasses } from "@halvaradop/ui-core"
 
 /**
@@ -16,9 +16,9 @@ export const merge = mergeClasses
 /**
  * Maps the fields of an object to a number
  *
- * @param entries object to be mapped
- * @param fields the name of the fields to be mapped or to be excluded
- * @param include true if the fields are to be mapped, false if the fields are to be excluded
+ * @param {Record<string, unknown>} entries - object to be mapped
+ * @param {string[]} fields - the name of the fields to be mapped or to be excluded
+ * @param {boolean} include - true if the fields are to be mapped, false if the fields are to be excluded
  */
 export const mapToNumber = (entries: Record<string, unknown>, fields: string[], include: boolean = true): void => {
     if (include) {
@@ -98,13 +98,13 @@ export const mapErrors = <T>(validate: SafeParseError<T>): T => {
 
 /**
  * Adds the calculated values for b0 and b1 to the sample data.
- *
+ *Todo Fix
  * @param {Sample} json - The sample data to be calculated.
  * @returns {{ b0: number, b1: number }} - The calculated values for b0 and b1.
  */
-export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
+export const sampleCalcs = (json: PositionSoilData): { b0: number; b1: number } => {
     const soilType = () => {
-        const value = json.soilType
+        const value = json.z1
         if (value > 80) return -4
         if (value >= 50) return -2
         if (value >= 30) return 0
@@ -113,7 +113,7 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
     }
 
     const soilResistivity = () => {
-        const value = json.soilResistivity
+        const value = json.z2
         if (value > 500) return 4
         if (value >= 200) return 2
         if (value >= 50) return 0
@@ -123,12 +123,12 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
     }
 
     const moistureContent = () => {
-        if (json.moistureContent < 20) return 0
+        if (json.z3 < 20) return 0
         return -1
     }
 
     const pHValue = () => {
-        const value = json.pHValue
+        const value = json.z4
         if (value > 9) return 2
         if (value >= 6) return 0
         if (value >= 4) return -1
@@ -136,13 +136,13 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
     }
 
     const bufferCapacityPH4_3 = () => {
-        if (json.bufferCapacityPH4_3 > 1000) return 3
-        if (json.bufferCapacityPH4_3 >= 200) return 1
+        if (json.z5 > 1000) return 3
+        if (json.z5 >= 200) return 1
         return 0
     }
 
     const bufferCapacityPH7_0 = () => {
-        const value = json.bufferCapacityPH7_0
+        const value = json.z6
         if (value > 30) return -10
         if (value >= 20) return -8
         if (value >= 10) return -6
@@ -152,20 +152,20 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
     }
 
     const sulfurReducingBacteria = () => {
-        if (json.sulfurReducingBacteria > 10) return -6
-        if (json.sulfurReducingBacteria >= 5) return -3
+        if (json.z7 > 10) return -6
+        if (json.z7 >= 5) return -3
         return 0
     }
 
     const sulfateContent = () => {
-        if (json.sulfateContent > 10) return -3
-        if (json.sulfateContent >= 5) return -2
-        if (json.sulfateContent >= 2) return -1
+        if (json.z8 > 10) return -3
+        if (json.z8 >= 5) return -2
+        if (json.z8 >= 2) return -1
         return 0
     }
 
     const neutralSalts = () => {
-        const value = json.neutralSalts
+        const value = json.z9
         if (value > 100) return -4
         if (value >= 30) return -3
         if (value >= 10) return -2
@@ -174,7 +174,7 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
     }
 
     const externalCathodes = () => {
-        const value = json.externalCathodes
+        const value = json.z10
         if (value > -0.3) return -10
         if (value >= -0.4) return -8
         if (value >= -0.5) return -6
@@ -191,16 +191,10 @@ export const sampleCalcs = (json: Sample): { b0: number; b1: number } => {
         sulfurReducingBacteria(),
         sulfateContent(),
         neutralSalts(),
-        json.undergroundWaterPresence,
+        json.z11,
     ].reduce((prev, now) => prev + now, 0)
 
-    const b1 = [
-        json.horizontalSoilHomogeneity,
-        json.verticalSoilHomogeneity,
-        json.soilTypeHomogeneity,
-        json.pHSoilHomogeneity,
-        externalCathodes(),
-    ].reduce((prev, now) => prev + now, 0)
+    const b1 = [json.z12, json.z13, json.z14, json.z15, externalCathodes()].reduce((prev, now) => prev + now, 0)
 
     return {
         b0,
@@ -225,21 +219,25 @@ export const camelCaseToHyphenCamel = (str: string): string => {
  *
  * @param name of the avatar
  * @param size of the svg returned
- * @returns {Image}
  */
-export const getAvatar = async (name: string, size: number = 48) => {
-    return await fetch(`https://avatar.vercel.sh/${name}.svg?size=${size}`)
+export const getAvatar = async () => {
+    return await fetch(`https://avatar.iran.liara.run/public/boy`, {
+        cache: "force-cache",
+        next: {
+            revalidate: 60 * 60 * 24 * 7 * 4 * 12,
+        },
+    })
 }
 
 export const evalutionGrosor = (
-    json: Sample
+    json: PositionSoilData
 ): { valueb0: string; valueb1: string; steel: string; galvanising: string; message: string } => {
     let message = ""
     let steel = ""
     let galvanising = ""
-    const soilResistivity = json.soilResistivity
-    const ph = json.pHValue
-    const sulfateContent = json.sulfateContent * 96.06
+    const soilResistivity = json.z2
+    const ph = json.z4
+    const sulfateContent = json.z8 * 96.06
     //const chlorideContent = json.chlorideContent * 35.45;
 
     const valueb0: string = (() => {
@@ -301,13 +299,64 @@ export const evalutionGrosor = (
     }
     */
 
-    if (json.undergroundWaterPresence) {
+    if (json.z4) {
         message += "\nAlert: Presence of groundwater detected. Consider alternative materials."
     }
     return { valueb0, valueb1, steel, galvanising, message }
 }
 
-export const valueSteel = (ph: number, soilResistivity: number): { steel: string } => {
+export const compiledSample = (
+    json: PositionSoilData[]
+): {
+    valueb0Min: number
+    valueb0Max: number
+    valueb1Max: number
+    valueb1Min: number
+    valueMaxSteel: number
+    valueMinSteel: number
+    valueMaxGalvanising: number
+    valueMinGalvanising: number
+} => {
+    let valueb0Min = 0
+    let valueb0Max = 0
+    let valueb1Max = 0
+    let valueb1Min = 0
+    let valueMaxSteel = 0
+    let valueMinSteel = 0
+    let valueMaxGalvanising = 0
+    let valueMinGalvanising = 0
+
+    json.forEach((data) => {
+        if (data.b0 !== undefined) {
+            valueb0Max = Math.max(valueb0Max, data.b0)
+            valueb0Min = Math.min(valueb0Min, data.b0)
+        }
+
+        if (data.b1 !== undefined) {
+            valueb1Max = Math.max(valueMaxGalvanising, data.b1)
+            valueb1Min = Math.min(valueMinGalvanising, data.b1)
+        }
+
+        valueMaxSteel = Math.max(valueSteel(data.z4, data.z2).valueMax, valueMaxSteel)
+        valueMinSteel = Math.min(valueSteel(data.z4, data.z2).valueMin, valueMinSteel)
+
+        valueMaxGalvanising = Math.max(valueGalvanised(data.z4, data.z2).valueMax, valueMaxGalvanising)
+        valueMinGalvanising = Math.min(valueGalvanised(data.z4, data.z2).valueMin, valueMinGalvanising)
+    })
+
+    return {
+        valueb1Max,
+        valueb1Min,
+        valueb0Max,
+        valueb0Min,
+        valueMaxSteel,
+        valueMinSteel,
+        valueMaxGalvanising,
+        valueMinGalvanising,
+    }
+}
+
+export const valueSteel = (ph: number, soilResistivity: number): { steel: string; valueMax: number; valueMin: number } => {
     let valueDrained = 0
     let valueNotDrained = 0
     if (ph > 5) {
@@ -336,6 +385,9 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueDrained = Math.max(valueDrained, 40)
         valueNotDrained = Math.max(valueNotDrained, 300)
     }
+
+    const valueMax = Math.max(valueDrained, valueNotDrained)
+    const valueMin = Math.max(valueDrained, valueNotDrained)
     const steel =
         "corrosion loss on dreanable soils is " +
         valueDrained +
@@ -343,11 +395,16 @@ export const valueSteel = (ph: number, soilResistivity: number): { steel: string
         valueNotDrained +
         "µm/y"
     return {
+        valueMin,
+        valueMax,
         steel,
     }
 }
 
-export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanised: string } => {
+export const valueGalvanised = (
+    ph: number,
+    soilResistivity: number
+): { Galvanised: string; valueMax: number; valueMin: number } => {
     let valueDrained = 0
     let valueNotDrained = 0
     if (ph > 4) {
@@ -383,6 +440,8 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueDrained = Math.max(valueDrained, 1)
         valueNotDrained = valueDrained
     }
+    const valueMax = Math.max(valueDrained, valueNotDrained)
+    const valueMin = Math.max(valueDrained, valueNotDrained)
     const Galvanised =
         "corrosion loss on dreanable soils is " +
         valueDrained +
@@ -390,6 +449,8 @@ export const valueGalvanised = (ph: number, soilResistivity: number): { Galvanis
         valueNotDrained +
         "µm/y"
     return {
+        valueMin,
+        valueMax,
         Galvanised,
     }
 }

@@ -1,17 +1,24 @@
-import { Dispatch, HTMLProps, SetStateAction } from "react"
+import React, { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
-import { Zone, Sample, User, Project, Client, Phone } from "@prisma/client"
-import { ActionState, Entry, Order } from "./types"
-import { ButtonProps, buttonVariants } from "@halvaradop/ui-button"
+import {
+    Project,
+    StakeHolder,
+    ContactPerson,
+    PhoneContactPerson,
+    Field,
+    PositionSoilData,
+    Address,
+    PositionData,
+} from "@prisma/client"
+import { ActionState, Entry, Order, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
-export interface HeaderMenuProps {
+export interface HeaderMenuProps extends ClassNameProps {
     onCloseMenu: () => void
 }
 
-export interface ProductProps {
-    className?: string
+export interface ProductProps extends ClassNameProps {
     id: string
     title: string
     subtitle: string
@@ -21,48 +28,54 @@ export interface ProductProps {
     isRight?: boolean
 }
 
-export interface ProjectProps {
-    className?: string
+export interface ProjectProps extends ClassNameProps {
     title: string
     city: string
     year: string
 }
 
-export interface FilterByProps {
-    className?: string
+export interface FilterByProps extends ClassNameProps {
     title: string
     options: Entry[]
 }
 
-export interface SampleListProps {
-    samples: (Sample & { zone?: { name: string } } & { user?: Pick<User, "firstName" | "lastName"> })[]
+export interface PositionSoilDatasProps {
+    positionSoilDatas: (PositionSoilData & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
+    })[]
 }
 
 export interface FilterProps {
     filters: FilterByProps[]
 }
 
-export interface TableClientsProps {
-    clients: (Omit<Client, "state"> & { phone?: Pick<Phone, "number">[] } & { user?: Pick<User, "firstName" | "lastName"> })[]
+export interface TableStakeHoldersProps {
+    stakeHolders: (Omit<StakeHolder, "state"> & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
+        phone?: Pick<PhoneContactPerson, "number">[]
+    })[]
 }
 
-export interface TableProjectOnUserProps {
-    projectsOnUsers: (User & Project)[]
+export interface TableProjectOnContactPersonProps {
+    projectsOnUsers: (ContactPerson & Project)[]
 }
 
-export interface TableUsersProps {
+export interface TableContactPeopleProps {
     /**
      * TODO: fix
      */
-    users: (Omit<User, "state"> & { phones?: Pick<Phone, "number">[] } & { role?: { roleName: string } })[]
+    contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[]; role?: { name: string } })[]
 }
 
-export interface TablePlantsProps {
-    plants: Project[]
+export interface TableProjectsProps {
+    projects: (Project & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
+        stakeholder?: Pick<StakeHolder, "name">
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
 }
 
-export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> {
-    className?: string
+export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> extends ClassNameProps {
     classNameOption?: string
     name: string
     id: K
@@ -70,15 +83,21 @@ export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof
     values: T[]
 }
 
-export interface SelectProps {
-    className?: string
+export interface SelectProps extends ClassNameProps {
     classNameOption?: string
     name: string
     values: Entry[]
 }
 
-export interface TableZonesProps {
-    zones: (Zone & { project?: Pick<Project, "name"> })[]
+export interface TableFieldsProps {
+    fields: (Field & {
+        project?: Pick<Project, "designation" | "idProject">
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+    })[]
+}
+
+export interface TablePositionDatasProps {
+    postionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
 }
 
 export interface InputListProps<T> {
@@ -90,16 +109,10 @@ export interface InputListProps<T> {
     }[]
 }
 
-export interface MenuRoutesProps {
-    className?: string
+export interface MenuRoutesProps extends ClassNameProps {
     classTitle?: string
     classOption?: string
     session: Session | null
-}
-
-export type SubmitProps = ButtonProps<typeof buttonVariants> & {
-    children: React.ReactNode
-    pending?: string
 }
 
 export type FormProps = FormVariantProps<typeof formVariants> & {
@@ -107,5 +120,49 @@ export type FormProps = FormVariantProps<typeof formVariants> & {
 }
 
 export interface MyDocumentProps {
-    samples: Order
+    positionSoilData: Order
+}
+
+export interface compiledSampleProps {
+    data: {
+        valueb0Max: number
+        valueb1Max: number
+        valueb0Min: number
+        valueb1Min: number
+        valueMaxSteel: number
+        valueMinSteel: number
+        valueMaxGalvanising: number
+        valueMinGalvanising: number
+    }
+}
+export interface CardDashboardProps {
+    src: string | StaticImageData
+    alt?: string
+    title: string
+    count: number
+    isHover?: boolean
+}
+
+export interface RenderByRoleProps {
+    role: Roles
+    match: Roles[]
+    children?: React.ReactNode
+}
+
+export interface ProjectOnPickProps {
+    contactPersonId: string
+    idProject: string
+    designation: string
+}
+
+export interface ClassNameProps {
+    className?: string
+}
+
+export interface ModalWrapperProps extends ClassNameProps {
+    children: React.ReactNode
+    innerClassName?: string
+    button?: React.ReactNode
+    close?: React.ReactNode
+    mandatory?: boolean
 }
