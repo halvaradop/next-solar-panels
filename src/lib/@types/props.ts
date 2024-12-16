@@ -9,8 +9,9 @@ import {
     PositionSoilData,
     Address,
     PositionData,
+    CookieToken,
 } from "@prisma/client"
-import { ActionState, Entry, Order, Roles } from "./types"
+import { ActionState, Entry, Order, Params, ResponseAPI, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
@@ -97,7 +98,7 @@ export interface TableFieldsProps {
 }
 
 export interface TablePositionDatasProps {
-    postionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
+    positionDatas: (PositionData & { field?: Pick<Field, "designation"> })[]
 }
 
 export interface InputListProps<T> {
@@ -110,8 +111,8 @@ export interface InputListProps<T> {
 }
 
 export interface MenuRoutesProps extends ClassNameProps {
-    classTitle?: string
-    classOption?: string
+    classNameTitle?: string
+    classNameOption?: string
     session: Session | null
 }
 
@@ -136,11 +137,9 @@ export interface compiledSampleProps {
     }
 }
 export interface CardDashboardProps {
-    src: string | StaticImageData
-    alt?: string
     title: string
     count: number
-    isHover?: boolean
+    href: string
 }
 
 export interface RenderByRoleProps {
@@ -163,6 +162,12 @@ export interface ModalWrapperProps extends ClassNameProps {
     children: React.ReactNode
     innerClassName?: string
     button?: React.ReactNode
+    buttonClassName?: string
     close?: React.ReactNode
     mandatory?: boolean
+    error?: boolean
+}
+
+export interface ErrorPickProjectProps extends Params<""> {
+    ok: boolean
 }

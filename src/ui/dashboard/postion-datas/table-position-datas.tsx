@@ -3,16 +3,16 @@ import { useSearchParams } from "next/navigation"
 import { TablePositionDatasProps } from "@/lib/@types/props"
 import Link from "next/link"
 
-export const TablePositionDatas = ({ postionDatas }: TablePositionDatasProps) => {
+export const TablePositionDatas = ({ positionDatas }: TablePositionDatasProps) => {
     const params = useSearchParams()
 
-    const filteredFields = postionDatas.filter(({ idPositionData }) => {
+    const filteredFields = positionDatas.filter(({ idPositionData }) => {
         const field = params.get("field")
         return field ? field === idPositionData.toString() : true
     })
 
     return (
-        <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
+        <table className="w-full text-neutral-600 table-fixed shadow border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
                 <tr>
                     <th>Field Name</th>

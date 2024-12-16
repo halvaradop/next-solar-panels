@@ -70,6 +70,8 @@ export const getPositionResistivitiesByContactPerson = async <T extends unknown[
  * @returns {Promise<T[]>} - A list of projects related to the user
  */
 export const getProjectsByContactPersonId = async <T extends unknown[] = Project[]>(contactPersonId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${contactPersonId}/projects`)
+    const { data } = await getFetch<T>(`contact-people/${contactPersonId}/projects`, {
+        cache: "no-cache",
+    })
     return data
 }

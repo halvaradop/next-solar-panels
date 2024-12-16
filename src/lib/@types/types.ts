@@ -68,7 +68,7 @@ export type Roles = "client-admin" | "client-user" | "admin" | "project-manager"
 
 export interface CookieToken {
     idProject: string
-    idStakeholder: string
+    idStakeHolder: string
 }
 
 export type PositionSoildDataById = PositionSoilData & {

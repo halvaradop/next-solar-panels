@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { PositionSoilData } from "@prisma/client"
 import { Params, ResponseAPI } from "@/lib/@types/types"
-import { sampleCalcs } from "@/lib/utils"
+import { sampleCalcs } from "@/lib/math"
 
 /**
  * Handle the GET request to retrieve all position soil data related to a specific contact person

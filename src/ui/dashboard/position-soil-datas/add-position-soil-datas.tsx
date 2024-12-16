@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { redirect } from "next/navigation"
 import { Field } from "@prisma/client"
 import { addPositionSoilDatasPageAction } from "@/lib/actions"
 import { AddPositionSoilDatasPageActionState, PositionSoilDatasWithoutIds } from "@/lib/@types/types"
@@ -9,7 +8,7 @@ import { Form, Input, Label, Select, Submit } from "@/ui/common/form-elements"
 import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import dataJson from "@/lib/data.json"
-import { getCookieToken } from "@/lib/services/cookies"
+import { getSessionToken } from "@/lib/utils"
 
 const { PositionSoilDataInputs } = dataJson
 
@@ -26,11 +25,8 @@ export const AddPositionSoilDatas = ({ className }: ClassNameProps) => {
 
     useEffect(() => {
         const fetchFields = async () => {
-            const { ok, data } = await getCookieToken()
-            if (!ok) {
-                return redirect("/dashboard?error=You need to select a stakeholder first")
-            }
-            const response = await getFieldsByStakeHolderId(data.idStakeholder)
+            const { idStakeHolder } = await getSessionToken()
+            const response = await getFieldsByStakeHolderId(idStakeHolder)
             setfields(response)
         }
         fetchFields()

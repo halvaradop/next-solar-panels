@@ -6,7 +6,6 @@ import {
 import { CardDashboard } from "./card"
 import { Roles } from "@/lib/@types/types"
 import { isFalsy } from "@halvaradop/ts-utility-types/validate"
-import positionMeasurementIcon from "@/public/samples.svg"
 
 export const PositionMeasurements = async ({ role, id }: { role?: Roles; id?: string }) => {
     const measurements =
@@ -15,12 +14,5 @@ export const PositionMeasurements = async ({ role, id }: { role?: Roles; id?: st
             : role === "client-admin"
               ? await getPositionMeasurementsByStakeholderId(id!)
               : await getPositionMeasurementsByContactPerson(id!)
-    return (
-        <CardDashboard
-            src={positionMeasurementIcon}
-            alt="position measurements"
-            title="Position measurements."
-            count={measurements.length}
-        />
-    )
+    return <CardDashboard href="/dashboard/position-measurements" title="Position measurements." count={measurements.length} />
 }

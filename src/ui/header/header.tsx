@@ -2,10 +2,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { HeaderMenu } from "./header-menu"
-import logoIcon from "@/public/logoAche.png"
 import { AnimatePresence } from "framer-motion"
+import logoIcon from "@/public/logoAche.png"
 
 export const Header = () => {
     const pathname = usePathname()
@@ -39,7 +39,7 @@ export const Header = () => {
                 <AnimatePresence mode="wait">
                     {isOpenMenu && <HeaderMenu className="base:hidden" onCloseMenu={handleToggleMenu} />}
                 </AnimatePresence>
-                <HeaderMenu className="hidden base:block" onCloseMenu={() => {}} />
+                <HeaderMenu className="hidden base:block" onCloseMenu={handleToggleMenu} />
             </nav>
         </header>
     )

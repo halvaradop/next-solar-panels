@@ -10,10 +10,12 @@ import { innerDialogVariants, Modal } from "@halvaradop/ui-dialog"
 export const ModalWrapperRedirect = ({
     className,
     innerClassName,
+    buttonClassName,
     children,
     button,
     close,
     mandatory = false,
+    error,
 }: ModalWrapperProps) => {
     const router = useRouter()
     const pathname = usePathname()
@@ -31,7 +33,7 @@ export const ModalWrapperRedirect = ({
     }
 
     useEffect(() => {
-        if (params.get("error") == "You need to select a stakeholder first") {
+        if (params.get("error") == "You need to select a stakeholder first" || error) {
             setIsMandatory(true)
             handleToggleModal(true)
         }
@@ -46,7 +48,9 @@ export const ModalWrapperRedirect = ({
 
     return (
         <>
-            <Button onClick={() => handleToggleModal(true)}>{button}</Button>
+            <Button className={buttonClassName} onClick={() => handleToggleModal(true)}>
+                {button}
+            </Button>
             <Modal className={className} ref={ref}>
                 <div
                     className={innerDialogVariants({

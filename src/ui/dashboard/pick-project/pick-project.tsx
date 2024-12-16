@@ -24,7 +24,7 @@ export const PickProjectModal = async ({ searchParams }: Params<"">) => {
                 </p>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <SessionProvider>
+                <SessionProvider session={session}>
                     {projects.map(({ idProject, designation }) => (
                         <Project
                             key={idProject}

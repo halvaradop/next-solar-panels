@@ -5,7 +5,7 @@ import screenshotRepo from "@/public/screenshot-repo.png"
 
 export const Links = () => {
     return (
-        <div className="mt-4 mb-2 grid grid-cols-2 gap-4">
+        <div className="mt-4 mb-2 grid gap-4 sm:grid-cols-2">
             <figure className="group relative rounded-md overflow-hidden">
                 <Link
                     className="flex items-center justify-center flex-col gap-y-2 bg-black"
