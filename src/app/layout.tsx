@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
 import { LayoutProps } from "@/lib/@types/types"
 import { Footer } from "@/ui/footer"
-import { Header } from "@/ui/header/header"
+import { HeaderWrapper } from "@/ui/header/header-wrapper"
 import "@/ui/globals.css"
 
 const poppins = Poppins({
@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: LayoutProps) {
             <body
                 className={`${poppins.className} antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
-                <Header />
+                <HeaderWrapper />
                 {children}
                 <Footer />
             </body>

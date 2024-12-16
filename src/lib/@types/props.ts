@@ -111,8 +111,8 @@ export interface InputListProps<T> {
 }
 
 export interface MenuRoutesProps extends ClassNameProps {
-    classTitle?: string
-    classOption?: string
+    classNameTitle?: string
+    classNameOption?: string
     session: Session | null
 }
 
@@ -137,11 +137,9 @@ export interface compiledSampleProps {
     }
 }
 export interface CardDashboardProps {
-    src: string | StaticImageData
-    alt?: string
     title: string
     count: number
-    isHover?: boolean
+    href: string
 }
 
 export interface RenderByRoleProps {
@@ -164,6 +162,7 @@ export interface ModalWrapperProps extends ClassNameProps {
     children: React.ReactNode
     innerClassName?: string
     button?: React.ReactNode
+    buttonClassName?: string
     close?: React.ReactNode
     mandatory?: boolean
     error?: boolean

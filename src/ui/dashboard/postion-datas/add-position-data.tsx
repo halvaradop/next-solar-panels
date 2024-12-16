@@ -7,8 +7,7 @@ import { getFieldsByStakeHolderId } from "@/lib/services"
 import { Form, Input, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
 import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
-import { getCookieToken } from "@/lib/services/cookies"
-import { redirect } from "next/navigation"
+import { getSessionToken } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
 const { positionDatas } = dataJson
@@ -31,13 +30,10 @@ export const AddPositionData = ({ className }: ClassNameProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const { ok, data } = await getCookieToken()
-            if (!ok) {
-                return redirect("/dashboard?error=You need to select a stakeholder first")
-            }
-            const response = await getFieldsByStakeHolderId(data.idStakeHolder)
-            setIdStakeHolder(data.idStakeHolder)
+            const { idStakeHolder } = await getSessionToken()
+            const response = await getFieldsByStakeHolderId(idStakeHolder)
             setFields(response)
+            setIdStakeHolder(idStakeHolder)
         }
         fetchContactPerson()
     }, [])

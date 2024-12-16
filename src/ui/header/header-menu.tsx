@@ -18,7 +18,7 @@ export const HeaderMenu = ({ className, onCloseMenu }: HeaderMenuProps) => {
     return (
         <motion.aside
             className={merge(
-                "[--nav-menu:100%] w-2/3 base:w-min base:min-w-max base:min-h-fit base:max-w-none base:relative base:overflow-hidden base:bg-transparent base:[--nav-menu:0%]",
+                "[--nav-menu:100%] w-2/3 base:w-min base:min-w-max base:min-h-fit base:max-w-none base:relative base:overflow-hidden base:border-l-0 base:bg-transparent base:[--nav-menu:0%]",
                 className
             )}
             variants={headerMenuVariants}
@@ -26,46 +26,41 @@ export const HeaderMenu = ({ className, onCloseMenu }: HeaderMenuProps) => {
             animate="visible"
             exit="exit"
         >
-            <div className="min-h-dvh p-10 flex flex-col justify-evenly base:min-h-fit base:p-0" id="aside-menu">
-                <motion.p
-                    className="pt-12 pb-1 text-2xl border-b border-gray [--nav-li:100%] base:hidden base:[--nav-li:0%]"
-                    variants={headerMenuListVariants}
-                >
-                    Navigation
-                </motion.p>
+            <div className="min-h-dvh py-10 px-5 flex flex-col justify-evenly base:min-h-fit base:p-0" id="aside-menu">
                 <ul className="mt-12 mb-16 font-medium flex items-start flex-col gap-y-6 base:m-0 base:items-center base:flex-row base:gap-x-8 base:uppercase">
                     {isLoggin && (
                         <>
-                            <Link className="text-xl base:hidden" href="/dashboard">
-                                Dashboard
-                            </Link>
-                            <MenuRoutes className="ml-2 space-y-1 base:hidden" session={session.data} />
+                            <MenuRoutes
+                                className="font-normal base:hidden"
+                                classNameOption="text-lg text-black"
+                                session={session.data}
+                            />
                             <Avatar />
                         </>
                     )}
                     <motion.li
-                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        className="min-w-fit home-link my-2 text-black text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
                         variants={headerMenuListVariants}
                         onClick={onCloseMenu}
                     >
                         <Link href="/">Home</Link>
                     </motion.li>
                     <motion.li
-                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        className="min-w-fit home-link my-2 text-black text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
                         variants={headerMenuListVariants}
                         onClick={onCloseMenu}
                     >
                         <Link href="/#corrosion">Corrosion</Link>
                     </motion.li>
                     <motion.li
-                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        className="min-w-fit home-link my-2 text-black text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
                         variants={headerMenuListVariants}
                         onClick={onCloseMenu}
                     >
                         <Link href="/#about-us">About us</Link>
                     </motion.li>
                     <motion.li
-                        className="min-w-fit home-link my-2 text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
+                        className="min-w-fit home-link my-2 text-black text-3xl [--nav-li:100%] base:text-lg base:[--nav-li:0%]"
                         variants={headerMenuListVariants}
                         onClick={onCloseMenu}
                     >

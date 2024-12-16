@@ -8,9 +8,8 @@ import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
 import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
-import { getCookieToken } from "@/lib/services/cookies"
 import dataJson from "@/lib/data.json"
-import { redirect } from "next/navigation"
+import { getSessionToken } from "@/lib/utils"
 
 const { stakeHolderInputs } = dataJson
 
@@ -31,11 +30,8 @@ export const AddStakeHolder = ({ className }: ClassNameProps) => {
 
     useEffect(() => {
         const fetchContactPerson = async () => {
-            const { ok, data } = await getCookieToken()
-            if (!ok) {
-                return redirect("/dashboard?error=You need to select a stakeholder first")
-            }
-            const response = await getContactPersonByStakeHolderId(data.idStakeHolder)
+            const { idStakeHolder } = await getSessionToken()
+            const response = await getContactPersonByStakeHolderId(idStakeHolder)
             setContacPerson(response)
         }
         fetchContactPerson()

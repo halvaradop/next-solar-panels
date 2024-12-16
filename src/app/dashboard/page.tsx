@@ -35,15 +35,15 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
     const { idStakeHolder } = data
 
     return (
-        <section className="mt-4 self-start">
-            <h1 className="text-2xl font-bold text-center uppercase">Dashboard</h1>
-            <ModalWrapperRedirect button="Pick the project">
-                <PickProjectModal params={params} searchParams={searchParams} />
-            </ModalWrapperRedirect>
+        <section className="mt-4 mb-10 self-start">
+            <h1 className="text-3xl font-medium text-center">Overview</h1>
             <RenderByRole match={["admin"]} role={role}>
                 <Links />
             </RenderByRole>
-            <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(100px,200px))] gap-4">
+            <ModalWrapperRedirect buttonClassName="mt-10" button="Pick the project">
+                <PickProjectModal params={params} searchParams={searchParams} />
+            </ModalWrapperRedirect>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                 <RenderByRole match={["admin"]} role={role}>
                     <Stakeholders />
                     <Projects />

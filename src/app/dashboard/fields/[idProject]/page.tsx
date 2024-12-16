@@ -4,7 +4,7 @@ import { TableFields } from "@/ui/dashboard/fields/table"
 import { getFieldsByProjectsId, getPositionSoilDatasByContactPerson } from "@/lib/services"
 import { Params } from "@/lib/@types/types"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
-import { compiledSample } from "@/lib/utils"
+import { compiledSample } from "@/lib/math"
 import { TableCompiledSamples } from "@/ui/dashboard/samples/table-compiled"
 import { auth } from "@/lib/auth"
 

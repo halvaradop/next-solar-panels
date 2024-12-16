@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { HeaderMenu } from "./header-menu"
 import { AnimatePresence } from "framer-motion"
-import { SessionProvider } from "next-auth/react"
 import logoIcon from "@/public/logoAche.png"
 
 export const Header = () => {
@@ -37,12 +36,10 @@ export const Header = () => {
                     <span className="w-8 h-0.5 block rounded bg-white" />
                     <span className="w-8 h-0.5 block rounded bg-white" />
                 </div>
-                <SessionProvider>
-                    <AnimatePresence mode="wait">
-                        {isOpenMenu && <HeaderMenu className="base:hidden" onCloseMenu={handleToggleMenu} />}
-                    </AnimatePresence>
-                    <HeaderMenu className="hidden base:block" onCloseMenu={handleToggleMenu} />
-                </SessionProvider>
+                <AnimatePresence mode="wait">
+                    {isOpenMenu && <HeaderMenu className="base:hidden" onCloseMenu={handleToggleMenu} />}
+                </AnimatePresence>
+                <HeaderMenu className="hidden base:block" onCloseMenu={handleToggleMenu} />
             </nav>
         </header>
     )

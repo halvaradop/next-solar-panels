@@ -4,7 +4,11 @@
 
 @layer base {
     header nav aside {
-        @apply w-1/2 min-h-dvh min-w-72 max-w-md absolute inset-y-0 right-0 z-10 overflow-y-auto overflow-x-hidden bg-black scroll:w-2 track:mt-20 track:mb-4 thumb:rounded thumb:bg-white;
+        @apply w-1/2 min-h-dvh min-w-72 max-w-md absolute inset-y-0 right-0 z-10 overflow-y-auto overflow-x-hidden border-l bg-slate-100 scroll:w-2 track:mt-20 track:mb-4 thumb:rounded thumb:bg-white;
+    }
+
+    header:is([data-pathname="/"]) #menu-icon span {
+        @apply bg-black;
     }
 
     header:not([data-pathname="/"]) {
@@ -25,12 +29,6 @@
         &:not([data-pathname*="/dashboard"]) {
             aside #aside-menu ul li.home-link {
                 @apply block;
-            }
-        }
-
-        &:is([data-open="true"]) {
-            #menu-icon span {
-                @apply bg-white;
             }
         }
     }
@@ -54,13 +52,7 @@
 
     @media (max-width: 900px) {
         body:has(header[data-open="true"]) {
-            @apply scroll:bg-black thumb:bg-white;
-        }
-
-        header:not([data-pathname="/"]):is([data-open="true"]) {
-            aside {
-                @apply text-white;
-            }
+            @apply scroll:bg-slate-100;
         }
     }
 
@@ -69,20 +61,4 @@
             filter: blur(2px);
         }
     }
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("/fonts/Roboto-Regular.ttf");
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("/fonts/Roboto-Bold.ttf");
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "Arial";
-    src: url("/fonts/Arial.ttf");
 }

@@ -10,6 +10,7 @@ import { innerDialogVariants, Modal } from "@halvaradop/ui-dialog"
 export const ModalWrapperRedirect = ({
     className,
     innerClassName,
+    buttonClassName,
     children,
     button,
     close,
@@ -47,7 +48,9 @@ export const ModalWrapperRedirect = ({
 
     return (
         <>
-            <Button onClick={() => handleToggleModal(true)}>{button}</Button>
+            <Button className={buttonClassName} onClick={() => handleToggleModal(true)}>
+                {button}
+            </Button>
             <Modal className={className} ref={ref}>
                 <div
                     className={innerDialogVariants({
