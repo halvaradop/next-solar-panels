@@ -15,7 +15,7 @@ export const Filter = ({ filters }: FilterProps) => {
     }
 
     return (
-        <div className="max-w-full w-fit h-14 flex items-center border border-gray-1000 rounded-lg bg-white divide-x">
+        <div className="max-w-full w-fit h-14 flex items-center shadow rounded-lg bg-white divide-x">
             <figure className="h-full px-3 flex items-center justify-center">
                 <Image src={filterIcon} alt="Filter icon" priority />
             </figure>

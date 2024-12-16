@@ -2,7 +2,7 @@ import { TableContactPeopleProps } from "@/lib/@types/props"
 
 export const TableContactPeople = async ({ contactPeople }: TableContactPeopleProps) => {
     return (
-        <table className="w-full text-neutral-600 table-fixed border border-gray-1000 border-separate border-spacing-0 rounded-lg bg-white">
+        <table className="w-full text-neutral-600 table-fixed shadow border-separate border-spacing-0 rounded-lg bg-white">
             <thead>
                 <tr>
                     <th>Name</th>

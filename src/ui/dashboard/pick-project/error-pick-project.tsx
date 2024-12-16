@@ -1,4 +1,4 @@
-import { ModalWrapperRedirect } from "./modal"
+import { ModalWrapperRedirect } from "./modal-redirect"
 import { PickProjectModal } from "./pick-project"
 import { ErrorPickProjectProps } from "@/lib/@types/props"
 

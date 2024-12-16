@@ -14,7 +14,7 @@ import {
 } from "@/ui/dashboard/index"
 import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
 import { Params } from "@/lib/@types/types"
-import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal"
+import { ModalWrapperRedirect } from "@/ui/dashboard/pick-project/modal-redirect"
 import { getCookieToken } from "@/lib/services/cookies"
 import { ErrorPickProject } from "@/ui/dashboard/pick-project/error-pick-project"
 
@@ -40,10 +40,13 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
             <RenderByRole match={["admin"]} role={role}>
                 <Links />
             </RenderByRole>
-            <ModalWrapperRedirect buttonClassName="mt-10" button="Pick the project">
+            <ModalWrapperRedirect
+                buttonClassName="mt-10 border-sky-500 bg-sky-500 focus-visible:ring-sky-500"
+                button="Pick the project"
+            >
                 <PickProjectModal params={params} searchParams={searchParams} />
             </ModalWrapperRedirect>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <RenderByRole match={["admin"]} role={role}>
                     <Stakeholders />
                     <Projects />

@@ -47,11 +47,14 @@ export const MenuRoutes = ({ className, classNameTitle, classNameOption, session
         <motion.ul className={merge("w-full", className)} variants={headerMenuListVariants}>
             <li
                 className={merge(
-                    "w-full p-2 font-medium border border-transparent rounded hover:text-white hover:border-sky-500 hover:cursor-pointer hover:bg-sky-500",
+                    "w-full p-2 font-medium border border-transparent rounded hocus:text-white hocus:border-sky-500 hocus:cursor-pointer hocus:bg-sky-500 focus-visible:outline-none",
                     classNameTitle
                 )}
+                tabIndex={0}
             >
-                <Link href="/dashboard">Overview</Link>
+                <Link href="/dashboard" tabIndex={-1}>
+                    Overview
+                </Link>
             </li>
             {links.map(({ title, link }, key) => {
                 const pathname = link.replace(/^\/dashboard\/?/, "")
@@ -59,12 +62,15 @@ export const MenuRoutes = ({ className, classNameTitle, classNameOption, session
                 return (
                     <li
                         className={merge(
-                            "w-full p-2 border border-transparent rounded hover:text-white hover:border-sky-500 hover:cursor-pointer hover:bg-sky-500",
+                            "w-full p-2 border border-transparent rounded hocus:text-white hocus:border-sky-500 hocus:cursor-pointer hocus:bg-sky-500 focus-visible:outline-none",
                             classNameOption
                         )}
+                        tabIndex={0}
                         key={key}
                     >
-                        <Link href={link}>{title}</Link>
+                        <Link href={link} tabIndex={-1}>
+                            {title}
+                        </Link>
                     </li>
                 )
             })}

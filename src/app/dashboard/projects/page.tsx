@@ -1,9 +1,9 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
-import { auth } from "@/lib/auth"
-import { getProjectsByStakeHolderId, getContactPersonById } from "@/lib/services"
+import { getProjectsByStakeHolderId } from "@/lib/services"
 import { TableProjects } from "@/ui/dashboard/projects/table"
 import { AddNewProject } from "@/ui/dashboard/projects/add-new-project"
+import { getSessionToken } from "@/lib/utils"
 
 export const metadata: Metadata = {
     title: "Projects",
@@ -11,19 +11,12 @@ export const metadata: Metadata = {
 }
 
 const getInformation = async () => {
-    const session = await auth()
-    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
-    const {
-        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-    } = await getContactPersonById(userId)
-    const [projects] = await Promise.all([getProjectsByStakeHolderId(idStakeHolder)])
-
-    return { projects }
+    const { idStakeHolder } = await getSessionToken()
+    return await getProjectsByStakeHolderId(idStakeHolder)
 }
 
 const DashboardPlantsPage = async () => {
-    const { projects } = await getInformation()
+    const projects = await getInformation()
     return (
         <section className="min-h-main py-4 space-y-4">
             <AddNewProject />
