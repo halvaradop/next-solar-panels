@@ -1,14 +1,21 @@
 "use client"
+import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { TableFieldsProps } from "@/lib/@types/props"
-import Link from "next/link"
 
 export const TableFields = ({ fields }: TableFieldsProps) => {
     const params = useSearchParams()
 
-    const filteredFields = fields.filter(({ idField }) => {
-        const project = params.get("plant")
-        return project ? project === idField.toString() : true
+    const filteredFields = fields.filter(({ project, address }) => {
+        const projectParam = params.get("project")
+        const cityParam = params.get("city")
+        const countryParam = params.get("country")
+
+        const matchesProject = projectParam ? project?.designation === projectParam : true
+        const matchesCity = cityParam ? address?.city === cityParam : true
+        const matchesCountry = countryParam ? address?.country === countryParam : true
+
+        return matchesProject && matchesCity && matchesCountry
     })
 
     return (
@@ -23,12 +30,11 @@ export const TableFields = ({ fields }: TableFieldsProps) => {
                 </tr>
             </thead>
             <tbody>
-                {filteredFields.map(({ idField, designation, idAddress, project, address }) => (
+                {filteredFields.map(({ idField, designation, project, address }) => (
                     <tr className="text-sm" key={idField}>
                         <td className="xs:table-cell">
-                            {" "}
                             <Link href={`/dashboard/position-datas/${idField}`} className="text-blue-600 hover:underline">
-                                {designation}{" "}
+                                {designation}
                             </Link>
                         </td>
                         <td>

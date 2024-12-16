@@ -1,9 +1,9 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
-import { auth } from "@/lib/auth"
-import { getContactPersonById, getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { TableContactPeople } from "@/ui/dashboard/contact-people/table"
 import { AddNewContactPerson } from "@/ui/dashboard/contact-people/add-new-contact-person"
+import { getSessionToken } from "@/lib/utils"
 
 export const metadata: Metadata = {
     title: "List of users",
@@ -11,12 +11,7 @@ export const metadata: Metadata = {
 }
 
 const getInformation = async () => {
-    const session = await auth()
-    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-
-    const {
-        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-    } = await getContactPersonById(userId)
+    const { idStakeHolder } = await getSessionToken()
     const contactPeople = await getContactPersonByStakeHolderId(idStakeHolder)
     return { contactPeople }
 }
