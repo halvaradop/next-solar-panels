@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client"
+import { ContactPerson, Role } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
 
 /**
@@ -8,5 +8,10 @@ import { getFetch } from "@/lib/utils"
  */
 export const getRoles = async <T extends unknown[] = Role[]>(): Promise<T> => {
     const { data } = await getFetch<T>("roles")
+    return data
+}
+
+export const getContecPersonByRol = async <T extends unknown[] = ContactPerson[]>(idRole: string): Promise<T> => {
+    const { data } = await getFetch<T>(`roles/${idRole}`)
     return data
 }

@@ -176,3 +176,10 @@ export interface ModalWrapperProps extends ClassNameProps {
 export interface ErrorPickProjectProps extends Params<""> {
     ok: boolean
 }
+export interface CardProps {
+    project: Project & {
+        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
+        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
+        field?: Pick<Field, "idField">[]
+    }
+}

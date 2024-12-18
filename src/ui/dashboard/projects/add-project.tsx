@@ -3,7 +3,7 @@ import { useEffect, useState, useActionState } from "react"
 import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPersonByStakeHolderId, getContecPersonByRol } from "@/lib/services"
 import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
 import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
@@ -14,6 +14,7 @@ const { projectInputs, addressInputs } = dataJson
 
 export const AddProject = ({ className }: ClassNameProps) => {
     const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
+    const [contactPersonsRol, setContactPersonRol] = useState<ContactPerson[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
@@ -25,6 +26,8 @@ export const AddProject = ({ className }: ClassNameProps) => {
         const fetchProjects = async () => {
             const { idStakeHolder } = await getSessionToken()
             const response = await getContactPersonByStakeHolderId(idStakeHolder)
+            const responseRol = await getContecPersonByRol("3")
+            setContactPersonRol(responseRol)
             setContactPerson(response)
             setIdStakeHolder(idStakeHolder)
         }
@@ -35,8 +38,8 @@ export const AddProject = ({ className }: ClassNameProps) => {
         <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={projectInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
-                Contact Person
-                <SelectGeneric values={contactPersons} id="lastName" value="idContactPerson" name="contactPerson" />
+                Project Manager
+                <SelectGeneric values={contactPersonsRol} id="lastName" value="idContactPerson" name="contactPerson" />
             </Label>
             <InputList inputs={addressInputs} state={state} />
             <input type="hidden" name="idStakeholder" defaultValue={idStakeHolder} />

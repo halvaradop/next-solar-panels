@@ -4,6 +4,7 @@ import { getProjectsByStakeHolderId } from "@/lib/services"
 import { TableProjects } from "@/ui/dashboard/projects/table"
 import { AddNewProject } from "@/ui/dashboard/projects/add-new-project"
 import { getSessionToken } from "@/lib/utils"
+import { CardInformation } from "@/ui/dashboard/Card/cards"
 
 export const metadata: Metadata = {
     title: "Projects",
