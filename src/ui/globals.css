@@ -54,6 +54,10 @@
         @apply p-3 text-start truncate;
     }
 
+    tbody > tr:first-child > td {
+        @apply border-t;
+    }
+
     @media (max-width: 900px) {
         body:has(header[data-open="true"]) {
             @apply scroll:bg-slate-100;

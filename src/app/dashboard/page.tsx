@@ -8,8 +8,6 @@ import {
     PositionSoilDatas,
     RenderByRole,
     Stakeholders,
-    PositionMeasurements,
-    PositionResistivities,
     Links,
 } from "@/ui/dashboard/index"
 import { PickProjectModal } from "@/ui/dashboard/pick-project/pick-project"
@@ -54,8 +52,8 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
                     <Fields />
                     <PositionData />
                     <PositionSoilDatas />
-                    <PositionMeasurements />
-                    <PositionResistivities />
+                    {/* <PositionMeasurements />
+                    <PositionResistivities /> */}
                 </RenderByRole>
                 <RenderByRole match={["client-admin"]} role={role}>
                     <Projects id={idStakeHolder} />
@@ -63,14 +61,14 @@ const DashboardPage = async ({ params, searchParams }: Params<"">) => {
                     <Fields stakeholderId={idStakeHolder} />
                     <PositionData id={idStakeHolder} />
                     <PositionSoilDatas id={idStakeHolder} role={role} />
-                    <PositionMeasurements id={idStakeHolder} role={role} />
-                    <PositionResistivities id={idStakeHolder} role={role} />
+                    {/* <PositionMeasurements id={idStakeHolder} role={role} />
+                    <PositionResistivities id={idStakeHolder} role={role} /> */}
                 </RenderByRole>
                 <RenderByRole match={["client-user"]} role={role}>
                     <Projects id={id} role={role} />
                     <PositionSoilDatas id={id} role={role} />
-                    <PositionMeasurements id={id} role={role} />
-                    <PositionResistivities id={id} role={role} />
+                    {/* <PositionMeasurements id={id} role={role} />
+                    <PositionResistivities id={id} role={role} /> */}
                 </RenderByRole>
             </div>
         </section>

@@ -1,11 +1,11 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
-import { auth } from "@/lib/auth"
 import { TableFields } from "@/ui/dashboard/fields/table"
-import { getContactPersonById, getProjectsByStakeHolderId, getFieldsByStakeHolderId } from "@/lib/services"
+import { getProjectsByStakeHolderId, getFieldsByStakeHolderId, getAddressById } from "@/lib/services"
 import { Filter } from "@/ui/common/filter"
-import { SessionProvider } from "next-auth/react"
 import { AddNewField } from "@/ui/dashboard/fields/add-new-field"
+import { getSessionToken } from "@/lib/utils"
+import { Entry } from "@/lib/@types/types"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -13,31 +13,40 @@ export const metadata: Metadata = {
 }
 
 const getInformation = async () => {
-    const session = await auth()
-    const userId = session?.user?.id ? session.user.id : Number.MAX_SAFE_INTEGER.toString()
-    const {
-        stakeHolder: [{ idStakeHolder } = { idStakeHolder: "" }],
-    } = await getContactPersonById(userId)
-    const [fields, projects] = await Promise.all([
+    const { idStakeHolder } = await getSessionToken()
+    const [fields, projects_] = await Promise.all([
         getFieldsByStakeHolderId(idStakeHolder),
         getProjectsByStakeHolderId(idStakeHolder),
     ])
-    return { fields, projects }
+    /**
+     * TODO: update this logic with a simple map function due to the fiel has a city and
+     * country from the address
+     */
+    const addresses = await Promise.all(fields.map(({ idAddress }) => getAddressById(idAddress)))
+    const cities = addresses.filter(({ city }) => city).map<Entry>(({ city }) => ({ key: city!, value: city! }))
+    const countries = addresses.filter(({ country }) => country).map<Entry>(({ country }) => ({ key: country!, value: country! }))
+    const projects = projects_.map<Entry>(({ idProject, designation }) => ({ key: designation, value: idProject.toString() }))
+    return { fields, projects, cities, countries }
 }
 
 const DashboardFieldsPage = async () => {
-    const { fields, projects } = await getInformation()
+    const { fields, projects, cities, countries } = await getInformation()
 
     return (
         <section className="min-h-main py-4 space-y-4">
             <Filter
                 filters={[
                     {
-                        title: "Projects",
-                        options: projects.map(({ idProject, designation }) => ({
-                            key: designation,
-                            value: idProject.toString(),
-                        })),
+                        title: "project",
+                        options: projects,
+                    },
+                    {
+                        title: "city",
+                        options: cities,
+                    },
+                    {
+                        title: "country",
+                        options: countries,
                     },
                 ]}
             />

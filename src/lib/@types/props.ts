@@ -38,6 +38,10 @@ export interface ProjectProps extends ClassNameProps {
 export interface FilterByProps extends ClassNameProps {
     title: string
     options: Entry[]
+    index: number
+    indexOpen: number
+    onUpdateIndex: (index: number) => void
+    onOption: (title: string, value: string) => void
 }
 
 export interface PositionSoilDatasProps {
@@ -47,7 +51,7 @@ export interface PositionSoilDatasProps {
 }
 
 export interface FilterProps {
-    filters: FilterByProps[]
+    filters: Pick<FilterByProps, "title" | "options" | "className">[]
 }
 
 export interface TableStakeHoldersProps {
@@ -136,6 +140,7 @@ export interface compiledSampleProps {
         valueMinGalvanising: number
     }
 }
+
 export interface CardDashboardProps {
     title: string
     count: number
