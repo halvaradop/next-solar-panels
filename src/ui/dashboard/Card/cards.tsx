@@ -1,6 +1,7 @@
 import { CardProps } from "@/lib/@types/props"
 import campo from "@/public/campo.jpg"
 import Image from "next/image"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
 export const CardInformation = async ({ project }: CardProps) => {
     const fieldsLength = project.field?.length ?? 0
@@ -28,7 +29,17 @@ export const CardInformation = async ({ project }: CardProps) => {
             </div>
 
             <div className="mt-6 md:mt-0 md:ml-6 flex-shrink-0">
-                <Image src={campo} alt={project.designation} width={400} height={300} className="rounded-lg shadow-lg" />
+                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[51.505, -0.09]}>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                </MapContainer>
             </div>
         </div>
     )
