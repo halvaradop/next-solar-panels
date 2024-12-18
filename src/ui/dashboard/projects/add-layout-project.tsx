@@ -83,37 +83,7 @@ export const AddLayoutProject = () => {
                             {openDialog === "environmentalParams" && "Environmental Parameters Form"}
                         </h2>
 
-                        <div>
-                            {openDialog === "pvStructures" && (
-                                <form className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Structure Name</label>
-                                        <input
-                                            type="text"
-                                            className="mt-1 block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                            placeholder="Enter structure name"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Height</label>
-                                        <input
-                                            type="number"
-                                            className="mt-1 block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                            placeholder="Enter height"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700">Material</label>
-                                        <input
-                                            type="text"
-                                            className="mt-1 block w-full border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                            placeholder="Enter material"
-                                        />
-                                    </div>
-                                    <Submit className="w-full mt-4">Submit</Submit>
-                                </form>
-                            )}
-                        </div>
+                        <div></div>
                     </div>
                 </div>
             )}
