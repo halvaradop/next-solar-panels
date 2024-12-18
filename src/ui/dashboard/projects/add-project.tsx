@@ -9,6 +9,7 @@ import { ClassNameProps } from "@/lib/@types/props"
 import { merge } from "@halvaradop/ui-core"
 import { getSessionToken } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
+import { AddLayoutProject } from "./add-layout-project"
 
 const { projectInputs, addressInputs } = dataJson
 
@@ -46,6 +47,7 @@ export const AddProject = ({ className }: ClassNameProps) => {
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>
+            <AddLayoutProject />
             {state.message && (
                 <div
                     className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
