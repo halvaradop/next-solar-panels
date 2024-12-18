@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server"
 export const GET = async (request: NextRequest, { params }: Params<"idRole">): Promise<NextResponse> => {
     try {
         const idRole = (await params).idRole
-        console.log(idRole)
         const data = await prisma.contactPerson.findMany({
             where: {
                 idRole: parseInt(idRole),

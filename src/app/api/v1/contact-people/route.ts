@@ -70,7 +70,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         {
             /*todo fix : change databse varchar to char*/
         }
-        console.log(spread)
+
         const newContactPerson = await prisma.contactPerson.create({
             data: {
                 ...spread,
