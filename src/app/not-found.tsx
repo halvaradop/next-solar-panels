@@ -13,7 +13,7 @@ const NotFound = () => {
             </p>
             <Image src={websiteBuilding} alt="Website under construction" width={400} height={300} priority />
             <Button className="mt-6 mx-auto" asChild>
-                <Link href="/">Go back to the homepage</Link>
+                <Link href="/dashboard/projects">Go back to the homepage</Link>
             </Button>
         </main>
     )

@@ -43,7 +43,7 @@ export const AddPositionData = ({ className }: ClassNameProps) => {
             <InputList inputs={positionDatas} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Position Data
-                <SelectGeneric values={fields} id="idField" value="idField" name="field" />
+                <SelectGeneric values={fields} id="designation" value="idField" name="field" />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Types

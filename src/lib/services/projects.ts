@@ -7,7 +7,7 @@ export const getProjects = async <T extends unknown[] = Project[]>(): Promise<T>
     return data
 }
 
-export const getProjectsById = async <T extends unknown[] = Project[]>(projectId: string): Promise<T> => {
+export const getProjectsById = async <T = Project>(projectId: string): Promise<T> => {
     const { data } = await getFetch<T>(`projects/${projectId}`)
     return data
 }

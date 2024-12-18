@@ -11,13 +11,26 @@ const links = [
         link: "/dashboard/projects",
     },
     {
+        title: "Client Data",
+        link: "/dashboard/client-data",
+    },
+    {
+        title: "Settings",
+        link: "/dashboard/settings",
+    },
+    {
+        title: "Help",
+        link: "/dashboard/help",
+    },
+    {
+        title: "Contact experts",
+        link: "/dashboard/contact-people",
+    },
+    /* {
         title: "Stakeholders",
         link: "/dashboard/stake-holders",
     },
-    {
-        title: "Contact People",
-        link: "/dashboard/contact-people",
-    },
+
     {
         title: "Fields",
         link: "/dashboard/fields",
@@ -33,7 +46,7 @@ const links = [
     {
         title: "Position Soil Datas",
         link: "/dashboard/position-soil-datas",
-    },
+    },*/
 ]
 
 export const MenuRoutes = ({ className, classNameTitle, classNameOption, session }: MenuRoutesProps) => {

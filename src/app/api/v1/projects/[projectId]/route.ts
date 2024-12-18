@@ -22,8 +22,12 @@ export const GET = async (request: NextRequest, { params }: Params<"projectId">)
             where: {
                 idProject,
             },
+            include: {
+                address: true,
+                contactPerson: true,
+                field: true,
+            },
         })
-
         return NextResponse.json({
             data,
             ok: true,

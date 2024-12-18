@@ -56,7 +56,7 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { email, idRole, password, website: www, ...spread } = await request.json()
+        const { email, idRole, password, number, website: www, ...spread } = await request.json()
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
@@ -70,6 +70,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         {
             /*todo fix : change databse varchar to char*/
         }
+
         const newContactPerson = await prisma.contactPerson.create({
             data: {
                 ...spread,
