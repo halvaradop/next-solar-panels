@@ -28,7 +28,7 @@ export const TableProjects = async ({ projects }: TableProjectsProps) => {
                         <td>{address?.country}</td>
                         <td>{address?.city}</td>
                         <td>
-                            {contactPerson?.firstName} {contactPerson?.firstName}
+                            {contactPerson?.firstName} {contactPerson?.lastName}
                         </td>
                     </tr>
                 ))}
