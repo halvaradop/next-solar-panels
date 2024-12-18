@@ -14,6 +14,7 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "contact-people",
         "addresses/add",
     ],
+
     "client-admin": [
         "projects",
         "position-soil-datas",
@@ -27,6 +28,7 @@ export const roleBasedAccessControl: Record<Roles, string[]> = {
         "settings",
         "client-data",
     ],
+
     "project-manager": ["projects", "fields", "position-datas", "position-soil-datas"],
     "client-user": ["projects", "fields", "position-soil-datas"],
 }
