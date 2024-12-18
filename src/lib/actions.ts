@@ -80,7 +80,7 @@ export const loginAction = async (previous: LoginActionState, formData: FormData
             return { message: "Unauthorized", isSuccess: false } as LoginActionState
         }
     }
-    redirect("/dashboard")
+    redirect("/dashboard/projects")
 }
 
 /**
