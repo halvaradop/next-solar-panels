@@ -9,9 +9,8 @@ import {
     PositionSoilData,
     Address,
     PositionData,
-    CookieToken,
 } from "@prisma/client"
-import { ActionState, Entry, Order, Params, ResponseAPI, Roles } from "./types"
+import { ActionState, Entry, Order, Params, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
@@ -78,14 +77,6 @@ export interface TableProjectsProps {
         stakeholder?: Pick<StakeHolder, "name">
         address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
     })[]
-}
-
-export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> extends ClassNameProps {
-    classNameOption?: string
-    name: string
-    id: K
-    value: K
-    values: T[]
 }
 
 export interface SelectProps extends ClassNameProps {
@@ -182,4 +173,9 @@ export interface CardProps {
         address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
         field?: Pick<Field, "idField">[]
     }
+}
+
+export interface MessageProps extends ClassNameProps {
+    index: string
+    schema: Record<string, any>
 }

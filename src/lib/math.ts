@@ -113,9 +113,6 @@ export const evalutionGrosor = (
     let galvanising = ""
     const soilResistivity = json.z2
     const ph = json.z4
-    const sulfateContent = json.z8 * 96.06
-    //const chlorideContent = json.chlorideContent * 35.45;
-
     const valueb0: string = (() => {
         const value = json.b0
         if (value >= 0) return "very low|la"
@@ -161,19 +158,6 @@ export const evalutionGrosor = (
         message =
             "\nThe value of specific soil resistivity is too low, loss rates cannot be determined. Please seek expert advice."
     }
-
-    /* 
-    TODO: implement
-
-    const reespuest = valueSteel(ph , soilResistivity)
-    if (chlorideContent <= 200 && sulfateContent <= 1000) {
-        steel
-        galvanising
-    } else if (chlorideContent > 200 || sulfateContent > 1000) {
-        steel = valueSteel(ph , soilResistivity).steel
-        galvanising = valueGalvanised(ph, soilResistivity).Galvanised
-    }
-    */
 
     if (json.z4) {
         message += "\nAlert: Presence of groundwater detected. Consider alternative materials."

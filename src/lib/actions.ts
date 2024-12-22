@@ -2,14 +2,13 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, Linkage, PositionData } from "@prisma/client"
+import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, PositionData } from "@prisma/client"
 import {
     StakeHolderSchema,
     PositionSoilDataSchema,
     ContactPersonSchema,
     FiledSchema,
     ProjectSchema,
-    ProjectOnUserSchema,
     AddressSchema,
     PositionDataSchema,
 } from "./schemas"
@@ -258,7 +257,6 @@ export const addPositionDataAction = async (
     previous: AddPositionDataActionState,
     formData: FormData
 ): Promise<AddPositionDataActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
     mapToNumber(entries, ["longitude", "latitude"])
     entries.grounding = entries.grounding ?? null

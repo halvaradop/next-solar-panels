@@ -4,12 +4,9 @@ import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId } from "@/lib/services"
-import { Submit, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
+import { Submit, Form, Input, Label, Select } from "@/ui/common/form/index"
 import { getSessionToken, merge } from "@/lib/utils"
 import { ClassNameProps } from "@/lib/@types/props"
-import dataJson from "@/lib/data.json"
-
-const { addressInputs } = dataJson
 
 export const AddField = ({ className }: ClassNameProps) => {
     const [projects, setProjects] = useState<Project[]>([])
@@ -26,6 +23,8 @@ export const AddField = ({ className }: ClassNameProps) => {
         }
         fetchProjects()
     }, [])
+
+    const mapProjects = projects.map(({ idProject, designation }) => ({ key: designation, value: idProject }))
 
     return (
         <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
@@ -48,9 +47,88 @@ export const AddField = ({ className }: ClassNameProps) => {
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project
-                <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
+                <Select name="project" values={mapProjects} />
             </Label>
-            <InputList inputs={addressInputs} state={state} />
+            <div className="w-full grid md:grid-cols-2 gap-5">
+                <Label className="w-full">
+                    Country
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="country"
+                    />
+                </Label>
+                <Label className="w-full">
+                    State/Province
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="state"
+                    />
+                </Label>
+            </div>
+            <div className="w-full grid md:grid-cols-2 gap-5">
+                <Label className="w-full">
+                    City
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="city"
+                    />
+                </Label>
+                <Label className="w-full">
+                    Postbox
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="postbox"
+                    />
+                </Label>
+            </div>
+            <div className="w-full grid md:grid-cols-2 gap-5">
+                <Label className="w-full">
+                    Street
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="street"
+                    />
+                </Label>
+                <Label className="w-full">
+                    Street Number
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="postbox"
+                    />
+                </Label>
+            </div>
+            <div className="w-full grid md:grid-cols-2 gap-5">
+                <Label className="w-full">
+                    Latitud
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="latitude"
+                    />
+                </Label>
+                <Label className="w-full">
+                    Longitude
+                    <Input
+                        className="focus-within:border-black focus-within:ring-black"
+                        fullWidth
+                        variant="outline"
+                        name="longitude"
+                    />
+                </Label>
+            </div>
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>

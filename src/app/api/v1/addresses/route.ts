@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The resource was created successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},
@@ -45,7 +45,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
 /**
  * Handler for the GET request to fetch addresses.
  *
- * @param {NextRequest} request - The incoming request object.
  * @returns {Promise<NextResponse>} - A promise that resolves to a NextResponse object containing the fetched addresses or an error message.
  *
  * @example
@@ -54,7 +53,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
  * const response = await request.json()
  * ```
  */
-export const GET = async (request: NextRequest): Promise<NextResponse> => {
+export const GET = async (): Promise<NextResponse> => {
     try {
         const data = await prisma.address.findMany()
         return NextResponse.json<ResponseAPI<Address[]>>({
@@ -62,7 +61,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
             message: "Addresses fetched successfully",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<Address[]>>({
             data: [],
             message: "Failed to fetch addresses",

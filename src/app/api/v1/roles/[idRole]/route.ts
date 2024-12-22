@@ -16,7 +16,7 @@ export const GET = async (request: NextRequest, { params }: Params<"idRole">): P
             ok: true,
             message: "Contact people retrieved successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<ContactPerson[]>>(
             {
                 data: [],

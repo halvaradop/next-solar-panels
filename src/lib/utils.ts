@@ -77,7 +77,7 @@ export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Pro
         })
         const json: ResponseAPI<T> = await response.json()
         return json
-    } catch (error) {
+    } catch {
         throw new BadRequestError(`Error fetching data from the API: ${JSON.stringify(error, null, 2)}`)
     }
 }

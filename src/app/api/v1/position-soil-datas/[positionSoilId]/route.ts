@@ -43,7 +43,7 @@ export const GET = async (request: NextRequest, { params }: Params<"positionSoil
             ok: true,
             message: "Position soil data retrieved successfully.",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},

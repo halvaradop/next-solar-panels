@@ -19,7 +19,7 @@ export const GET = async (request: NextRequest, { params }: Params<"idField">): 
             message: "Successfully retrieved projects for the specified user",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},

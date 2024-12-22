@@ -22,7 +22,7 @@ export type AddContactPersonActionState = ActionState<Omit<ContactPerson, "idCon
 export type AddAddressActionState = ActionState<Omit<Address, "isActive" | "addressId">>
 
 export interface Entry {
-    key: string
+    key: string | number
     value: string | number
 }
 

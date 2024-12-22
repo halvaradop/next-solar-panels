@@ -20,7 +20,7 @@ export const GET = async (request: NextRequest, { params }: Params<"stakeholderI
             message: "Stakeholder position data retrieved successfully",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<null>>({
             data: null,
             message: "Error to retrieve stakeholder position data",

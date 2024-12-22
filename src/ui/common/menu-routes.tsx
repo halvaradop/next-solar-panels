@@ -26,27 +26,6 @@ const links = [
         title: "Contact experts",
         link: "/dashboard/contact-people",
     },
-    /* {
-        title: "Stakeholders",
-        link: "/dashboard/stake-holders",
-    },
-
-    {
-        title: "Fields",
-        link: "/dashboard/fields",
-    },
-    {
-        title: "Addresses",
-        link: "/dashboard/addresses",
-    },
-    {
-        title: "Position Datas",
-        link: "/dashboard/position-datas",
-    },
-    {
-        title: "Position Soil Datas",
-        link: "/dashboard/position-soil-datas",
-    },*/
 ]
 
 export const MenuRoutes = ({ className, classNameTitle, classNameOption, session }: MenuRoutesProps) => {

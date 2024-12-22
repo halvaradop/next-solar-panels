@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
-import { parse } from "path"
-import { data } from "framer-motion/client"
 
 /**
  * Handle the GET request to retrieve all fields from the database.
@@ -23,7 +21,7 @@ export const GET = async (): Promise<NextResponse> => {
             ok: true,
             message: "The resource was retrieved successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<Field[]>>(
             {
                 data: [],
@@ -89,7 +87,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The field was created successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,

@@ -5,7 +5,7 @@ import { Button, buttonVariants, ButtonProps } from "@halvaradop/ui-button"
 /**
  * @internal
  */
-type SubmitProps = ButtonProps<typeof buttonVariants> & {
+type SubmitProps = Omit<ButtonProps<typeof buttonVariants>, "asChild"> & {
     children: React.ReactNode
     pending?: string
 }
@@ -18,7 +18,6 @@ export const Submit = ({
     fullWidth,
     children,
     pending = "...",
-    asChild,
     ...props
 }: SubmitProps) => {
     const { pending: status } = useFormStatus()

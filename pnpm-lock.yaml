@@ -15,20 +15,23 @@ importers:
         specifier: ^0.15.0
         version: 0.15.0
       '@halvaradop/ui-button':
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: 0.3.2-beta.0
+        version: 0.3.2-beta.0
+      '@halvaradop/ui-checkbox':
+        specifier: 0.1.0-beta.0
+        version: 0.1.0-beta.0
       '@halvaradop/ui-dialog':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: 0.1.2-beta.0
+        version: 0.1.2-beta.0
       '@halvaradop/ui-form':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: 0.1.2-beta.0
+        version: 0.1.2-beta.0
       '@halvaradop/ui-input':
-        specifier: ^0.2.2
-        version: 0.2.2
+        specifier: 0.2.2-beta.0
+        version: 0.2.2-beta.0
       '@halvaradop/ui-label':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: 0.1.2-beta.0
+        version: 0.1.2-beta.0
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
@@ -163,29 +166,32 @@ packages:
   '@halvaradop/tailwindcss-utilities@0.2.3':
     resolution: {integrity: sha512-z8e3hdNLpgV7Pv46VL0zboLAhxC63xUt/8iYqiYO3TJxBlcWQZkAuyN7LZVH1x/FfqVCxo0YgMLYZ3HlRQ0IHw==}
 
-  '@halvaradop/ts-utility-types@0.11.1':
-    resolution: {integrity: sha512-7t86TIg5cKxPweNMR6olMtZkeTJ6uoXN+hjTu+A9t1nvWh5bS0LtWO3yjOZ1hobjcgH+uy6gM7ApoIkpx/6BeA==}
-
   '@halvaradop/ts-utility-types@0.15.0':
     resolution: {integrity: sha512-e3AC/OnD6xn27ukp86UtdQlQKd82HLVSlNgk5JS6cKWWHWH5eTC860M6qm1RAILuIdL/a5r4BCdFxPgJAnY5qw==}
 
-  '@halvaradop/ui-button@0.3.2':
-    resolution: {integrity: sha512-2nuN1caZ/OYTLIswhoc1De1uLJDUtQndTFMVvN5phf/yDf+SIj1qMYbHiWVyB0peb1G99phq/z574RmcWIlxXA==}
+  '@halvaradop/ui-button@0.3.2-beta.0':
+    resolution: {integrity: sha512-qNLD3fNSd2sj6xNHFrtFCPZLq6E+iMA7HdntI7zqQAmwRH0t9/N+G4SH31ckghFA+OeZBoNDe90JNDe9Edxq6Q==}
+
+  '@halvaradop/ui-checkbox@0.1.0-beta.0':
+    resolution: {integrity: sha512-mcHKRKssxfjx3QJ3rOWGF3sgm3pX/gOyNWvqUw7jdK5XLkhA6k0QpT0QgZ9osfwi90ozFCItPKBD/FjpERIj3A==}
 
   '@halvaradop/ui-core@0.2.1':
     resolution: {integrity: sha512-AblOzPb7d7K0+iEQPf6Ti1yF4dY2XGP/03ZAQQNHOkUZlZD4IYdSQ1/U5z5ffJKiKPBGLXNiE4nPRUhYVD4QPw==}
 
-  '@halvaradop/ui-dialog@0.1.2':
-    resolution: {integrity: sha512-iwDDpXAykWV3+GEgsWfyDfpd/un0jkHE3pEttAkRUJx2u9PHtuKN3MKY1PfRYYqNj/n+sFaou0/WdWSFacFBlQ==}
+  '@halvaradop/ui-core@0.2.1-beta.0':
+    resolution: {integrity: sha512-FWbmE91CBWWEl1x73nSRckrEyIaXwx+lqJwCPCjRuRb9dtHEHjg/kB43ZNyGtsyqY7kZwSPRsx6oBj50kyL8Sg==}
 
-  '@halvaradop/ui-form@0.1.2':
-    resolution: {integrity: sha512-yLnn2icfc+wpugrDfrr1RNT+u6bgKpQQAsbN5SXiM+XKpWrMZG805b63CzTEnwk3vf6hyc5lEzI9Sjb/4SAszQ==}
+  '@halvaradop/ui-dialog@0.1.2-beta.0':
+    resolution: {integrity: sha512-lKUNqknFtzk4RVVamb19lYDuUaCla1rmYLeMSHQOwhEJ2o/AI5PI3miLhFxK80S2pun0fkVEkHf8B21asMx2wA==}
 
-  '@halvaradop/ui-input@0.2.2':
-    resolution: {integrity: sha512-vyRoxgCQzYGIxuyvv3Vt5QfNOkGZrAz6mvbAFyBCZBeH91aZj5BRNuo5TY36GVbKnK2esfJixeIsAMYFqzp1JA==}
+  '@halvaradop/ui-form@0.1.2-beta.0':
+    resolution: {integrity: sha512-dVMCWl0Pb6fMPEyjDaavhLf0YvbKdE9Tb8fSjWo1hgetD4lAmN7f0kefH/OeBIrIHL1ths2DJrYzeVawl//BzQ==}
 
-  '@halvaradop/ui-label@0.1.2':
-    resolution: {integrity: sha512-CjgEudXZvlrDVYm+qJYjJ/dvPgqeSeIe+nbQPIb3O9EoARM4CVzgmJ7xN4JR8NhEm/iIc9oFnxDE3bhMXzLX4g==}
+  '@halvaradop/ui-input@0.2.2-beta.0':
+    resolution: {integrity: sha512-CZNB2Ekr/x5XwpuWtxePAxeb3we6yl8lM6kkljDCZcnxejWrKiRZdZNQ3hdohk44BdXwO1jNlBjtJMs9kHdX9Q==}
+
+  '@halvaradop/ui-label@0.1.2-beta.0':
+    resolution: {integrity: sha512-N+vy9PXFBrZssOe8BRZBNMaBMetpZl0I9FVsYxFCHb6J9rtbusqXHnToTFHjc7OKF8BpLZWy6TGaHCzZpggxYA==}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -1947,6 +1953,9 @@ packages:
     resolution: {integrity: sha512-vrozgXDQwYO72vHjUb/HnFbQx1exDjoKzqx23aXEg2a9VIg2TSFZ8FmeZpTjUCFMYw7mpX4BE2SFu8wI7asYsw==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tailwind-merge@2.5.5:
+    resolution: {integrity: sha512-0LXunzzAZzo0tEPxV3I297ffKZPlKDrjj7NXphC8V5ak9yHC5zRmxnOe2m/Rd/7ivsOMJe3JZ2JVocoDdQTRBA==}
+
   tailwindcss@3.4.15:
     resolution: {integrity: sha512-r4MeXnfBmSOuKUWmXe6h2CcyfzJCEk4F0pptO5jlnYSIViUkVmsawj80N5h2lO3gwcmSb4n3PuN+e+GC1Guylw==}
     engines: {node: '>=14.0.0'}
@@ -2137,40 +2146,42 @@ snapshots:
 
   '@halvaradop/tailwindcss-utilities@0.2.3': {}
 
-  '@halvaradop/ts-utility-types@0.11.1': {}
-
   '@halvaradop/ts-utility-types@0.15.0': {}
 
-  '@halvaradop/ui-button@0.3.2':
+  '@halvaradop/ui-button@0.3.2-beta.0':
     dependencies:
-      '@halvaradop/ts-utility-types': 0.11.1
+      '@halvaradop/ui-core': 0.2.1-beta.0
+      class-variance-authority: 0.7.0
+
+  '@halvaradop/ui-checkbox@0.1.0-beta.0':
+    dependencies:
       '@halvaradop/ui-core': 0.2.1
       class-variance-authority: 0.7.0
 
   '@halvaradop/ui-core@0.2.1': {}
 
-  '@halvaradop/ui-dialog@0.1.2':
+  '@halvaradop/ui-core@0.2.1-beta.0':
     dependencies:
-      '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.1
+      tailwind-merge: 2.5.5
+
+  '@halvaradop/ui-dialog@0.1.2-beta.0':
+    dependencies:
+      '@halvaradop/ui-core': 0.2.1-beta.0
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-form@0.1.2':
+  '@halvaradop/ui-form@0.1.2-beta.0':
     dependencies:
-      '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.1
+      '@halvaradop/ui-core': 0.2.1-beta.0
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-input@0.2.2':
+  '@halvaradop/ui-input@0.2.2-beta.0':
     dependencies:
-      '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.1
+      '@halvaradop/ui-core': 0.2.1-beta.0
       class-variance-authority: 0.7.0
 
-  '@halvaradop/ui-label@0.1.2':
+  '@halvaradop/ui-label@0.1.2-beta.0':
     dependencies:
-      '@halvaradop/ts-utility-types': 0.11.1
-      '@halvaradop/ui-core': 0.2.1
+      '@halvaradop/ui-core': 0.2.1-beta.0
       class-variance-authority: 0.7.0
 
   '@humanwhocodes/config-array@0.13.0':
@@ -4110,6 +4121,8 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.1.1
       tslib: 2.8.1
+
+  tailwind-merge@2.5.5: {}
 
   tailwindcss@3.4.15:
     dependencies:

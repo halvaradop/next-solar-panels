@@ -1,9 +1,6 @@
 "use client"
-
-import { Submit } from "@/ui/common/form-elements"
-import { ModalWrapper } from "@/ui/common/modal-wrapper"
 import { useState } from "react"
-import Link from "next/link"
+import { ModalWrapper } from "@/ui/common/modal-wrapper"
 
 export const AddLayoutProject = () => {
     const [openDialog, setOpenDialog] = useState<string | null>(null)
@@ -16,7 +13,7 @@ export const AddLayoutProject = () => {
         setOpenDialog(null)
     }
     return (
-        <ModalWrapper button="Add Layout Project" innerClassName="w-2/3 min-w-80 max-w-screen-sm mb-10">
+        <ModalWrapper button="Add Layout Project" innerClassName="w-2/3 min-w-80 max-w-screen-sm mb-10" buttonClassName="w-full">
             <div className="grid grid-cols-2 gap-4">
                 {/* PV Structures */}
                 <article
