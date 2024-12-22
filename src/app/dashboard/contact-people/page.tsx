@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { Suspense } from "react"
-import { getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPeopleByStakeHolderId } from "@/lib/services"
 import { TableContactPeople } from "@/ui/dashboard/contact-people/table"
 import { AddNewContactPerson } from "@/ui/dashboard/contact-people/add-new-contact-person"
 import { getSessionToken } from "@/lib/utils"
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const getInformation = async () => {
     const { idStakeHolder } = await getSessionToken()
-    const contactPeople = await getContactPersonByStakeHolderId(idStakeHolder)
+    const contactPeople = await getContactPeopleByStakeHolderId(idStakeHolder)
     return { contactPeople }
 }
 

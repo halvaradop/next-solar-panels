@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { Suspense } from "react"
 import { getStakeholder } from "@/lib/services"
 import { TableStakeHolder } from "@/ui/dashboard/stake-holders/table"
-import { TableStakeHoldersProps } from "@/lib/@types/props"
 import { AddNewStakeHolder } from "@/ui/dashboard/stake-holders/add-new-stake-holder"
 
 export const metadata: Metadata = {
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 const DashboardStakeHolderPage = async () => {
-    const stakeHolders = await getStakeholder<TableStakeHoldersProps["stakeHolders"]>()
+    const stakeHolders = await getStakeholder()
 
     return (
         <section className="min-h-main py-4 space-y-4">

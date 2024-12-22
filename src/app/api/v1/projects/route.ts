@@ -4,37 +4,6 @@ import { Project } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handles the GET request to retrieve all projects from the database.
- *
- * @returns {Promise<NextResponse>} - The HTTP response containing the projects
- * retrieved from the database.
- * @example
- * ```ts
- * const response = await fetch("{domain}/api/v1/projects")
- * const data = await response.json()
- * ```
- */
-export const GET = async (): Promise<NextResponse> => {
-    try {
-        const data = await prisma.project.findMany()
-        return NextResponse.json<ResponseAPI<Project[]>>({
-            data,
-            ok: true,
-            message: "The resource was retrieved successfully",
-        })
-    } catch {
-        return NextResponse.json<ResponseAPI<Project[]>>(
-            {
-                data: [],
-                ok: false,
-                message: "Failed to retrieve the project",
-            },
-            { status: 500 }
-        )
-    }
-}
-
-/**
  * Handle the POST request to create a new plant related to a specific user
  *
  * @param {NextRequest} request - The HTTP request data received with the new plant information.

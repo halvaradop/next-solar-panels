@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { addStakeHolderAction } from "@/lib/actions"
 import { AddStakeHolderActionState, Entry } from "@/lib/@types/types"
 import { Form, InputList, Label, Select, Submit, merge } from "@/ui/common/form/index"
-import { getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPeopleByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
 import { ClassNameProps } from "@/lib/@types/props"
 import { getSessionToken } from "@/lib/utils"
@@ -30,7 +30,7 @@ export const AddStakeHolder = ({ className }: ClassNameProps) => {
     useEffect(() => {
         const fetchContactPerson = async () => {
             const { idStakeHolder } = await getSessionToken()
-            const response = await getContactPersonByStakeHolderId(idStakeHolder)
+            const response = await getContactPeopleByStakeHolderId(idStakeHolder)
             setContacPerson(response)
         }
         fetchContactPerson()

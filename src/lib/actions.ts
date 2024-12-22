@@ -24,6 +24,7 @@ import {
 } from "@/lib/@types/types"
 import { mapErrors, mapToNumber } from "./utils"
 import { SafeParseError } from "zod"
+import { createAddress } from "./services"
 
 /**
  * Adds a sample to the database and checks if the action was successful
@@ -231,16 +232,12 @@ export const addAddressAction = async (previous: AddAddressActionState, formData
     const validate = AddressSchema.safeParse(entries)
 
     if (validate.success) {
-        const request = await fetch(`http://localhost:3000/api/v1/address`, {
-            method: "POST",
-            body: JSON.stringify(validate.data),
-        })
-        const { message, ok } = await request.json()
-        if (request.ok && ok) {
+        const { ok, message } = await createAddress(validate.data as Address)
+        if (ok) {
             redirect("/dashboard")
         }
         return {
-            message,
+            message: message ?? "An error occurred while creating the address",
             isSuccess: false,
             schema: {} as Address,
         }

@@ -4,41 +4,6 @@ import { StakeHolder } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handles the GET request to retrieve all stakeholders from the database.
- *
- * @returns {Promise<NextResponse>} - The HTTP response containing the list of stakeholders or an error message.
- * @example
- * ```ts
- * const response = await fetch("{domain}/api/v1/stakeholders")
- * const data = await response.json()
- * ```
- */
-export const GET = async (): Promise<NextResponse> => {
-    try {
-        const data = await prisma.stakeHolder.findMany({
-            include: {
-                contactPerson: true,
-            },
-        })
-
-        return NextResponse.json<ResponseAPI<StakeHolder[]>>({
-            data,
-            ok: true,
-            message: "Stakeholders retrieved successfully",
-        })
-    } catch {
-        return NextResponse.json<ResponseAPI<null>>(
-            {
-                data: null,
-                ok: false,
-                message: "Error retrieving stakeholders",
-            },
-            { status: 400 }
-        )
-    }
-}
-
-/**
  * Handle the POST request to create a new stakeholders in the database.
  *
  * @param {NextRequest} request - The HTTP request data containing the new stakeholders information.

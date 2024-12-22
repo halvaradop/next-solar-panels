@@ -22,3 +22,18 @@ declare module "next-auth/jwt" {
         user: User
     }
 }
+
+declare module "*.jpg" {
+    const value: string
+    export default value
+}
+
+declare module "*.svg" {
+    const value: string
+    export default value
+}
+
+declare module "*.web" {
+    const value: string
+    export default value
+}

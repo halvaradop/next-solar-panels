@@ -4,35 +4,6 @@ import { ContactPerson } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all contact people from the database.
- *
- * @returns {Promise<NextResponse>} - The HTTP response with the contact people fetched.
- * @example
- * ```ts
- * const response = await fetch("{domain}/api/v1/contact-people")
- * const data = await response.json()
- * ```
- */
-export const GET = async (): Promise<NextResponse> => {
-    try {
-        const data = await prisma.contactPerson.findMany()
-        return NextResponse.json<ResponseAPI<ContactPerson[]>>({
-            data,
-            ok: true,
-            message: "Contact people retrieved successfully",
-        })
-    } catch {
-        return NextResponse.json<ResponseAPI<ContactPerson[]>>(
-            {
-                data: [],
-                ok: false,
-                message: "Failed to retrieve contact people",
-            },
-            { status: 400 }
-        )
-    }
-}
-/**
  * Handle the POST request to create a new contact person in the database.
  *
  * @param {NextRequest} request - The HTTP request data received with the new contact person information.

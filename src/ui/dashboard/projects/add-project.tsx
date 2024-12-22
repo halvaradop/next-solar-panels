@@ -3,7 +3,7 @@ import { useEffect, useState, useActionState } from "react"
 import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPeopleByStakeHolderId } from "@/lib/services"
 import { Form, Input, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
 import { getSessionToken } from "@/lib/utils"
@@ -23,7 +23,7 @@ export const AddProject = ({ className }: ClassNameProps) => {
     useEffect(() => {
         const fetchProjects = async () => {
             const { idStakeHolder } = await getSessionToken()
-            const response = await getContactPersonByStakeHolderId(idStakeHolder)
+            const response = await getContactPeopleByStakeHolderId(idStakeHolder)
             setContactPerson(response)
             setIdStakeHolder(idStakeHolder)
         }

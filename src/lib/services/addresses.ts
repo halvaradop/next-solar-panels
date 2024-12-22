@@ -1,25 +1,48 @@
+"use server"
 import { Address } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
+import { prisma } from "@/lib/prisma"
+import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Fetches all addresses from the API.
+ * Gets all addresses from the database.
  *
- * @returns {Promise<Address[]>} - The list of addresses.
- * ```
+ * @returns {Promise<Address[]>} - A promise that resolves to an array of addresses.
  */
-export const getAddresses = async <T extends unknown[] = Address[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("addresses")
-    return data
+export const getAddresses = async (): Promise<Address[]> => {
+    "use cache"
+    return await prisma.address.findMany()
 }
 
 /**
- * Fetches an address by its ID from the API.
+ * TODO: Implement revalidateTag to refresh the cache
  *
- * @template T - The type of the address object, defaults to Address.
- * @param {number} addressId - The ID of the address to fetch.
- * @returns {Promise<T>} - A promise that resolves to the address with the given ID.
+ * Creates a new address in the database.
+ *
+ * @param {Address} address - The address object to create.
+ * @returns {Promise<ResponseAPI<Address | null>>} - A promise that resolves to the response from the database
  */
-export const getAddressById = async <T extends object = Address>(addressId: number): Promise<T> => {
-    const { data } = await getFetch<T>(`addresses/${addressId}`)
-    return data
+export const createAddress = async (address: Address): Promise<ResponseAPI<Address | null>> => {
+    try {
+        const data = await prisma.address.create({ data: address })
+        return { data, ok: true, message: "Address created successfully" }
+    } catch {
+        return {
+            data: null,
+            ok: false,
+            message: "An error occurred while creating the address",
+        }
+    }
+}
+
+/**
+ * Gets an address by its ID from the database.
+ *
+ * @param {number} idAddress - The ID of the address to fetch.
+ * @returns {Promise<Address | null>} - A promise that resolves to the address with the given ID.
+ */
+export const getAddressById = async (idAddress: number): Promise<Address | null> => {
+    "use cache"
+    return await prisma.address.findUnique({
+        where: { idAddress },
+    })
 }

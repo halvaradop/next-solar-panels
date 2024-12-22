@@ -1,7 +1,7 @@
 import { CardDashboard } from "./card"
-import { getContactaPeople, getContactPersonByStakeHolderId } from "@/lib/services"
+import { getContactPeople, getContactPeopleByStakeHolderId } from "@/lib/services"
 
 export const ContactPerson = async ({ stakeholderId }: { stakeholderId?: string }) => {
-    const contacts = stakeholderId ? await getContactPersonByStakeHolderId(stakeholderId) : await getContactaPeople()
+    const contacts = stakeholderId ? await getContactPeopleByStakeHolderId(stakeholderId) : await getContactPeople()
     return <CardDashboard href="/dashboard/contact-people" title="Contacts" count={contacts.length} />
 }

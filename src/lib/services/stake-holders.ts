@@ -1,123 +1,155 @@
-import { ContactPerson, Field, PositionData, Project, StakeHolder } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
+"use server"
+import { PositionData, PositionMeasurement, PositionResistivity, PositionSoilData, StakeHolder } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
+import { GetContactPeopleByStakeHolderId, GetFieldsByStakeHolderId, GetProjectsByStakeHolderId } from "@/lib/@types/types"
 
-/**
- * Fetches all stake Holders from the database
- *
- * @returns {Promise<StakeHolder[]>} - A promise that resolves to a list of  stake Holders
- */
-export const getStakeholder = async <T extends unknown[] = StakeHolder[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("stake-holders")
-    return data || []
+export const getStakeholder = async (): Promise<StakeHolder[]> => {
+    "use cache"
+    return await prisma.stakeHolder.findMany({
+        include: {
+            contactPerson: true,
+        },
+    })
 }
 
 /**
- * Fetches all plants from the database by the  stake Holder
+ * Gets all Projects from the database by the  stake Holder
  *
- * @param {string} stakeHolderId - The ID of the  stake Holder to fetch plants for
- * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
+ * @param {string} idStakeholder - The ID of the  stake Holder to retrieve projects
  */
-export const getProjectsByStakeHolderId = async <T extends unknown[] = Project[]>(stakeHolderId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/projects`)
-    return data
+export const getProjectsByStakeHolderId: GetProjectsByStakeHolderId = async (idStakeholder: string) => {
+    "use cache"
+    return await prisma.project.findMany({
+        where: {
+            idStakeholder,
+        },
+        include: {
+            address: true,
+            contactPerson: true,
+            stakeholder: true,
+        },
+    })
 }
 
 /**
- * Fetches all zones from the database by the  stake Holder
+ * Gets all zones from the database by the  stake Holder
  *
- * @param {string} stakeHolderId - The ID of the  stake Holder to fetch zones for
- * @returns {Promise<Field[]>} - A promise that resolves to a list of zones
+ * @param {string} idStakeholder - The ID of the  stake Holder to fetch zones for
  */
-export const getFieldsByStakeHolderId = async <T extends unknown[] = Field[]>(stakeHolderId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/fields`)
-    return data
+export const getFieldsByStakeHolderId: GetFieldsByStakeHolderId = async (idStakeholder: string) => {
+    "use cache"
+    return await prisma.field.findMany({
+        where: {
+            project: {
+                idStakeholder,
+            },
+        },
+        include: {
+            project: true,
+            address: true,
+        },
+    })
 }
 
 /**
- * Fetches all users associated with a specific  stake Holder from the database
+ * Gets all users associated with a specific  stake Holder from the database
  *
- * @param {string} stakeHolderId - The ID of the  stake Holder to fetch users for
- * @returns {Promise<User[]>} - A promise that resolves to a list of users
+ * @param {string} idStakeHolder - The ID of the  stake Holder to fetch users for
  */
-export const getContactPersonByStakeHolderId = async <T extends unknown[] = ContactPerson[]>(
-    stakeHolderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/contact-people`)
-    return data
+export const getContactPeopleByStakeHolderId: GetContactPeopleByStakeHolderId = async (idStakeHolder: string) => {
+    "use cache"
+    return await prisma.contactPerson.findMany({
+        where: {
+            stakeHolder: {
+                some: {
+                    idStakeHolder,
+                },
+            },
+        },
+        include: {
+            role: true,
+        },
+    })
 }
 
 /**
- * Fetches all plants from the database by the  stake Holder and field
+ * Gets all PositionData from the database.
  *
- * @param {string} stakeHolderId - The ID of the  stake Holder to fetch plants for
- * @returns {Promise<Project[]>} - A promise that resolves to a list of plants
+ * @param {string} idStakeholder - The id of the stakeholder
+ * @returns {Promise<PositionData[]>} - A list of zones from the database
  */
-export const getProjectsByStakeHolderIdAndFieldId = async <T extends unknown[] = Project[]>(
-    stakeHolderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}/projects`)
-    return data
+export const getPositionDataByStakeholderId = async (idStakeholder: string): Promise<PositionData[]> => {
+    "use cache"
+    return await prisma.positionData.findMany({
+        where: {
+            field: {
+                project: {
+                    idStakeholder,
+                },
+            },
+        },
+    })
 }
 
 /**
- * Fetches all PositionData from the database.
+ * Gets all Position Soil Datas from the database.
  *
- * @param {string} stakeholderId - The id of the stakeholder
- * @returns {Promise<T>} - A list of zones from the database
+ * @param {string} idStakeHolder - The id of the stakeholder
+ * @returns {Promise<PositionSoilData[]>} - A list of zones from the database
  */
-export const getPositionDataByStakeholderId = async <T extends unknown[] = PositionData[]>(stakeholderId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-datas`)
-    return data
+export const getPositionSoilDatasByStakeholderId = async (idStakeHolder: string): Promise<PositionSoilData[]> => {
+    "use cache"
+    return await prisma.positionSoilData.findMany({
+        where: {
+            contactPerson: {
+                stakeHolder: {
+                    some: {
+                        idStakeHolder,
+                    },
+                },
+            },
+        },
+    })
 }
 
 /**
- * Fetches the user plants related to the given user id.
+ * Gets all Position Measurements from the database.
  *
- * @param {string} stakeHolderId - The user id.
- * @returns {Promise<ProjectsOnUsers[]>} - A promise that resolves to an array of ProjectsOnUsers.
+ * @param {string} idStakeHolder - The id of the stakeholder
+ * @returns {Promise<PositionMeasurement[]>} - A list of zones from the database
  */
-export const getContacPersonProjectsByStakeHolder = async <T extends unknown[] = (ContactPerson & Project)[]>(
-    stakeHolderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeHolderId}`)
-    return data
+export const getPositionMeasurementsByStakeholderId = async (idStakeHolder: string): Promise<PositionMeasurement[]> => {
+    "use cache"
+    return await prisma.positionMeasurement.findMany({
+        where: {
+            contactPerson: {
+                stakeHolder: {
+                    some: {
+                        idStakeHolder,
+                    },
+                },
+            },
+        },
+    })
 }
 
 /**
- * Fetches all PositionSoilDatas from the database.
+ * Gets all Position Resistivities from the database.
  *
- * @param {string} stakeholderId - The id of the stakeholder
- * @returns {Promise<T>} - A list of zones from the database
+ * @param {string} idStakeHolder - The id of the stakeholder
+ * @returns {Promise<PositionResistivity[]>} - A list of zones from the database
  */
-export const getPositionSoilDatasByStakeholderId = async <T extends unknown[] = PositionData[]>(
-    stakeholderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-soil-datas`)
-    return data
-}
-
-/**
- * Fetches all PositionMeasurements from the database.
- *
- * @param {string} stakeholderId - The id of the stakeholder
- * @returns {Promise<T>} - A list of zones from the database
- */
-export const getPositionMeasurementsByStakeholderId = async <T extends unknown[] = PositionData[]>(
-    stakeholderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-measurements`)
-    return data
-}
-
-/**
- * Fetches all PositionResistivities from the database.
- *
- * @param {string} stakeholderId - The id of the stakeholder
- * @returns {Promise<T>} - A list of zones from the database
- */
-export const getPositionResistivitiesByStakeholderId = async <T extends unknown[] = PositionData[]>(
-    stakeholderId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`stake-holders/${stakeholderId}/position-resistivities`)
-    return data
+export const getPositionResistivitiesByStakeholderId = async (idStakeHolder: string): Promise<PositionResistivity[]> => {
+    "use cache"
+    return await prisma.positionResistivity.findMany({
+        where: {
+            contactPerson: {
+                stakeHolder: {
+                    some: {
+                        idStakeHolder,
+                    },
+                },
+            },
+        },
+    })
 }

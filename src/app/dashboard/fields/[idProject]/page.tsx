@@ -9,6 +9,7 @@ import { TableCompiledSamples } from "@/ui/dashboard/samples/table-compiled"
 import { auth } from "@/lib/auth"
 import { CardInformation } from "@/ui/dashboard/Card/cards"
 import { Filter } from "@/ui/common/filter"
+import { Address } from "@prisma/client"
 
 export const metadata: Metadata = {
     title: "Fields",
@@ -24,8 +25,11 @@ const getInformation = async (idProject: string) => {
         getProjectsById(idProject),
     ])
     const addresses = await Promise.all(fields.map(({ idAddress }) => getAddressById(idAddress)))
-    const cities = addresses.filter(({ city }) => city).map<Entry>(({ city }) => ({ key: city!, value: city! }))
-    const countries = addresses.filter(({ country }) => country).map<Entry>(({ country }) => ({ key: country!, value: country! }))
+    const filteredAddresses = addresses.filter((address) => address && address.city && address.country) as Address[]
+    const cities = filteredAddresses.filter(({ city }) => city).map<Entry>(({ city }) => ({ key: city!, value: city! }))
+    const countries = filteredAddresses
+        .filter(({ country }) => country)
+        .map<Entry>(({ country }) => ({ key: country!, value: country! }))
     return { fields, positionSoilDatas, project, cities, countries }
 }
 
@@ -36,7 +40,7 @@ const DashboardFieldsPage = async ({ params }: Params<"idProject">) => {
 
     return (
         <section className="min-h-main py-4 space-y-4">
-            <CardInformation project={project}></CardInformation>
+            <CardInformation project={project!}></CardInformation>
             <Filter
                 filters={[
                     {
