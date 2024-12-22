@@ -17,7 +17,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     const slug = (await params).positionsoildataId
     const getPositionSoilData = await getPositionSoilDataById(slug)
 
-    // @typescript-eslint/no-unused-vars
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         idContactPerson,
         idPositionSoilData,

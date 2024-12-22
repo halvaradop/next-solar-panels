@@ -5,6 +5,7 @@ import { addAddressAction } from "@/lib/actions"
 import { Form, Input, Label, Submit } from "@/ui/common/form/index"
 
 export const AddAddress = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [state, formAction] = useActionState(addAddressAction, {
         message: "",
         isSuccess: false,
