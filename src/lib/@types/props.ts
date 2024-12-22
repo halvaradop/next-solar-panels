@@ -156,9 +156,9 @@ export interface ErrorPickProjectProps extends Params<""> {
 }
 export interface CardProps {
     project?: Project & {
-        contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
-        address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
-        field?: Pick<Field, "idField">[]
+        contactPerson?: ContactPerson
+        address?: Address
+        field?: Field[]
     }
 }
 

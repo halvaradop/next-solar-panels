@@ -25,9 +25,9 @@ export const getProjectsById: GetProjectsById = async (idProject: string) => {
             idProject,
         },
         include: {
+            field: true,
             address: true,
             contactPerson: true,
-            field: true,
         },
     })
 }

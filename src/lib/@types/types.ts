@@ -88,7 +88,7 @@ export type GetPositionSoilDataById = (idPositionSoilData: string) => Promise<Po
 
 export type GetProjectsById = (
     idProject: string
-) => Promise<(Project & { contactPerson: ContactPerson; address: Address; field: unknown }) | null>
+) => Promise<(Project & { contactPerson: ContactPerson; address: Address; field: Field[] }) | null>
 
 export type GetFieldsByProjectId = (idProject: string) => Promise<(Field & { project: Project; address: Address })[]>
 
@@ -97,3 +97,5 @@ export type GetContactPeopleByStakeHolderId = (idStakeHolder: string) => Promise
 export type GetProjectsByStakeHolderId = (
     idStakeHolder: string
 ) => Promise<(Project & { address: Address; contactPerson: ContactPerson; stakeholder: StakeHolder })[]>
+
+export type GetFieldsByStakeHolderId = (idStakeHolder: string) => Promise<(Field & { project: Project; address: Address })[]>

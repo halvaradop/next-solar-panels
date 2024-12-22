@@ -16,16 +16,12 @@ export const generateMetadata = async ({ params }: Params<"positionsoildataId">)
 const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     const slug = (await params).positionsoildataId
     const getPositionSoilData = await getPositionSoilDataById(slug)
+    if (!getPositionSoilData) {
+        return <p>Position soil data not found</p>
+    }
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    const {
-        idContactPerson,
-        idPositionSoilData,
-        date: dateTime,
-        field: { designation },
-        user,
-        ...spread
-    } = getPositionSoilData
+    const { idContactPerson, idPositionSoilData, date: dateTime, ...spread } = getPositionSoilData
     const date = new Date(dateTime).toLocaleString()
 
     return (
@@ -36,7 +32,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
             <article className="w-full">
                 <div className="flex items-center justify-between">
                     <h1 className="text-neutral-700 text-lg font-medium">Sample information</h1>
-                    <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500">{designation}</span>
+                    <span className="w-fit px-4 py-1 text-white text-xs rounded-full bg-green-500"></span>
                 </div>
                 <time className="text-neutral-600" dateTime={date}>
                     Date: {0}

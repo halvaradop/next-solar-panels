@@ -1,7 +1,7 @@
 "use server"
-import { Field, PositionData, PositionMeasurement, PositionResistivity, PositionSoilData, StakeHolder } from "@prisma/client"
+import { PositionData, PositionMeasurement, PositionResistivity, PositionSoilData, StakeHolder } from "@prisma/client"
 import { prisma } from "@/lib/prisma"
-import { GetContactPeopleByStakeHolderId, GetProjectsByStakeHolderId } from "@/lib/@types/types"
+import { GetContactPeopleByStakeHolderId, GetFieldsByStakeHolderId, GetProjectsByStakeHolderId } from "@/lib/@types/types"
 
 export const getStakeholder = async (): Promise<StakeHolder[]> => {
     "use cache"
@@ -35,9 +35,8 @@ export const getProjectsByStakeHolderId: GetProjectsByStakeHolderId = async (idS
  * Gets all zones from the database by the  stake Holder
  *
  * @param {string} idStakeholder - The ID of the  stake Holder to fetch zones for
- * @returns {Promise<Field[]>} - A promise that resolves to a list of zones
  */
-export const getFieldsByStakeHolderId = async (idStakeholder: string): Promise<Field[]> => {
+export const getFieldsByStakeHolderId: GetFieldsByStakeHolderId = async (idStakeholder: string) => {
     "use cache"
     return await prisma.field.findMany({
         where: {
