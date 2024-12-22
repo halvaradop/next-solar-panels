@@ -4,9 +4,10 @@ import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId } from "@/lib/services"
-import { Submit, Form, Input, Label, Select } from "@/ui/common/form/index"
-import { getSessionToken, merge } from "@/lib/utils"
+import { Submit, Form, Input, Label, Select, merge } from "@/ui/common/form/index"
+import { getSessionToken } from "@/lib/utils"
 import { ClassNameProps } from "@/lib/@types/props"
+import { InternalAddress } from "@/ui/dashboard/address/address"
 
 export const AddField = ({ className }: ClassNameProps) => {
     const [projects, setProjects] = useState<Project[]>([])
@@ -49,86 +50,7 @@ export const AddField = ({ className }: ClassNameProps) => {
                 Project
                 <Select name="project" values={mapProjects} />
             </Label>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Country
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="country"
-                    />
-                </Label>
-                <Label className="w-full">
-                    State/Province
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="state"
-                    />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    City
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="city"
-                    />
-                </Label>
-                <Label className="w-full">
-                    Postbox
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="postbox"
-                    />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Street
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="street"
-                    />
-                </Label>
-                <Label className="w-full">
-                    Street Number
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="postbox"
-                    />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Latitud
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="latitude"
-                    />
-                </Label>
-                <Label className="w-full">
-                    Longitude
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="longitude"
-                    />
-                </Label>
-            </div>
+            <InternalAddress state={state} />
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>

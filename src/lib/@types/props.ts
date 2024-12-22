@@ -167,3 +167,8 @@ export interface MessageProps extends ClassNameProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     schema: Record<string, any>
 }
+
+export interface InternalAddressProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state: ActionState<any>
+}

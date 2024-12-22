@@ -9,6 +9,7 @@ import { ClassNameProps } from "@/lib/@types/props"
 import { getSessionToken } from "@/lib/utils"
 import { AddLayoutProject } from "./add-layout-project"
 import { Message } from "@/ui/common/message"
+import { InternalAddress } from "@/ui/dashboard/address/address"
 
 export const AddProject = ({ className }: ClassNameProps) => {
     const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
@@ -41,94 +42,7 @@ export const AddProject = ({ className }: ClassNameProps) => {
                 Project Manager
                 <Select name="contactPerson" values={mapContactPeople} />
             </Label>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Country
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="country"
-                    />
-                    <Message schema={state.schema} index="country" />
-                </Label>
-                <Label className="w-full">
-                    State/Province
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="state"
-                    />
-                    <Message schema={state.schema} index="state" />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    City
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="city"
-                    />
-                    <Message schema={state.schema} index="city" />
-                </Label>
-                <Label className="w-full">
-                    Postbox
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="postbox"
-                    />
-                    <Message schema={state.schema} index="postbox" />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Street
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="street"
-                    />
-                    <Message schema={state.schema} index="street" />
-                </Label>
-                <Label className="w-full">
-                    Street Number
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="postbox"
-                    />
-                    <Message schema={state.schema} index="postbox" />
-                </Label>
-            </div>
-            <div className="w-full grid md:grid-cols-2 gap-5">
-                <Label className="w-full">
-                    Latitude
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="latitude"
-                    />
-                    <Message schema={state.schema} index="latitude" />
-                </Label>
-                <Label className="w-full">
-                    Longitude
-                    <Input
-                        className="focus-within:border-black focus-within:ring-black"
-                        fullWidth
-                        variant="outline"
-                        name="longitude"
-                    />
-                    <Message schema={state.schema} index="longitude" />
-                </Label>
-            </div>
+            <InternalAddress state={state} />
             <input type="hidden" name="idStakeholder" defaultValue={idStakeHolder} />
             <Submit className="mt-6" fullWidth>
                 Add
