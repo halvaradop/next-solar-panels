@@ -1,7 +1,9 @@
-import { Input } from "@halvaradop/ui-input"
-import { Label } from "@halvaradop/ui-label"
+import { Label, Input } from "@/ui/common/form/index"
 import { InputListProps } from "@/lib/@types/props"
 
+/**
+ * @deprecated
+ */
 export const InputList = <T,>({ inputs, state }: InputListProps<T>) => {
     return inputs.map(({ label, name, type }) => (
         <Label className="w-full text-neutral-700" size="sm" key={label}>

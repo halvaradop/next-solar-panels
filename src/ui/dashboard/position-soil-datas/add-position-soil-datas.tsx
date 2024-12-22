@@ -2,9 +2,8 @@
 import { useActionState } from "react"
 import { addPositionSoilDatasPageAction } from "@/lib/actions"
 import { AddPositionSoilDatasPageActionState, PositionSoilDatasWithoutIds } from "@/lib/@types/types"
-import { Form, Input, Label, Select, Submit } from "@/ui/common/form/index"
+import { Form, Input, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
 import dataJson from "@/lib/data.json"
 
 const { PositionSoilDataInputs } = dataJson

@@ -1,9 +1,8 @@
 "use client"
 import { useRef } from "react"
 import { merge } from "@/lib/utils"
-import { Button } from "@halvaradop/ui-button"
 import { ModalWrapperProps } from "@/lib/@types/props"
-import { innerDialogVariants, Modal } from "@halvaradop/ui-dialog"
+import { Button, Modal, innerDialogVariants } from "@/ui/common/form/index"
 
 export const ModalWrapper = ({ className, innerClassName, buttonClassName, children, button, close }: ModalWrapperProps) => {
     const ref = useRef<HTMLDialogElement>(null)

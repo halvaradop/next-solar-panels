@@ -2,10 +2,9 @@
 import { useRef, useEffect, useState } from "react"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { merge } from "@/lib/utils"
-import { Button } from "@halvaradop/ui-button"
 import { ModalWrapperProps } from "@/lib/@types/props"
 import { getCookieToken } from "@/lib/services/cookies"
-import { innerDialogVariants, Modal } from "@halvaradop/ui-dialog"
+import { Button, Modal, innerDialogVariants } from "@/ui/common/form/index"
 
 export const ModalWrapperRedirect = ({
     className,
