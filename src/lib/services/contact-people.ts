@@ -1,77 +1,113 @@
-import { ContactPerson, PositionMeasurement, PositionResistivity, PositionSoilData, Project } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
-import { ContactPersonAPI } from "@/lib/@types/types"
+"use server"
+import { ContactPerson, PositionMeasurement, PositionResistivity, Project } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
+import { GetContactPersonById, GetPositionSoilDatasByContactPerson } from "@/lib/@types/types"
 
 /**
- * Fetches all users from the database
+ * Gets all contact people from the database.
  *
- * @returns {Promise<T[]>} - A list of users
+ * @returns {Promise<ContactPerson[]>} - A list of users
  */
-export const getContactaPeople = async <T extends unknown[] = ContactPerson[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("contact-people")
-    return data
+export const getContactPeople = async (): Promise<ContactPerson[]> => {
+    "use cache"
+    return await prisma.contactPerson.findMany()
 }
 
 /**
- * Fetches a specific user from the database by their id.
+ * Gets a contact person from the database by their id.
  *
- * @param {string} contactaPersonId - The user id to get the user from the database
- * @returns {Promise<T>} - A user object
+ * @param {string} idContactPerson - The user id to get the user from the database
  */
-export const getContactPersonById = async <T extends object = ContactPersonAPI>(contactaPersonId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${contactaPersonId}`)
-    return data
+export const getContactPersonById: GetContactPersonById = async (idContactPerson: string) => {
+    "use cache"
+    return await prisma.contactPerson.findUnique({
+        where: {
+            idContactPerson,
+        },
+        select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+            fax: true,
+            www: true,
+            stakeHolder: true,
+        },
+    })
 }
 
 /**
- * Fetches the PositionSoilData data associated with a specific user from the database.
+ * Gets the PositionSoilData related to a specific user from the database.
  *
- * @param {string} contactPersonId - The user id to get the PositionSoilData related to them from the database
- * @returns {Promise<T[]>} - A list of PositionSoilData related to the user
+ * @param {string} idContactPerson - The user id to get the PositionSoilData related to them from the database
  */
-export const getPositionSoilDatasByContactPerson = async <T extends unknown[] = PositionSoilData[]>(
-    contactPersonId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${contactPersonId}/position-soil-datas`)
-    return data
+export const getPositionSoilDatasByContactPerson: GetPositionSoilDatasByContactPerson = async (idContactPerson: string) => {
+    "use cache"
+    return await prisma.positionSoilData.findMany({
+        where: {
+            idContactPerson,
+        },
+        include: {
+            contactPerson: true,
+        },
+    })
 }
 
 /**
- * Fetches position measurements for a given contact person.
+ * Gets the Position Measurements related to a specific user from the database.
  *
- * @template T - The type of the position measurements, defaults to an array of PositionMeasurement objects.
- * @param {string} idContactPerson - The ID of the contact person whose position measurements are to be fetched.
- * @returns {Promise<T>} A promise that resolves to the position measurements data.
+ * @param {string} idContactPerson - The user id to get the Position Measurements related to them from the database
+ * @returns {Promise<PositionMeasurement[]>} - A list of Position Measurements related to the user
  */
-export const getPositionMeasurementsByContactPerson = async <T extends unknown[] = PositionMeasurement[]>(
-    idContactPerson: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${idContactPerson}/position-measurements`)
-    return data
+export const getPositionMeasurementsByContactPerson = async (idContactPerson: string): Promise<PositionMeasurement[]> => {
+    "use cache"
+    return await prisma.positionMeasurement.findMany({
+        where: {
+            idContactPerson,
+        },
+    })
 }
 
 /**
- * Fetches all PositionResistivity from the database.
+ * Gets the Position Resistivities related to a specific user from the database.
  *
  * @param {string} idContactPerson - The contact person id to filter the position resistivities.
- * @returns {Promise<T>[]} - A list of zones from the database
+ * @returns {Promise<PositionResistivity>[]} - A list of zones from the database
  */
-export const getPositionResistivitiesByContactPerson = async <T extends unknown[] = PositionResistivity[]>(
-    idContactPerson: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${idContactPerson}/position-resistivities`)
-    return data
+export const getPositionResistivitiesByContactPerson = async (idContactPerson: string): Promise<PositionResistivity[]> => {
+    "use cache"
+    return await prisma.positionResistivity.findMany({
+        where: {
+            idContactPerson,
+        },
+    })
 }
 
 /**
- * Fetches all projects associated with a specific user from the database.
+ * Gets all projects associated with a specific user from the database.
  *
- * @param {string} contactPersonId - The user id to get the projects related to them from the database
- * @returns {Promise<T[]>} - A list of projects related to the user
+ * @param {string} idContactPerson - The user id to get the projects related to them from the database
+ * @returns {Promise<Project[]>} - A list of projects related to the user
  */
-export const getProjectsByContactPersonId = async <T extends unknown[] = Project[]>(contactPersonId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`contact-people/${contactPersonId}/projects`, {
-        cache: "no-cache",
+export const getProjectsByContactPersonId = async (idContactPerson: string): Promise<Project[]> => {
+    "use cache"
+    return await prisma.project.findMany({
+        where: {
+            idContactPerson,
+        },
     })
-    return data
+}
+
+/**
+ * Gets the contact people from the database associated with a specific idRole
+ *
+ * @param {number} idRole - identifier of the role to extract the contact people
+ * @returns {Promise<Role[]>} A promise that resolves to the retrieved data.
+ */
+export const getContactPeopleById = async (idRole: number): Promise<ContactPerson[]> => {
+    "use cache"
+    return await prisma.contactPerson.findMany({
+        where: {
+            idRole,
+        },
+    })
 }

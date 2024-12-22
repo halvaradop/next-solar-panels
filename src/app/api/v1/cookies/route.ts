@@ -7,6 +7,8 @@ import { NextRequest, NextResponse } from "next/server"
  * Handler for the GET request to retrieve the Token from cookies.
  *
  * @returns {Promise<NextResponse>} A promise that resolves to a JSON response containing the token.
+ * @unstable
+ * @deprecated
  */
 export const GET = async (): Promise<NextResponse> => {
     try {
@@ -44,6 +46,8 @@ export const GET = async (): Promise<NextResponse> => {
  *
  * @param {NextRequest} request - The incoming request object.
  * @returns {Promise<NextResponse>} - The response object containing a success message.
+ * @unstable
+ * @deprecated
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {

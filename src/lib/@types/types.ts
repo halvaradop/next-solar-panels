@@ -75,3 +75,25 @@ export type PositionSoildDataById = PositionSoilData & {
     field: Pick<Field, "designation">
     user: Pick<ContactPerson, "firstName" | "lastName">
 }
+
+export type GetContactPersonById = (
+    idContactPerson: string
+) => Promise<(Omit<ContactPerson, "idContactPerson" | "idRole" | "password" | "state"> & { stakeHolder: StakeHolder[] }) | null>
+
+export type GetPositionSoilDatasByContactPerson = (
+    idContactPerson: string
+) => Promise<(PositionSoilData & { contactPerson: ContactPerson })[]>
+
+export type GetPositionSoilDataById = (idPositionSoilData: string) => Promise<PositionSoilData | null>
+
+export type GetProjectsById = (
+    idProject: string
+) => Promise<(Project & { contactPerson: ContactPerson; address: Address; field: unknown }) | null>
+
+export type GetFieldsByProjectId = (idProject: string) => Promise<(Field & { project: Project; address: Address })[]>
+
+export type GetContactPeopleByStakeHolderId = (idStakeHolder: string) => Promise<ContactPerson[]>
+
+export type GetProjectsByStakeHolderId = (
+    idStakeHolder: string
+) => Promise<(Project & { address: Address; contactPerson: ContactPerson; stakeholder: StakeHolder })[]>

@@ -4,6 +4,7 @@ import { LayoutProps } from "@/lib/@types/types"
 import { Footer } from "@/ui/footer"
 import { HeaderWrapper } from "@/ui/header/header-wrapper"
 import "@/ui/globals.css"
+import { Suspense } from "react"
 
 const poppins = Poppins({
     weight: ["400", "500", "600", "700"],
@@ -43,9 +44,12 @@ export default async function RootLayout({ children }: LayoutProps) {
             <body
                 className={`${poppins.className} antialiased overflow-x-hidden scroll:w-1.5 track:my-1 thumb:rounded thumb:bg-black`}
             >
-                <HeaderWrapper />
-                {children}
-                <Footer />
+                <Suspense>
+                    <HeaderWrapper />
+
+                    {children}
+                    <Footer />
+                </Suspense>
             </body>
         </html>
     )

@@ -1,29 +1,31 @@
+"use server"
 import { Field, PositionData } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
+import { prisma } from "@/lib/prisma"
 
 /**
- * Fetches all Field from the database.
- * The data is cached, and can be updated using the `revalidateTags` with the `Fields` tag.
+ * Gets all Fields from the database.
  *
- * @returns {Promise<T>} - A list of zones from the database
+ * @returns {Promise<Field[]>} - A list of zones from the database
  */
-export const getFields = async <T extends unknown[] = Field[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("fields")
-    return data
+export const getFields = async (): Promise<Field[]> => {
+    "use cache"
+    return await prisma.field.findMany()
 }
 
 /**
- * Fetches a single Field from the database.
+ * Gets all PositionDatas from the database which are related to a specific `idField`.
  *
- * @param {string} fieldId - The id of the Field to fetch
+ * @param {string} idField - The id of the Field to fetch
  * @returns {Promise<Field>} - The Field from the database
  */
-export const getFieldById = async (fieldId: string): Promise<Field> => {
-    const { data } = await getFetch<Field>(`fields/${fieldId}`)
-    return data
-}
-
-export const getPositionDatasFieldById = async <T extends unknown[] = PositionData[]>(fieldId: string): Promise<T> => {
-    const { data } = await getFetch<T>(`fields/${fieldId}/position-datas`)
-    return data
+export const getPositionDatasFieldById = async (idField: string): Promise<PositionData[]> => {
+    "use cache"
+    return await prisma.positionData.findMany({
+        where: {
+            idField,
+        },
+        include: {
+            field: true,
+        },
+    })
 }

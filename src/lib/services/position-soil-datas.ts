@@ -1,26 +1,36 @@
+"use server"
 import { PositionSoilData } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
-import { PositionSoildDataById } from "@/lib/@types/types"
+import { prisma } from "@/lib/prisma"
+import { GetPositionSoilDataById } from "@/lib/@types/types"
 
 /**
- * Fetches a PositionSoilData by its id from the database.
+ * Gets a specific Position Soil Data from the database
  *
- * @param sampleId - The id of the sample to fetch
- * @returns {Promise<PositionSoilData>} - A sample by its id
+ * @param {string} idPositionSoilData - The id of the Position Soil Data to fetch
  */
-export const getPositionSoilDataById = async <T extends object = PositionSoildDataById>(
-    positionSoilDataId: string
-): Promise<T> => {
-    const { data } = await getFetch<T>(`position-soil-datas/${positionSoilDataId}`)
-    return data
+export const getPositionSoilDataById: GetPositionSoilDataById = async (idPositionSoilData: string) => {
+    "use cache"
+    return await prisma.positionSoilData.findUnique({
+        where: {
+            idPositionSoilData,
+        },
+        include: {
+            contactPerson: {
+                select: {
+                    firstName: true,
+                    lastName: true,
+                },
+            },
+        },
+    })
 }
 
 /**
- * Fetches position soil data from the "position-soil-datas" endpoint.
+ * Gets all Position Soil Datas from the database
  *
  * @returns {Promise<T>} A promise that resolves to the fetched data.
  */
-export const getPositionSoilDatas = async <T extends unknown[] = PositionSoilData[]>(): Promise<T> => {
-    const { data } = await getFetch<T>(`position-soil-datas`)
-    return data
+export const getPositionSoilDatas = async (): Promise<PositionSoilData[]> => {
+    "use cache"
+    return await prisma.positionSoilData.findMany()
 }

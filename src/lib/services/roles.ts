@@ -1,17 +1,12 @@
-import { ContactPerson, Role } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
+"use server"
+import { Role } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
 
 /**
- * Fetches all roles from the database
+ * Gets all Roles from the database
  *
- * @returns {Promise<Role[]>} - A list of roles
+ * @returns {Promise<Role[]>} A promise that resolves to the retrieved data.
  */
-export const getRoles = async <T extends unknown[] = Role[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("roles")
-    return data
-}
-
-export const getContecPersonByRol = async <T extends unknown[] = ContactPerson[]>(idRole: string): Promise<T> => {
-    const { data } = await getFetch<T>(`roles/${idRole}`)
-    return data
+export const getRoles = async (): Promise<Role[]> => {
+    return await prisma.role.findMany()
 }

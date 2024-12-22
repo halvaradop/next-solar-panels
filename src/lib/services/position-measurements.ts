@@ -1,12 +1,13 @@
+"use server"
+import { prisma } from "@/lib/prisma"
 import { PositionMeasurement } from "@prisma/client"
-import { getFetch } from "@/lib/utils"
 
 /**
- * Fetches position measurements data from the "position-measurements" endpoint.
+ * Gets all Position Measurements from the database
  *
- * @returns {Promise<T>} A promise that resolves to the fetched data.
+ * @returns {Promise<PositionMeasurement[]>} A promise that resolves to the retrieved data.
  */
-export const getPositionMeasurements = async <T extends unknown[] = PositionMeasurement[]>(): Promise<T> => {
-    const { data } = await getFetch<T>("position-measurements")
-    return data
+export const getPositionMeasurements = async (): Promise<PositionMeasurement[]> => {
+    "use cache"
+    return await prisma.positionMeasurement.findMany()
 }

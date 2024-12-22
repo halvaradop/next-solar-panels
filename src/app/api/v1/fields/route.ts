@@ -4,35 +4,6 @@ import { Field } from "@prisma/client"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
- * Handle the GET request to retrieve all fields from the database.
- *
- * @returns {Promise<NextResponse>} - HTTP response containing all fields.
- * @example
- * ```ts
- * const response = await fetch("{domain}/api/v1/fields")
- * const data = await response.json()
- * ```
- */
-export const GET = async (): Promise<NextResponse> => {
-    try {
-        const data = await prisma.field.findMany()
-        return NextResponse.json<ResponseAPI<Field[]>>({
-            data,
-            ok: true,
-            message: "The resource was retrieved successfully",
-        })
-    } catch {
-        return NextResponse.json<ResponseAPI<Field[]>>(
-            {
-                data: [],
-                ok: false,
-                message: "Failed to retrieve fields",
-            },
-            { status: 400 }
-        )
-    }
-}
-/**
  * Handle the POST request to create a new field in the database.
  *
  * @param {NextRequest} request - The HTTP request containing the information of the new field.
