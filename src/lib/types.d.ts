@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DefaultSession, Session } from "next-auth"
 import { DefaultJWT, JWT } from "next-auth/jwt"
 import { MotionProps } from "framer-motion"

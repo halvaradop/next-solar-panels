@@ -2,22 +2,21 @@
 import { useActionState } from "react"
 import { useEffect, useState } from "react"
 import { addStakeHolderAction } from "@/lib/actions"
-import { AddStakeHolderActionState } from "@/lib/@types/types"
-import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { AddStakeHolderActionState, Entry } from "@/lib/@types/types"
+import { Form, InputList, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { getContactPersonByStakeHolderId } from "@/lib/services"
 import { ContactPerson } from "@prisma/client"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
-import dataJson from "@/lib/data.json"
 import { getSessionToken } from "@/lib/utils"
+import dataJson from "@/lib/data.json"
 
 const { stakeHolderInputs } = dataJson
 
-const type = [
-    { id: "CLIENT", name: "CLIENT" },
-    { id: "SUPPLIER", name: "SUPPLIER" },
-    { id: "SERVICE_PROVIDER", name: "SERVICE_PROVIDER" },
-    { id: "GOVT_INSTANCE", name: "GOVT_INSTANCE" },
+const type: Entry[] = [
+    { key: "CLIENT", value: "CLIENT" },
+    { key: "SUPPLIER", value: "SUPPLIER" },
+    { key: "SERVICE_PROVIDER", value: "SERVICE_PROVIDER" },
+    { key: "GOVT_INSTANCE", value: "GOVT_INSTANCE" },
 ]
 
 export const AddStakeHolder = ({ className }: ClassNameProps) => {
@@ -37,16 +36,18 @@ export const AddStakeHolder = ({ className }: ClassNameProps) => {
         fetchContactPerson()
     }, [])
 
+    const mapContactPeople = contactPerson.map(({ idContactPerson, lastName }) => ({ key: lastName, value: idContactPerson }))
+
     return (
         <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={stakeHolderInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Contact Person
-                <SelectGeneric values={contactPerson} id="lastName" value="idContactPerson" name="contactPerson" />
+                <Select name="contactPerson" values={mapContactPeople} />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Types
-                <SelectGeneric values={type} id="id" value="name" name="type" />
+                <Select name="type" values={type} />
             </Label>
             <Submit className="mt-6" fullWidth>
                 Add

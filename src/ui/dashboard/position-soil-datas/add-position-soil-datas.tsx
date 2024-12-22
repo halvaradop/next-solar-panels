@@ -1,36 +1,19 @@
 "use client"
-import { useEffect, useState, useActionState } from "react"
-import { Field } from "@prisma/client"
+import { useActionState } from "react"
 import { addPositionSoilDatasPageAction } from "@/lib/actions"
 import { AddPositionSoilDatasPageActionState, PositionSoilDatasWithoutIds } from "@/lib/@types/types"
-import { getFieldsByStakeHolderId } from "@/lib/services"
-import { Form, Input, Label, Select, Submit } from "@/ui/common/form-elements"
+import { Form, Input, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
 import dataJson from "@/lib/data.json"
-import { getSessionToken } from "@/lib/utils"
 
 const { PositionSoilDataInputs } = dataJson
 
-/**
- * ¿ [fields, setFields] hook is used ?
- */
 export const AddPositionSoilDatas = ({ className }: ClassNameProps) => {
-    const [fields, setfields] = useState<Field[]>([])
     const [state, formAction] = useActionState(addPositionSoilDatasPageAction, {
         message: "",
         isSuccess: false,
         schema: {} as AddPositionSoilDatasPageActionState["schema"],
     })
-
-    useEffect(() => {
-        const fetchFields = async () => {
-            const { idStakeHolder } = await getSessionToken()
-            const response = await getFieldsByStakeHolderId(idStakeHolder)
-            setfields(response)
-        }
-        fetchFields()
-    }, [])
 
     return (
         <Form

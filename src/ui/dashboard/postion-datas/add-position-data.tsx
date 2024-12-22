@@ -2,21 +2,20 @@
 import { useEffect, useState, useActionState } from "react"
 import { Field } from "@prisma/client"
 import { addPositionDataAction } from "@/lib/actions"
-import { AddPositionDataActionState } from "@/lib/@types/types"
+import { AddPositionDataActionState, Entry } from "@/lib/@types/types"
 import { getFieldsByStakeHolderId } from "@/lib/services"
-import { Form, Input, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { Form, Input, InputList, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
 import { getSessionToken } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
 const { positionDatas } = dataJson
 
-const types = [
-    { id: "POI", name: "POI" },
-    { id: "FIELD", name: "FIELD" },
-    { id: "ZONE", name: "ZONE" },
-    { id: "MEASUREMENT", name: "MEASUREMENT" },
+const types: Entry[] = [
+    { key: "POI", value: "POI" },
+    { key: "FIELD", value: "FIELD" },
+    { key: "ZONE", value: "ZONE" },
+    { key: "MEASUREMENT", value: "MEASUREMENT" },
 ]
 
 export const AddPositionData = ({ className }: ClassNameProps) => {
@@ -38,16 +37,18 @@ export const AddPositionData = ({ className }: ClassNameProps) => {
         fetchContactPerson()
     }, [])
 
+    const mapFields = fields.map(({ idField, designation }) => ({ key: designation, value: idField }))
+
     return (
         <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
             <InputList inputs={positionDatas} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Position Data
-                <SelectGeneric values={fields} id="designation" value="idField" name="field" />
+                <Select name="field" values={mapFields} />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Types
-                <SelectGeneric values={types} id="id" value="name" name="pointType" />
+                <Select name="pointType" values={types} />
             </Label>
             <Label className="w-full flex items-center gap-x-2 text-neutral-700" size="sm">
                 Grounding

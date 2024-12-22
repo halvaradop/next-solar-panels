@@ -26,7 +26,7 @@ export const GET = async (): Promise<NextResponse> => {
             ok: true,
             message: "Stakeholders retrieved successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<null>>(
             {
                 data: null,
@@ -64,7 +64,7 @@ export const GET = async (): Promise<NextResponse> => {
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { email, website: www, contactPerson, number, ...spread } = response
+        const { email, website: www, contactPerson, ...spread } = response
 
         const existEmail = await prisma.stakeHolder.findFirst({
             where: { email },
@@ -92,7 +92,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The resource was created successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,

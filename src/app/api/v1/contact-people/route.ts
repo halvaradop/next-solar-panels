@@ -21,7 +21,7 @@ export const GET = async (): Promise<NextResponse> => {
             ok: true,
             message: "Contact people retrieved successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<ContactPerson[]>>(
             {
                 data: [],
@@ -56,7 +56,7 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { email, idRole, password, number, website: www, ...spread } = await request.json()
+        const { email, idRole, password, website: www, ...spread } = await request.json()
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
@@ -67,10 +67,6 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-        {
-            /*todo fix : change databse varchar to char*/
-        }
-
         const newContactPerson = await prisma.contactPerson.create({
             data: {
                 ...spread,
@@ -86,7 +82,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "Contact person created successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},

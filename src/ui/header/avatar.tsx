@@ -6,7 +6,7 @@ import { signOut, useSession } from "next-auth/react"
 
 export const Avatar = () => {
     const { data: session } = useSession()
-    const [picture, setPicture] = useState<string | null>(null)
+    const [picture] = useState<string | null>(null)
     if (!session) return null
     const {
         user: { firstName, lastName },

@@ -21,7 +21,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The Posistion data was create succesfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,
@@ -41,7 +41,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
  * const data = await response.json()
  * ```
  */
-export const GET = async (request: NextRequest): Promise<NextResponse> => {
+export const GET = async (): Promise<NextResponse> => {
     try {
         const positionDatas = await prisma.positionData.findMany()
         return NextResponse.json<ResponseAPI<PositionData[]>>({
@@ -49,7 +49,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "All position datas",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<[]>>({
             data: [],
             ok: false,

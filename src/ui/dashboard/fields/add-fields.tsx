@@ -4,12 +4,10 @@ import { Project } from "@prisma/client"
 import { addFieldsAction } from "@/lib/actions"
 import { AddFieldsActionState } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId } from "@/lib/services"
-import { Submit, Form, Input, InputList, Label, SelectGeneric } from "@/ui/common/form-elements"
-import { getSessionToken, merge } from "@/lib/utils"
+import { Submit, Form, Input, Label, Select, merge } from "@/ui/common/form/index"
+import { getSessionToken } from "@/lib/utils"
 import { ClassNameProps } from "@/lib/@types/props"
-import dataJson from "@/lib/data.json"
-
-const { addressInputs } = dataJson
+import { InternalAddress } from "@/ui/dashboard/address/address"
 
 export const AddField = ({ className }: ClassNameProps) => {
     const [projects, setProjects] = useState<Project[]>([])
@@ -26,6 +24,8 @@ export const AddField = ({ className }: ClassNameProps) => {
         }
         fetchProjects()
     }, [])
+
+    const mapProjects = projects.map(({ idProject, designation }) => ({ key: designation, value: idProject }))
 
     return (
         <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
@@ -48,9 +48,9 @@ export const AddField = ({ className }: ClassNameProps) => {
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project
-                <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
+                <Select name="project" values={mapProjects} />
             </Label>
-            <InputList inputs={addressInputs} state={state} />
+            <InternalAddress state={state} />
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>

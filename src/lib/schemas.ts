@@ -66,9 +66,13 @@ export const ContactPersonSchema = object({
     }),
 })
 export const AddressSchema = object({
-    country: string(),
+    country: string().min(4, {
+        message: "Country must be at least 4 characters long",
+    }),
     state: string(),
-    city: string(),
+    city: string().min(4, {
+        message: "City must be at least 4 characters long",
+    }),
     postbox: string(),
     street: string(),
     number: string(),
@@ -84,19 +88,7 @@ export const ProjectSchema = object({
     name: string(),
     contactPerson: string(),
     idStakeholder: string(),
-    country: string(),
-    state: string(),
-    city: string(),
-    postbox: string(),
-    street: string(),
-    number: string(),
-    latitude: number()
-        .nonnegative()
-        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
-    longitude: number()
-        .nonnegative()
-        .refine((value) => value !== 0, { message: "Latitude must be different than zero" }),
-})
+}).merge(AddressSchema)
 
 export const FiledSchema = object({
     designation: string(),

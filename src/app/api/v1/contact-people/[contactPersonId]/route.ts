@@ -46,7 +46,7 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             ok: true,
             message: "The resource was retrieved successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<ContactPersonAPI>>(
             {
                 data: {} as ContactPersonAPI,

@@ -3,7 +3,6 @@ import { Metadata } from "next"
 import { Params } from "@/lib/@types/types"
 import { getPositionSoilDataById } from "@/lib/services/position-soil-datas"
 import { camelCaseToWords } from "@/lib/utils"
-import { evalutionGrosor } from "@/lib/math"
 import { Button } from "@halvaradop/ui-button"
 import { isObject } from "@halvaradop/ts-utility-types/validate"
 
@@ -17,14 +16,8 @@ export const generateMetadata = async ({ params }: Params<"positionsoildataId">)
 const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     const slug = (await params).positionsoildataId
     const getPositionSoilData = await getPositionSoilDataById(slug)
-    const pdfGnerate = evalutionGrosor(getPositionSoilData)
 
-    const valueb0 = pdfGnerate.valueb0
-    const valueb1 = pdfGnerate.valueb1
-    const steel = pdfGnerate.steel
-    const galvanising = pdfGnerate.galvanising
-    const message = pdfGnerate.message
-    const extendedPositionSoilD = { ...getPositionSoilData, valueb0, valueb1, steel, galvanising, message }
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const {
         idContactPerson,
         idPositionSoilData,
@@ -58,7 +51,7 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
                     <tbody>
                         {Object.entries(spread)
                             .filter((entry) => !isObject(entry[1]))
-                            .map(([key, value]) => (
+                            .map(([key]) => (
                                 <tr key={key}>
                                     <td className="py-1 px-2 text-neutral-700 font-medium">{camelCaseToWords(key)}</td>
                                     <td className="py-1 px-2 text-neutral-600">{}</td>

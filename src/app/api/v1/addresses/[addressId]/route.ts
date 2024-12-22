@@ -38,7 +38,7 @@ export const GET = async (request: NextRequest, { params }: Params<"addressId">)
             ok: true,
             message: "The resource was fetched successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},

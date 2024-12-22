@@ -8,7 +8,6 @@ import { compiledSample } from "@/lib/math"
 import { TableCompiledSamples } from "@/ui/dashboard/samples/table-compiled"
 import { auth } from "@/lib/auth"
 import { CardInformation } from "@/ui/dashboard/Card/cards"
-import { Projects } from "@/ui/dashboard/index"
 import { Filter } from "@/ui/common/filter"
 
 export const metadata: Metadata = {

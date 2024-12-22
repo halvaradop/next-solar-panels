@@ -6,10 +6,9 @@ import { NextRequest, NextResponse } from "next/server"
 /**
  * Handler for the GET request to retrieve the Token from cookies.
  *
- * @param {NextRequest} request - The incoming request object.
  * @returns {Promise<NextResponse>} A promise that resolves to a JSON response containing the token.
  */
-export const GET = async (request: NextRequest): Promise<NextResponse> => {
+export const GET = async (): Promise<NextResponse> => {
     try {
         const session = await auth()
         const cookie = await prisma.cookieToken.findFirst({
@@ -31,7 +30,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
             message: "Token retrieved",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<null>>({
             data: null,
             message: "Token not found",
@@ -99,7 +98,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             message: "Project token set",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<null>>({
             data: null,
             message: "Project token not set",

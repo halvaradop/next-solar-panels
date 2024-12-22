@@ -28,7 +28,7 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             data,
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<PositionResistivity[]>>(
             {
                 data: [],

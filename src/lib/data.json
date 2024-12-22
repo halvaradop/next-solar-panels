@@ -224,13 +224,6 @@
       "type": "number"
     }
   ],
-  "projectInputs": [
-    {
-      "label": "Project Name",
-      "name": "name",
-      "type": "text"
-    }
-  ],
   "positionDatas": [
     {
       "label": "Latitude",
@@ -251,48 +244,6 @@
       "label": "Point Designation",
       "name": "pointDesignation",
       "type": "text"
-    }
-  ],
-  "addressInputs": [
-    {
-      "label": "Country",
-      "name": "country",
-      "type": "text"
-    },
-    {
-      "label": "State",
-      "name": "state",
-      "type": "text"
-    },
-    {
-      "label": "City",
-      "name": "city",
-      "type": "text"
-    },
-    {
-      "label": "Postbox",
-      "name": "postbox",
-      "type": "text"
-    },
-    {
-      "label": "Street",
-      "name": "street",
-      "type": "text"
-    },
-    {
-      "label": "Number",
-      "name": "number",
-      "type": "number"
-    },
-    {
-      "label": "Latitude",
-      "name": "latitude",
-      "type": "number"
-    },
-    {
-      "label": "Longitude",
-      "name": "longitude",
-      "type": "number"
     }
   ]
 }

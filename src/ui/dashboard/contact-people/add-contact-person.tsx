@@ -2,11 +2,10 @@
 import { useEffect, useState, useActionState } from "react"
 import { Project, Role } from "@prisma/client"
 import { addContactPersonAction } from "@/lib/actions"
-import { AddContactPersonActionState } from "@/lib/@types/types"
+import { AddContactPersonActionState, Entry } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"
-import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { Form, InputList, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
 import { getSessionToken } from "@/lib/utils"
 import dataJson from "@/lib/data.json"
 
@@ -20,6 +19,9 @@ export const AddContactPerson = ({ className }: ClassNameProps) => {
         isSuccess: false,
         schema: {} as AddContactPersonActionState["schema"],
     })
+
+    const mapRoles = roles.map<Entry>(({ idRole, name }) => ({ key: name, value: idRole }))
+    const mapProjects = projects.map<Entry>(({ idProject, designation }) => ({ key: designation, value: idProject }))
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -43,11 +45,11 @@ export const AddContactPerson = ({ className }: ClassNameProps) => {
             <InputList inputs={contactPersonInputs} state={state} />
             <Label className="w-full text-neutral-700" size="sm">
                 Role
-                <SelectGeneric values={roles} id="name" value="idRole" name="idRole" />
+                <Select name="idRole" values={mapRoles} />
             </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project
-                <SelectGeneric values={projects} id="designation" value="idProject" name="project" />
+                <Select name="project" values={mapProjects} />
             </Label>
             <Submit className="mt-6" fullWidth>
                 Add

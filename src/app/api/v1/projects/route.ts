@@ -22,7 +22,7 @@ export const GET = async (): Promise<NextResponse> => {
             ok: true,
             message: "The resource was retrieved successfully",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<Project[]>>(
             {
                 data: [],
@@ -55,7 +55,7 @@ export const GET = async (): Promise<NextResponse> => {
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { name, latitude, longitude, userId, contactPerson, idStakeholder, ...spread } = await request.json()
+        const { name, latitude, longitude, contactPerson, idStakeholder, ...spread } = await request.json()
         const data = await prisma.project.create({
             data: {
                 designation: name,
@@ -82,7 +82,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The resource was created successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>(
             {
                 data: {},

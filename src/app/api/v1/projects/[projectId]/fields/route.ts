@@ -32,7 +32,7 @@ export const GET = async (request: NextRequest, { params }: Params<"projectId">)
             data,
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<Field[]>>(
             {
                 data: [],

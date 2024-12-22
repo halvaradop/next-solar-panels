@@ -22,7 +22,7 @@ export const GET = async (): Promise<NextResponse> => {
             message: "Position resistivities fetched successfully",
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<PositionResistivity[]>>({
             data: [],
             message: "Failed to fetch position resistivities",

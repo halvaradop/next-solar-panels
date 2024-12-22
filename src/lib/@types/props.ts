@@ -9,9 +9,8 @@ import {
     PositionSoilData,
     Address,
     PositionData,
-    CookieToken,
 } from "@prisma/client"
-import { ActionState, Entry, Order, Params, ResponseAPI, Roles } from "./types"
+import { ActionState, Entry, Order, Params, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
 import { Session } from "next-auth"
 
@@ -45,9 +44,7 @@ export interface FilterByProps extends ClassNameProps {
 }
 
 export interface PositionSoilDatasProps {
-    positionSoilDatas: (PositionSoilData & {
-        contactPerson?: Pick<ContactPerson, "firstName" | "lastName">
-    })[]
+    positionSoilDatas: (PositionSoilData & { contactPerson?: Pick<ContactPerson, "firstName" | "lastName"> })[]
 }
 
 export interface FilterProps {
@@ -61,14 +58,7 @@ export interface TableStakeHoldersProps {
     })[]
 }
 
-export interface TableProjectOnContactPersonProps {
-    projectsOnUsers: (ContactPerson & Project)[]
-}
-
 export interface TableContactPeopleProps {
-    /**
-     * TODO: fix
-     */
     contactPeople: (Omit<ContactPerson, "state"> & { phones?: Pick<PhoneContactPerson, "number">[]; role?: { name: string } })[]
 }
 
@@ -78,14 +68,6 @@ export interface TableProjectsProps {
         stakeholder?: Pick<StakeHolder, "name">
         address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
     })[]
-}
-
-export interface SelectGenericProps<T extends Record<string, unknown>, K = keyof T> extends ClassNameProps {
-    classNameOption?: string
-    name: string
-    id: K
-    value: K
-    values: T[]
 }
 
 export interface SelectProps extends ClassNameProps {
@@ -107,11 +89,7 @@ export interface TablePositionDatasProps {
 
 export interface InputListProps<T> {
     state: ActionState<T>
-    inputs: {
-        label: string
-        name: string
-        type: string
-    }[]
+    inputs: { label: string; name: string; type: string }[]
 }
 
 export interface MenuRoutesProps extends ClassNameProps {
@@ -128,7 +106,7 @@ export interface MyDocumentProps {
     positionSoilData: Order
 }
 
-export interface compiledSampleProps {
+export interface CompiledSampleProps {
     data: {
         valueb0Max: number
         valueb1Max: number
@@ -182,4 +160,15 @@ export interface CardProps {
         address?: Pick<Address, "country" | "city" | "latitude" | "longitude">
         field?: Pick<Field, "idField">[]
     }
+}
+
+export interface MessageProps extends ClassNameProps {
+    index: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    schema: Record<string, any>
+}
+
+export interface InternalAddressProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state: ActionState<any>
 }

@@ -2,7 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useActionState, useState } from "react"
-import { Form, Input, Label, Submit } from "@/ui/common/form-elements"
+import { Form, Input, Label, Submit } from "@/ui/common/form/index"
 import { merge } from "@/lib/utils"
 import { loginAction } from "@/lib/actions"
 import visibility from "@/public/visibility.svg"

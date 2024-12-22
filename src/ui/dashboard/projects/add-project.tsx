@@ -3,19 +3,16 @@ import { useEffect, useState, useActionState } from "react"
 import { ContactPerson } from "@prisma/client"
 import { addProjectAction } from "@/lib/actions"
 import { AddProjectActionState } from "@/lib/@types/types"
-import { getContactPersonByStakeHolderId, getContecPersonByRol } from "@/lib/services"
-import { Form, InputList, Label, SelectGeneric, Submit } from "@/ui/common/form-elements"
+import { getContactPersonByStakeHolderId } from "@/lib/services"
+import { Form, Input, Label, Select, Submit, merge } from "@/ui/common/form/index"
 import { ClassNameProps } from "@/lib/@types/props"
-import { merge } from "@halvaradop/ui-core"
 import { getSessionToken } from "@/lib/utils"
-import dataJson from "@/lib/data.json"
 import { AddLayoutProject } from "./add-layout-project"
-
-const { projectInputs, addressInputs } = dataJson
+import { Message } from "@/ui/common/message"
+import { InternalAddress } from "@/ui/dashboard/address/address"
 
 export const AddProject = ({ className }: ClassNameProps) => {
     const [contactPersons, setContactPerson] = useState<ContactPerson[]>([])
-    const [contactPersonsRol, setContactPersonRol] = useState<ContactPerson[]>([])
     const [idStakeHolder, setIdStakeHolder] = useState<string>("")
     const [state, formAction] = useActionState(addProjectAction, {
         message: "",
@@ -27,34 +24,31 @@ export const AddProject = ({ className }: ClassNameProps) => {
         const fetchProjects = async () => {
             const { idStakeHolder } = await getSessionToken()
             const response = await getContactPersonByStakeHolderId(idStakeHolder)
-            const responseRol = await getContecPersonByRol("3")
-            setContactPersonRol(responseRol)
             setContactPerson(response)
             setIdStakeHolder(idStakeHolder)
         }
         fetchProjects()
     }, [])
 
+    const mapContactPeople = contactPersons.map(({ idContactPerson, lastName }) => ({ key: lastName, value: idContactPerson }))
+
     return (
-        <Form className={merge("w-full min-h-main pt-4", className)} action={formAction}>
-            <InputList inputs={projectInputs} state={state} />
+        <Form className={merge("w-full max-w-none min-h-main pt-4", className)} action={formAction}>
+            <Label className="w-full">
+                Project Name
+                <Input className="focus-within:border-black focus-within:ring-black" fullWidth variant="outline" name="name" />
+            </Label>
             <Label className="w-full text-neutral-700" size="sm">
                 Project Manager
-                <SelectGeneric values={contactPersonsRol} id="lastName" value="idContactPerson" name="contactPerson" />
+                <Select name="contactPerson" values={mapContactPeople} />
             </Label>
-            <InputList inputs={addressInputs} state={state} />
+            <InternalAddress state={state} />
             <input type="hidden" name="idStakeholder" defaultValue={idStakeHolder} />
             <Submit className="mt-6" fullWidth>
                 Add
             </Submit>
             <AddLayoutProject />
-            {state.message && (
-                <div
-                    className={`mt-4 p-2 rounded ${state.isSuccess ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
-                >
-                    {state.message}
-                </div>
-            )}
+            <Message className="mt-4 text-base text-center" schema={state} index="message" />
         </Form>
     )
 }

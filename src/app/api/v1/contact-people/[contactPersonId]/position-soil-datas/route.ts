@@ -32,7 +32,7 @@ export const GET = async (request: NextRequest, { params }: Params<"contactPerso
             data,
             ok: true,
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<PositionSoilData[]>>(
             {
                 data: [],
@@ -89,7 +89,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             ok: true,
             message: "The resource was created successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<{}>>({
             data: {},
             ok: false,

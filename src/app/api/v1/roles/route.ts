@@ -22,7 +22,7 @@ export const GET = async (): Promise<NextResponse> => {
             ok: true,
             message: "The resource was retrieved successfuly",
         })
-    } catch (error) {
+    } catch {
         return NextResponse.json<ResponseAPI<Role[]>>(
             {
                 data: [],

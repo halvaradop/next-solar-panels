@@ -1,6 +1,5 @@
 import { Field, PositionData, Project } from "@prisma/client"
 import { getFetch } from "@/lib/utils"
-import { string } from "zod"
 
 export const getProjects = async <T extends unknown[] = Project[]>(): Promise<T> => {
     const { data } = await getFetch<T>("projects")

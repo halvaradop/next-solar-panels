@@ -1,6 +1,6 @@
-import { compiledSampleProps } from "@/lib/@types/props"
+import { CompiledSampleProps } from "@/lib/@types/props"
 
-export const TableCompiledSamples = async ({ data }: compiledSampleProps) => {
+export const TableCompiledSamples = async ({ data }: CompiledSampleProps) => {
     const calculateAverage = (max: number, min: number): number => {
         return (max + min) / 2
     }
