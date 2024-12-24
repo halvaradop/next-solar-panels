@@ -8,7 +8,7 @@ export const getStakeholder = async (): Promise<StakeHolder[]> => {
     return await prisma.stakeHolder.findMany({
         include: {
             contactPerson: true,
-            phoneStakeHolder:true,
+            phoneStakeHolder: true,
         },
     })
 }

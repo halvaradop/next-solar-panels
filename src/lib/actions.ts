@@ -206,7 +206,7 @@ export const addProjectAction = async (previous: AddProjectActionState, formData
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",
-        body: JSON.stringify(validate.data),
+            body: JSON.stringify(validate.data),
         })
         const { message, ok } = await request.json()
         if (request.ok && ok) {

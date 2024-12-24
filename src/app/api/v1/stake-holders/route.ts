@@ -42,19 +42,19 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
-   
+
         const data = await prisma.stakeHolder.create({
             data: {
-             ...spread,
+                ...spread,
                 email,
                 www,
                 idContactPerson: contactPerson,
                 idAddress: 1,
-                phoneStakeHolder:{
-                    create:{
+                phoneStakeHolder: {
+                    create: {
                         number,
-                    }
-                }
+                    },
+                },
             },
         })
 

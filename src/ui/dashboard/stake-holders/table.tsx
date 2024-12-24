@@ -13,7 +13,7 @@ export const TableStakeHolder = async ({ stakeHolders }: TableStakeHoldersProps)
                 </tr>
             </thead>
             <tbody>
-                {stakeHolders.map(({ name, email, www, contactPerson,  idStakeHolder, phoneStakeHolder = [] }) => (
+                {stakeHolders.map(({ name, email, www, contactPerson, idStakeHolder, phoneStakeHolder = [] }) => (
                     <tr className="text-sm" key={idStakeHolder}>
                         <td>{name}</td>
                         <td>{email}</td>
