@@ -197,7 +197,6 @@ export const addContactPersonAction = async (
  * @returns {Promise<AddProjectActionState>} - The state of the plant and the result of the action, redirecting to the dashboard if successful.
  */
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
     console.log(entries)
     mapToNumber(entries, ["longitude", "latitude"])
