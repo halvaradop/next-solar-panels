@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 const DashboardStakeHolderPage = async () => {
     const stakeHolders = await getStakeholder()
+   
 
     return (
         <section className="min-h-main py-4 space-y-4">

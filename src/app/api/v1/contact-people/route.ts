@@ -27,7 +27,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { email, idRole, password, website: www, ...spread } = await request.json()
+        const { email, idRole, password, website: www,number,  ...spread } = await request.json()
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
@@ -45,6 +45,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 password,
                 www,
                 idRole: parseInt(idRole),
+                phones:{
+                    create:{
+                        number,
+                    }
+                }
             },
         })
 

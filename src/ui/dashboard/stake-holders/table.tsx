@@ -13,14 +13,14 @@ export const TableStakeHolder = async ({ stakeHolders }: TableStakeHoldersProps)
                 </tr>
             </thead>
             <tbody>
-                {stakeHolders.map(({ name, email, www, contactPerson, idContactPerson, phone = [] }) => (
-                    <tr className="text-sm" key={idContactPerson}>
+                {stakeHolders.map(({ name, email, www, contactPerson,  idStakeHolder, phoneStakeHolder = [] }) => (
+                    <tr className="text-sm" key={idStakeHolder}>
                         <td>{name}</td>
                         <td>{email}</td>
                         <td>{www}</td>
                         <td className="hidden md:table-cell">
-                            {phone.length > 0
-                                ? phone.map(({ number }, index) => <div key={index}>{number}</div>)
+                            {phoneStakeHolder.length > 0
+                                ? phoneStakeHolder.map(({ number }, index) => <div key={index}>{number}</div>)
                                 : "No phone number"}
                         </td>
                         <td className="p-3 border-t">
