@@ -9,6 +9,7 @@ import {
     PositionSoilData,
     Address,
     PositionData,
+    PhoneStakeHolder,
 } from "@prisma/client"
 import { ActionState, Entry, Order, Params, Roles } from "./types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
@@ -54,7 +55,7 @@ export interface FilterProps {
 export interface TableStakeHoldersProps {
     stakeHolders: (Omit<StakeHolder, "state"> & {
         contactPerson?: Pick<ContactPerson, "firstName" | "lastName" | "email">
-        phone?: Pick<PhoneContactPerson, "number">[]
+        phoneStakeHolder?: Pick<PhoneStakeHolder, "number">[]
     })[]
 }
 

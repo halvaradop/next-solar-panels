@@ -29,7 +29,7 @@ import { ResponseAPI } from "@/lib/@types/types"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const response = await request.json()
-        const { email, website: www, contactPerson, ...spread } = response
+        const { email, website: www, contactPerson, number, ...spread } = response
 
         const existEmail = await prisma.stakeHolder.findFirst({
             where: { email },
@@ -42,6 +42,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
+
         const data = await prisma.stakeHolder.create({
             data: {
                 ...spread,
@@ -49,6 +50,11 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 www,
                 idContactPerson: contactPerson,
                 idAddress: 1,
+                phoneStakeHolder: {
+                    create: {
+                        number,
+                    },
+                },
             },
         })
 

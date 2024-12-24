@@ -197,17 +197,15 @@ export const addContactPersonAction = async (
  * @returns {Promise<AddProjectActionState>} - The state of the plant and the result of the action, redirecting to the dashboard if successful.
  */
 export const addProjectAction = async (previous: AddProjectActionState, formData: FormData): Promise<AddProjectActionState> => {
-    const session = await auth()
     const entries = Object.fromEntries(formData)
+    console.log(entries)
     mapToNumber(entries, ["longitude", "latitude"])
     const validate = ProjectSchema.safeParse(entries)
+    console.log(validate)
     if (validate.success) {
         const request = await fetch(`http://localhost:3000/api/v1/projects`, {
             method: "POST",
-            body: JSON.stringify({
-                userId: session?.user?.id,
-                ...validate.data,
-            }),
+            body: JSON.stringify(validate.data),
         })
         const { message, ok } = await request.json()
         if (request.ok && ok) {

@@ -66,9 +66,9 @@ export const InternalAddress = ({ state }: InternalAddressProps) => {
                         className="focus-within:border-black focus-within:ring-black"
                         fullWidth
                         variant="outline"
-                        name="postbox"
+                        name="number"
                     />
-                    <Message schema={state.schema} index="postbox" />
+                    <Message schema={state.schema} index="number" />
                 </Label>
             </div>
             <div className="w-full grid md:grid-cols-2 gap-5">
