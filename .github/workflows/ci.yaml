@@ -3,6 +3,12 @@ name: ci
 on:
   pull_request:
     types: [opened, synchronize, closed]
+    paths:
+      - "frontend/**"
+
+defaults:
+  run:
+    working-directory: frontend
 
 jobs:
   lint:
