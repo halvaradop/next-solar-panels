@@ -42,3 +42,6 @@ package-lock.json
 # artifacts
 playwright-report
 test-results
+
+# enviroments
+backend/backend/django_enviorement/
