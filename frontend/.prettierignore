@@ -5,6 +5,6 @@ dist
 playwright-report
 test-results
 
-# files
+# Files
 .gitignore
 pnpm-lock.yaml
