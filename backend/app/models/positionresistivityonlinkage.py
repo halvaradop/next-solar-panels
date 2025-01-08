@@ -1,8 +1,8 @@
 from django.db import models
 
-class Positionresistivityonlinkage(models.Model):
-    idlinkage = models.ForeignKey(Linkage, models.DO_NOTHING, db_column='idLinkage')  # Field name made lowercase.
-    idpositionresistivity = models.OneToOneField(Positionresistivity, models.DO_NOTHING, db_column='idPositionResistivity', primary_>
+class PositionResistivityOnLinkage(models.Model):
+    id_linkage = models.ForeignKey(Linkage, models.DO_NOTHING, db_column='idLinkage')  # Field name made lowercase.
+    id_position_resistivity = models.OneToOneField(Positionresistivity, models.DO_NOTHING, db_column='idPositionResistivity', primary_>
 
     class Meta:
         managed = False

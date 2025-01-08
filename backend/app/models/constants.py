@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Constants(models.Model):
-    idconstants = models.AutoField(db_column='idConstants', primary_key=True)  # Field name made lowercase.
+    id_constants = models.AutoField(db_column='idConstants', primary_key=True)  # Field name made lowercase.
     name = models.CharField(max_length=100)
     symbol = models.CharField(max_length=100)
     value = models.FloatField()
