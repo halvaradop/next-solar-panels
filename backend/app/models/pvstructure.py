@@ -2,7 +2,7 @@ from django.db import models
 
 class PvStructure(models.Model):
     id_pv_structure = models.AutoField(db_column='idPvStructure', primary_key=True)  # Field name made lowercase.
-    id_project = models.ForeignKey(Project, models.DO_NOTHING, db_column='idProject')  # Field name made lowercase.
+    id_project = models.ForeignKey('Project', models.DO_NOTHING, db_column='idProject')  # Field name made lowercase.
     designation = models.CharField(max_length=100)
     base_material = models.IntegerField(db_column='baseMaterial')  # Field name made lowercase.
     base_matrial_thickness = models.CharField(db_column='baseMatrialThickness', max_length=100)  # Field name made lowercase.

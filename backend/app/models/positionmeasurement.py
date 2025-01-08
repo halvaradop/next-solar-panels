@@ -11,7 +11,7 @@ class PositionMeasurement(models.Model):
     galvanic_current = models.FloatField(db_column='galvanicCurrent', blank=True, null=True)  # Field name made lowercase.
     coating_thickness = models.FloatField(db_column='coatingThickness', blank=True, null=True)  # Field name made lowercase.
     material_trickness = models.FloatField(db_column='materialTrickness', blank=True, null=True)  # Field name made lowercase.
-    id_contact_person = models.ForeignKey(Contactperson, models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
+    id_contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
 
     class Meta:
         managed = False

@@ -1,7 +1,8 @@
 from django.db import models
 
 
-class PositionSoilData(models.Model):                                                                                                    idpositionsoildata = models.CharField(db_column='idPositionSoilData', primary_key=True, max_length=36)  # Field name made lowerc>    date = models.DateTimeField(blank=True, null=True)
+class PositionSoilData(models.Model):                                                                                                    
+    idpositionsoildata = models.CharField(db_column='idPositionSoilData', primary_key=True, max_length=36)  # Field name made lowerc>    date = models.DateTimeField(blank=True, null=True)
     updateat = models.DateTimeField(db_column='updateAt', blank=True, null=True)  # Field name made lowercase.
     z1 = models.FloatField(blank=True, null=True)
     z2 = models.FloatField(blank=True, null=True)
@@ -21,7 +22,7 @@ class PositionSoilData(models.Model):                                           
     b0 = models.FloatField(blank=True, null=True)
     b1 = models.FloatField(blank=True, null=True)
     chlorides = models.FloatField(blank=True, null=True)
-    id_contactperson = models.ForeignKey(Contactperson, models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
+    id_contactperson = models.ForeignKey('ContactPerson', models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
 
     class Meta:
         managed = False

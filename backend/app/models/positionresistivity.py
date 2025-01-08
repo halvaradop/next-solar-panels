@@ -9,7 +9,7 @@ class PositionResistivity(models.Model):
     orientation = models.FloatField()
     value = models.FloatField()
     measurement_instrument = models.CharField(db_column='measurementInstrument', max_length=255)  # Field name made lowercase.
-    id_contact_person = models.ForeignKey(Contactperson, models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
+    id_contact_person = models.ForeignKey('ContactPerson', models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
 
     class Meta:
         managed = False

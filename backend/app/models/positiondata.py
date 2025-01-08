@@ -8,7 +8,7 @@ class PositionData(models.Model):
     pile_designation = models.CharField(db_column='pileDesignation', max_length=255)  # Field name made lowercase.
     point_designation = models.CharField(db_column='pointDesignation', max_length=255)  # Field name made lowercase.
     grounding = models.IntegerField(blank=True, null=True)
-    id_field = models.ForeignKey(Field, models.DO_NOTHING, db_column='idField')  # Field name made lowercase.
+    id_field = models.ForeignKey('Field', models.DO_NOTHING, db_column='idField')  # Field name made lowercase.
 
     class Meta:
         managed = False
