@@ -9,10 +9,7 @@
     "lint": "next lint",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:generate": "prisma generate",
-    "prisma:studio": "prisma studio"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@halvaradop/tailwindcss-utilities": "^0.2.3",
@@ -56,7 +53,6 @@
     "semi": false,
     "printWidth": 130,
     "tabWidth": 4,
-    "useTabs": false,
     "trailingComma": "es5",
     "overrides": [
       {

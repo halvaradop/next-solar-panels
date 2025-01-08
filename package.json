@@ -1,0 +1,31 @@
+{
+  "name": "@ache/root",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ache root package",
+  "scripts": {
+    "dev:frontend": "cd frontend && pnpm dev",
+    "build:frontend": "cd frontend && pnpm build"
+  },
+  "keywords": [
+    "Ache Engineering",
+    "Solar Panels",
+    "Solar Energy",
+    "Renewable Energy",
+    "Sustainability"
+  ],
+  "author": {
+    "name": "Hernan Alvarado",
+    "email": "hernanvid123@gmail.com"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halvaradop/next-solar-panels.git"
+  },
+  "bugs": {
+    "url": "https://github.com/halvaradop/next-solar-panels/issues"
+  },
+  "homepage": "https://github.com/halvaradop/next-solar-panels#readme",
+  "packageManager": "pnpm@9.12.0"
+}
