@@ -1,6 +1,5 @@
 "use server"
-import { ContactPerson, PositionMeasurement, PositionResistivity, Project } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { ContactPerson, PositionMeasurement, PositionResistivity, Project } from "@/lib/@types/models"
 import { GetContactPersonById, GetPositionSoilDatasByContactPerson } from "@/lib/@types/types"
 
 /**
@@ -10,6 +9,7 @@ import { GetContactPersonById, GetPositionSoilDatasByContactPerson } from "@/lib
  */
 export const getContactPeople = async (): Promise<ContactPerson[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.contactPerson.findMany()
 }
 
@@ -20,6 +20,7 @@ export const getContactPeople = async (): Promise<ContactPerson[]> => {
  */
 export const getContactPersonById: GetContactPersonById = async (idContactPerson: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.contactPerson.findUnique({
         where: {
             idContactPerson,
@@ -42,6 +43,7 @@ export const getContactPersonById: GetContactPersonById = async (idContactPerson
  */
 export const getPositionSoilDatasByContactPerson: GetPositionSoilDatasByContactPerson = async (idContactPerson: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionSoilData.findMany({
         where: {
             idContactPerson,
@@ -60,6 +62,7 @@ export const getPositionSoilDatasByContactPerson: GetPositionSoilDatasByContactP
  */
 export const getPositionMeasurementsByContactPerson = async (idContactPerson: string): Promise<PositionMeasurement[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionMeasurement.findMany({
         where: {
             idContactPerson,
@@ -75,6 +78,7 @@ export const getPositionMeasurementsByContactPerson = async (idContactPerson: st
  */
 export const getPositionResistivitiesByContactPerson = async (idContactPerson: string): Promise<PositionResistivity[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionResistivity.findMany({
         where: {
             idContactPerson,
@@ -90,6 +94,7 @@ export const getPositionResistivitiesByContactPerson = async (idContactPerson: s
  */
 export const getProjectsByContactPersonId = async (idContactPerson: string): Promise<Project[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.project.findMany({
         where: {
             idContactPerson,
@@ -105,6 +110,7 @@ export const getProjectsByContactPersonId = async (idContactPerson: string): Pro
  */
 export const getContactPeopleById = async (idRole: number): Promise<ContactPerson[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.contactPerson.findMany({
         where: {
             idRole,

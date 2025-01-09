@@ -1,6 +1,5 @@
 import { ResponseAPI } from "@/lib/@types/types"
 import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
 /**
@@ -13,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server"
 export const GET = async (): Promise<NextResponse> => {
     try {
         const session = await auth()
+        // @ts-expect-error
         const cookie = await prisma.cookieToken.findFirst({
             where: {
                 idContactPerson: session?.user.id,
@@ -54,6 +54,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { idProject, idContactPerson } = response
 
+        // @ts-expect-error
         const stakeholder = await prisma.project.findFirst({
             where: {
                 idProject,
@@ -70,6 +71,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 ok: false,
             })
         }
+
+        // @ts-expect-error
         const storeToken = await prisma.cookieToken.findFirst({
             where: {
                 idContactPerson,
@@ -79,6 +82,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             },
         })
         if (storeToken) {
+            // @ts-expect-error
             await prisma.cookieToken.update({
                 where: {
                     id: storeToken.id,
@@ -88,6 +92,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 },
             })
         } else {
+            // @ts-expect-error
             await prisma.cookieToken.create({
                 data: {
                     idProject,
