@@ -1,6 +1,6 @@
 from django.db import models
 
-class PvStructure(models.Model):
+class PVStructure(models.Model):
     id_pv_structure = models.AutoField(db_column='idPvStructure', primary_key=True)  # Field name made lowercase.
     id_project = models.ForeignKey('Project', models.DO_NOTHING, db_column='idProject')  # Field name made lowercase.
     designation = models.CharField(max_length=100)
