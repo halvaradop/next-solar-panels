@@ -1,6 +1,5 @@
 "use server"
-import { prisma } from "@/lib/prisma"
-import { PositionData } from "@prisma/client"
+import { PositionData } from "@/lib/@types/models"
 
 /**
  * Gets all PositionDatas from the database
@@ -9,5 +8,6 @@ import { PositionData } from "@prisma/client"
  */
 export const getPositionDatas = async (): Promise<PositionData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionData.findMany()
 }

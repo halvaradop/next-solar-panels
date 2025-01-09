@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { AuthError } from "next-auth"
 import { auth, signIn } from "@/lib/auth"
-import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, PositionData } from "@prisma/client"
+import { Project, Address, StakeHolder, PositionSoilData, Field, ContactPerson, PositionData } from "@/lib/@types/models"
 import {
     StakeHolderSchema,
     PositionSoilDataSchema,

@@ -45,3 +45,5 @@ test-results
 
 # enviroments
 backend/backend/django_enviorement/
+backend/runtime
+backend/environment

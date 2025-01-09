@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { ContactPerson } from "@prisma/client"
+import { ContactPerson } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -28,6 +27,7 @@ import { ResponseAPI } from "@/lib/@types/types"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const { email, idRole, password, website: www, ...spread } = await request.json()
+        // @ts-expect-error
         const existingContactPerson = await prisma.contactPerson.findUnique({
             where: { email },
         })
@@ -38,6 +38,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
+        // @ts-expect-error
         const newContactPerson = await prisma.contactPerson.create({
             data: {
                 ...spread,

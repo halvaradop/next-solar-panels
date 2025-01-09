@@ -21,7 +21,13 @@ const SampleByIdPage = async ({ params }: Params<"positionsoildataId">) => {
     }
 
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    const { idContactPerson, idPositionSoilData, date: dateTime, ...spread } = getPositionSoilData
+    const {
+        // @ts-expect-error
+        idContactPerson,
+        idPositionSoilData,
+        date: dateTime,
+        ...spread
+    } = getPositionSoilData
     const date = new Date(dateTime).toLocaleString()
 
     return (

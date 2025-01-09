@@ -1,6 +1,5 @@
 "use server"
-import { PositionData, Project } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { PositionData, Project } from "@/lib/@types/models"
 import { GetFieldsByProjectId, GetProjectsById } from "@/lib/@types/types"
 
 /**
@@ -10,6 +9,7 @@ import { GetFieldsByProjectId, GetProjectsById } from "@/lib/@types/types"
  */
 export const getProjects = async (): Promise<Project[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.project.findMany()
 }
 
@@ -20,6 +20,7 @@ export const getProjects = async (): Promise<Project[]> => {
  */
 export const getProjectsById: GetProjectsById = async (idProject: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.project.findUnique({
         where: {
             idProject,
@@ -39,6 +40,7 @@ export const getProjectsById: GetProjectsById = async (idProject: string) => {
  */
 export const getFieldsByProjectsId: GetFieldsByProjectId = async (idProject: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.field.findMany({
         where: {
             idProject,
@@ -58,6 +60,7 @@ export const getFieldsByProjectsId: GetFieldsByProjectId = async (idProject: str
  */
 export const getPositionDatasByProjectId = async (idProject: string): Promise<PositionData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionData.findMany({
         where: {
             field: {

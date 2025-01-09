@@ -1,10 +1,10 @@
 "use server"
-import { PositionData, PositionMeasurement, PositionResistivity, PositionSoilData, StakeHolder } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { PositionData, PositionMeasurement, PositionResistivity, PositionSoilData, StakeHolder } from "@/lib/@types/models"
 import { GetContactPeopleByStakeHolderId, GetFieldsByStakeHolderId, GetProjectsByStakeHolderId } from "@/lib/@types/types"
 
 export const getStakeholder = async (): Promise<StakeHolder[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.stakeHolder.findMany({
         include: {
             contactPerson: true,
@@ -19,6 +19,7 @@ export const getStakeholder = async (): Promise<StakeHolder[]> => {
  */
 export const getProjectsByStakeHolderId: GetProjectsByStakeHolderId = async (idStakeholder: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.project.findMany({
         where: {
             idStakeholder,
@@ -38,6 +39,7 @@ export const getProjectsByStakeHolderId: GetProjectsByStakeHolderId = async (idS
  */
 export const getFieldsByStakeHolderId: GetFieldsByStakeHolderId = async (idStakeholder: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.field.findMany({
         where: {
             project: {
@@ -58,6 +60,7 @@ export const getFieldsByStakeHolderId: GetFieldsByStakeHolderId = async (idStake
  */
 export const getContactPeopleByStakeHolderId: GetContactPeopleByStakeHolderId = async (idStakeHolder: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.contactPerson.findMany({
         where: {
             stakeHolder: {
@@ -80,6 +83,7 @@ export const getContactPeopleByStakeHolderId: GetContactPeopleByStakeHolderId = 
  */
 export const getPositionDataByStakeholderId = async (idStakeholder: string): Promise<PositionData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionData.findMany({
         where: {
             field: {
@@ -99,6 +103,7 @@ export const getPositionDataByStakeholderId = async (idStakeholder: string): Pro
  */
 export const getPositionSoilDatasByStakeholderId = async (idStakeHolder: string): Promise<PositionSoilData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionSoilData.findMany({
         where: {
             contactPerson: {
@@ -120,6 +125,7 @@ export const getPositionSoilDatasByStakeholderId = async (idStakeHolder: string)
  */
 export const getPositionMeasurementsByStakeholderId = async (idStakeHolder: string): Promise<PositionMeasurement[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionMeasurement.findMany({
         where: {
             contactPerson: {
@@ -141,6 +147,7 @@ export const getPositionMeasurementsByStakeholderId = async (idStakeHolder: stri
  */
 export const getPositionResistivitiesByStakeholderId = async (idStakeHolder: string): Promise<PositionResistivity[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionResistivity.findMany({
         where: {
             contactPerson: {

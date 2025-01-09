@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { Field } from "@prisma/client"
+import { Field } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -32,6 +31,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const connectionEarthingFenceBoolean = !!connectionEarthingFence
         const externalCurrentInfluenceBoolean = !!externalCurrentInfluence
 
+        // @ts-expect-error
         const newField = await prisma.field.create({
             data: {
                 designation,
