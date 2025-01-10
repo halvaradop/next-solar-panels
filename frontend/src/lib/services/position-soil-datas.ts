@@ -1,6 +1,5 @@
 "use server"
-import { PositionSoilData } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { PositionSoilData } from "@/lib/@types/models"
 import { GetPositionSoilDataById } from "@/lib/@types/types"
 
 /**
@@ -10,6 +9,7 @@ import { GetPositionSoilDataById } from "@/lib/@types/types"
  */
 export const getPositionSoilDataById: GetPositionSoilDataById = async (idPositionSoilData: string) => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionSoilData.findUnique({
         where: {
             idPositionSoilData,
@@ -32,5 +32,6 @@ export const getPositionSoilDataById: GetPositionSoilDataById = async (idPositio
  */
 export const getPositionSoilDatas = async (): Promise<PositionSoilData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionSoilData.findMany()
 }

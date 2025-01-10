@@ -1,5 +1,6 @@
 import React, { HTMLProps } from "react"
 import { StaticImageData } from "next/image"
+import { Session } from "next-auth"
 import {
     Project,
     StakeHolder,
@@ -9,10 +10,9 @@ import {
     PositionSoilData,
     Address,
     PositionData,
-} from "@prisma/client"
-import { ActionState, Entry, Order, Params, Roles } from "./types"
+} from "@/lib/@types/models"
+import { ActionState, Entry, Order, Params, Roles } from "@/types/types"
 import { FormProps as FormVariantProps, formVariants } from "@halvaradop/ui-form"
-import { Session } from "next-auth"
 
 export interface HeaderMenuProps extends ClassNameProps {
     onCloseMenu: () => void

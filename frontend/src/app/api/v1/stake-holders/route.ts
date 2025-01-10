@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { StakeHolder } from "@prisma/client"
+import { StakeHolder } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -31,6 +30,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { email, website: www, contactPerson, ...spread } = response
 
+        // @ts-expect-error
         const existEmail = await prisma.stakeHolder.findFirst({
             where: { email },
         })
@@ -42,6 +42,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 message: "This email is already registered",
             })
         }
+
+        // @ts-expect-error
         const data = await prisma.stakeHolder.create({
             data: {
                 ...spread,

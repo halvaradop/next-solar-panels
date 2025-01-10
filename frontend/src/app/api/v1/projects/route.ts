@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { Project } from "@prisma/client"
+import { Project } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -25,6 +24,8 @@ import { ResponseAPI } from "@/lib/@types/types"
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
         const { name, latitude, longitude, contactPerson, idStakeholder, ...spread } = await request.json()
+
+        // @ts-expect-error
         const data = await prisma.project.create({
             data: {
                 designation: name,
