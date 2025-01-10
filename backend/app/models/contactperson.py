@@ -1,3 +1,6 @@
+from django.db import models
+
+
 class ContactPerson(models.Model):
     id_contactperson = models.CharField(db_column='idContactPerson', primary_key=True, max_length=36)  # Field name made lowercase.
     first_name = models.CharField(db_column='firstName', max_length=50)  # Field name made lowercase.

@@ -19,3 +19,4 @@ from .pvstructure import PVStructure
 from .role import Role
 from .stakeholder import Stakeholder
 from .zone import Zone
+from .material import Material

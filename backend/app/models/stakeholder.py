@@ -1,6 +1,6 @@
 from django.db import models
 
-class StakeHolder(models.Model):
+class Stakeholder(models.Model):
     id_stake_holder = models.CharField(db_column='idStakeHolder', primary_key=True, max_length=36)  # Field name made lowercase.
     name = models.CharField(max_length=100)
     industry = models.CharField(max_length=100)
