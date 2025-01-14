@@ -43,7 +43,13 @@ package-lock.json
 playwright-report
 test-results
 
+# Python cache files
+__pycache__/
+*.py[cod]
+
 # enviroments
 backend/backend/django_enviorement/
+venv/
 backend/runtime
 backend/environment
+
