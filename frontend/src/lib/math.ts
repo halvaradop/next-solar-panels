@@ -1,4 +1,4 @@
-import { PositionSoilData } from "@prisma/client"
+import { PositionSoilData } from "@/lib/@types/models"
 
 /**
  *

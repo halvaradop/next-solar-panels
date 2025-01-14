@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
-import { PositionSoilData } from "@prisma/client"
+import { PositionSoilData } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 import { sampleCalcs } from "@/lib/math"
 
@@ -26,6 +25,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const { idContactPerson, ...rest } = await request.json()
 
         const { b0, b1 } = sampleCalcs(rest)
+        // @ts-expect-error
         const data = await prisma.positionSoilData.create({
             data: {
                 idContactPerson: idContactPerson,

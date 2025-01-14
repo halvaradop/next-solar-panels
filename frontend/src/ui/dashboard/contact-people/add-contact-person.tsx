@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState, useActionState } from "react"
-import { Project, Role } from "@prisma/client"
+import { Project, Role } from "@/lib/@types/models"
 import { addContactPersonAction } from "@/lib/actions"
 import { AddContactPersonActionState, Entry } from "@/lib/@types/types"
 import { getProjectsByStakeHolderId, getRoles } from "@/lib/services"

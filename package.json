@@ -5,9 +5,7 @@
   "description": "Ache root package",
   "scripts": {
     "dev:frontend": "cd frontend && pnpm dev",
-    "build": "pnpm build",
-    "start": "pnpm start",
-    "test": "pnpm test"
+    "build:frontend": "cd frontend && pnpm build"
   },
   "keywords": [
     "Ache Engineering",

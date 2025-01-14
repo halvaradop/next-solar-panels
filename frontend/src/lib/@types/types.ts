@@ -1,4 +1,4 @@
-import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, PositionData } from "@prisma/client"
+import { Project, Address, Role, StakeHolder, PositionSoilData, ContactPerson, Field, PositionData } from "./models"
 
 export interface LayoutProps {
     children: React.ReactNode

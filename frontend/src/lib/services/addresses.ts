@@ -1,6 +1,5 @@
 "use server"
-import { Address } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { Address } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
 
 /**
@@ -10,6 +9,7 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const getAddresses = async (): Promise<Address[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.address.findMany()
 }
 
@@ -23,6 +23,7 @@ export const getAddresses = async (): Promise<Address[]> => {
  */
 export const createAddress = async (address: Address): Promise<ResponseAPI<Address | null>> => {
     try {
+        // @ts-expect-error
         const data = await prisma.address.create({ data: address })
         return { data, ok: true, message: "Address created successfully" }
     } catch {
@@ -42,6 +43,7 @@ export const createAddress = async (address: Address): Promise<ResponseAPI<Addre
  */
 export const getAddressById = async (idAddress: number): Promise<Address | null> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.address.findUnique({
         where: { idAddress },
     })

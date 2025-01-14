@@ -50,3 +50,6 @@ __pycache__/
 # enviroments
 backend/backend/django_enviorement/
 venv/
+backend/runtime
+backend/environment
+

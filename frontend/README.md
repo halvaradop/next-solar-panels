@@ -35,19 +35,6 @@ npm install -g pnpm@latest
 pnpm install
 ```
 
-### Set up environment variables
-
-To ensure the project works correctly, you need to set up the environment variables. These variables are required for database connection and NextAuth configuration. Next.js recommends having multiple environment variables depending on the runtime of the application, whether it is development or production. Therefore, you should configure both development and production environments with their respective variables.
-
-1. Copy the example environment file to create your local environment files:
-
-```bash
-cp .env.example .env.development.local
-cp .env.example .env.production.local
-```
-
-2. Open the `.env.development.local` and `.env.production.local` files and fill in the required values.
-
 ### Run the project
 
 ```bash

@@ -1,6 +1,5 @@
 "use server"
-import { Field, PositionData } from "@prisma/client"
-import { prisma } from "@/lib/prisma"
+import { Field, PositionData } from "@/lib/@types/models"
 
 /**
  * Gets all Fields from the database.
@@ -9,6 +8,7 @@ import { prisma } from "@/lib/prisma"
  */
 export const getFields = async (): Promise<Field[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.field.findMany()
 }
 
@@ -20,6 +20,7 @@ export const getFields = async (): Promise<Field[]> => {
  */
 export const getPositionDatasFieldById = async (idField: string): Promise<PositionData[]> => {
     "use cache"
+    // @ts-expect-error
     return await prisma.positionData.findMany({
         where: {
             idField,

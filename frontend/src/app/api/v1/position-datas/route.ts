@@ -1,6 +1,5 @@
 import { ResponseAPI } from "@/lib/@types/types"
-import { prisma } from "@/lib/prisma"
-import { PositionData } from "@prisma/client"
+import { PositionData } from "@/lib/@types/models"
 import { NextRequest, NextResponse } from "next/server"
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
@@ -8,6 +7,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         const response = await request.json()
         const { field, grounding, ...rest } = response
         const groundingBoolean = !!grounding
+
+        // @ts-expect-error
         const newPositionData = await prisma.positionData.create({
             data: {
                 idField: field,

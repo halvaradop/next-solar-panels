@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { prisma } from "@/lib/prisma"
 import { Roles } from "@/lib/@types/types"
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
@@ -12,6 +11,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             },
             async authorize(credentials) {
                 const { email, password } = credentials as { email: string; password: string }
+                // @ts-expect-error
                 const authorized = await prisma.contactPerson.findFirst({
                     where: {
                         email,
