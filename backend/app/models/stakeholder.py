@@ -11,7 +11,7 @@ class Stakeholder(models.Model):
     type = models.CharField(max_length=16)
     state = models.CharField(max_length=8, blank=True, null=True)
     id_address = models.ForeignKey('Address', models.DO_NOTHING, db_column='idAddress')  # Field name made lowercase.
-    id_contactperson = models.ForeignKey('ContacPerson', models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
+    id_contactperson = models.ForeignKey('ContactPerson', models.DO_NOTHING, db_column='idContactPerson')  # Field name made lowercase.
     id_picture = models.ForeignKey('Picture', models.DO_NOTHING, db_column='idPicture', blank=True, null=True)  # Field name made lower>
 
     class Meta:
