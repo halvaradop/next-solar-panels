@@ -7,7 +7,7 @@ from app import views
 
 router = DefaultRouter()
 router.register(r'stakeholders', views.StakeHolderViewSet)
-router.register(r'contactpersons', views.ContactPersonViewSet)
+router.register(r'contactpeople', views.ContactPersonViewSet)
 router.register(r'fields', views.FieldViewSet)
 router.register(r'zones', views.ZoneViewSet)
 router.register(r'positions-datas', views.PositionDataViewSet)
