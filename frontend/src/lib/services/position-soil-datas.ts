@@ -1,6 +1,7 @@
 "use server"
 import { PositionSoilData } from "@/lib/@types/models"
 import { GetPositionSoilDataById } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Gets a specific Position Soil Data from the database
@@ -32,6 +33,6 @@ export const getPositionSoilDataById: GetPositionSoilDataById = async (idPositio
  */
 export const getPositionSoilDatas = async (): Promise<PositionSoilData[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.positionSoilData.findMany()
+    const { data } = await getFetch<PositionSoilData[]>("position-soil-datas")
+    return data
 }

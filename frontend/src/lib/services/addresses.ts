@@ -1,6 +1,10 @@
+/**
+ * Is required the "use server" directive to use the server cache. ??
+ */
 "use server"
 import { Address } from "@/lib/@types/models"
 import { ResponseAPI } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Gets all addresses from the database.
@@ -9,8 +13,8 @@ import { ResponseAPI } from "@/lib/@types/types"
  */
 export const getAddresses = async (): Promise<Address[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.address.findMany()
+    const { data } = await getFetch<Address[]>("address")
+    return data
 }
 
 /**
@@ -22,17 +26,11 @@ export const getAddresses = async (): Promise<Address[]> => {
  * @returns {Promise<ResponseAPI<Address | null>>} - A promise that resolves to the response from the database
  */
 export const createAddress = async (address: Address): Promise<ResponseAPI<Address | null>> => {
-    try {
-        // @ts-expect-error
-        const data = await prisma.address.create({ data: address })
-        return { data, ok: true, message: "Address created successfully" }
-    } catch {
-        return {
-            data: null,
-            ok: false,
-            message: "An error occurred while creating the address",
-        }
-    }
+    "use cache"
+    return await getFetch<Address>("address/", {
+        method: "POST",
+        body: JSON.stringify(address),
+    })
 }
 
 /**
@@ -43,8 +41,6 @@ export const createAddress = async (address: Address): Promise<ResponseAPI<Addre
  */
 export const getAddressById = async (idAddress: number): Promise<Address | null> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.address.findUnique({
-        where: { idAddress },
-    })
+    const { data } = await getFetch<Address>(`address/${idAddress}`)
+    return data
 }
