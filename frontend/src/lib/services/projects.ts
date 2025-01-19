@@ -1,6 +1,7 @@
 "use server"
 import { PositionData, Project } from "@/lib/@types/models"
 import { GetFieldsByProjectId, GetProjectsById } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Retrieves all projects from the database.
@@ -9,8 +10,8 @@ import { GetFieldsByProjectId, GetProjectsById } from "@/lib/@types/types"
  */
 export const getProjects = async (): Promise<Project[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.project.findMany()
+    const { data } = await getFetch<Project[]>("projects")
+    return data
 }
 
 /**

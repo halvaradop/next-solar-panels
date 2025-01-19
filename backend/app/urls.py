@@ -15,7 +15,7 @@ router.register(r'materials', views.MaterialViewSet)
 router.register(r'projects', views.ProjectViewSet)
 router.register(r'position-soil-datas', views.PositionSoilDataViewSet)
 router.register(r'roles', views.RoleViewSet)
-router.register(r'address', views.AddressViewSet)
+router.register(r'addresses', views.AddressViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),

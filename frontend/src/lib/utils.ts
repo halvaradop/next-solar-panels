@@ -63,7 +63,7 @@ export const encrypt = async (data: string): Promise<string> => {
  * @throws {BadRequestError} if there is an error fetching data from the API
  */
 export const getFetch = async <T>(endpoint: string, init: RequestInit = {}): Promise<ResponseAPI<T>> => {
-    const URL = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpoint}`
+    const URL = `http://127.0.0.1:8000/app/api/v1/${endpoint}`
     const { headers: headersInit, ...spread } = init
     try {
         const signal = new AbortController().signal

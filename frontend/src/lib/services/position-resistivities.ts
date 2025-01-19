@@ -1,5 +1,6 @@
 "use server"
 import { PositionResistivity } from "@/lib/@types/models"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Gets all Position Resistivities from the database
@@ -8,6 +9,6 @@ import { PositionResistivity } from "@/lib/@types/models"
  */
 export const getPositionResistivities = async (): Promise<PositionResistivity[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.positionResistivity.findMany()
+    const { data } = await getFetch<PositionResistivity[]>("position-resistivities")
+    return data
 }

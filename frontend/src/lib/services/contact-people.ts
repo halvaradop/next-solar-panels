@@ -1,6 +1,7 @@
 "use server"
 import { ContactPerson, PositionMeasurement, PositionResistivity, Project } from "@/lib/@types/models"
 import { GetContactPersonById, GetPositionSoilDatasByContactPerson } from "@/lib/@types/types"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Gets all contact people from the database.
@@ -9,8 +10,8 @@ import { GetContactPersonById, GetPositionSoilDatasByContactPerson } from "@/lib
  */
 export const getContactPeople = async (): Promise<ContactPerson[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.contactPerson.findMany()
+    const { data } = await getFetch<ContactPerson[]>("contactpeople")
+    return data
 }
 
 /**

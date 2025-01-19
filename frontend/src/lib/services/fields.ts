@@ -1,5 +1,6 @@
 "use server"
 import { Field, PositionData } from "@/lib/@types/models"
+import { getFetch } from "@/lib/utils"
 
 /**
  * Gets all Fields from the database.
@@ -8,8 +9,8 @@ import { Field, PositionData } from "@/lib/@types/models"
  */
 export const getFields = async (): Promise<Field[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.field.findMany()
+    const { data } = await getFetch<Field[]>("fields")
+    return data
 }
 
 /**
@@ -20,13 +21,6 @@ export const getFields = async (): Promise<Field[]> => {
  */
 export const getPositionDatasFieldById = async (idField: string): Promise<PositionData[]> => {
     "use cache"
-    // @ts-expect-error
-    return await prisma.positionData.findMany({
-        where: {
-            idField,
-        },
-        include: {
-            field: true,
-        },
-    })
+    const { data } = await getFetch<PositionData[]>(`fields/${idField}`)
+    return data
 }
